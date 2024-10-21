@@ -1,9 +1,23 @@
+using Hexagon.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+#region Configure Hexagon Context
+var connectionString = builder.Configuration.GetConnectionString("AcademyConnectionStrings");
+builder.Services.AddDbContext<HexagonContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+#endregion
 
 var app = builder.Build();
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

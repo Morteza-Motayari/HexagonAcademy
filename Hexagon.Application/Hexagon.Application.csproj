@@ -16,4 +16,8 @@
     <Folder Include="Security\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Hexagon.Infra.Data\Hexagon.Infra.Data.csproj" />
+  </ItemGroup>
+
 </Project>

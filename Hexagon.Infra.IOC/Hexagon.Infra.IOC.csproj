@@ -10,4 +10,8 @@
     <Folder Include="Container\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Hexagon.Application\Hexagon.Application.csproj" />
+  </ItemGroup>
+
 </Project>
