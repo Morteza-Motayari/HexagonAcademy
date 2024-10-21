@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
     <Folder Include="Shared\" />
-    <Folder Include="ViewModels\" />
+    <Folder Include="ViewModels\Gyms\" />
+    <Folder Include="ViewModels\Users\" />
+    <Folder Include="ViewModels\Records\" />
   </ItemGroup>
 
 </Project>

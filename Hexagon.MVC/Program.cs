@@ -1,4 +1,6 @@
+using Hexagon.Application.Statics;
 using Hexagon.Infra.Data.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,20 @@ builder.Services.AddDbContext<HexagonContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+#endregion
+
+#region Authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LogoutPath = "/logOut";
+        options.LoginPath = "/Login";
+        options.ExpireTimeSpan=TimeSpan.FromDays(30);
+    });
+#endregion
+
+#region Config kaveNegar
+builder.Configuration.GetSection("KaveNegarInfo").Get<KaveNegarStatics>();
 #endregion
 
 var app = builder.Build();
@@ -32,6 +48,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

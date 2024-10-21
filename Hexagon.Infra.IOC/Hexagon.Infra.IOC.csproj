@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Container\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Hexagon.Application\Hexagon.Application.csproj" />
   </ItemGroup>
 

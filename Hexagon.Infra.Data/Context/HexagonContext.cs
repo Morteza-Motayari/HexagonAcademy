@@ -3,11 +3,6 @@ using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hexagon.Infra.Data.Context
 {

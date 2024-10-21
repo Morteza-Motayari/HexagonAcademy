@@ -20,7 +20,7 @@ namespace Hexagon.Domain.Models.Users
         public string? Avatar { get; set; }
         public UserGender? Gender { get; set; }
         public UserStatus Status { get; set; }
-        public UserSituation Situation { get; set; }
+        public UserSituation? Situation { get; set; }
         #endregion
 
         #region Relations
