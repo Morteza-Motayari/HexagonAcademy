@@ -1,11 +1,27 @@
 using Hexagon.Application.Statics;
 using Hexagon.Infra.Data.Context;
+using Hexagon.Infra.IOC.Container;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
+#region HtmlEncoder
+//this code is for using persian fonts in some components like sweet alert 
+builder.Services.AddSingleton<HtmlEncoder>(
+HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin,
+UnicodeRanges.Arabic }));
+#endregion
+
+#region register Sevices
+builder.Services.RegisterServices();
+#endregion
+
 builder.Services.AddControllersWithViews();
 #region Configure Hexagon Context
 var connectionString = builder.Configuration.GetConnectionString("AcademyConnectionStrings");
@@ -50,6 +66,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

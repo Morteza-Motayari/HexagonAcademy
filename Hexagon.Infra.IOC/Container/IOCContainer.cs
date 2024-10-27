@@ -14,6 +14,8 @@ using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Application.Services.Implementation.Users;
 using Hexagon.Application.Senders.Interfaces;
 using Hexagon.Application.Senders.Implementation;
+using Hexagon.Domain.Interfaces.Users;
+using Hexagon.Infra.Data.Repositories.Users;
 
 namespace Hexagon.Infra.IOC.Container
 {
@@ -26,13 +28,14 @@ namespace Hexagon.Infra.IOC.Container
             #region Users
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ISmsSender, SmsSender>();
+            services.AddScoped<IRoleService, RoleService>();
 
             #endregion
-
 
             #endregion
 
             #region Repositories
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             #region Gyms
             services.AddScoped<IGymRepository, GymRepository>();
@@ -55,6 +58,7 @@ namespace Hexagon.Infra.IOC.Container
             #region Users
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             #endregion
 
             #endregion

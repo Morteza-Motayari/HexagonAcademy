@@ -1,0 +1,129 @@
+﻿@using Hexagon.Domain.ViewModels.Users.Roles
+@using Hexagon.Application.Extensions
+@using Hexagon.Application.Convertors
+@model FilterRoleViewModel
+
+@{
+    ViewData["Title"] = "لیست نقش ها";
+    int j = 0;
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h1>فیلترها</h1>
+            </div>
+            <div class="body">
+                <div class="table-responsive">                    
+                    <div id="tableExport_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <div class="row col-12">
+                            <form method="post" id="filter-search" asp-area="Admin" asp-controller="Role" asp-action="List">
+                                <input type="hidden" asp-for="Page" />
+                                <div class="row ">
+                                    <div class="col-12 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Title" class="control-label"></label>
+                                            <input asp-for="Title" class="form-control form-control-sm" placeholder="" aria-controls="tableExport">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Status" class="control-label"></label>
+                                            <select asp-for="Status" class="form-control">
+                                                @foreach (var item in Enum.GetValues(typeof(FilterRoleStatus)).Cast<FilterRoleStatus>().ToList())
+                                                {
+                                                    @if (Model.Status == item)
+                                                    {
+                                                        <option selected value="@item">@item.GetDisplayName()</option>
+                                                    }
+                                                    <option value="@item">@item.GetDisplayName()</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-6">
+                                        <label>
+                                            نمایش
+                                            <select asp-for="TakeEntity"  aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> ورودی
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-sm-12">
+                                        <input type="submit" value="جستجو" class="btn btn-outline-success" />
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <p>
+                            <a asp-area="Admin" asp-controller="Role" asp-action="create">ایجاد نقش جدید</a>
+                        </p>
+                        <table id="tableExport" class="display table table-hover table-checkable order-column width-per-100 dataTable" role="grid" aria-describedby="tableExport_info">
+                            <h2>@ViewData["Title"]</h2>
+                            <thead>
+                                <tr role="row">
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اسم نقش: activate to sort column ascending" style="width: 133.113px;">اسم نقش</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="عنوان نقش: activate to sort column ascending" style="width: 149.188px;">عنوان نقش</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="وضعیت: activate to sort column ascending" style="width: 89.9125px;">وضعیت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ: activate to sort column ascending" style="width: 86.1375px;">تاریخ</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending" style="width: 70.8875px;">اقدام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Entities.CheckNullability())
+                                {
+                                    @foreach (var item in Model.Entities)
+                                    {
+                                        {
+                                            j++;
+                                        }
+                                        <tr role="row" class="@((j%2==0)?"even":"odd")@((item.IsDeleted==true)?" bg-c-pink":"")">
+                                            <td class="center">@item.RoleName</td>
+                                            <td class="center">@item.RoleTitle</td>
+                                            <td class="center">
+                                                <div class="badge col-green">بسته شده</div>
+                                            </td>
+                                            <td class="center">@item.CreatedDate.ToShamsi()</td>
+                                            <td class="center">
+                                                <a asp-area="Admin" asp-controller="Role" asp-action="Edit" asp-route-roleId="@item.Id" class="btn btn-tbl-edit">
+                                                    <i class="material-icons">create</i>
+                                                </a>
+                                                <a onclick="confirmDelete('@Url.Action("Delete","Role",new{id=item.Id})',event,'@item.RoleTitle')" class="btn btn-tbl-delete">
+                                                    <i class="material-icons">delete_forever</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                            @if (Model.Entities.CheckNullability())
+                            {
+                                <tfoot>
+                                    <tr>
+                                        <th class="center" rowspan="1" colspan="1">اسم نقش</th>
+                                        <th class="center" rowspan="1" colspan="1">عنوان نقش</th>
+                                        <th class="center" rowspan="1" colspan="1">وضعیت</th>
+                                        <th class="center" rowspan="1" colspan="1">تاریخ</th>
+                                        <th class="center" rowspan="1" colspan="1">اقدام</th>
+                                    </tr>
+                                </tfoot>
+                            }
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="dataTables_info" id="tableExport_info" role="status" aria-live="polite">نمایش 1 تا 10 از 16 ورودی</div>
+                <partial name="_AdminPaging" model="Model.GetCurrentPaging()"/>
+            </div>
+        </div>
+    </div>
+</div>
+

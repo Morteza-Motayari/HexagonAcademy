@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <partial name="_AdminMetaTags" />
+    <title>آتریو - قالب بوت استرپ 4 مدیریتی </title>
+    <!-- Favicon-->
+    <link rel="icon" href="~/AdminFiles/assets/images/favicon.ico" type="image/x-icon">
+    <partial name="_AdminStyleReferences"/>
+</head>
+
+<body class="light rtl">
+    <partial name="_AdminPageLoader"/>
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <partial name="_AdminNavbar"/>
+    <div>
+        <partial name="_AdminLeftSideBar"/>
+        <partial name="_AdminRightSideBar"/>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </section>
+    <partial name="_AdminJsReferences"/>
+    <partial name="_SiteNotification" />
+</body>
