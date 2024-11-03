@@ -1,4 +1,5 @@
-﻿using Hexagon.Domain.Interfaces.Users;
+﻿using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Infra.Data.Context;
@@ -28,19 +29,19 @@ namespace Hexagon.Infra.Data.Repositories.Users
             #region Filter Search
             switch (filter.Status)
             {
-                case FilterRoleStatus.All:
+                case ExistingStatus.All:
                     break;
-                case FilterRoleStatus.Deleted:
+                case ExistingStatus.Deleted:
                     query = query.Where(u => u.IsDeleted == true);
                     break;
-                case FilterRoleStatus.NotDeleted:
+                case ExistingStatus.NotDeleted:
                     query = query.Where(u => !u.IsDeleted);
                     break;
             }
 
             if (filter.Title != null)
             {
-                query = query.Where(r => r.RoleTitle.Contains(filter.Title) || r.RoleName.Contains(filter.Title)).Distinct();
+                query = query.Where(r => r.RoleTitle.Contains(filter.Title));
             }
             #endregion
 
@@ -49,7 +50,6 @@ namespace Hexagon.Infra.Data.Repositories.Users
             await filter.Paging(query.Select(r => new RoleViewModel
             {
                 Id = r.Id,
-                RoleName = r.RoleName,
                 RoleTitle = r.RoleTitle,
                 CreatedDate = r.CreatedDate,
                 IsDeleted = r.IsDeleted
@@ -63,7 +63,6 @@ namespace Hexagon.Infra.Data.Repositories.Users
             {
                 Id = u.Id,
                 RoleTitle = u.RoleTitle,
-                RoleName = u.RoleName,
                 CreatedDate = u.CreatedDate
             }).ToListAsync();
             return roles;

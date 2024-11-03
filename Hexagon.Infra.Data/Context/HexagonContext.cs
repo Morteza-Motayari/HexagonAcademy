@@ -36,6 +36,8 @@ namespace Hexagon.Infra.Data.Context
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> userRoles { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission>? RolePermissions { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

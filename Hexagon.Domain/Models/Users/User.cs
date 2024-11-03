@@ -29,7 +29,7 @@ namespace Hexagon.Domain.Models.Users
         public ICollection<Staff>? staffes { get; set; }
         public ICollection<GymUsers>? GymUsers { get; set; }
         public ICollection<ClassUser>? UserClasses { get; set; }
-        public ICollection<UserRole>? userRoles { get; set; }
+        public List<UserRole>? userRoles { get; set; }
         #endregion
 
     }

@@ -2,6 +2,7 @@
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
+using Hexagon.Infra.Data.Repositories.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
-    public class RoleService(IRoleRepository roleRepository) : IRoleService
+    public class RoleService(IRoleRepository roleRepository,
+        IRolePermissionRepository rolePermissionRepository) : IRoleService
     {
         public async Task<CreateRoleResult> CreateRoleAsync(CreateRoleViewModel model)
         {
@@ -19,11 +21,19 @@ namespace Hexagon.Application.Services.Implementation.Users
             Role role = new()
             {
                 RoleTitle = model.RoleTitle,
-                RoleName = model.RoleName,
                 CreatedDate = DateTime.Now
             };
             await roleRepository.InserAsync(role);
             await roleRepository.SaveChangeAsync();
+
+            #region Add Role Permissions
+            foreach (var permission in model.PermissionsId)
+            {
+                await rolePermissionRepository.InserAsync(new RolePermission { PermissionId = permission, RoleId = role.Id });
+            }
+            await rolePermissionRepository.SaveChangeAsync();
+            #endregion
+
             return CreateRoleResult.Success;
         }
 
@@ -48,7 +58,6 @@ namespace Hexagon.Application.Services.Implementation.Users
             return new UpdateRoleViewModel()
             {
                 RoleTitle = role.RoleTitle,
-                RoleName = role.RoleName,
                 Id = role.Id,
             };
         }
@@ -67,8 +76,27 @@ namespace Hexagon.Application.Services.Implementation.Users
 
             #region Update Role
             role.RoleTitle = model.RoleTitle;
-            role.RoleName = model.RoleName;
             roleRepository.Update(role);
+            #region Update Role Permissions
+            var permissions = await rolePermissionRepository.GetRolePermissionsIdentityKeyAsync(model.Id);
+            if(permissions != null)
+            {
+                foreach (var item in permissions)
+                {
+                    rolePermissionRepository.Remove(new RolePermission { Id = item });
+                }
+                await rolePermissionRepository.SaveChangeAsync();
+            }
+
+            #region Add new Role Permissions
+            foreach (var permission in model.PermissionsId)
+            {
+                await rolePermissionRepository.InserAsync(new RolePermission { PermissionId = permission, RoleId = role.Id });
+            }
+            await rolePermissionRepository.SaveChangeAsync();
+            #endregion
+
+            #endregion
             await roleRepository.SaveChangeAsync();
             #endregion
 

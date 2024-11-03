@@ -15,8 +15,6 @@ namespace Hexagon.Infra.Data.Configurations.Users
         {
             builder.Property(g => g.RoleTitle).IsRequired()
                 .HasMaxLength(230);
-            builder.Property(g => g.RoleName).IsRequired()
-                .HasMaxLength(230);
         }
     }
 }

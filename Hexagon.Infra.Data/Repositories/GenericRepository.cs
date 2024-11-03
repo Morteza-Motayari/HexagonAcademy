@@ -6,6 +6,7 @@ namespace Hexagon.Infra.Data.Repositories
 {
     public class GenericRepository<T> (HexagonContext db): IGenericRepository<T> where T : class
     {
+
         public async Task<List<T>> GetAllAsync()
         => await db.Set<T>().ToListAsync();
 

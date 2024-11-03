@@ -24,8 +24,9 @@ namespace Hexagon.Application.Services.Implementation.Users
             if (user == null)
                 return ForgotPasswordResult.MobileNotfound;
 
-            //To Do: Checking if user is active or not
+            //ToDo: Checking if user is active or not
             string randomCode = CodeGenerator.GenerateCode();
+            //ToDo Sending sms
             // var result=smsSender.SendMessage(model.Mobile, $"کد تایید ورود شما {randcode} می باشد.");
             SendResult result = new SendResult();
             result.Status = 200;

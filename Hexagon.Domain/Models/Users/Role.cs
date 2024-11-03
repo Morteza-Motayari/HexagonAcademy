@@ -11,11 +11,11 @@ namespace Hexagon.Domain.Models.Users
     {
         #region Properties
         public string RoleTitle { get; set; }
-        public string RoleName { get; set; }
         #endregion
 
         #region Relations
-        public ICollection<UserRole>? userRoles { get; set; }
+        public List<UserRole>? userRoles { get; set; }
+        public List<RolePermission>? RolePermissions { get; set; }
 
         #endregion
     }

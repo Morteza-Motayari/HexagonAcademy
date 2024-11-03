@@ -1,4 +1,5 @@
-﻿@using Hexagon.Domain.ViewModels.Users.Roles
+﻿@using Hexagon.Domain.Enums.Filter
+@using Hexagon.Domain.ViewModels.Users.Roles
 @using Hexagon.Application.Extensions
 @using Hexagon.Application.Convertors
 @model FilterRoleViewModel
@@ -30,7 +31,7 @@
                                         <div class="form-group">
                                             <label asp-for="Status" class="control-label"></label>
                                             <select asp-for="Status" class="form-control">
-                                                @foreach (var item in Enum.GetValues(typeof(FilterRoleStatus)).Cast<FilterRoleStatus>().ToList())
+                                                @foreach (var item in Enum.GetValues(typeof(ExistingStatus)).Cast<ExistingStatus>().ToList())
                                                 {
                                                     @if (Model.Status == item)
                                                     {
@@ -93,9 +94,12 @@
                                                 <a asp-area="Admin" asp-controller="Role" asp-action="Edit" asp-route-roleId="@item.Id" class="btn btn-tbl-edit">
                                                     <i class="material-icons">create</i>
                                                 </a>
-                                                <a onclick="confirmDelete('@Url.Action("Delete","Role",new{id=item.Id})',event,'@item.RoleTitle')" class="btn btn-tbl-delete">
-                                                    <i class="material-icons">delete_forever</i>
-                                                </a>
+                                                @if (item.IsDeleted == false)
+                                                {
+                                                    <a onclick="confirmDelete('@Url.Action("Delete","Role",new{id=item.Id})',event,'@item.RoleTitle')" class="btn btn-tbl-delete">
+                                                        <i class="material-icons">delete_forever</i>
+                                                    </a>
+                                                }                                               
                                             </td>
                                         </tr>
                                     }

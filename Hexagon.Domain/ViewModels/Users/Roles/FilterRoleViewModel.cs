@@ -1,4 +1,5 @@
-﻿using Hexagon.Domain.ViewModels.Common;
+﻿using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,17 +15,7 @@ namespace Hexagon.Domain.ViewModels.Users.Roles
         public override int TakeEntity { get; set; }
         [Display(Name = "نقش")]
         public string? Title { get; set; }
-        [Display(Name = "وضعیت")]
-        public FilterRoleStatus? Status { get; set; }
-        //public int TakeEntities { get; set; }
-    }
-    public enum FilterRoleStatus
-    {
-        [Display(Name = "همه")]
-        All,
-        [Display(Name = "حذف شده ها")]
-        Deleted,
-        [Display(Name = "ویژگی های موجود")]
-        NotDeleted
+        [Display(Name = "وضعیت موجودیت")]
+        public ExistingStatus? Status { get; set; }
     }
 }
