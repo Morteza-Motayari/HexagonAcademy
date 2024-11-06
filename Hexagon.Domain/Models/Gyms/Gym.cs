@@ -12,11 +12,12 @@ namespace Hexagon.Domain.Models.Gyms
         public string Address { get; set; }
         public int? Area { get; set; }
         public string? ConstantPhone { get; set; }
+        public string? ImageUrl{ get; set; }
 
         #endregion
 
         #region Relations
-        public ICollection<GymUsers>? GymUsers { get; set; }
+        public ICollection<GymUser>? GymUsers { get; set; }
         public ICollection<Staff>? Staffs { get; set; }
         public ICollection<GymGallery>? Gallery { get; set; }
         public ICollection<SportClass>? SportClasses { get; set; }

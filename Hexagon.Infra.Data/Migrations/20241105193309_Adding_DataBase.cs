@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Hexagon.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddDataBase : Migration
+    public partial class Adding_DataBase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,6 +41,7 @@ namespace Hexagon.Infra.Data.Migrations
                     Address = table.Column<string>(type: "nvarchar(700)", maxLength: 700, nullable: false),
                     Area = table.Column<int>(type: "int", nullable: true),
                     ConstantPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -50,6 +51,45 @@ namespace Hexagon.Infra.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Gyms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permissions",
+                columns: table => new
+                {
+                    PermissionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PermissionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermissionTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    PermissionId1 = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissions", x => x.PermissionId);
+                    table.ForeignKey(
+                        name: "FK_Permissions_Permissions_PermissionId1",
+                        column: x => x.PermissionId1,
+                        principalTable: "Permissions",
+                        principalColumn: "PermissionId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleTitle = table.Column<string>(type: "nvarchar(230)", maxLength: 230, nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,7 +110,7 @@ namespace Hexagon.Infra.Data.Migrations
                     Avatar = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    Situation = table.Column<int>(type: "int", nullable: false),
+                    Situation = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -116,7 +156,6 @@ namespace Hexagon.Infra.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    MyProperty = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GymId = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageTitle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
@@ -128,6 +167,32 @@ namespace Hexagon.Infra.Data.Migrations
                         name: "FK_GymGalleries_Gyms_GymId",
                         column: x => x.GymId,
                         principalTable: "Gyms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RolePermissions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    PermissionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolePermissions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RolePermissions_Permissions_PermissionId",
+                        column: x => x.PermissionId,
+                        principalTable: "Permissions",
+                        principalColumn: "PermissionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RolePermissions_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -256,6 +321,32 @@ namespace Hexagon.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "userRoles",
+                columns: table => new
+                {
+                    UserRoleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_userRoles", x => x.UserRoleId);
+                    table.ForeignKey(
+                        name: "FK_userRoles_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_userRoles_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SportClasses",
                 columns: table => new
                 {
@@ -270,6 +361,7 @@ namespace Hexagon.Infra.Data.Migrations
                     SportId = table.Column<int>(type: "int", nullable: true),
                     GymId = table.Column<int>(type: "int", nullable: true),
                     TrainerId = table.Column<int>(type: "int", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -297,7 +389,7 @@ namespace Hexagon.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassUser",
+                name: "ClassUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -308,15 +400,15 @@ namespace Hexagon.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClassUser", x => x.Id);
+                    table.PrimaryKey("PK_ClassUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClassUser_SportClasses_SportClassId",
+                        name: "FK_ClassUsers_SportClasses_SportClassId",
                         column: x => x.SportClassId,
                         principalTable: "SportClasses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClassUser_Users_UserId",
+                        name: "FK_ClassUsers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -324,13 +416,13 @@ namespace Hexagon.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassUser_SportClassId",
-                table: "ClassUser",
+                name: "IX_ClassUsers_SportClassId",
+                table: "ClassUsers",
                 column: "SportClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassUser_UserId",
-                table: "ClassUser",
+                name: "IX_ClassUsers_UserId",
+                table: "ClassUsers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -357,6 +449,21 @@ namespace Hexagon.Infra.Data.Migrations
                 name: "IX_GymUsers_UserId",
                 table: "GymUsers",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_PermissionId1",
+                table: "Permissions",
+                column: "PermissionId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolePermissions_PermissionId",
+                table: "RolePermissions",
+                column: "PermissionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolePermissions_RoleId",
+                table: "RolePermissions",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SportClasses_GymId",
@@ -397,13 +504,23 @@ namespace Hexagon.Infra.Data.Migrations
                 name: "IX_UserCertificates_UserId",
                 table: "UserCertificates",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_userRoles_RoleId",
+                table: "userRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_userRoles_UserId",
+                table: "userRoles",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ClassUser");
+                name: "ClassUsers");
 
             migrationBuilder.DropTable(
                 name: "Experiences");
@@ -415,10 +532,22 @@ namespace Hexagon.Infra.Data.Migrations
                 name: "GymUsers");
 
             migrationBuilder.DropTable(
+                name: "RolePermissions");
+
+            migrationBuilder.DropTable(
                 name: "UserCertificates");
 
             migrationBuilder.DropTable(
+                name: "userRoles");
+
+            migrationBuilder.DropTable(
                 name: "SportClasses");
+
+            migrationBuilder.DropTable(
+                name: "Permissions");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Sports");

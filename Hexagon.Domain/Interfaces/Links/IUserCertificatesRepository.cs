@@ -10,6 +10,12 @@ namespace Hexagon.Domain.Interfaces.Links
 {
     public interface IUserCertificatesRepository : IGenericRepository<UserCertificates>
     {
-
+        Task<List<UserCertificates>?> GetUserCertificatesAsync(int userId);
+        Task<List<int>?> GetUserCertificateIdsAsync(int userId);
+        Task<List<int>?> GetUserCertificatesIdentityKeyAsync(int userId);
+        Task<UserCertificates?> GetUserCertificateAsync(int id);
+        Task DeleteUserCertificate(int id);
+        Task DeleteUserCertificates(int userId);
+        void Remove(UserCertificates userCertificate);
     }
 }

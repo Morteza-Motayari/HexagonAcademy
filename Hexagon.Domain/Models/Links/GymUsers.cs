@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hexagon.Domain.Models.Links
 {
-    public class GymUsers
+    public class GymUser
     {
         #region Properties
         [Key]

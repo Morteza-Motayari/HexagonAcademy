@@ -118,7 +118,6 @@ namespace Hexagon.Application.Services.Implementation.Users
                 return UpdateUserResult.MobileDuplicated;
 
             #region Update User
-            User.CreatedDate = DateTime.Now;
                 User.FirstName = model.FirstName;
                 User.LastName = model.LastName;
                 User.city = model.city;
@@ -131,7 +130,6 @@ namespace Hexagon.Application.Services.Implementation.Users
                 User.Situation = model.Situation;
                 User.Status = UserStatus.Active;
             UserRepository.Update(User);
-            await UserRepository.SaveChangeAsync();
 
             #region Update Avatar
             if (model.NewImage != null)
@@ -145,7 +143,7 @@ namespace Hexagon.Application.Services.Implementation.Users
                 User.Avatar = imageName;
             }
             #endregion
-
+            await UserRepository.SaveChangeAsync();
             #region Update User Roles
             var list=await userRoleRepository.GetUserRolesIdentityKeyAsync(model.Id);
             if (list != null)
@@ -167,7 +165,7 @@ namespace Hexagon.Application.Services.Implementation.Users
             }
             await userRoleRepository.SaveChangeAsync();
             #endregion
-
+            
             #endregion
 
             #endregion

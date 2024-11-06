@@ -21,8 +21,8 @@ namespace Hexagon.Infra.Data.Context
         #endregion
 
         #region Links
-        public DbSet<ClassUser> ClassUser { get; set; }
-        public DbSet<GymUsers> GymUsers { get; set; }
+        public DbSet<ClassUser> ClassUsers { get; set; }
+        public DbSet<GymUser> GymUsers { get; set; }
         public DbSet<UserCertificates> UserCertificates { get; set; }
         #endregion
 

@@ -8,7 +8,6 @@ namespace Hexagon.Domain.Models.Gyms
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
-        public string MyProperty { get; set; }
         public int GymId { get; set; }
         public string ImageUrl { get; set; }
         public string ImageTitle { get; set; }

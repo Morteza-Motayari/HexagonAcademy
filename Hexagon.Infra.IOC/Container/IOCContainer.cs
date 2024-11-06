@@ -1,6 +1,9 @@
 ﻿using Hexagon.Application.Senders.Implementation;
 using Hexagon.Application.Senders.Interfaces;
+using Hexagon.Application.Services.Implementation.Gyms;
 using Hexagon.Application.Services.Implementation.Users;
+using Hexagon.Application.Services.Interfaces.Gyms;
+using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Gyms;
@@ -25,7 +28,19 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ISmsSender, SmsSender>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IUserService, UserService>();
+            #endregion
 
+            #region Gyms
+            services.AddScoped<IGymService, GymService>();
+            services.AddScoped<IGymGalleryService, GymGalleryService>();
+            services.AddScoped<ISportService, SportService>();
+            services.AddScoped<ISportClassService, SportClassService>();
+            #endregion
+
+            #region Records
+            services.AddScoped<ICertificateService, CertificateService>();
+            services.AddScoped<IExperienceService, ExperienceService>();
             #endregion
 
             #endregion
@@ -42,7 +57,7 @@ namespace Hexagon.Infra.IOC.Container
 
             #region Links
             services.AddScoped<IClassUserRepository, ClassUserRepository>();
-            services.AddScoped<IGymUsersRepository, GymUsersRepository>();
+            services.AddScoped<IGymUserRepository, GymUserRepository>();
             services.AddScoped<IUserCertificatesRepository, UserCertificatesRepository>();
             #endregion
 

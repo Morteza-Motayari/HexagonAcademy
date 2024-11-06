@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Hexagon.Domain.Interfaces.Links
 {
-    public interface IGymUsersRepository : IGenericRepository<GymUsers>
+    public interface IGymUserRepository : IGenericRepository<GymUser>
     {
-
+        Task<List<GymUser>?> GetGymUsersAsync(int gymId);
+        Task<List<int>?> GetGymUserIdsAsync(int gymId);
+        Task<List<int>?> GetGymUsersIdentityKeyAsync(int gymId);
+        Task<GymUser?> GetGymUserAsync(int id);
+        Task DeleteGymUser(int id);
+        Task DeleteGymUsers(int gymId);
+        void Remove(GymUser gymUser);
     }
 }

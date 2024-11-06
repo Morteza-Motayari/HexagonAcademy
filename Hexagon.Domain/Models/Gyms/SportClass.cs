@@ -17,6 +17,7 @@ namespace Hexagon.Domain.Models.Gyms
         public int? SportId { get; set; }
         public int? GymId {  get; set; }
         public int? TrainerId {  get; set; }
+        public string? ImageUrl { get; set; }
         #endregion
 
         #region Relations

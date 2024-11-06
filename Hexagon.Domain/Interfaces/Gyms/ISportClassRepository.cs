@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ namespace Hexagon.Domain.Interfaces.Gyms
 {
     public interface ISportClassRepository : IGenericRepository<SportClass>
     {
-
+        Task<bool> ExistSpecificSlug(string slug);
+        Task<string> PutSpecificSlug(string slug);
+        Task<FilterSportClassViewModel> FilterSportClassAsync(FilterSportClassViewModel filter);
+        Task<List<SportClassViewModel>?> GetAllSportClasssAsync();
     }
 }

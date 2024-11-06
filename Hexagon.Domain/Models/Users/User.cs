@@ -27,7 +27,7 @@ namespace Hexagon.Domain.Models.Users
         public ICollection<UserCertificates>? UserCertificates { get; set; }
         public ICollection<Experience>? Experiences { get; set; }
         public ICollection<Staff>? staffes { get; set; }
-        public ICollection<GymUsers>? GymUsers { get; set; }
+        public ICollection<GymUser>? UserGyms { get; set; }
         public ICollection<ClassUser>? UserClasses { get; set; }
         public List<UserRole>? userRoles { get; set; }
         #endregion

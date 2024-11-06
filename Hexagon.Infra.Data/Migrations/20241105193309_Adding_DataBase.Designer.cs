@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hexagon.Infra.Data.Migrations
 {
     [DbContext(typeof(HexagonContext))]
-    [Migration("20241021115447_Add-DataBase")]
-    partial class AddDataBase
+    [Migration("20241105193309_Adding_DataBase")]
+    partial class Adding_DataBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,9 @@ namespace Hexagon.Infra.Data.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -98,10 +101,6 @@ namespace Hexagon.Infra.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MyProperty")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -175,6 +174,9 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Property<int?>("GymId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -243,10 +245,10 @@ namespace Hexagon.Infra.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ClassUser");
+                    b.ToTable("ClassUsers");
                 });
 
-            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUsers", b =>
+            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,6 +400,91 @@ namespace Hexagon.Infra.Data.Migrations
                     b.ToTable("Experiences");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.Permission", b =>
+                {
+                    b.Property<int>("PermissionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"));
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PermissionId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PermissionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermissionTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PermissionId");
+
+                    b.HasIndex("PermissionId1");
+
+                    b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RoleTitle")
+                        .IsRequired()
+                        .HasMaxLength(230)
+                        .HasColumnType("nvarchar(230)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.RolePermission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermissions");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Users.Staff", b =>
                 {
                     b.Property<int>("Id")
@@ -500,7 +587,7 @@ namespace Hexagon.Infra.Data.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<int>("Situation")
+                    b.Property<int?>("Situation")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -521,6 +608,29 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.UserRole", b =>
+                {
+                    b.Property<int>("UserRoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"));
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserRoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("userRoles");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.GymGallery", b =>
@@ -585,7 +695,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUsers", b =>
+            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUser", b =>
                 {
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
                         .WithMany("GymUsers")
@@ -594,7 +704,7 @@ namespace Hexagon.Infra.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
-                        .WithMany("GymUsers")
+                        .WithMany("UserGyms")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -640,6 +750,34 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.Permission", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Users.Permission", "permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId1");
+
+                    b.Navigation("permission");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.RolePermission", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Users.Permission", "permission")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hexagon.Domain.Models.Users.Role", "role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("permission");
+
+                    b.Navigation("role");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Users.Staff", b =>
                 {
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
@@ -655,6 +793,25 @@ namespace Hexagon.Infra.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("gym");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.UserRole", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Users.Role", "role")
+                        .WithMany("userRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hexagon.Domain.Models.Users.User", "user")
+                        .WithMany("userRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("role");
 
                     b.Navigation("user");
                 });
@@ -687,6 +844,18 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("UserCertificates");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.Permission", b =>
+                {
+                    b.Navigation("RolePermissions");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Users.Role", b =>
+                {
+                    b.Navigation("RolePermissions");
+
+                    b.Navigation("userRoles");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Users.Staff", b =>
                 {
                     b.Navigation("SportClasses");
@@ -696,13 +865,15 @@ namespace Hexagon.Infra.Data.Migrations
                 {
                     b.Navigation("Experiences");
 
-                    b.Navigation("GymUsers");
-
                     b.Navigation("UserCertificates");
 
                     b.Navigation("UserClasses");
 
+                    b.Navigation("UserGyms");
+
                     b.Navigation("staffes");
+
+                    b.Navigation("userRoles");
                 });
 #pragma warning restore 612, 618
         }

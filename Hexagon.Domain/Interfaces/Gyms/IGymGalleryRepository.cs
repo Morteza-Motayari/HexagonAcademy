@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Gyms.GymGalleries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Hexagon.Domain.Interfaces.Gyms
 {
     public interface IGymGalleryRepository : IGenericRepository<GymGallery>
     {
-
+        Task<List<GymGalleryViewModel>> GetGymGalleryAsync(int gymId);
     }
 }

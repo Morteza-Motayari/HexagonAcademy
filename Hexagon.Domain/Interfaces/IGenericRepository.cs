@@ -13,6 +13,7 @@ namespace Hexagon.Domain.Interfaces
         Task<T?> GetByIdAsync(int id);
         Task SaveChangeAsync();
         void Update(T entity);
+        void Delete(T entity);
     }
     public class T
     {

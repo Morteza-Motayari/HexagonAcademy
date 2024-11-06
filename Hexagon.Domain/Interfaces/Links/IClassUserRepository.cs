@@ -10,6 +10,12 @@ namespace Hexagon.Domain.Interfaces.Links
 {
     public interface IClassUserRepository : IGenericRepository<ClassUser>
     {
-
+        Task<List<ClassUser>?> GetClassUsersAsync(int classId);
+        Task<List<int>?> GetClassUserIdsAsync(int classId);
+        Task<List<int>?> GetClassUsersIdentityKeyAsync(int classId);
+        Task<ClassUser?> GetClassUserAsync(int id);
+        Task DeleteClassUser(int id);
+        Task DeleteClassUsers(int classId);
+        void Remove(ClassUser classUser);
     }
 }

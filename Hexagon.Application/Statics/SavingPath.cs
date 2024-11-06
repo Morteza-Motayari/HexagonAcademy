@@ -9,5 +9,8 @@ namespace Hexagon.Application.Statics
     public static class SavingPath
     {
         public static string AvatarPath = "/Images/Avatars/";
+        public static string GymPath = "/Images/Gyms/";
+        public static string GymGalleryPath = "/Images/GymGalleries/";
+        public static string SportClassPath = "/Images/SportClasses/";
     }
 }

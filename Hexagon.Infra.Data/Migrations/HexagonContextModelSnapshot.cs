@@ -47,6 +47,9 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -95,10 +98,6 @@ namespace Hexagon.Infra.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MyProperty")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -172,6 +171,9 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Property<int?>("GymId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -240,10 +242,10 @@ namespace Hexagon.Infra.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ClassUser");
+                    b.ToTable("ClassUsers");
                 });
 
-            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUsers", b =>
+            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -690,7 +692,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUsers", b =>
+            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUser", b =>
                 {
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
                         .WithMany("GymUsers")
@@ -699,7 +701,7 @@ namespace Hexagon.Infra.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
-                        .WithMany("GymUsers")
+                        .WithMany("UserGyms")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -860,11 +862,11 @@ namespace Hexagon.Infra.Data.Migrations
                 {
                     b.Navigation("Experiences");
 
-                    b.Navigation("GymUsers");
-
                     b.Navigation("UserCertificates");
 
                     b.Navigation("UserClasses");
+
+                    b.Navigation("UserGyms");
 
                     b.Navigation("staffes");
 

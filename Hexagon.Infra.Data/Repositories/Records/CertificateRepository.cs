@@ -1,6 +1,10 @@
-﻿using Hexagon.Domain.Interfaces;
+﻿using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Models.Records;
+using Hexagon.Domain.ViewModels.Gyms.SportClasses;
+using Hexagon.Domain.ViewModels.Records.Certificates;
 using Hexagon.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hexagon.Infra.Data.Repositories
 {
@@ -12,5 +16,59 @@ namespace Hexagon.Infra.Data.Repositories
             _db = db;
         }
 
+        public async Task<bool> DupliCateCertificateName(string certificateName)
+        => await _db.Certificates.AnyAsync(c=>c.Name == certificateName);
+
+        public async Task<FilterCertificateViewModel> FilterCertificateAsync(FilterCertificateViewModel filter)
+        {
+            var query = _db.Certificates.AsQueryable();
+
+            #region Filter Search
+            switch (filter.Status)
+            {
+                case ExistingStatus.All:
+                    break;
+                case ExistingStatus.Deleted:
+                    query = query.Where(u => u.IsDeleted == true);
+                    break;
+                case ExistingStatus.NotDeleted:
+                    query = query.Where(u => !u.IsDeleted);
+                    break;
+            }
+
+            if (filter.Title != null)
+            {
+                query = query.Where(r => r.Name.Contains(filter.Title));
+            }
+
+            #endregion
+
+            query = query.OrderByDescending(u => u.CreatedDate);
+
+            await filter.Paging(query.Select(u => new CertificateViewModel
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Details=u.Details,
+                IsDeleted = u.IsDeleted,
+                CreatedDate = u.CreatedDate
+            }));
+            return filter;
+        }
+
+        async Task<List<CertificateViewModel>?> GetAllCertificatesAsync()
+        => await _db.Certificates.Select(u=>new CertificateViewModel
+        {
+            Id=u.Id,
+            Name = u.Name,
+            Details = u.Details,
+            IsDeleted=u.IsDeleted,
+            CreatedDate=u.CreatedDate
+        }).ToListAsync();
+
+        Task<List<CertificateViewModel>?> ICertificateRepository.GetAllCertificatesAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
