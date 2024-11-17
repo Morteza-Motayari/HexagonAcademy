@@ -23,6 +23,7 @@ builder.Services.RegisterServices();
 #endregion
 
 builder.Services.AddControllersWithViews();
+
 #region Configure Hexagon Context
 var connectionString = builder.Configuration.GetConnectionString("AcademyConnectionStrings");
 builder.Services.AddDbContext<HexagonContext>(options =>

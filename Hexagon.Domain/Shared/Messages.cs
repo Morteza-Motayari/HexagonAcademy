@@ -13,13 +13,29 @@ namespace Hexagon.Domain.Shared
         public static string RoleUpdatedSuccessfully = "نقش با موفقیت ویرایش شده است.";
         public static string RoleDeletedSuccessfully = "نقش با موفقیت حذف شده است.";
         #endregion
+
+        #region Account
+        public static string RigesterDoneSuccessfully = "ثبت نام شما با موفقیت انجام شد.";
+        public static string SignInDoneSuccessfully = " عزیز خوش آمدید.";
+        public static string SignInDoneUnkownuUserSuccessfully = " کاربر عزیز خوش آمدید.";
+        public static string ForgotPasswordSentSuccessfully = " کد تایید فراموشی رمز عبور برای شماره شما ارسال شد.";
+        public static string ResetPasswordDoneSuccessfully = " رمز عبور شما با موفقیت تغییر یافت.";
+        #endregion
     }
     public class ErrorMessages
     {
         #region Roles
         public static string RoleNotFound = "نقش مورد نظر پیدا نشده است.";
         public static string RoleTitleDuplicated = "نقشی با این عنوان پیدا شده است.";
+        #endregion
 
+        #region Account
+        public static string PhoneNumberExisted = "شماره موبایلی که وارد کرده اید قبلا با آن ثبت نام شده است.";
+        public static string UserNotExisted = "همچین کاربری پیدا نشده است.";
+        public static string UserNotActive = "حساب کاربری مدنظر هنوز فعال نشده است.";
+        public static string UserIsBanned = "حساب کاربری مدنظر مسدود شده است.";
+        public static string ErrorOccuredInSms = "هنگام ارسال مد تایید به حساب شما حطایی رخ داده است لطفا بعدا سعی بکنید.";
+        public static string WrongCodeEntered = "کد تایید وارد شده درست نمی باشد.";
         #endregion
     }
 }

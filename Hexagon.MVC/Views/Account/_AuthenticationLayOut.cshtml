@@ -1,0 +1,28 @@
+﻿<!doctype html>
+<html lang="fa">
+<head>
+    <partial name="_AuthenticationMetaTags" />
+    <link rel="icon" href="favicon.ico">
+    <title>باشگاه ورزشی الماس-احراز هویت</title>
+    <partial name="_AuthenticationStyleReferences" />
+</head>
+<body class="light rtl">
+    <main class="main">
+        <div class="content">
+            <div class="container-fluid pb-5">
+                <div class="row justify-content-md-center">
+                    <div class="card-wrapper col-12 col-md-4 mt-5">
+                        <partial name="_AuthenticationBanner" />
+                        <div class="card">
+                            @RenderBody()
+                        </div>
+                        <partial name="_AuthenticationFooter" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <partial name="_AuthenticationJsReferences" />
+    <partial name="_SiteNotification" />
+</body>
+</html>

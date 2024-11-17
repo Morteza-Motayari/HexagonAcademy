@@ -1,29 +1,20 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
-
+<html lang="fa">
 <head>
     <partial name="_AdminMetaTags" />
-    <title>آتریو - قالب بوت استرپ 4 مدیریتی </title>
-    <!-- Favicon-->
-    <link rel="icon" href="~/AdminFiles/assets/images/favicon.ico" type="image/x-icon">
-    <partial name="_AdminStyleReferences"/>
+    <link rel="icon" href="favicon.ico">
+    <title>بخش مدیریت - سایت باشگاه الماس</title>
+    <partial name="_AdminStyleReferences" />
 </head>
-
-<body class="light rtl">
-    <partial name="_AdminPageLoader"/>
-    <!-- Overlay For Sidebars -->
-    <div class="overlay"></div>
-    <!-- #END# Overlay For Sidebars -->
-    <partial name="_AdminNavbar"/>
-    <div>
-        <partial name="_AdminLeftSideBar"/>
-        <partial name="_AdminRightSideBar"/>
-    </div>
-    <section class="content">
-        <div class="container-fluid">
+<body class="vertical  light rtl ">
+    <div class="wrapper">
+        <partial name="_AdminNav" />
+        <partial name="_AdminRightSideBar" />
+        <main role="main" class="main-content">
             @RenderBody()
-        </div>
-    </section>
-    <partial name="_AdminJsReferences"/>
-    <partial name="_SiteNotification" />
+        </main> <!-- main -->
+    </div> <!-- .wrapper -->
+    <partial name="_WebSiteModal" />
+    <partial name="_AdminJsReferences" />
+    @RenderSection("Scripts", false)
 </body>

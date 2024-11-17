@@ -1,198 +1,138 @@
-﻿<!-- Right Sidebar -->
-<aside id="rightsidebar" class="right-sidebar">
-    <ul class="nav nav-tabs tab-nav-right" role="tablist">
-        <li role="presentation">
-            <a href="#skins" data-toggle="tab" class="active">پوسته ها</a>
-        </li>
-        <li role="presentation">
-            <a href="#settings" data-toggle="tab">تنظیمات</a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane in active in active stretchLeft" id="skins">
-            <div class="demo-skin">
-                <div class="rightSetting">
-                    <p>تنظیمات عمومی</p>
-                    <ul class="setting-list list-unstyled m-t-20">
-                        <li>
-                            <div class="form-check">
-                                <div class="form-check m-l-10">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value="" checked> ذخیره تاریخچه
-                                        <span class="form-check-sign">
-                                            <span class="check"></span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-check">
-                                <div class="form-check m-l-10">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value="" checked> نمایش وضعیت
-                                        <span class="form-check-sign">
-                                            <span class="check"></span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-check">
-                                <div class="form-check m-l-10">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value="" checked> ثبت مسئله خودکار
-                                        <span class="form-check-sign">
-                                            <span class="check"></span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-check">
-                                <div class="form-check m-l-10">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value="" checked> نمایش وضعیت به همه
-                                        <span class="form-check-sign">
-                                            <span class="check"></span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="rightSetting">
-                    <p>رنگ منو نوار کناری</p>
-                    <button type="button" class="btn btn-sidebar-light btn-border-radius p-l-20 p-r-20">روشن</button>
-                    <button type="button" class="btn btn-sidebar-dark btn-default btn-border-radius p-l-20 p-r-20">تاریک</button>
-                </div>
-                <div class="rightSetting">
-                    <p>رنگ قالب</p>
-                    <button type="button" class="btn btn-theme-light btn-border-radius p-l-20 p-r-20">روشن</button>
-                    <button type="button" class="btn btn-theme-dark btn-default btn-border-radius p-l-20 p-r-20">تاریک</button>
-                </div>
-                <div class="rightSetting">
-                    <p>پوسته ها</p>
-                    <ul class="demo-choose-skin choose-theme list-unstyled">
-                        <li data-theme="black" class="actived">
-                            <div class="black-theme"></div>
-                        </li>
-                        <li data-theme="white">
-                            <div class="white-theme white-theme-border"></div>
-                        </li>
-                        <li data-theme="purple">
-                            <div class="purple-theme"></div>
-                        </li>
-                        <li data-theme="blue">
-                            <div class="blue-theme"></div>
-                        </li>
-                        <li data-theme="cyan">
-                            <div class="cyan-theme"></div>
-                        </li>
-                        <li data-theme="green">
-                            <div class="green-theme"></div>
-                        </li>
-                        <li data-theme="orange">
-                            <div class="orange-theme"></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="rightSetting">
-                    <p>فضای دیسک</p>
-                    <div class="sidebar-progress">
-                        <div class="progress m-t-20">
-                            <div class="progress-bar l-bg-cyan shadow-style width-per-45" role="progressbar"
-                                 aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <span class="progress-description">
-                            <small>26% باقی مانده</small>
-                        </span>
-                    </div>
-                </div>
-                <div class="rightSetting m-b-15">
-                    <p>بارگذاری سرور</p>
-                    <div class="sidebar-progress">
-                        <div class="progress m-t-20">
-                            <div class="progress-bar l-bg-orange shadow-style width-per-63" role="progressbar"
-                                 aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <span class="progress-description">
-                            <small>بسیار بارگذاری شده</small>
-                        </span>
-                    </div>
-                </div>
-            </div>
+﻿<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+    <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+        <i class="fe fe-x"><span class="sr-only"></span></i>
+    </a>
+    <nav class="vertnav navbar navbar-light">
+        <!-- nav bar -->
+        <div class="w-100 mb-4 d-flex">
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
+                <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
+                <g>
+                <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
+                <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
+                <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
+                </g>
+              </svg>
+            </a>
         </div>
-        <div role="tabpanel" class="tab-pane stretchRight" id="settings">
-            <div class="demo-settings">
-                <p>تنظیمات عمومی</p>
-                <ul class="setting-list">
-                    <li>
-                        <span>گزارش استفاده از پانل</span>
-                        <div class="switch">
-                            <label>
-                                <input type="checkbox" checked>
-                                <span class="lever switch-col-green"></span>
-                            </label>
-                        </div>
+        <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+                <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-home fe-16"></i>
+                    <span class="ml-3 item-text">داشبورد</span><span class="sr-only">(current)</span>
+                </a>
+                <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+                    <li class="nav-item active">
+                        <a class="nav-link pl-3" href="./index.html"><span class="ml-1 item-text">Default</span></a>
                     </li>
-                    <li>
-                        <span>تغییر مسیر ایمیل</span>
-                        <div class="switch">
-                            <label>
-                                <input type="checkbox">
-                                <span class="lever switch-col-blue"></span>
-                            </label>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./dashboard-analytics.html"><span class="ml-1 item-text">Analytics</span></a>
                     </li>
-                </ul>
-                <p>تنظیمات سیستم</p>
-                <ul class="setting-list">
-                    <li>
-                        <span>اطلاعیه ها</span>
-                        <div class="switch">
-                            <label>
-                                <input type="checkbox" checked>
-                                <span class="lever switch-col-purple"></span>
-                            </label>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./dashboard-sales.html"><span class="ml-1 item-text">E-commerce</span></a>
                     </li>
-                    <li>
-                        <span>به روز رسانی خودکار</span>
-                        <div class="switch">
-                            <label>
-                                <input type="checkbox" checked>
-                                <span class="lever switch-col-cyan"></span>
-                            </label>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./dashboard-saas.html"><span class="ml-1 item-text">Saas Dashboard</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./dashboard-system.html"><span class="ml-1 item-text">Systems</span></a>
                     </li>
                 </ul>
-                <p>تنظیمات حساب</p>
-                <ul class="setting-list">
-                    <li>
-                        <span>آنلاین</span>
-                        <div class="switch">
-                            <label>
-                                <input type="checkbox" checked>
-                                <span class="lever switch-col-red"></span>
-                            </label>
-                        </div>
+            </li>
+        </ul>
+        <p class="text-muted nav-heading mt-4 mb-1">
+            <span>مدیریت دسترسی ها و کاربران</span>
+        </p>
+        <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+                <a href="#ui-roles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-lock fe-16"></i>
+                    <span class="ml-3 item-text">نقش ها</span>
+                </a>
+                <ul class="collapse list-unstyled pl-4 w-100" id="ui-roles">
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Role" asp-action="List">
+                            <span class="ml-1 item-text">مدیریت نقش ها</span>
+                        </a>
                     </li>
-                    <li>
-                        <span>مجوز محل سکونت</span>
-                        <div class="switch">
-                            <label>
-                                <input type="checkbox">
-                                <span class="lever switch-col-lime"></span>
-                            </label>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Role" asp-action="Create">
+                            <span class="ml-1 item-text">افزودن نقش </span>
+                        </a>
                     </li>
                 </ul>
-            </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-users fe-16"></i>
+                    <span class="ml-3 item-text">کاربران</span>
+                </a>
+                <ul class="collapse list-unstyled pl-4 w-100" id="users">
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="User" asp-action="List">
+                            <span class="ml-1 item-text">لیست کاربران</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="User" asp-action="Create">
+                            <span class="ml-1 item-text">افزودن کاربر</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="User" asp-action="Create">
+                            <span class="ml-1 item-text">لیست مربی ها</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="User" asp-action="Create">
+                            <span class="ml-1 item-text">افزودن مربی </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#trainers" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-grid fe-16"></i>
+                    <span class="ml-3 item-text">Tables</span>
+                </a>
+                <ul class="collapse list-unstyled pl-4 w-100" id="trainers">
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./table_basic.html">
+                            <span class="ml-1 item-text">لیست مربی ها</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./table_advanced.html">
+                            <span class="ml-1 item-text">افزودن مربی</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-pie-chart fe-16"></i>
+                    <span class="ml-3 item-text">Charts</span>
+                </a>
+                <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./chart-inline.html"><span class="ml-1 item-text">Inline Chart</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./chart-chartjs.html"><span class="ml-1 item-text">Chartjs</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./chart-apexcharts.html"><span class="ml-1 item-text">ApexCharts</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="./datamaps.html"><span class="ml-1 item-text">Datamaps</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="btn-box w-100 mt-4 mb-1">
+            <a href="https://themeforest.net/item/tinydash-bootstrap-html-admin-dashboard-template/27511269" target="_blank" class="btn mb-2 btn-primary btn-lg btn-block">
+                <i class="fe fe-shopping-cart fe-12 mr-2"></i><span class="small">Buy now</span>
+            </a>
         </div>
-    </div>
+    </nav>
 </aside>
-<!-- #END# Right Sidebar -->

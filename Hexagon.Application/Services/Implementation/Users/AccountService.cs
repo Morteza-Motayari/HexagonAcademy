@@ -24,9 +24,9 @@ namespace Hexagon.Application.Services.Implementation.Users
             if (user == null)
                 return ForgotPasswordResult.MobileNotfound;
 
-            //ToDo: Checking if user is active or not
+            //TODO: Checking if user is active or not
             string randomCode = CodeGenerator.GenerateCode();
-            //ToDo Sending sms
+            //TODO Sending sms
             // var result=smsSender.SendMessage(model.Mobile, $"کد تایید ورود شما {randcode} می باشد.");
             SendResult result = new SendResult();
             result.Status = 200;
@@ -42,14 +42,18 @@ namespace Hexagon.Application.Services.Implementation.Users
             return ForgotPasswordResult.Error;
         }
 
+        public async Task<User?> GetUserByMobileAsync(string mobile)
+        => await userRepository.GetByMobileAsync(mobile);
+
         public async Task<LoginResult> loginAsync(LoginViewModel model)
         {
-            User? user = await userRepository.GetbyMobileAndPassword(model.PhoneNumber, model.Password);
+            string hashPassword = model.Password.EncodePasswordMd5();
+            User? user = await userRepository.GetbyMobileAndPassword(model.PhoneNumber, hashPassword);
             if (user == null)
                return LoginResult.UserNotFound;
             if(user.Status==UserStatus.Ban)
                 return LoginResult.UserIsBaned;
-            if (user.Status == UserStatus.Active)
+            if (user.Status == UserStatus.NotActive)
                 return LoginResult.UserIsNotActive;
             return LoginResult.Success;
         }
@@ -62,7 +66,8 @@ namespace Hexagon.Application.Services.Implementation.Users
             User user = new()
             {
                 PhoneNumber = model.PhoneNumber,
-                Password = model.Password.EncodePasswordMd5()
+                Password = model.Password.EncodePasswordMd5(),
+                Status=UserStatus.Active
             };
             await userRepository.InserAsync(user);
             await userRepository.SaveChangeAsync();

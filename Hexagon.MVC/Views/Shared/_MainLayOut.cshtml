@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <title>@ViewBag.Title| باشگاه ورزشی الماس </title>
+    <partial name="_MetaTags" />
+    <partial name="_StyleReferences" />
+</head>
+
+<body>
+    <!-- Header -->
+    <partial name="_PageHeader" />
+    <!-- Close Header -->
+    <main class="page-content">
+        @RenderBody()
+    </main>
+    <partial name="_Footer" />
+    <partial name="_JsReferences" />
+    <partial name="_SiteNotification" />
+    @RenderSection("Scripts",false)
+</body>
+
+</html>

@@ -14,120 +14,125 @@
             <div class="header">
                 <h1>فیلترها</h1>
             </div>
-            <div class="body">
+            <div class="card-body">
                 <div class="table-responsive">                    
                     <div id="tableExport_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                        <div class="row col-12">
-                            <form method="post" id="filter-search" asp-area="Admin" asp-controller="Role" asp-action="List">
-                                <input type="hidden" asp-for="Page" />
-                                <div class="row ">
-                                    <div class="col-12 col-sm-6 col-md-6">
-                                        <div class="form-group">
-                                            <label asp-for="Title" class="control-label"></label>
-                                            <input asp-for="Title" class="form-control form-control-sm" placeholder="" aria-controls="tableExport">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-md-6">
-                                        <div class="form-group">
-                                            <label asp-for="Status" class="control-label"></label>
-                                            <select asp-for="Status" class="form-control">
-                                                @foreach (var item in Enum.GetValues(typeof(ExistingStatus)).Cast<ExistingStatus>().ToList())
-                                                {
-                                                    @if (Model.Status == item)
-                                                    {
-                                                        <option selected value="@item">@item.GetDisplayName()</option>
-                                                    }
-                                                    <option value="@item">@item.GetDisplayName()</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-md-6">
-                                        <label>
-                                            نمایش
-                                            <select asp-for="TakeEntity"  aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">
-                                                <option value="5">5</option>
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select> ورودی
-                                        </label>
-                                    </div>
-                                    <div class="col-12 col-sm-12">
-                                        <input type="submit" value="جستجو" class="btn btn-outline-success" />
-                                    </div>
+                        <div class="card-body">
+                            <div class="toolbar">
+                                <div class="row col-12">
+                                    <form class="form" method="post" id="filter-search" asp-area="Admin" asp-controller="Role" asp-action="List">
+                                       <div class="form-row">
+                                            <input type="hidden" asp-for="Page" />
+                                            <div class="row ">
+                                                <div class="col-12 col-sm-6 col-md-4">
+                                                    <div class="form-group">
+                                                        <label asp-for="Title" class="control-label"></label>
+                                                        <input asp-for="Title" class="form-control form-control-sm" placeholder="" aria-controls="tableExport">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-md-4">
+                                                    <div class="form-group">
+                                                        <label asp-for="Status" class="control-label"></label>
+                                                        <select asp-for="Status" class="form-control">
+                                                            @foreach (var item in Enum.GetValues(typeof(ExistingStatus)).Cast<ExistingStatus>().ToList())
+                                                            {
+                                                                @if (Model.Status == item)
+                                                                {
+                                                                    <option selected value="@item">@item.GetDisplayName()</option>
+                                                                }
+                                                                <option value="@item">@item.GetDisplayName()</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-md-4 py-2">
+                                                    <label>
+                                                        نمایش ورودی
+                                                        <select asp-for="TakeEntity" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">
+                                                            <option value="5">5</option>
+                                                            <option value="10">10</option>
+                                                            <option value="25">25</option>
+                                                            <option value="50">50</option>
+                                                            <option value="100">100</option>
+                                                        </select> 
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-sm-12 ">
+                                                    <input type="submit" value="جستجو" class="btn btn-outline-success" />
+                                                </div>
+                                            </div>
+                                       </div>                                        
+                                    </form>
                                 </div>
-                                
-                            </form>
-                        </div>
-                        <p>
-                            <a asp-area="Admin" asp-controller="Role" asp-action="create">ایجاد نقش جدید</a>
-                        </p>
-                        <table id="tableExport" class="display table table-hover table-checkable order-column width-per-100 dataTable" role="grid" aria-describedby="tableExport_info">
-                            <h2>@ViewData["Title"]</h2>
-                            <thead>
-                                <tr role="row">
-                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اسم نقش: activate to sort column ascending" style="width: 133.113px;">اسم نقش</th>
-                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="عنوان نقش: activate to sort column ascending" style="width: 149.188px;">عنوان نقش</th>
-                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="وضعیت: activate to sort column ascending" style="width: 89.9125px;">وضعیت</th>
-                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ: activate to sort column ascending" style="width: 86.1375px;">تاریخ</th>
-                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending" style="width: 70.8875px;">اقدام</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.Entities.CheckNullability())
-                                {
-                                    @foreach (var item in Model.Entities)
-                                    {
-                                        {
-                                            j++;
-                                        }
-                                        <tr role="row" class="@((j%2==0)?"even":"odd")@((item.IsDeleted==true)?" bg-c-pink":"")">
-                                            <td class="center">@item.RoleName</td>
-                                            <td class="center">@item.RoleTitle</td>
-                                            <td class="center">
-                                                <div class="badge col-green">بسته شده</div>
-                                            </td>
-                                            <td class="center">@item.CreatedDate.ToShamsi()</td>
-                                            <td class="center">
-                                                <a asp-area="Admin" asp-controller="Role" asp-action="Edit" asp-route-roleId="@item.Id" class="btn btn-tbl-edit">
-                                                    <i class="material-icons">create</i>
-                                                </a>
-                                                @if (item.IsDeleted == false)
-                                                {
-                                                    <a onclick="confirmDelete('@Url.Action("Delete","Role",new{id=item.Id})',event,'@item.RoleTitle')" class="btn btn-tbl-delete">
-                                                        <i class="material-icons">delete_forever</i>
-                                                    </a>
-                                                }                                               
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-
-                            </tbody>
-                            @if (Model.Entities.CheckNullability())
-                            {
-                                <tfoot>
-                                    <tr>
-                                        <th class="center" rowspan="1" colspan="1">اسم نقش</th>
-                                        <th class="center" rowspan="1" colspan="1">عنوان نقش</th>
-                                        <th class="center" rowspan="1" colspan="1">وضعیت</th>
-                                        <th class="center" rowspan="1" colspan="1">تاریخ</th>
-                                        <th class="center" rowspan="1" colspan="1">اقدام</th>
+                                <br />
+                                <p>
+                                    <a onclick="ShowAddingItemForm('@Url.Action("Create","Role")',' افزودن نقش جدید')" class="btn btn-tbl-primary">ایجاد نقش جدید</a>
+                                </p>
+                               
+                            </div>
+                            <!-- table -->
+                            <table class="table table-borderless table-hover">
+                                <thead class="thead-dark">
+                                    <tr role="row">
+                                        <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="عنوان نقش: activate to sort column ascending" style="width: 149.188px;">عنوان نقش</th>
+                                        <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="وضعیت: activate to sort column ascending" style="width: 89.9125px;">وضعیت</th>
+                                        <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ: activate to sort column ascending" style="width: 86.1375px;">تاریخ</th>
+                                        <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending" style="width: 70.8875px;">اقدام</th>
                                     </tr>
-                                </tfoot>
-                            }
-                        </table>
-
+                                </thead>
+                                <tbody>
+                                    @if (Model.Entities.CheckNullability())
+                                    {
+                                        @foreach(var item in Model.Entities)
+                                        {
+                                            {
+                                                j++;
+                                            }
+                                            <tr role="row" class="@((j%2==0)?"even":"odd")@((item.IsDeleted==true)?" bg-c-pink":"")">
+                                                <td class="center">@item.RoleTitle</td>
+                                                <td class="center">
+                                                    <div class="badge col-green">بسته شده</div>
+                                                </td>
+                                                <td class="center">@item.CreatedDate.ToShamsi()</td>
+                                                <td class="center">
+                                                    <a asp-area="Admin" asp-controller="Role" asp-action="Edit" asp-route-roleId="@item.Id" class="btn btn-tbl-edit">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+                                                    @if (item.IsDeleted == false)
+                                                    {
+                                                        <a onclick="confirmDelete('@Url.Action("Delete","Role",new{id=item.Id})',event,'@item.RoleTitle')" class="btn btn-tbl-delete">
+                                                            <i class="material-icons">delete_forever</i>
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <nav aria-label="Table Paging" class="mb-0 text-muted">
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="footer">
-                <div class="dataTables_info" id="tableExport_info" role="status" aria-live="polite">نمایش 1 تا 10 از 16 ورودی</div>
-                <partial name="_AdminPaging" model="Model.GetCurrentPaging()"/>
-            </div>
+            @if (Model.Page > 1)
+            {
+                <div class="footer">
+                    <div class="dataTables_info" id="tableExport_info" role="status" aria-live="polite">نمایش 1 تا 10 از 16 ورودی</div>
+                    <partial name="_AdminPaging" model="Model.GetCurrentPaging()" />
+                </div>
+            }            
         </div>
     </div>
 </div>
-
+@section Scripts{
+    <script src="/adminfiles/assets/admin/admin-items.js"></script>
+}

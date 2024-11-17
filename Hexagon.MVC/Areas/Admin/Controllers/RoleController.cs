@@ -19,7 +19,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return PartialView("_AddRole");
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoleViewModel model)

@@ -1,4 +1,5 @@
-﻿using Hexagon.Domain.ViewModels.Account;
+﻿using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<LoginResult> loginAsync(LoginViewModel model);
         Task<ForgotPasswordResult> ForgotPasswordAsync(ForgotPasswordViewModel model);
         Task<ResetPasswordResult> ResetPasswordAsync(ResetPasswordViewModel model);
+        Task<User?> GetUserByMobileAsync(string mobile);
     }
 }
