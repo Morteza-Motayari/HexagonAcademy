@@ -1,57 +1,129 @@
 ﻿<nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
-    <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand h1" href="index.html">
-            <i class='bx bx-dumbbell bx-sm text-dark'></i>
-            <span class="text-dark h4">باشگاه</span> <span class="text-primary h4">الماس</span>
-        </a>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="navbar-toggler-success">
-            <div class="flex-fill mx-xl-5 mb-2">
-                <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
-                    <li class="nav-item">
-                        <a class="nav-link btn-outline-primary rounded-pill px-3" href="index.html">خانه</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-outline-primary rounded-pill px-3" href="about.html">درباره ما</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-outline-primary rounded-pill px-3" href="work.html">کلاس های وزرشی</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-outline-primary rounded-pill px-3" href="pricing.html">خدمات</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-outline-primary rounded-pill px-3" href="contact.html">ارتباط با ما</a>
-                    </li>
-                </ul>
-            </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="navbar align-self-center d-flex">
-                    <a class="nav-link" href="#"><i class='bx bx-bell bx-sm bx-tada-hover text-primary'></i></a>
-                    <a class="nav-link" href="#"><i class='bx bx-cog bx-sm text-primary'></i></a>
-                    <a class="nav-link" href="#"><i class='bx bx-user-circle bx-sm text-primary'></i></a>
-                </div>
-            }
-            else
-            {
-                <div class="navbar align-self-center d-flex">
-                    <ul class="nav navbar-nav d-flex  mx-xl-5 text-center text-dark">
+    <div class="container">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand h1 align-self-center" href="index.html">
+                <i class='bx bx-dumbbell text-dark '></i>
+                <span class="text-dark h4">باشگاه</span> <span class="text-primary h4">الماس</span>
+            </a>
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="navbar-toggler-success">
+                <div class="flex-fill mx-xl-5 mb-2">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
                         <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" asp-controller="Account" asp-action="Register">ثبت نام</a>
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="index.html">خانه</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" asp-controller="Account" asp-action="LogIn">ورود</a>
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="about.html">درباره ما</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="work.html">کلاس های وزرشی</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="pricing.html">خدمات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="contact.html">ارتباط با ما</a>
                         </li>
                     </ul>
-                    @* <a class="nav-link" ></a>
-                    /
-                    <a class="nav-link" ></a> *@
                 </div>
-            }
+            </div>
+            <div class="user-panerl">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="user-options">
+                        <div class="user-option user-option--account">
+                            <a href="profile.html" class="user-option-btn user-option-btn--account">
+                                <i class='bx bxs-user'></i>
+                                <i class="bx bx-chevron-down  fs-7 text-muted"></i>
+                            </a>
+                            <div class="user-option--dropdown ">
+                                <div class="profile-user-info ui-box">
+                                    <div class="profile-detail dddy">
+                                        <div class="d-flex align-items-center">
+                                            <div class="profile-avatar me-3">
+                                                <img src="/Images/Avatars/default.png" alt="avatar">
+                                            </div>
+                                            <div class="profile-info">
+                                                <a href="#" class="text-decoration-none text-dark fw-bold mb-2">
+                                                    جلال
+                                                    بهرامی
+                                                    راد
+                                                </a>
+                                                <div class="text-muted fs-7 fw-bold">۰۹xxxxxxxxx</div>
+                                            </div>
+                                        </div>
+                                        <div class="user-options">
+                                            <ul class="decor-ul">
+                                                <li >
+                                                    <span class="label">کیف پول</span>
+                                                    <span class="detail">
+                                                        <span class="d-block">۰ <span class="currency fs-7 fw-bold">تومان</span></span>
+                                                        <a href="#" class="link border-bottom-0 text-info fs-7 fw-bold link-decor">
+                                                            افزایش
+                                                            موجودی <i class='bx bx-chevron-left'></i>
+                                                        </a>
+                                                    </span>
+                                                </li>
+                                                <li >
+                                                    <span class="label">باشگاه مشتریان</span>
+                                                    <span class="detail">
+                                                        <span class="d-block">۰ <span class="score text-muted fs-7">امتیاز</span></span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <ul class="nav nav-items-with-icon flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link nav-decor" href="#">
+                                                <i class="nav-link-icon bx bxs-category bxs"></i>
+                                                کلاس
+                                                های من
+                                            </a>
+                                        </li>
+                                        <li class="nav-item ">
+                                            <a class="nav-link nav-decor" href="#">
+                                                <i class="nav-link-icon bx bx-dumbbell bxs"></i>
+                                                باشگاه ورزشی
+                                            </a>
+                                        </li>
+                                        <li class="nav-item ">
+                                            <a class="nav-link nav-decor" asp-controller="Account" asp-action="LogOut">
+                                                <i class="nav-link-icon bx bx-log-out bxs"></i>
+                                                خروج
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-option">
+                            <a href="#" class="user-option-btn user-option-btn--account">
+                                <i class="bx bxs-heart"></i>
+                                <span class="counter">۲</span>
+                            </a>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="align-self-center flex-fill  d-lg-flex justify-content-lg-between">
+                        <ul class="nav navbar-nav d-flex justify-content-between text-center text-dark">
+                            <li class="nav-item">
+                                <a class="nav-link btn-outline-primary rounded-pill px-3" asp-controller="Account" asp-action="Register">ثبت نام</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn-outline-primary rounded-pill px-3" asp-controller="Account" asp-action="LogIn">ورود</a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            </div>
         </div>
+        
     </div>
+
 </nav>

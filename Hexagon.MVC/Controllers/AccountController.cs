@@ -176,7 +176,7 @@ namespace Hexagon.MVC.Controllers
         }
         #endregion
 
-        #region Sign Out
+        #region LogOut 
         [HttpGet(template:"/LogOut")]
         public async Task<IActionResult> LogOut()
         {
