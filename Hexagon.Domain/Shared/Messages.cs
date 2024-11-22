@@ -20,6 +20,8 @@ namespace Hexagon.Domain.Shared
         public static string SignInDoneUnkownuUserSuccessfully = " کاربر عزیز خوش آمدید.";
         public static string ForgotPasswordSentSuccessfully = " کد تایید فراموشی رمز عبور برای شماره شما ارسال شد.";
         public static string ResetPasswordDoneSuccessfully = " رمز عبور شما با موفقیت تغییر یافت.";
+        public static string PersonalUserInfoUpdatedSuccessfully = " اطلاعات شما با موفقیت بروز شد.";
+        
         #endregion
     }
     public class ErrorMessages
@@ -36,6 +38,8 @@ namespace Hexagon.Domain.Shared
         public static string UserIsBanned = "حساب کاربری مدنظر مسدود شده است.";
         public static string ErrorOccuredInSms = "هنگام ارسال مد تایید به حساب شما حطایی رخ داده است لطفا بعدا سعی بکنید.";
         public static string WrongCodeEntered = "کد تایید وارد شده درست نمی باشد.";
+        public static string ErrorInUpdateUserOccured = " در هنگام بروز اطلاعات شما مشکلی رخ داده است.";
+        public static string InvalidDateTimeInput = " تاریخ تولد وارد شده معتبر نمی باشد.";
         #endregion
     }
 }

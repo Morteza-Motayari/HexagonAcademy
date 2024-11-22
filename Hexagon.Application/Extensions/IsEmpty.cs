@@ -12,5 +12,14 @@ namespace Hexagon.Application.Extensions
         {
             return list != null && list.Any();
         }
+        public static bool CheckPersianDate(this string date)
+        {
+            if(date.Length>10) 
+                return false;
+            if(date.Contains(@"^[^\W_]*$"))
+                return false;
+
+            return true;
+        }
     }
 }

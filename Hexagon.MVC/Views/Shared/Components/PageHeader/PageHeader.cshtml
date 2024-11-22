@@ -1,0 +1,76 @@
+﻿@using Hexagon.Application.Extensions
+@using Hexagon.Application.Statics
+@using Hexagon.Domain.ViewModels.Users.Users
+@model UserClientSideView
+<div class="user-options">
+    <div class="user-option user-option--account">
+        <a asp-area="UserManagement" asp-controller="Home" asp-action="Index" class="user-option-btn user-option-btn--account">
+            <i class='bx bxs-user'></i>
+            <i class="bx bx-chevron-down  fs-7 text-muted"></i>
+        </a>
+        <div class="user-option--dropdown user-option--dropdown-right">
+            <div class="profile-user-info ui-box">
+                <div class="profile-detail dddy">
+                    <div class="d-flex align-items-center">
+                        <div class="profile-avatar me-3">
+                            <img src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(Model.Avatar))?$"{Model.Avatar}":"default.png")" alt="avatar">
+                        </div>
+                        <div class="profile-info">
+                            <a asp-area="UserManagement" asp-controller="Home" asp-action="Index" class="text-decoration-none text-dark fw-bold mb-2">
+                                @Model.GetUserName()
+                            </a>
+                            <div class="text-muted fs-7 fw-bold">@Model.PhoneNumber</div>
+                        </div>
+                    </div>
+                    <div class="user-options">
+                        <ul class="decor-ul">
+                            <li>
+                                <span class="label">کیف پول</span>
+                                <span class="detail">
+                                    <span class="d-block">۰ <span class="currency fs-7 fw-bold">تومان</span></span>
+                                    <a href="#" class="link border-bottom-0 text-info fs-7 fw-bold link-decor">
+                                        افزایش
+                                        موجودی <i class='bx bx-chevron-left'></i>
+                                    </a>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="label">باشگاه مشتریان</span>
+                                <span class="detail">
+                                    <span class="d-block">۰ <span class="score text-muted fs-7">امتیاز</span></span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="nav nav-items-with-icon flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link nav-decor" href="#">
+                            <i class="nav-link-icon bx bxs-category bxs"></i>
+                            کلاس
+                            های من
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link nav-decor" href="#">
+                            <i class="nav-link-icon bx bx-dumbbell bxs"></i>
+                            باشگاه ورزشی
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link nav-decor" asp-controller="Account" asp-action="LogOut">
+                            <i class="nav-link-icon bx bx-log-out bxs"></i>
+                            خروج
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="user-option">
+        <a href="#" class="user-option-btn user-option-btn--account">
+            <i class="bx bxs-heart"></i>
+            <span class="counter">۲</span>
+        </a>
+    </div>
+</div>

@@ -16,5 +16,6 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<DeleteUserResult> DeleteUserAsync(int UserId);
         Task<List<UserViewModel>?> ListUsersAsync();
         Task<FilterUserViewModel> FilterUsersAsync(FilterUserViewModel filter);
+        Task<UserClientSideView?> GetUserClientSideAsync(int UserId);
     }
 }

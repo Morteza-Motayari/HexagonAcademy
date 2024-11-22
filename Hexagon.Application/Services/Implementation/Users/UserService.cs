@@ -81,6 +81,15 @@ namespace Hexagon.Application.Services.Implementation.Users
         public async Task<FilterUserViewModel> FilterUsersAsync(FilterUserViewModel filter)
         => await UserRepository.FilteUsersAsync(filter);
 
+        public async Task<UserClientSideView?> GetUserClientSideAsync(int UserId)
+        {
+            UserClientSideView? user=await UserRepository.GetUserForViewClientSide(UserId);
+            if (user == null)
+                return null;
+
+            return user;
+        }
+
         public async Task<UpdateUserViewModel> GetUserForEdit(int UserId)
         {
             var User = await UserRepository.GetByIdAsync(UserId);

@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexagon.Infra.Data", "Hexag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexagon.Infra.IOC", "Hexagon.Infra.IOC\Hexagon.Infra.IOC.csproj", "{3152A4D7-A1D6-477B-81C1-C81DCA165CCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexagon.MVC", "Hexagon.MVC\Hexagon.MVC.csproj", "{88398005-A8FD-4FB0-91E4-95E75D31D2BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexagon.MVC", "Hexagon.MVC\Hexagon.MVC.csproj", "{88398005-A8FD-4FB0-91E4-95E75D31D2BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

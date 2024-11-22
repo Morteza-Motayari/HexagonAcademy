@@ -23,8 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\UserManagement\Controllers\" />
-    <Folder Include="Areas\UserManagement\Views\" />
     <Folder Include="wwwroot\Images\Avatars\" />
     <Folder Include="wwwroot\Images\Gyms\" />
     <Folder Include="wwwroot\Images\GymGalleries\" />
@@ -412,6 +410,13 @@
     <None Include="wwwroot\AdminFiles\assets\js\topojson.min.js" />
     <None Include="wwwroot\AdminFiles\assets\js\uppy.min.js" />
     <None Include="wwwroot\js\site.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\UserManagement\Views\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

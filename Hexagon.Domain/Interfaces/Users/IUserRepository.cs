@@ -19,5 +19,7 @@ namespace Hexagon.Domain.Interfaces
         Task<bool> ExistNationalCodeAsync(string NationalCode);
         Task<FilterUserViewModel> FilteUsersAsync(FilterUserViewModel filter);
         Task<List<UserViewModel>?> GetAllUsersAsync();
+        Task<ClientSideUpdateUserViewModel?> GetUserForUpdateClientSide(int userId);
+        Task<UserClientSideView?> GetUserForViewClientSide(int userId);
     }
 }

@@ -137,6 +137,38 @@ namespace Hexagon.Infra.Data.Repositories
         public async Task<User?> GetByMobileAsync(string mobile)
         => await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == mobile);
 
+        public async Task<ClientSideUpdateUserViewModel?> GetUserForUpdateClientSide(int userId)
+        => await _db.Users.Select(u => new ClientSideUpdateUserViewModel
+        {
+            Id = userId,
+            FirstName=u.FirstName,
+            LastName=u.LastName,
+            //BirthDay = u.BirthDay.ToShamsi(),
+            Avatar =u.Avatar,
+            Gender=u.Gender,
+            email=u.email,
+            city=u.city,
+            NationalCode=u.NationalCode
+        }).FirstOrDefaultAsync(u => u.Id == userId);
+
+        public async Task<UserClientSideView?> GetUserForViewClientSide(int userId)
+        => await _db.Users.Select(u => new UserClientSideView
+        {
+            Id = userId,
+            FirstName = u.FirstName,
+            LastName = u.LastName,
+            BirthDay = u.BirthDay,
+            Avatar = u.Avatar,
+            Gender = u.Gender,
+            email = u.email,
+            city = u.city,
+            NationalCode = u.NationalCode,
+            Password = u.Password,
+            PhoneNumber = u.PhoneNumber,
+            Situation=u.Situation,
+            Status=u.Status
+        }).FirstOrDefaultAsync(u => u.Id == userId);
+
         public async Task<bool> MobileDuplicatedAsync(string mobile, int userId)
         => await _db.Users.AnyAsync(u => u.PhoneNumber == mobile && u.Id!=userId);
 
