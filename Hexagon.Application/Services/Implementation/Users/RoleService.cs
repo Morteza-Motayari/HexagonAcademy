@@ -81,22 +81,25 @@ namespace Hexagon.Application.Services.Implementation.Users
             role.RoleTitle = model.RoleTitle;
             roleRepository.Update(role);
             #region Update Role Permissions
-            var permissions = await rolePermissionRepository.GetRolePermissionsIdentityKeyAsync(model.Id);
-            if (permissions != null)
+            if (model.PermissionsId.CheckNullability())
             {
-                foreach (var item in permissions)
+                var permissions = await rolePermissionRepository.GetRolePermissionsIdentityKeyAsync(model.Id);
+                if (permissions != null)
                 {
-                    rolePermissionRepository.Remove(new RolePermission { Id = item });
+                    foreach (var item in permissions)
+                    {
+                        rolePermissionRepository.Remove(new RolePermission { Id = item });
+                    }
+                    await rolePermissionRepository.SaveChangeAsync();
                 }
-                await rolePermissionRepository.SaveChangeAsync();
-            }
-
+                       
             #region Add new Role Permissions
             foreach (var permission in model.PermissionsId)
             {
                 await rolePermissionRepository.InserAsync(new RolePermission { PermissionId = permission, RoleId = role.Id });
             }
             await rolePermissionRepository.SaveChangeAsync();
+            }
             #endregion
 
             #endregion

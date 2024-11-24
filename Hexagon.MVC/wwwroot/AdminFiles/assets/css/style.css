@@ -22954,3 +22954,11 @@ html.ie11 .bs-searchbox .form-control {
 	    margin-left: 10px;
     float: right;
 }
+#tableExport_wrapper {
+	padding: 10px 0;
+}
+.dataTables_wrapper {
+	position: relative;
+}
+
+

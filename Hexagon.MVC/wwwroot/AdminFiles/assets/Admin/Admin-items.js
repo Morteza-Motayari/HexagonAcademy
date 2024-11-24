@@ -13,7 +13,7 @@ function OnSuccessAddingItem(res) {
         Swal.fire({
             title: "موفق",
             text: res.message,
-            icon: "Success"
+            icon: "success"
         }).then((result)=> {
             if (result.isConfirmed) {
                 location.reload();
@@ -32,4 +32,23 @@ function OnSuccessAddingItem(res) {
             icon: "error"
         });
     }
+}
+
+function confirmDelete(url, e, title) {
+
+    e.preventDefault();
+
+    Swal.fire({
+        text: `آیا از حذف ${title} مطمئن هستید؟`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "بله",
+        cancelButtonText: "خیر"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            location.href = url;
+        }
+    });
 }

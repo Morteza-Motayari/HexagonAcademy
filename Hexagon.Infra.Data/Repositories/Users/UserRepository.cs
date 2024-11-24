@@ -152,7 +152,7 @@ namespace Hexagon.Infra.Data.Repositories
         }).FirstOrDefaultAsync(u => u.Id == userId);
 
         public async Task<UserClientSideView?> GetUserForViewClientSide(int userId)
-        => await _db.Users.Select(u => new UserClientSideView
+        => await _db.Users.Where(u=>u.Id==userId).Select(u => new UserClientSideView
         {
             Id = userId,
             FirstName = u.FirstName,
@@ -167,7 +167,7 @@ namespace Hexagon.Infra.Data.Repositories
             PhoneNumber = u.PhoneNumber,
             Situation=u.Situation,
             Status=u.Status
-        }).FirstOrDefaultAsync(u => u.Id == userId);
+        }).FirstAsync(u => u.Id == userId);
 
         public async Task<bool> MobileDuplicatedAsync(string mobile, int userId)
         => await _db.Users.AnyAsync(u => u.PhoneNumber == mobile && u.Id!=userId);

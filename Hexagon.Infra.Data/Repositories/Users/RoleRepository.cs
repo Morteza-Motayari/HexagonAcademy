@@ -20,7 +20,7 @@ namespace Hexagon.Infra.Data.Repositories.Users
             _db = db;
         }
         public async Task<bool> ExistRoleTitle(string roleTilte)
-        => await _db.Roles.AnyAsync(u => u.RoleTitle == roleTilte);
+        => await _db.Roles.AnyAsync(u => u.RoleTitle == roleTilte&&u.IsDeleted==false);
 
         public async Task<FilterRoleViewModel> FilteRolesAsync(FilterRoleViewModel filter)
         {

@@ -27,7 +27,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
+                return Ok(new
                 {
                     status = 204,
                     message = ErrorMessages.InsufficintInputs
@@ -45,13 +45,13 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                         message = SuccessMessages.RoleAddedSuccessfully
                     });
                 case CreateRoleResult.DupliactedRole:
-                    return BadRequest(new
+                    return Ok(new
                     {
                         status = 409,
                         message = ErrorMessages.RoleTitleDuplicated
                     });
             }
-            return BadRequest(new
+            return Ok(new
             {
                 status = 204,
                 message = ErrorMessages.ErrorOccured
@@ -64,7 +64,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int roleId)
         {
             var role = await roleService.GetRoleForEdit(roleId);
-            return View(role);
+            return PartialView("_EditRole",role);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(UpdateRoleViewModel model)
@@ -81,15 +81,29 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 case UpdateRoleResult.Success:
                     TempData[SuccessMessage] = SuccessMessages.RoleAddedSuccessfully;
-                    return RedirectToAction(nameof(List));
+                    return Ok(new
+                    {
+                        status = 200,
+                        message = SuccessMessages.RoleUpdatedSuccessfully
+                    });
                 case UpdateRoleResult.DupliactedRole:
-                    TempData[ErrorMessage] = ErrorMessages.RoleTitleDuplicated;
-                    break;
+                    return Ok(new
+                    {
+                        status = 409,
+                        message = ErrorMessages.RoleTitleDuplicated
+                    });
                 case UpdateRoleResult.NotFound:
-                    TempData[ErrorMessage] = ErrorMessages.RoleNotFound;
-                    break;
+                    return Ok(new
+                    {
+                        status = 409,
+                        message = ErrorMessages.RoleNotFound
+                    });
             }
-            return View();
+            return Ok(new
+            {
+                status = 204,
+                message = ErrorMessages.ErrorOccured
+            });
         }
         #endregion
 

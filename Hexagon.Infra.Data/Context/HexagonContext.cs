@@ -3,17 +3,18 @@ using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Infra.Data.DataExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Hexagon.Infra.Data.Context
 {
-    public class HexagonContext:DbContext
+    public class HexagonContext : DbContext
     {
         private readonly IHttpContextAccessor _accessor;
 
-        public HexagonContext(DbContextOptions<HexagonContext> options, IHttpContextAccessor accessor ) : base(options)
+        public HexagonContext(DbContextOptions<HexagonContext> options, IHttpContextAccessor accessor) : base(options)
         {
             _accessor = accessor;
         }
@@ -56,11 +57,14 @@ namespace Hexagon.Infra.Data.Context
             foreach (var entry in ChangeTracker.Entries<BaseEntity<int>>())
             {
                 entry.Entity.LastModifiedDate = DateTime.Now;
-                entry.Entity.LastModifiedBy=int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value);
+                if (_accessor.CheckAuthentication())
+                    entry.Entity.LastModifiedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value);
+
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedDate = DateTime.Now;
-                    entry.Entity.CreatedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value);
+                    if (_accessor.CheckAuthentication())
+                        entry.Entity.CreatedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value);
                 }
             }
 
@@ -73,14 +77,18 @@ namespace Hexagon.Infra.Data.Context
             foreach (var entry in ChangeTracker.Entries<BaseEntity<int>>())
             {
                 entry.Entity.LastModifiedDate = DateTime.Now;
-                entry.Entity.LastModifiedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value.ToString());
+                if (_accessor.CheckAuthentication())
+                    entry.Entity.LastModifiedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value.ToString());
+
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedDate = DateTime.Now;
-                    entry.Entity.CreatedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value.ToString());
+                    if (_accessor.CheckAuthentication())
+                        entry.Entity.CreatedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value.ToString());
                 }
             }
             return base.SaveChanges();
         }
     }
+
 }
