@@ -1,16 +1,21 @@
-﻿using Hexagon.Domain.Models.Gyms;
+﻿using Hexagon.Domain.Models.Common;
+using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.Models.Users;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Hexagon.Infra.Data.Context
 {
     public class HexagonContext:DbContext
     {
-        public HexagonContext(DbContextOptions<HexagonContext> options) : base(options)
-        {
+        private readonly IHttpContextAccessor _accessor;
 
+        public HexagonContext(DbContextOptions<HexagonContext> options, IHttpContextAccessor accessor ) : base(options)
+        {
+            _accessor = accessor;
         }
 
         #region Gym
@@ -44,6 +49,38 @@ namespace Hexagon.Infra.Data.Context
         {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries<BaseEntity<int>>())
+            {
+                entry.Entity.LastModifiedDate = DateTime.Now;
+                entry.Entity.LastModifiedBy=int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value);
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedDate = DateTime.Now;
+                    entry.Entity.CreatedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value);
+                }
+            }
+
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        public override int SaveChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries<BaseEntity<int>>())
+            {
+                entry.Entity.LastModifiedDate = DateTime.Now;
+                entry.Entity.LastModifiedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value.ToString());
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedDate = DateTime.Now;
+                    entry.Entity.CreatedBy = int.Parse(_accessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value.ToString());
+                }
+            }
+            return base.SaveChanges();
         }
     }
 }

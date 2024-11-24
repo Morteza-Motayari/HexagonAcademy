@@ -1,4 +1,5 @@
-﻿using Hexagon.Application.Services.Interfaces.Users;
+﻿using Hexagon.Application.Extensions;
+using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
@@ -16,22 +17,24 @@ namespace Hexagon.Application.Services.Implementation.Users
     {
         public async Task<CreateRoleResult> CreateRoleAsync(CreateRoleViewModel model)
         {
-            if(await roleRepository.ExistRoleTitle(model.RoleTitle))
+            if (await roleRepository.ExistRoleTitle(model.RoleTitle))
                 return CreateRoleResult.DupliactedRole;
             Role role = new()
             {
-                RoleTitle = model.RoleTitle,
-                CreatedDate = DateTime.Now
+                RoleTitle = model.RoleTitle
             };
             await roleRepository.InserAsync(role);
             await roleRepository.SaveChangeAsync();
 
             #region Add Role Permissions
-            foreach (var permission in model.PermissionsId)
+            if (model.PermissionsId.CheckNullability())
             {
-                await rolePermissionRepository.InserAsync(new RolePermission { PermissionId = permission, RoleId = role.Id });
+                foreach (var permission in model.PermissionsId)
+                {
+                    await rolePermissionRepository.InserAsync(new RolePermission { PermissionId = permission, RoleId = role.Id });
+                }
+                await rolePermissionRepository.SaveChangeAsync();
             }
-            await rolePermissionRepository.SaveChangeAsync();
             #endregion
 
             return CreateRoleResult.Success;
@@ -39,7 +42,7 @@ namespace Hexagon.Application.Services.Implementation.Users
 
         public async Task<DeleteRoleResult> DeleteRoleAsync(int RoleId)
         {
-            var role=await roleRepository.GetByIdAsync(RoleId);
+            var role = await roleRepository.GetByIdAsync(RoleId);
             if (role == null)
                 return DeleteRoleResult.NotFound;
             role.IsDeleted = true;
@@ -79,7 +82,7 @@ namespace Hexagon.Application.Services.Implementation.Users
             roleRepository.Update(role);
             #region Update Role Permissions
             var permissions = await rolePermissionRepository.GetRolePermissionsIdentityKeyAsync(model.Id);
-            if(permissions != null)
+            if (permissions != null)
             {
                 foreach (var item in permissions)
                 {

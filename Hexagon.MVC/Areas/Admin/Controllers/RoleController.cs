@@ -27,7 +27,11 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return BadRequest(new
+                {
+                    status = 204,
+                    message = ErrorMessages.InsufficintInputs
+                });
             }
             #endregion
 
@@ -35,13 +39,23 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             switch (result)
             {
                 case CreateRoleResult.Success:
-                    TempData[SuccessMessage] = SuccessMessages.RoleAddedSuccessfully;
-                    return RedirectToAction(nameof(List));
+                    return Ok(new
+                    {
+                        status = 200,
+                        message = SuccessMessages.RoleAddedSuccessfully
+                    });
                 case CreateRoleResult.DupliactedRole:
-                    TempData[ErrorMessage] = ErrorMessages.RoleTitleDuplicated;
-                    break;
+                    return BadRequest(new
+                    {
+                        status = 409,
+                        message = ErrorMessages.RoleTitleDuplicated
+                    });
             }
-            return View();
+            return BadRequest(new
+            {
+                status = 204,
+                message = ErrorMessages.ErrorOccured
+            });
         }
         #endregion
 

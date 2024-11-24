@@ -41,5 +41,10 @@ namespace Hexagon.Domain.Shared
         public static string ErrorInUpdateUserOccured = " در هنگام بروز اطلاعات شما مشکلی رخ داده است.";
         public static string InvalidDateTimeInput = " تاریخ تولد وارد شده معتبر نمی باشد.";
         #endregion
+
+        #region Public Message
+        public static string InsufficintInputs = "لطفا فیلدهای ضروری را پر بکنید.";
+        public static string ErrorOccured = "خطایی در هنگام اجرای عملیات رخ داده است لطفا دوباره سعی بکنید.";
+        #endregion
     }
 }

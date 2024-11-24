@@ -46,6 +46,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Configuration.GetSection("KaveNegarInfo").Get<KaveNegarStatics>();
 #endregion
 
+#region HtppContextAccessor
+builder.Services.AddHttpContextAccessor();
+#endregion
 var app = builder.Build();
 
 

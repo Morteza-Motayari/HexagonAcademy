@@ -47,7 +47,6 @@ namespace Hexagon.Infra.IOC.Container
 
             #region Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
             #region Gyms
             services.AddScoped<IGymRepository, GymRepository>();
             services.AddScoped<IGymGalleryRepository, GymGalleryRepository>();
