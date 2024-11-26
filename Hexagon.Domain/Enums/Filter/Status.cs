@@ -16,4 +16,35 @@ namespace Hexagon.Domain.Enums.Filter
         [Display(Name = " موجود")]
         NotDeleted
     }
+    public enum FilterUserGender
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "مذکر")]
+        Male,
+        [Display(Name = "مونث")]
+        Female
+    }
+    public enum FilterUserStatus
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "فعال")]
+        Active,
+        [Display(Name = "غیرفعال")]
+        NotActive,
+        [Display(Name = "مسدود")]
+        Ban
+    }
+    public enum FilterUserSituation
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "کادر")]
+        Cadre,
+        [Display(Name = "مربی")]
+        Trainer,
+        [Display(Name = "ورزشکار")]
+        Athlete
+    }
 }

@@ -67,5 +67,17 @@ namespace Hexagon.Infra.Data.Repositories.Users
             }).ToListAsync();
             return roles;
         }
+
+        public async Task<List<Role>?> GetUserRoles(List<int>? ids)
+        {
+            if (ids == null || ids.Count == 0)
+                return null;
+            List<Role> roles = new();
+            foreach(var item in ids)
+            {
+                roles.Add(await GetByIdAsync(item));
+            }
+            return roles;
+        }
     }
 }

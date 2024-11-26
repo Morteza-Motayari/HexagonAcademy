@@ -21,11 +21,24 @@ namespace Hexagon.Domain.Shared
         public static string ForgotPasswordSentSuccessfully = " کد تایید فراموشی رمز عبور برای شماره شما ارسال شد.";
         public static string ResetPasswordDoneSuccessfully = " رمز عبور شما با موفقیت تغییر یافت.";
         public static string PersonalUserInfoUpdatedSuccessfully = " اطلاعات شما با موفقیت بروز شد.";
-        
+
+        #endregion
+
+        #region User
+        public static string UserAddedSuccessfully = "کاربر جدید با موفقیت اضافه شده است.";
+        public static string UserUpdatedSuccessfully = "کاربر  با موفقیت ویرایش شده است.";
+        public static string UserStatusChangedSuccessfully = "کاربر جدید با موفقیت اضافه شده است.";
+        public static string UserDeletedSuccessfully = "کاربر  با موفقیت حذف شده است.";
+        public static string UserPasswordChangedSuccessfully = "رمز کاربر با موفقیت تغییر کرده است.";
         #endregion
     }
     public class ErrorMessages
     {
+        #region Public Message
+        public static string InsufficintInputs = "لطفا فیلدهای ضروری را پر بکنید.";
+        public static string ErrorOccured = "خطایی در هنگام اجرای عملیات رخ داده است لطفا دوباره سعی بکنید.";
+        #endregion
+
         #region Roles
         public static string RoleNotFound = "نقش مورد نظر پیدا نشده است.";
         public static string RoleTitleDuplicated = "نقشی با این عنوان پیدا شده است.";
@@ -42,9 +55,17 @@ namespace Hexagon.Domain.Shared
         public static string InvalidDateTimeInput = " تاریخ تولد وارد شده معتبر نمی باشد.";
         #endregion
 
-        #region Public Message
-        public static string InsufficintInputs = "لطفا فیلدهای ضروری را پر بکنید.";
-        public static string ErrorOccured = "خطایی در هنگام اجرای عملیات رخ داده است لطفا دوباره سعی بکنید.";
+        #region User
+        public static string UserNotFound = "کاربر مدنظر پیدا نشده است.";
+        public static string UserPhoneNumberDuplicated = "شماره مدنظر قبلا ثبت شده است.";
+        #endregion
+
+
+    }
+    public class WarningMessages
+    {
+        #region User
+        public static string UserCantbeEdited = "این کاربر حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
     }
 }

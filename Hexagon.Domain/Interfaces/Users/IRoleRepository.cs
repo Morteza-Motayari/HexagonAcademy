@@ -13,5 +13,6 @@ namespace Hexagon.Domain.Interfaces.Users
         Task<bool> ExistRoleTitle(string roleTilte);
         Task<List<RoleViewModel>> GetAllRolesAsync();
         Task<FilterRoleViewModel> FilteRolesAsync(FilterRoleViewModel filter);
+        Task<List<Role>?> GetUserRoles(List<int>? ids);
     }
 }

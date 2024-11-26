@@ -30,31 +30,33 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         public string Password { get; set; }
         [Display(Name = "کد ملی")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [MaxLength(10, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "کد ملی وارد شده معتبر نمی باشد")]
-        public string NationalCode { get; set; }
+        public string? NationalCode { get; set; }
+        [Display(Name = "شهر")]
         public string? city { get; set; }
         [Display(Name = "ایمیل")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [MaxLength(150, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [EmailAddress]
-        public string email { get; set; }
+        public string? email { get; set; }
         [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
-        public DateTime BirthDay { get; set; }
+        public string? BirthDay { get; set; }
         [Display(Name = "عکس")]
         public IFormFile? Image { get; set; }
         [Display(Name = "جنسیت")]
+        [Required(ErrorMessage = "لطفا {0} را انتخاب کنید.")]
         public UserGender Gender { get; set; }
         [Display(Name = "نقش")]
         public UserSituation? Situation { get; set; }
+        [Display(Name = "وضعیت")]
+        public UserStatus Status { get; set; }
         public List<int>? RolesId { get; set; }
     }
     public enum CreateUserResult
     {
         Success,
         MobileDuplicated,
-        NationalCodeDuplicated
+        InvalidDateTime
     }
 }

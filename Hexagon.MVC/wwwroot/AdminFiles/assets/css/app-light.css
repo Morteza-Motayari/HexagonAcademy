@@ -147,13 +147,6 @@ a {
     color: #0045ce;
     text-decoration: underline; }
 
-a:not([href]) {
-  color: inherit;
-  text-decoration: none; }
-  a:not([href]):hover {
-    color: inherit;
-    text-decoration: none; }
-
 pre,
 code,
 kbd,
@@ -3540,7 +3533,7 @@ input[type="button"].btn-block {
 .badge {
   display: inline-block;
   padding: 0.25em 0.4em;
-  font-size: 75%;
+  font-size: 100%;
   font-weight: 600;
   line-height: 1;
   text-align: center;
@@ -3588,6 +3581,22 @@ input[type="button"].btn-block {
 .badge-success {
   color: #212529;
   background-color: #3ad29f; }
+.badge-pink {
+    color: #212529;
+    background-color: #ef118a;
+}
+.badge-blue {
+    color: #212529;
+    background-color: #5238ef;
+}
+.badge-orange {
+    color: #212529;
+    background-color: #ff952e;
+}
+.badge-green {
+    color: #212529;
+    background-color: #78b825;
+}
   a.badge-success:hover, a.badge-success:focus {
     color: #212529;
     background-color: #28b183; }
@@ -7022,7 +7031,12 @@ a.text-danger:hover, a.text-danger:focus {
 
 a.text-light:hover, a.text-light:focus {
   color: #cbd3da !important; }
-
+.text-lock {
+    color: #d2da61 !important;
+}
+a.text-lock:hover, a.text-lock:focus {
+    color: #a71d2a !important;
+}
 .text-dark {
   color: #343a40 !important; }
 
@@ -12287,3 +12301,6 @@ html {
     .rtl.horizontal .navbar-slide .navbar-nav .dropdown-menu .nav-item .dropdown-toggle::after {
       left: 0;
       content: "\e92e"; } }
+.bxs {
+    vertical-align: middle;
+}

@@ -52,3 +52,7 @@ function confirmDelete(url, e, title) {
         }
     });
 }
+function fillPageId(pageId) {
+    $("#Page").val(pageId);
+    $("#filter-search").submit();
+}

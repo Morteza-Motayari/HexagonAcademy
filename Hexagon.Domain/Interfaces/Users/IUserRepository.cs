@@ -12,14 +12,15 @@ namespace Hexagon.Domain.Interfaces
     public interface IUserRepository:IGenericRepository<User>
     {
         Task<bool> ExistMobileAsync(string mobile);
+        Task<bool> ExistMobileAsync(string mobile,int id);
         Task<bool> MobileDuplicatedAsync(string mobile, int userId);
         Task<User?> GetbyMobileAndPassword(string mobile, string password);
         Task<User?> GetByMobileAsync(string mobile);
         Task<User?> GetByMobileAndVerificationCodeAsync(string mobile, string verificationCode);
-        Task<bool> ExistNationalCodeAsync(string NationalCode);
         Task<FilterUserViewModel> FilteUsersAsync(FilterUserViewModel filter);
         Task<List<UserViewModel>?> GetAllUsersAsync();
         Task<ClientSideUpdateUserViewModel?> GetUserForUpdateClientSide(int userId);
         Task<UserClientSideView?> GetUserForViewClientSide(int userId);
+        Task<string?> GetJustUserName(int? userId);
     }
 }

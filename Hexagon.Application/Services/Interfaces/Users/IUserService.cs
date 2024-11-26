@@ -17,5 +17,8 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<List<UserViewModel>?> ListUsersAsync();
         Task<FilterUserViewModel> FilterUsersAsync(FilterUserViewModel filter);
         Task<UserClientSideView?> GetUserClientSideAsync(int UserId);
+        Task<AdminSideDetailUserViewModel?> AdminSideDetailUserAsync(int userId);
+        Task<AdminChagePasswordViewModel?> AdminGetUserForChangePassword(int UserId);
+        Task<AdminChagePasswordResult> AdminChangeUserPasswordAsync(AdminChagePasswordViewModel model);
     }
 }

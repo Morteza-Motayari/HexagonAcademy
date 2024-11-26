@@ -19,6 +19,10 @@ namespace Hexagon.Application.Extensions
         {
             return user.FirstName + " " + user.LastName;
         }
+        public static string GetUserName(this UserViewModel user)
+        {
+            return user.FirstName + " " + user.LastName;
+        }
         public static int GetUserId(this ClaimsPrincipal claimsPrincipal)
         {
             string? userId=claimsPrincipal.Claims.FirstOrDefault(u=>u.Type==ClaimTypes.NameIdentifier)?.Value;

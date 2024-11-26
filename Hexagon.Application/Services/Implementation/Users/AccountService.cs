@@ -91,7 +91,8 @@ namespace Hexagon.Application.Services.Implementation.Users
             {
                 PhoneNumber = model.PhoneNumber,
                 Password = model.Password.EncodePasswordMd5(),
-                Status=UserStatus.Active
+                Status=UserStatus.Active,
+                Situation=UserSituation.Athlete
             };
             await userRepository.InserAsync(user);
             await userRepository.SaveChangeAsync();

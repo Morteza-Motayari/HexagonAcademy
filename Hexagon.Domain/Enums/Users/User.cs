@@ -16,8 +16,11 @@ namespace Hexagon.Domain.Enums.Users
     }
     public enum UserStatus
     {
+        [Display(Name = "فعال")]
         Active,
+        [Display(Name = "غیرفعال")]
         NotActive,
+        [Display(Name = "مسدود")]
         Ban
     }
     public enum UserSituation
