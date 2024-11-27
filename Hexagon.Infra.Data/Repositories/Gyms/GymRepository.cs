@@ -18,7 +18,13 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         }
 
         public async Task<bool> ExistConstantPhoneNumberAsync(string constantphone)
-        => await _db.Gyms.AnyAsync(g => g.ConstantPhone== constantphone);
+        => await _db.Gyms.AnyAsync(g => g.ConstantPhone== constantphone && g.IsDeleted == false);
+
+        public async Task<bool> ExistConstantPhoneNumberAsync(string constantphone, int gymId)
+        => await _db.Gyms.AnyAsync(g => g.ConstantPhone == constantphone&&g.Id!=gymId&&g.IsDeleted==false);
+
+        public async Task<bool> ExistGymAsync(int gymId)
+        => await _db.Gyms.AnyAsync(g=>g.Id==gymId&&g.IsDeleted==false);
 
         public async Task<bool> ExistSpecificSlug(string slug)
         =>await _db.Gyms.AnyAsync(u => u.Slug == slug);

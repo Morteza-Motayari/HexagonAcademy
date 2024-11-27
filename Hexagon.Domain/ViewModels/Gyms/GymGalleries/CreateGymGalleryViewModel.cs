@@ -11,8 +11,6 @@ namespace Hexagon.Domain.ViewModels.Gyms.GymGalleries
     public class CreateGymGalleryViewModel
     {
         public int GymId { get; set; }
-        [Display(Name = "عنوان عکس")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         public IFormFile? Image { get; set; }
         [Display(Name = "عنوان عکس")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
@@ -20,6 +18,8 @@ namespace Hexagon.Domain.ViewModels.Gyms.GymGalleries
     }
     public enum CreateGymGalleryResult
     {
-        Success
+        Success,
+        ImageNull,
+        MaxImagesForGym
     }
 }

@@ -214,7 +214,7 @@
                                                     <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" class="text-success">
                                                         <i class="fe fe-24 fe-edit-3"></i>
                                                     </a>                                                    
-                                                    <a onclick="confirmDelete('@Url.Action("Delete","User",new{id=item.Id})',event,'@item.GetUserName()','@item.GetUserName()')" class="text-danger">
+                                                    <a onclick="confirmDelete('@Url.Action("Delete","User",new{id=item.Id})',event,'@item.GetUserName()')" class="text-danger">
                                                         <i class="fe fe-24 fe-trash-2"></i>
                                                     </a>
                                                     <a asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-id="@item.Id" class="text-lock">

@@ -28,6 +28,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.Gyms
         [Display(Name = "تصویر")]
         public IFormFile? NewImage { get; set; }
         public string? ImageUrl { get; set; }
+        public bool IsDeleted {  get; set; }
     }
     public enum UpdateGymResult
     {

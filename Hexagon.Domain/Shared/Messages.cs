@@ -26,10 +26,21 @@ namespace Hexagon.Domain.Shared
 
         #region User
         public static string UserAddedSuccessfully = "کاربر جدید با موفقیت اضافه شده است.";
-        public static string UserUpdatedSuccessfully = "کاربر  با موفقیت ویرایش شده است.";
+        public static string UserUpdatedSuccessfully = "کاربر مدنظر با موفقیت ویرایش شده است.";
         public static string UserStatusChangedSuccessfully = "کاربر جدید با موفقیت اضافه شده است.";
-        public static string UserDeletedSuccessfully = "کاربر  با موفقیت حذف شده است.";
-        public static string UserPasswordChangedSuccessfully = "رمز کاربر با موفقیت تغییر کرده است.";
+        public static string UserDeletedSuccessfully = "کاربر مدنظر با موفقیت حذف شده است.";
+        public static string UserPasswordChangedSuccessfully = "رمز کاربر مدنظر با موفقیت تغییر کرده است.";
+        #endregion
+
+        #region Gym
+        public static string GymAddedSuccessfully = "باشگاه جدید با موفقیت اضافه شده است.";
+        public static string GymUpdatedSuccessfully = "باشگاه مدنظر  با موفقیت ویرایش شده است.";
+        public static string GymDeletedSuccessfully = "باشگاه مدنظر  با موفقیت حذف شده است.";
+        #endregion
+
+        #region GymGallery
+        public static string GymGalleryAddedSuccessfully = "تصویر جدید برای باشگاه با موفقیت اضافه شده است.";
+        public static string GymGalleryDeletedSuccessfully = "تصویر باشگاه مدنظر  با موفقیت حذف شده است.";
         #endregion
     }
     public class ErrorMessages
@@ -58,14 +69,34 @@ namespace Hexagon.Domain.Shared
         #region User
         public static string UserNotFound = "کاربر مدنظر پیدا نشده است.";
         public static string UserPhoneNumberDuplicated = "شماره مدنظر قبلا ثبت شده است.";
+        public static string UserAlreadyDeleted = "کاربر مدنظر قبلا حذف شده است.";
         #endregion
 
+        #region Gym
+        public static string GymNotFound = "باشگاه مدنظر پیدا نشده است.";
+        public static string GymConstatntPhoneNumberDuplicated = "شماره ثابت مدنظر قبلا ثبت شده است.";
+        public static string GymAlreadyDeleted = "باشگاه مدنظر قبلا حذف شده است.";
+        #endregion
 
+        #region GymGallery
+        public static string GymGalleryNull = "تصویری برای باشگاه انتخاب نشده است.";
+        public static string MaxImagesForGym = "حداکثر تصاویر موجود برای یک باشگاه 8 تا می تواند باشد.";
+        #endregion
     }
+
     public class WarningMessages
     {
         #region User
         public static string UserCantbeEdited = "این کاربر حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
+        #region Gym
+        public static string GymCantbeEdited = "این باشگاه حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
+        #region GymGallery
+        public static string GymGalleryIdZero = "عکسی انتخاب نشده است.";
+
         #endregion
     }
 }

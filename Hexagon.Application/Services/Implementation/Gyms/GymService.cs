@@ -2,14 +2,45 @@
 using Hexagon.Application.Generators;
 using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Application.Statics;
+using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.Gyms;
+using Hexagon.Domain.ViewModels.Users.Users;
+using Hexagon.Infra.Data.Repositories.Users;
+using Hexagon.Infra.Data.Repositories;
+using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Users.Roles;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
-    public class GymService(IGymRepository gymRepository) : IGymService
+    public class GymService(IGymRepository gymRepository,IUserRepository userRepository) : IGymService
     {
+        public async Task<AdminSideDetailGymViewModel?> AdminSideDetailGymAsync(int gymId)
+        {
+            var gym = await gymRepository.GetByIdAsync(gymId);
+            if (gym == null)
+                return null;
+
+            AdminSideDetailGymViewModel? Detail = new()
+            {
+                Id = gymId,
+                Name = gym.Name,
+                Address = gym.Address,
+                Area = gym.Area,
+                ImageUrl = gym.ImageUrl,
+                ConstantPhone = gym.ConstantPhone,
+                IsDeleted = gym.IsDeleted,
+                CreatedById = gym.CreatedBy,
+                LastModifiedById = gym.LastModifiedBy,
+                CreatedDate = gym.CreatedDate,
+                CreatedBy = await userRepository.GetJustUserName(gym.CreatedBy),
+                LastModifiedBy = await userRepository.GetJustUserName(gym.LastModifiedBy),
+                ModifiedDate = gym.LastModifiedDate
+            };
+            return Detail;
+        }
+
         public async Task<CreateGymResult> CreateGymAsync(CreateGymViewModel model)
         {
             if (await gymRepository.ExistConstantPhoneNumberAsync(model.ConstantPhone))
@@ -48,8 +79,10 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             var Gym = await gymRepository.GetByIdAsync(GymId);
             if (Gym == null)
                 return DeleteGymResult.GymNotFound;
+            if (Gym.IsDeleted == true)
+                return DeleteGymResult.UserAlreadyDeleted;
 
-            #region Deleting Avatar
+            #region Deleting Image
             if (Gym.ImageUrl != null)
                 Gym.ImageUrl.DeleteImage(SavingPath.GymPath);
             #endregion
@@ -74,7 +107,8 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 ConstantPhone = Gym.ConstantPhone,
                 ImageUrl = Gym.ImageUrl,
                 Name = Gym.Name,
-                Area = Gym.Area
+                Area = Gym.Area,
+                IsDeleted= Gym.IsDeleted
             };
         }
 
@@ -86,7 +120,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             var gym = await gymRepository.GetByIdAsync(model.Id);
             if (gym == null)
                 return UpdateGymResult.GymNotFound;
-            if (await gymRepository.ExistConstantPhoneNumberAsync(model.ConstantPhone))
+            if (await gymRepository.ExistConstantPhoneNumberAsync(model.ConstantPhone,model.Id))
                 return UpdateGymResult.DuplicatedConstantPhone;
 
 
@@ -110,10 +144,10 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             {
                 if (gym.ImageUrl != null)
                 {
-                    gym.ImageUrl.DeleteImage(SavingPath.AvatarPath);
+                    gym.ImageUrl.DeleteImage(SavingPath.GymPath);
                 }
                 string imageName = Guid.NewGuid().ToString() + Path.GetExtension(model.NewImage.FileName);
-                model.NewImage.AddImageToServer(imageName, SavingPath.AvatarPath);
+                model.NewImage.AddImageToServer(imageName, SavingPath.GymPath);
                 gym.ImageUrl = imageName;
             }
             #endregion

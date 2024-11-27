@@ -130,6 +130,8 @@ namespace Hexagon.Application.Services.Implementation.Users
             var User = await UserRepository.GetByIdAsync(UserId);
             if (User == null)
                 return DeleteUserResult.UserNotFound;
+            if (User.IsDeleted == true)
+                return DeleteUserResult.UserAlreadyDeleted;
 
             #region Deleting Avatar
             if (User.Avatar != null)

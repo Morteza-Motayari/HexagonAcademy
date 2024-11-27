@@ -14,7 +14,9 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<bool> ExistSpecificSlug(string slug);
         Task<string> PutSpecificSlug(string slug);
         Task<bool> ExistConstantPhoneNumberAsync(string constantphone);
+        Task<bool> ExistConstantPhoneNumberAsync(string constantphone,int gymId);
         Task<FilterGymViewModel> FilterGymAsync(FilterGymViewModel filter);
         Task<List<GymViewModel>?> GetAllGymsAsync();
+        Task<bool> ExistGymAsync(int gymId);
     }
 }

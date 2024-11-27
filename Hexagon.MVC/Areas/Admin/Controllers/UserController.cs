@@ -119,6 +119,9 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 case DeleteUserResult.UserNotFound:
                     TempData[ErrorMessage] = ErrorMessages.UserNotFound;
                     break;
+                case DeleteUserResult.UserAlreadyDeleted:
+                    TempData[ErrorMessage] = ErrorMessages.UserAlreadyDeleted;
+                    break;
             }
             return RedirectToAction(nameof(List));
         }

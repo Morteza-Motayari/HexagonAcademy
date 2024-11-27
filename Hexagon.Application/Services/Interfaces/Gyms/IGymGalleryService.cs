@@ -7,5 +7,6 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         Task<CreateGymGalleryResult> CreateGymGalleryAsync(CreateGymGalleryViewModel model);
         Task<DeleteGymGalleryResult> DeleteGymGalleryAsync(int GymGalleryId);
         Task<List<GymGalleryViewModel>?> ListGymGallerysAsync(int gymId);
+        Task<bool> GymExistForGalleyAsync(int gymId);
     }
 }

@@ -10,6 +10,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.Gyms
     public enum DeleteGymResult
     {
         Success,
-        GymNotFound
+        GymNotFound,
+        UserAlreadyDeleted
     }
 }

@@ -12,5 +12,6 @@ namespace Hexagon.Domain.Interfaces.Gyms
     public interface IGymGalleryRepository : IGenericRepository<GymGallery>
     {
         Task<List<GymGalleryViewModel>> GetGymGalleryAsync(int gymId);
+        Task<int> GymGalleryCountImagesAsync(int gymId);
     }
 }

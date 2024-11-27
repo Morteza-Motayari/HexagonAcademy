@@ -10,6 +10,7 @@ namespace Hexagon.Domain.ViewModels.Users.Roles
     public enum DeleteUserResult
     {
         Success,
-        UserNotFound
+        UserNotFound,
+        UserAlreadyDeleted
     }
 }

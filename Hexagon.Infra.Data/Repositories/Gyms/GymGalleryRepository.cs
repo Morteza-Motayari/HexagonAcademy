@@ -24,5 +24,8 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             ImageUrl = u.ImageUrl,
             ImageTitle = u.ImageTitle
         }).ToListAsync();
+
+        public async Task<int> GymGalleryCountImagesAsync(int gymId)
+        => await _db.GymGalleries.CountAsync(g => g.GymId == gymId);
     }
 }

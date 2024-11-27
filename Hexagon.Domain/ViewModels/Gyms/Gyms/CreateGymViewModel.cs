@@ -18,7 +18,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.Gyms
         [MaxLength(1000, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         public string Address { get; set; }
-        [Display(Name = "مساحت(متر مربع(")]
+        [Display(Name = "مساحت(متر مربع)")]
         public int? Area { get; set; }
         [Display(Name = "شماره تلفن ثابت")]
         [MaxLength(11, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]

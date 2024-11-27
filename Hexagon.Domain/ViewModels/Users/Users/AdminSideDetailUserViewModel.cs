@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Hexagon.Domain.ViewModels.Users.Users
 {
-    public class AdminSideDetailUserViewModel
+    public class AdminSideDetailUserViewModel: BaseAdminDetail
     {
         public int Id { get; set; }
         [Display(Name = "نام")]
@@ -36,17 +37,6 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         public UserSituation? Situation { get; set; }
         [Display(Name = "وضعیت کاربر")]
         public UserStatus? Status { get; set; }
-        [Display(Name = "تاریخ ایجاد")]
-        public DateTime CreatedDate { get; set; }
-        [Display(Name = "تاریخ ویرایش")]
-        public DateTime? ModifiedDate { get; set; }        
-        public int? CreatedById { get; set; }        
-        public int? LastModifiedById { get; set; }
-        [Display(Name = "ساخته شده توسط")]
-        public string? CreatedBy { get; set; }
-        [Display(Name = "ویرایش شده توسط")]
-        public string? LastModifiedBy { get; set; }
-        public bool? IsDeleted { get; set; }
         public List<Role>? Roles { get; set; }
 
     }
