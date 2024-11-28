@@ -12,7 +12,8 @@ namespace Hexagon.Domain.Interfaces
     public interface ICertificateRepository : IGenericRepository<Certificate>
     {
         Task<FilterCertificateViewModel> FilterCertificateAsync(FilterCertificateViewModel filter);
-        Task<List<CertificateViewModel>?> GetAllCertificatesAsync();
+        Task<List<CertificateViewModel>?> GetAllCertificatesItemsAsync();
         Task<bool> DupliCateCertificateName(string certificateName);
+        Task<bool> DupliCateCertificateName(string certificateName, int id);
     }
 }

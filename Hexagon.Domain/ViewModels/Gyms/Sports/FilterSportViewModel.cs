@@ -13,8 +13,10 @@ namespace Hexagon.Domain.ViewModels.Gyms.Sports
     {
         [Display(Name = "تعداد مدل های نمایشی در صفحه")]
         public override int TakeEntity { get; set; }
-        [Display(Name = "نقش")]
+        [Display(Name = "رشته ورزشی")]
         public string? Title { get; set; }
+        [Display(Name = "مدرک")]
+        public string? Certificate { get; set; }
         [Display(Name = "وضعیت موجودیت")]
         public ExistingStatus? Status { get; set; }
     }

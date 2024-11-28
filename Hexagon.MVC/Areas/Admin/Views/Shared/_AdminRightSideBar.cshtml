@@ -144,18 +144,18 @@
             </li>
             <li class="nav-item dropdown">
                 <a href="#trainers" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-grid fe-20"></i>
+                    <i class="bx bx-ball bxs fe-20"></i>
                     <span class="ml-3 item-text">رشته های ورزشی</span>
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="trainers">
                     <li class="nav-item">
-                        <a class="nav-link pl-3" href="./table_basic.html">
-                            <span class="ml-1 item-text">لیست مربی ها</span>
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Sport" asp-action="List">
+                            <span class="ml-1 item-text">لیست رشته های ورزشی</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pl-3" href="./table_advanced.html">
-                            <span class="ml-1 item-text">افزودن مربی</span>
+                        <a class="nav-link pl-3" onclick="ShowAddingItemForm('@Url.Action("Create","Sport")',' افزودن رشته ورزشی جدید ')">
+                            <span class="ml-1 item-text">افزودن رشته ورزشی</span>
                         </a>
                     </li>
                 </ul>

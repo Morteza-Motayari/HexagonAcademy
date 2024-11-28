@@ -16,6 +16,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.Sports
         public string Title { get; set; }
         [Display(Name = "مدرک مورد نیاز")]
         public int CertificateId { get; set; }
+        public bool IsDeleted { get; set; }
     }
     public enum UpdateSportResult
     {

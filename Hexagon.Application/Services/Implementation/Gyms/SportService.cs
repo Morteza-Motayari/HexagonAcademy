@@ -1,14 +1,40 @@
 ﻿using Hexagon.Application.Generators;
 using Hexagon.Application.Services.Interfaces.Gyms;
+using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
+using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
+using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Infra.Data.Repositories;
 using Hexagon.Infra.Data.Repositories.Gyms;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
-    public class SportService(ISportRepository sportRepository) : ISportService
+    public class SportService(ISportRepository sportRepository,IUserRepository userRepository) : ISportService
     {
+        public async Task<AdminSideDetailSportViewModel?> AdminSideDetailSportAsync(int SportId)
+        {
+            var sport = await sportRepository.GetSportWithCertificate(SportId);
+            if (sport == null)
+                return null;
+            AdminSideDetailSportViewModel? Detail = new()
+            {
+                Id = SportId,
+                CertificateId = sport.CertificateId,
+                Certificate=sport.Certificate?.Name,
+                Title = sport.Title,
+                CreatedDate = sport.CreatedDate,
+                ModifiedDate = sport.LastModifiedDate,
+                CreatedBy = await userRepository.GetJustUserName(sport.CreatedBy),
+                LastModifiedBy = await userRepository.GetJustUserName(sport.LastModifiedBy),
+                CreatedById = sport.CreatedBy,
+                LastModifiedById = sport.LastModifiedBy,
+                IsDeleted = sport.IsDeleted
+            };
+            return Detail;
+        }
+
         public async Task<CreateSportResult> CreateSportAsync(CreateSportViewModel model)
         {
             if (await sportRepository.ExistSportTitle(model.Title))
@@ -16,7 +42,6 @@ namespace Hexagon.Application.Services.Implementation.Gyms
 
             Sport sport = new()
             {
-                CreatedDate = DateTime.Now,
                 Title = model.Title,
                 CertificateId = model.CertificateId
             };
@@ -33,6 +58,8 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             var Sport = await sportRepository.GetByIdAsync(SportId);
             if (Sport == null)
                 return DeleteSportResult.SportNotFound;
+            if(Sport.IsDeleted==true)
+                return DeleteSportResult.SportAlreadyDeleted;
 
             Sport.IsDeleted = true;
             sportRepository.Update(Sport);
@@ -52,7 +79,8 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             {
                 Id = Sport.Id,
                 Title= Sport.Title,
-                CertificateId = Sport.CertificateId
+                CertificateId = Sport.CertificateId,
+                IsDeleted = Sport.IsDeleted
             };
         }
 
@@ -64,7 +92,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             var Sport = await sportRepository.GetByIdAsync(model.Id);
             if (Sport == null)
                 return UpdateSportResult.SportNotFound;
-            if (await sportRepository.ExistSportTitle(model.Title))
+            if (await sportRepository.ExistSportTitle(model.Title,model.Id))
                 return UpdateSportResult.DuplicatedTitle;
 
             #region Update Sport

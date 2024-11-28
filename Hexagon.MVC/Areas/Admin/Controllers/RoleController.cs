@@ -72,7 +72,11 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return Ok(new
+                {
+                    status = 204,
+                    message = ErrorMessages.InsufficintInputs
+                });
             }
             #endregion
 
@@ -80,7 +84,6 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             switch (result)
             {
                 case UpdateRoleResult.Success:
-                    TempData[SuccessMessage] = SuccessMessages.RoleAddedSuccessfully;
                     return Ok(new
                     {
                         status = 200,

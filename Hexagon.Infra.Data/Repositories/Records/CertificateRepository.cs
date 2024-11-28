@@ -17,7 +17,10 @@ namespace Hexagon.Infra.Data.Repositories
         }
 
         public async Task<bool> DupliCateCertificateName(string certificateName)
-        => await _db.Certificates.AnyAsync(c=>c.Name == certificateName);
+        => await _db.Certificates.AnyAsync(c=>c.Name == certificateName&&c.IsDeleted==false);
+
+        public async Task<bool> DupliCateCertificateName(string certificateName, int id)
+        => await _db.Certificates.AnyAsync(c => c.Name == certificateName &&c.Id!=id &&c.IsDeleted == false);
 
         public async Task<FilterCertificateViewModel> FilterCertificateAsync(FilterCertificateViewModel filter)
         {
@@ -56,6 +59,13 @@ namespace Hexagon.Infra.Data.Repositories
             return filter;
         }
 
+        public async Task<List<CertificateViewModel>?> GetAllCertificatesItemsAsync()
+        => await _db.Certificates.Where(c=>c.IsDeleted==false).Select(u => new CertificateViewModel
+        {
+            Id = u.Id,
+            Name = u.Name
+        }).ToListAsync();
+
         async Task<List<CertificateViewModel>?> GetAllCertificatesAsync()
         => await _db.Certificates.Select(u=>new CertificateViewModel
         {
@@ -66,9 +76,5 @@ namespace Hexagon.Infra.Data.Repositories
             CreatedDate=u.CreatedDate
         }).ToListAsync();
 
-        Task<List<CertificateViewModel>?> ICertificateRepository.GetAllCertificatesAsync()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -10,6 +10,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.Sports
     public enum DeleteSportResult
     {
         Success,
-        SportNotFound
+        SportNotFound,
+        SportAlreadyDeleted
     }
 }

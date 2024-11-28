@@ -1,17 +1,17 @@
 ﻿@using Hexagon.Application.Convertors
 @using Hexagon.Application.Extensions
 @using Hexagon.Domain.Enums.Filter
-@using Hexagon.Domain.ViewModels.Records.Certificates
-@model FilterCertificateViewModel
+@using Hexagon.Domain.ViewModels.Gyms.Sports
+@model FilterSportViewModel
 @{
-    ViewData["Title"] = "لیست مدرک ها";
+    ViewData["Title"] = "لیست رشته های ورزشی";
 }
 <div class="row">
     <div class="pl-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Certificate" asp-action="List">مدرک ها</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Sport" asp-action="List">رشته های ورزشی</a></li>
             </ol>
         </nav>
     </div>
@@ -21,13 +21,19 @@
                 <h2><i class="fe fe-24 fe-zoom-in"></i> فیلترها</h2>
                 <div class="toolbar">
                     <div class="col-12">
-                        <form class="form" method="post" id="filter-search" asp-area="Admin" asp-controller="Certificate" asp-action="List">
+                        <form class="form" method="post" id="filter-search" asp-area="Admin" asp-controller="Sport" asp-action="List">
                             <input type="hidden" asp-for="Page" />
                             <div class="form-row row pl-4">
                                 <div class="col-12 col-sm-6 col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Title" class="control-label"></label>
                                         <input asp-for="Title" class="form-control form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Certificate" class="control-label"></label>
+                                        <input asp-for="Certificate" class="form-control form-control">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4">
@@ -67,18 +73,19 @@
                     </div>
                     <br />
                     <p class="col-12">
-                        <a asp-area="Admin" asp-controller="Certificate" asp-action="Create" class="btn btn-success text-white">افزودن مدرک جدید</a>
+                        <a onclick="ShowAddingItemForm('@Url.Action("Create","Sport")',' افزودن رشته ورزشی جدید ')" class="btn btn-success text-white">ایجاد رشته ورزشی جدید</a>
                     </p>
                 </div>
             </div>
             <div class="body">
-                <h2><i class="fe fe-file-text text-dark bxl"></i> @ViewData["Title"]</h2>
+                <h2><i class="bx bx-ball text-dark bxl"></i> @ViewData["Title"]</h2>
                 <div class="table-responsive">
                     <div id="tableExport_wrapper" class="dataTables_wrapper dt-bootstrap4">
                         <table class="table table-borderless dataTable table-responsive w-100 d-block d-table table-hover" role="grid">
                             <thead class="thead-dark">
                                 <tr role="row">
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="نام: activate to sort column ascending">نام </th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="مدرک: activate to sort column ascending">مدرک </th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ ثبت: activate to sort column ascending">تاریخ ثبت</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="وضعیت: activate to sort column ascending">وضعیت</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending">اقدام</th>
@@ -90,7 +97,8 @@
                                     @foreach (var item in Model.Entities)
                                     {
                                         <tr role="row" class="@((item.IsDeleted==true)?"bg-danger":"") text-dark">
-                                            <td class="center">@item.Name</td>
+                                            <td class="center">@item.Title</td>
+                                            <td class="center">@item.Certificate</td>
                                             <td class="center">@item.CreatedDate.ToShamsi()</td>
                                             <td class="center">
                                                 @if (item.IsDeleted == true)
@@ -103,15 +111,15 @@
                                                 }
                                             </td>
                                             <td class="center">
-                                                <a asp-area="Admin" asp-controller="Certificate" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
+                                                <a asp-area="Admin" asp-controller="Sport" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
                                                     <i class="fe fe-24 fe-alert-circle"></i>
                                                 </a>
                                                 @if (item.IsDeleted == false)
                                                 {
-                                                    <a asp-area="Admin" asp-controller="Certificate" asp-action="Edit" asp-route-id="@item.Id" class="text-success">
+                                                    <a onclick="ShowAddingItemForm('@Url.Action("Edit","Sport",new{id=item.Id})','ویرایش رشته ورزشی')" class="text-success">
                                                         <i class="fe fe-24 fe-edit-3"></i>
                                                     </a>
-                                                    <a onclick="confirmDelete('@Url.Action("Delete","Certificate",new{id=item.Id})',event,'@item.Name')" class="text-danger">
+                                                    <a onclick="confirmDelete('@Url.Action("Delete","Sport",new{id=item.Id})',event,'@item.Title')" class="text-danger">
                                                         <i class="fe fe-24 fe-trash-2"></i>
                                                     </a>
                                                 }

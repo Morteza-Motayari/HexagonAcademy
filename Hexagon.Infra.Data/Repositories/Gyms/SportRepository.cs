@@ -17,11 +17,14 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         }
 
         public async Task<bool> ExistSportTitle(string title)
-        => await _db.Sports.AnyAsync(s => s.Title == title);
+        => await _db.Sports.AnyAsync(s => s.Title == title&& s.IsDeleted==false);
+
+        public async Task<bool> ExistSportTitle(string title, int id)
+        => await _db.Sports.AnyAsync(s => s.Title == title&& s.Id!=id && s.IsDeleted == false);
 
         public async Task<FilterSportViewModel> FilterSportAsync(FilterSportViewModel filter)
         {
-            var query = _db.Sports.AsQueryable();
+            var query = _db.Sports.Include(x => x.Certificate).AsQueryable();
 
             #region Filter Search
             switch (filter.Status)
@@ -40,6 +43,10 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             {
                 query = query.Where(r => r.Title.Contains(filter.Title));
             }
+            if (filter.Certificate != null)
+            {
+                query = query.Where(r => r.Certificate.Name.Contains(filter.Certificate));
+            }
 
             #endregion
 
@@ -50,6 +57,7 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
                 Id = u.Id,
                 Title = u.Title,
                 CertificateId = u.CertificateId,
+                Certificate=u.Certificate.Name,
                 CreatedDate = u.CreatedDate,
                 IsDeleted = u.IsDeleted
             }));
@@ -65,5 +73,8 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             CreatedDate = u.CreatedDate,
             IsDeleted = u.IsDeleted
         }).ToListAsync();
+
+        public async Task<Sport?> GetSportWithCertificate(int id)
+        => await _db.Sports.Include(s=>s.Certificate).FirstOrDefaultAsync(s => s.Id == id);
     }
 }

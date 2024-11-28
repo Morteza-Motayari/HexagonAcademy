@@ -57,6 +57,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 return DeleteCertificateResult.CertificateNotFound;
             if(certificate.IsDeleted==true)
                 return DeleteCertificateResult.CertificateAlreadyDeleted;
+
             certificate.IsDeleted = true;
             CertificateRepository.Update(certificate);
             await CertificateRepository.SaveChangeAsync();
@@ -80,15 +81,15 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             };
         }
 
-        public async Task<List<CertificateViewModel>?> ListCertificateesAsync()
-        => await CertificateRepository.GetAllCertificatesAsync();
+        public async Task<List<CertificateViewModel>?> ListCertificatesForOptionsAsync()
+        => await CertificateRepository.GetAllCertificatesItemsAsync();
 
         public async Task<UpdateCertificateResult> UpdateCertificateAsync(UpdateCertificateViewModel model)
         {
             var certificate = await CertificateRepository.GetByIdAsync(model.Id);
             if (certificate == null)
                 return UpdateCertificateResult.CertificateNotFound;
-            if (await CertificateRepository.DupliCateCertificateName(model.Name))
+            if (await CertificateRepository.DupliCateCertificateName(model.Name,model.Id))
                 return UpdateCertificateResult.DuplicatedCertificate;
             #region Update Certificate
             certificate.Name = model.Name;

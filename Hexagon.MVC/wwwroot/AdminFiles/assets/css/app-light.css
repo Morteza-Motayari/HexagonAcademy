@@ -12308,3 +12308,6 @@ html {
     font-size: 30px;
     vertical-align: middle;
 }
+.color-disabled {
+    background-color: #e9ecef;
+}

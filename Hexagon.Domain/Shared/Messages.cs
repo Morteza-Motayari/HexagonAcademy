@@ -48,6 +48,12 @@ namespace Hexagon.Domain.Shared
         public static string CertificateUpdatedSuccessfully = "مدرک مدنظر  با موفقیت ویرایش شده است.";
         public static string CertificateDeletedSuccessfully = "مدرک مدنظر  با موفقیت حذف شده است.";
         #endregion
+
+        #region Sport
+        public static string SportAddedSuccessfully = "رشته ورزشی جدید با موفقیت اضافه شده است.";
+        public static string SportUpdatedSuccessfully = "رشته ورزشی مدنظر  با موفقیت ویرایش شده است.";
+        public static string SportDeletedSuccessfully = "رشته ورزشی مدنظر  با موفقیت حذف شده است.";
+        #endregion
     }
     public class ErrorMessages
     {
@@ -94,6 +100,12 @@ namespace Hexagon.Domain.Shared
         public static string CertificateDuplicated = "مدرک مدنظر قبلا ثبت شده است.";
         public static string CertificateAlreadyDeleted = "مدرک مدنظر قبلا حذف شده است.";
         #endregion
+
+        #region Sport
+        public static string SportNotFound = "رشته ورزشی مدنظر پیدا نشده است.";
+        public static string SportDuplicated = "رشته ورزشی مدنظر قبلا ثبت شده است.";
+        public static string SportAlreadyDeleted = "رشته ورزشی مدنظر قبلا حذف شده است.";
+        #endregion
     }
 
     public class WarningMessages
@@ -113,5 +125,10 @@ namespace Hexagon.Domain.Shared
         #region Certificate
         public static string CertificateCantbeEdited = "این مدرک حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
+
+        #region Sport
+        public static string SportCantbeEdited = "این رشته ورزشی حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
     }
 }
