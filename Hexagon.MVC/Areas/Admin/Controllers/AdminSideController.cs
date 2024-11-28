@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AdminSideController : Controller
     {
         protected static string SuccessMessage = "SuccessMessage";

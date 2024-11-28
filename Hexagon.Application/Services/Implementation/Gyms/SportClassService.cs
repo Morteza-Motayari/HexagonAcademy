@@ -5,6 +5,7 @@ using Hexagon.Application.Statics;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
+using Hexagon.Infra.Data.Repositories.Gyms;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
@@ -56,6 +57,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             #endregion
 
             SportClass.IsDeleted = true;
+            SportClassRepository.Update(SportClass);
             await SportClassRepository.SaveChangeAsync();
             return DeleteSportClassResult.Success;
         }
@@ -109,8 +111,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                     slug = await SportClassRepository.PutSpecificSlug(slug);
                 }
                 SportClass.Slug = slug;
-            }
-            SportClassRepository.Update(SportClass);
+            }            
             #region Update Image
             if (model.NewImage != null)
             {
@@ -123,6 +124,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 SportClass.ImageUrl = imageName;
             }
             #endregion
+            SportClassRepository.Update(SportClass);
             await SportClassRepository.SaveChangeAsync();
             #endregion
 

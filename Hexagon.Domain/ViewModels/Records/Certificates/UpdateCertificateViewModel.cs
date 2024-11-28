@@ -18,6 +18,7 @@ namespace Hexagon.Domain.ViewModels.Records.Certificates
         [MaxLength(1000, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [Display(Name = "جزئیات")]
         public string? Details { get; set; }
+        public bool IsDeleted { get; set; }
     }
     public enum UpdateCertificateResult
     {

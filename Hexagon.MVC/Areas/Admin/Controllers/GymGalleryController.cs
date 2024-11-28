@@ -14,7 +14,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if(!await gymGalleryService.GymExistForGalleyAsync(gymId))
             {
                 TempData[ErrorMessage] = ErrorMessages.GymNotFound;
-                return RedirectToAction("List","Gym","Admin");
+                return RedirectToAction("List","Gym", new { area = "Admin" });
             }
             ViewData["GymGallery"]=await gymGalleryService.ListGymGallerysAsync(gymId);
             return View(new CreateGymGalleryViewModel

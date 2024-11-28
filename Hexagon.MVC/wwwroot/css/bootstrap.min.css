@@ -8164,7 +8164,9 @@ textarea.form-control-lg {
 .text-secondary {
     color: #6266ea !important
 }
-
+.text-green {
+    color: #18e143 !important
+}
 .text-success {
     color: #198754 !important
 }

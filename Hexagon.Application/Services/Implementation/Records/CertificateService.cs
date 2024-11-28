@@ -4,12 +4,37 @@ using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Statics;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Models.Records;
+using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Domain.ViewModels.Users.Users;
+using Hexagon.Infra.Data.Repositories.Users;
+using Hexagon.Infra.Data.Repositories;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
-    public class CertificateService(ICertificateRepository CertificateRepository) : ICertificateService
+    public class CertificateService(ICertificateRepository CertificateRepository,IUserRepository userRepository) : ICertificateService
     {
+        public async Task<AdminSideDetailCertificateViewModel?> AdminSideDetailCertificateAsync(int CertificateId)
+        {
+            var user = await CertificateRepository.GetByIdAsync(CertificateId);
+            if (user == null)
+                return null;
+            AdminSideDetailCertificateViewModel? Detail = new()
+            {
+                Id = CertificateId,
+                Name = user.Name,
+                Details=user.Details,
+                CreatedDate = user.CreatedDate,
+                ModifiedDate = user.LastModifiedDate,
+                CreatedBy = await userRepository.GetJustUserName(user.CreatedBy),
+                LastModifiedBy = await userRepository.GetJustUserName(user.LastModifiedBy),                
+                CreatedById = user.CreatedBy,
+                LastModifiedById = user.LastModifiedBy,
+                IsDeleted = user.IsDeleted
+            };
+            return Detail;
+        }
+
         public async Task<CreateCertificateResult> CreateCertificateAsync(CreateCertificateViewModel model)
         {
             if(await CertificateRepository.DupliCateCertificateName(model.Name))
@@ -30,8 +55,10 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             var certificate = await CertificateRepository.GetByIdAsync(CertificateId);
             if (certificate == null)
                 return DeleteCertificateResult.CertificateNotFound;
-
+            if(certificate.IsDeleted==true)
+                return DeleteCertificateResult.CertificateAlreadyDeleted;
             certificate.IsDeleted = true;
+            CertificateRepository.Update(certificate);
             await CertificateRepository.SaveChangeAsync();
             return DeleteCertificateResult.Success;
         }
@@ -48,7 +75,8 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             {
                 Id = certificate.Id,
                 Name = certificate.Name,
-                Details = certificate.Details
+                Details = certificate.Details,
+                IsDeleted = certificate.IsDeleted
             };
         }
 

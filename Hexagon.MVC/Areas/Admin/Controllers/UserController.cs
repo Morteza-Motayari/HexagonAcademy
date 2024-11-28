@@ -37,7 +37,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 case CreateUserResult.Success:
                     TempData[SuccessMessage] = SuccessMessages.UserAddedSuccessfully;
-                    return RedirectToAction(nameof(List), "User", "Admin");
+                    return RedirectToAction(nameof(List), "User", new { area = "Admin" });
                 case CreateUserResult.MobileDuplicated:
                     TempData[ErrorMessage] = ErrorMessages.UserPhoneNumberDuplicated;
                     break;
@@ -59,7 +59,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (user.IsDeleted == true)
             {
                 TempData[WarningMessage] = WarningMessages.UserCantbeEdited;
-                return RedirectToAction("List", "User", "Admin");
+                return RedirectToAction("List", "User", new {area="Admin"});
             }
 
             ViewData["roles"] = await roleService.ListRolesAsync();
@@ -149,7 +149,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 case AdminChagePasswordResult.Success:
                     TempData[SuccessMessage] = SuccessMessages.UserPasswordChangedSuccessfully;
-                    return RedirectToAction(nameof(List), "User", "Admin");
+                    return RedirectToAction("List", "User", new { area = "Admin" });
                 case AdminChagePasswordResult.UserNotFound:
                     TempData[ErrorMessage] = ErrorMessages.UserNotFound;
                     break;

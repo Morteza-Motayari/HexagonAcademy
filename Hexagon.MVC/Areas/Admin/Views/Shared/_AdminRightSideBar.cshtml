@@ -6,19 +6,20 @@
         <!-- nav bar -->
         <div class="w-100 mb-4 d-flex">
             <a class="navbar-brand mx-auto mt-2 flex-fill text-center" asp-area="Admin" asp-controller="Home" asp-action="Index">
-                <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
+                @* <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
                 <g>
                 <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
                 <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
                 <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
                 </g>
-              </svg>
+              </svg> *@
+                <img src="/img/logo/logo.jpg" class="navbar-brand-img brand-sm" />
             </a>
         </div>
         <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
                 <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-home fe-16"></i>
+                    <i class="fe fe-home fe-20"></i>
                     <span class="ml-3 item-text">داشبورد</span><span class="sr-only">(current)</span>
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
@@ -40,13 +41,13 @@
                 </ul>
             </li>
         </ul>
-        <p class="text-muted nav-heading mt-4 mb-1">
+        <p class="text-muted nav-heading mb-1">
             <span>مدیریت دسترسی ها و کاربران</span>
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
                 <a href="#ui-roles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-lock fe-16"></i>
+                    <i class="fe fe-lock fe-20"></i>
                     <span class="ml-3 item-text">نقش ها</span>
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="ui-roles">
@@ -64,7 +65,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-users fe-16"></i>
+                    <i class="fe fe-users fe-20"></i>
                     <span class="ml-3 item-text">کاربران</span>
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="users">
@@ -90,46 +91,8 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a href="#trainers" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-grid fe-16"></i>
-                    <span class="ml-3 item-text">Tables</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="trainers">
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="./table_basic.html">
-                            <span class="ml-1 item-text">لیست مربی ها</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="./table_advanced.html">
-                            <span class="ml-1 item-text">افزودن مربی</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-pie-chart fe-16"></i>
-                    <span class="ml-3 item-text">Charts</span>
-                </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="charts">
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="./chart-inline.html"><span class="ml-1 item-text">Inline Chart</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="./chart-chartjs.html"><span class="ml-1 item-text">Chartjs</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="./chart-apexcharts.html"><span class="ml-1 item-text">ApexCharts</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="./datamaps.html"><span class="ml-1 item-text">Datamaps</span></a>
-                    </li>
-                </ul>
-            </li>
         </ul>
-        <p class="text-muted nav-heading mt-4 mb-1">
+        <p class="text-muted nav-heading mb-1">
             <span>مدیریت باشگاه ها و کلاس ها</span>
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-2">
@@ -153,7 +116,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a href="#classes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-users fe-16"></i>
+                    <i class="fe fe-users fe-20"></i>
                     <span class="ml-3 item-text">کلاس ها</span>
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="classes">
@@ -181,8 +144,8 @@
             </li>
             <li class="nav-item dropdown">
                 <a href="#trainers" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-grid fe-16"></i>
-                    <span class="ml-3 item-text">Tables</span>
+                    <i class="fe fe-grid fe-20"></i>
+                    <span class="ml-3 item-text">رشته های ورزشی</span>
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="trainers">
                     <li class="nav-item">
@@ -197,23 +160,44 @@
                     </li>
                 </ul>
             </li>
+        </ul>
+        <p class="text-muted nav-heading mb-1">
+            <span>مدیریت مدارک و سوابق</span>
+        </p>
+        <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
-                <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-pie-chart fe-16"></i>
-                    <span class="ml-3 item-text">Charts</span>
+                <a href="#ui-certificates" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-file-text fe-20 text-dark bxs"></i>
+                    <span class="ml-3 item-text">مدرک ها</span>
                 </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+                <ul class="collapse list-unstyled pl-4 w-100" id="ui-certificates">
                     <li class="nav-item">
-                        <a class="nav-link pl-3" href="./chart-inline.html"><span class="ml-1 item-text">Inline Chart</span></a>
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Certificate" asp-action="List">
+                            <span class="ml-1 item-text">مدیریت مدرک ها</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pl-3" href="./chart-chartjs.html"><span class="ml-1 item-text">Chartjs</span></a>
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Certificate" asp-action="Create">
+                            <span class="ml-1 item-text">افزودن مدرک</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#Experiences" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-award fe-20"></i>
+                    <span class="ml-3 item-text">سابقه ها</span>
+                </a>
+                <ul class="collapse list-unstyled pl-4 w-100" id="Experiences">
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Experience" asp-action="List">
+                            <span class="ml-1 item-text">لیست سابقه ها</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pl-3" href="./chart-apexcharts.html"><span class="ml-1 item-text">ApexCharts</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="./datamaps.html"><span class="ml-1 item-text">Datamaps</span></a>
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Experience" asp-action="Create">
+                            <span class="ml-1 item-text">افزودن سابقه</span>
+                        </a>
                     </li>
                 </ul>
             </li>

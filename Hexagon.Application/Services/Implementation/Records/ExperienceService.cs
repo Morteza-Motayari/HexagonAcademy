@@ -3,6 +3,7 @@ using Hexagon.Application.Generators;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Statics;
 using Hexagon.Domain.Interfaces;
+using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.ViewModels.Records.Experiences;
@@ -43,6 +44,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 return DeleteExperienceResult.ExperienceNotFound;
 
             experience.IsDeleted = true;
+            experienceRepository.Update(experience);
             await experienceRepository.SaveChangeAsync();
             return DeleteExperienceResult.Success;
         }

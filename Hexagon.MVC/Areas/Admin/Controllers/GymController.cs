@@ -39,7 +39,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 case CreateGymResult.Success:
                     TempData[SuccessMessage] = SuccessMessages.GymAddedSuccessfully;
-                    return RedirectToAction(nameof(List), "Gym", "Admin");
+                    return RedirectToAction(nameof(List), "Gym", new { area = "Admin" });
                 case CreateGymResult.DuplicatedConstantPhone:
                     TempData[ErrorMessage] = ErrorMessages.GymConstatntPhoneNumberDuplicated;
                     break;
@@ -57,7 +57,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (gym.IsDeleted == true)
             {
                 TempData[WarningMessage] = WarningMessages.GymCantbeEdited;
-                return RedirectToAction("List", "Gym", "Admin");
+                return RedirectToAction("List", "Gym", new { area = "Admin" });
             }
 
             return View(gym);
@@ -76,7 +76,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 case UpdateGymResult.Success:
                     TempData[SuccessMessage] = SuccessMessages.GymUpdatedSuccessfully;
-                    return RedirectToAction(nameof(List), "Gym", "Admin");
+                    return RedirectToAction(nameof(List), "Gym", new { area = "Admin" });
                 case UpdateGymResult.DuplicatedConstantPhone:
                     TempData[ErrorMessage] = ErrorMessages.GymConstatntPhoneNumberDuplicated;
                     break;

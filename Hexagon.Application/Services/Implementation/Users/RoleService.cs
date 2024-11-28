@@ -3,12 +3,6 @@ using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
-using Hexagon.Infra.Data.Repositories.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
@@ -46,6 +40,7 @@ namespace Hexagon.Application.Services.Implementation.Users
             if (role == null)
                 return DeleteRoleResult.NotFound;
             role.IsDeleted = true;
+            roleRepository.Update(role);
             await roleRepository.SaveChangeAsync();
             return DeleteRoleResult.Success;
         }

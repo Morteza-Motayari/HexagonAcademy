@@ -3,6 +3,7 @@ using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
+using Hexagon.Infra.Data.Repositories.Gyms;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
@@ -34,6 +35,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 return DeleteSportResult.SportNotFound;
 
             Sport.IsDeleted = true;
+            sportRepository.Update(Sport);
             await sportRepository.SaveChangeAsync();
             return DeleteSportResult.Success;
         }

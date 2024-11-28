@@ -10,6 +10,7 @@ namespace Hexagon.Domain.ViewModels.Records.Certificates
     public enum DeleteCertificateResult
     {
         Success,
-        CertificateNotFound
+        CertificateNotFound,
+        CertificateAlreadyDeleted
     }
 }

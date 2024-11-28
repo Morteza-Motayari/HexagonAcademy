@@ -42,6 +42,12 @@ namespace Hexagon.Domain.Shared
         public static string GymGalleryAddedSuccessfully = "تصویر جدید برای باشگاه با موفقیت اضافه شده است.";
         public static string GymGalleryDeletedSuccessfully = "تصویر باشگاه مدنظر  با موفقیت حذف شده است.";
         #endregion
+
+        #region Certificate
+        public static string CertificateAddedSuccessfully = "مدرک جدید با موفقیت اضافه شده است.";
+        public static string CertificateUpdatedSuccessfully = "مدرک مدنظر  با موفقیت ویرایش شده است.";
+        public static string CertificateDeletedSuccessfully = "مدرک مدنظر  با موفقیت حذف شده است.";
+        #endregion
     }
     public class ErrorMessages
     {
@@ -82,6 +88,12 @@ namespace Hexagon.Domain.Shared
         public static string GymGalleryNull = "تصویری برای باشگاه انتخاب نشده است.";
         public static string MaxImagesForGym = "حداکثر تصاویر موجود برای یک باشگاه 8 تا می تواند باشد.";
         #endregion
+
+        #region Certificate
+        public static string CertificateNotFound = "مدرک مدنظر پیدا نشده است.";
+        public static string CertificateDuplicated = "مدرک مدنظر قبلا ثبت شده است.";
+        public static string CertificateAlreadyDeleted = "مدرک مدنظر قبلا حذف شده است.";
+        #endregion
     }
 
     public class WarningMessages
@@ -96,7 +108,10 @@ namespace Hexagon.Domain.Shared
 
         #region GymGallery
         public static string GymGalleryIdZero = "عکسی انتخاب نشده است.";
+        #endregion
 
+        #region Certificate
+        public static string CertificateCantbeEdited = "این مدرک حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
     }
 }

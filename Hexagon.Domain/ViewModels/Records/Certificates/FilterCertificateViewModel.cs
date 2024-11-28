@@ -13,7 +13,7 @@ namespace Hexagon.Domain.ViewModels.Records.Certificates
     {
         [Display(Name = "تعداد مدل های نمایشی در صفحه")]
         public override int TakeEntity { get; set; }
-        [Display(Name = "نقش")]
+        [Display(Name = "نام")]
         public string? Title { get; set; }
         [Display(Name = "وضعیت موجودیت")]
         public ExistingStatus? Status { get; set; }

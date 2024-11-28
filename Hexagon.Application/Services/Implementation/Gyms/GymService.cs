@@ -11,6 +11,7 @@ using Hexagon.Infra.Data.Repositories.Users;
 using Hexagon.Infra.Data.Repositories;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
+using Hexagon.Infra.Data.Repositories.Gyms;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
@@ -88,6 +89,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             #endregion
 
             Gym.IsDeleted = true;
+            gymRepository.Update(Gym);
             await gymRepository.SaveChangeAsync();
             return DeleteGymResult.Success;
         }
@@ -137,8 +139,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                     slug = await gymRepository.PutSpecificSlug(slug);
                 }
                 gym.Slug = slug;
-            }
-            gymRepository.Update(gym);
+            }           
             #region Update Image
             if (model.NewImage != null)
             {
@@ -151,6 +152,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 gym.ImageUrl = imageName;
             }
             #endregion
+            gymRepository.Update(gym);
             await gymRepository.SaveChangeAsync();
             #endregion
 

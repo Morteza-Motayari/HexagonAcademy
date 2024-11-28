@@ -1,0 +1,19 @@
+﻿using Hexagon.Domain.ViewModels.Common;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Hexagon.Domain.ViewModels.Records.Certificates
+{
+    public class AdminSideDetailCertificateViewModel:BaseAdminDetail
+    {
+        public int Id { get; set; }
+        [Display(Name = "مدرک")]
+        public string Name { get; set; }
+        [Display(Name = "جزئیات")]
+        public string? Details { get; set; }
+    }
+}

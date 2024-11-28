@@ -6,9 +6,11 @@ using Hexagon.Application.Statics;
 using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Users;
+using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
+using Hexagon.Infra.Data.Repositories;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
@@ -140,6 +142,7 @@ namespace Hexagon.Application.Services.Implementation.Users
 
 
             User.IsDeleted = true;
+            UserRepository.Update(User);
             await UserRepository.SaveChangeAsync();
             return DeleteUserResult.Success;
         }
@@ -210,8 +213,7 @@ namespace Hexagon.Application.Services.Implementation.Users
             User.Gender = model.Gender;
             User.Situation = model.Situation;
             User.Status = model.Status;
-            UserRepository.Update(User);
-
+            
             #region Update Avatar
             if (model.NewImage != null)
             {
@@ -224,6 +226,7 @@ namespace Hexagon.Application.Services.Implementation.Users
                 User.Avatar = imageName;
             }
             #endregion
+            UserRepository.Update(User);
             await UserRepository.SaveChangeAsync();
             #region Update User Roles
             if (model.RolesId.CheckNullability())

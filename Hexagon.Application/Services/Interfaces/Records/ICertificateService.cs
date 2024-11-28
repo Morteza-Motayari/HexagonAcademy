@@ -10,5 +10,7 @@ namespace Hexagon.Application.Services.Interfaces.Records
         Task<DeleteCertificateResult> DeleteCertificateAsync(int CertificateId);
         Task<List<CertificateViewModel>?> ListCertificateesAsync();
         Task<FilterCertificateViewModel> FilterCertificateesAsync(FilterCertificateViewModel filter);
+        Task<AdminSideDetailCertificateViewModel?> AdminSideDetailCertificateAsync(int CertificateId);
+
     }
 }
