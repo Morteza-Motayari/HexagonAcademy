@@ -44,11 +44,11 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label asp-for="CreatedDate" class="control-label"></label>
-                                <input value="@Model.CreatedDate.ToShamsi()" type="text" class="form-control" id="birthDay" disabled="">
+                                <input value="@Model.CreatedDate.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
                             </div>
                             <div class="form-group col-md-6">
                                 <label asp-for="ModifiedDate" class="control-label"></label>
-                                <input value="@Model.ModifiedDate?.ToShamsi()" type="text" class="form-control" id="birthDay" disabled="">
+                                <input value="@Model.ModifiedDate?.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
                             </div>
                             <div class="form-group col-md-6">
                                 <label asp-for="CreatedBy" class="form-control-label"></label>

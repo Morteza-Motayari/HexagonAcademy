@@ -81,7 +81,7 @@
                                                 <img src="@SavingPath.GymGalleryPath@item.ImageUrl"
                                                 class="img-thumbnail" style="max-width:180px" />
                                             </td>
-                                            <td class="center">@item.CreatedDate.ToShamsi()</td>
+                                            <td class="center">@item.CreatedDate.ToShamsiWithHour()</td>
                                             <td class="center">
                                                 <a onclick="confirmDeleteImage('@item.Id',event,'@item.ImageTitle')" class="text-danger">
                                                     <i class="fe fe-24 fe-trash-2"></i>

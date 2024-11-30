@@ -1,0 +1,91 @@
+﻿@using Hexagon.Application.Extensions
+@using Hexagon.Domain.ViewModels.Records.Certificates
+@using Hexagon.Domain.ViewModels.Users.Staffs.Trainers
+@model UpdateTrainerViewModel
+@{
+    ViewData["Title"] = "ویرایش مربی";
+    List<CertificateViewModel> certificates = ViewData["Certificates"] as List<CertificateViewModel> ?? new List<CertificateViewModel>();
+    List<int>? TrainerCertificateIds = Model.TrainerCertificatesIds ?? new List<int>();
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Trainer" asp-action="List">مربیان</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Trainer" asp-action="Edit" asp-route-id="@Model.Id">ویرایش مربی</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2 class="mt-3">
+                    <i class="bx bx-cycling bxl"></i> @ViewData["Title"]
+                </h2>
+            </div>
+            <div class="body">
+                <form method="post" enctype="multipart/form-data" asp-area="Admin" class="row col-md-12" asp-controller="Trainer" asp-action="Edit">
+                    <input asp-for="Id" type="hidden" />
+                    <input asp-for="UserId" type="hidden" />
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label asp-for="UserId" class="form-control-label"></label>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" class="form-control color-disabled" asp-route-id="@Model.UserId">@Model.TrainerName</a>                                
+                            </div>
+                            <br />
+                            <div class="form-group col-md-6">
+                                <label asp-for="Position" class="form-control-label"></label>
+                                <input asp-for="Position" class="form-control" />
+                                <span asp-validation-for="Position" class="text-danger"></span>
+                            </div><div class="form-group col-md-6">
+                                <label asp-for="Salary" class="form-control-label"></label>
+                                <input asp-for="Salary" class="form-control" id="salaryInput" />
+                                <span asp-validation-for="Salary" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>مدرک ها</h2>
+                        <hr />
+                        <div>
+                            @if (certificates.CheckNullability())
+                            {
+                                @foreach (var item in certificates)
+                                {
+                                    <div class="custom-checkbox">
+                                        <input type="checkbox" class="bxs" name="TrainerCertificatesIds" @(TrainerCertificateIds.Any(c=>c==item.Id)?"checked":"") value="@item.Id">
+                                        <label for="customCheck1">@item.Name</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="submit" value="ویرایش مربی" class="btn btn-primary" />
+                            <a asp-area="Admin" asp-controller="Trainer" asp-action="List" class="btn btn-secondary">برگشت به لیست</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        document.getElementById('salaryInput').addEventListener('input', function (e) {
+            // Remove all non-digit characters (except period if you want to allow decimals)
+            let value = e.target.value.replace(/[^0-9]/g, '');
+
+            // Format the number with commas
+            e.target.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        });
+
+        // Optional: Strip commas before submitting the form
+        document.getElementById('salaryInput').addEventListener('blur', function (e) {
+            e.target.value = e.target.value.replace(/,/g, '');
+        });
+    </script>
+}

@@ -1,6 +1,7 @@
 ﻿using Hexagon.Domain.Enums.Filter;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Models.Records;
+using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Hexagon.Domain.ViewModels.Records.Certificates;
 using Hexagon.Infra.Data.Context;
@@ -65,6 +66,9 @@ namespace Hexagon.Infra.Data.Repositories
             Id = u.Id,
             Name = u.Name
         }).ToListAsync();
+
+        public async Task<ICollection<Certificate>?> GetTrainerCertificate(int userId, int staffId)
+        => await _db.Certificates.Include(c=>c.UserCertificates).Where(u=>u.UserCertificates.Where(c=>c.UserId==userId&&c.StaffId==staffId).Any()).ToListAsync();
 
         async Task<List<CertificateViewModel>?> GetAllCertificatesAsync()
         => await _db.Certificates.Select(u=>new CertificateViewModel

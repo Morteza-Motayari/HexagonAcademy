@@ -19,6 +19,15 @@ namespace Hexagon.Application.Convertors
             return $"{year}/{mounth.ToString("00")}/{day.ToString("00")}";
         }
 
+        public static string ToShamsiWithHour(this DateTime date)
+        {
+            PersianCalendar calender = new();
+            int year = calender.GetYear(date);
+            int mounth = calender.GetMonth(date);
+            int day = calender.GetDayOfMonth(date);
+            return $"{date.Hour}:{date.Minute} {year}/{mounth.ToString("00")}/{day.ToString("00")}";
+        }
+
         public static DateTime ToMiladi(this string date)
         {
             PersianCalendar p = new PersianCalendar();

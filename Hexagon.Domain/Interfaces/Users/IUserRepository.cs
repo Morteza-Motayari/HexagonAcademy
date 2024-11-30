@@ -1,8 +1,10 @@
-﻿using Hexagon.Domain.Models.Users;
+﻿using Hexagon.Domain.Models.Records;
+using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +20,10 @@ namespace Hexagon.Domain.Interfaces
         Task<User?> GetByMobileAsync(string mobile);
         Task<User?> GetByMobileAndVerificationCodeAsync(string mobile, string verificationCode);
         Task<FilterUserViewModel> FilteUsersAsync(FilterUserViewModel filter);
-        Task<List<UserViewModel>?> GetAllUsersAsync();
+        Task<ReadOnlyCollection<UserViewModel>?> GetAllUsersForOptionsAsync(string term);
         Task<ClientSideUpdateUserViewModel?> GetUserForUpdateClientSide(int userId);
         Task<UserClientSideView?> GetUserForViewClientSide(int userId);
         Task<string?> GetJustUserName(int? userId);
+        Task<User?> GetUserWithChilds(int userId);
     }
 }

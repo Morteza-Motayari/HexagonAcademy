@@ -245,6 +245,32 @@ namespace Hexagon.Infra.Data.Migrations
                     b.ToTable("ClassUsers");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymStaff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GymId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RegisteredDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StaffId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GymId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("GymStaffs");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUser", b =>
                 {
                     b.Property<int>("Id")
@@ -286,9 +312,11 @@ namespace Hexagon.Infra.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PlaceOftake")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("StaffId")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -296,6 +324,8 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CertificateId");
+
+                    b.HasIndex("StaffId");
 
                     b.HasIndex("UserId");
 
@@ -496,9 +526,6 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GymId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -520,8 +547,6 @@ namespace Hexagon.Infra.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GymId");
 
                     b.HasIndex("UserId");
 
@@ -692,6 +717,25 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Links.GymStaff", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
+                        .WithMany("GymStaffs")
+                        .HasForeignKey("GymId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hexagon.Domain.Models.Users.Staff", "staff")
+                        .WithMany("StaffGyms")
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("gym");
+
+                    b.Navigation("staff");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Links.GymUser", b =>
                 {
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
@@ -719,6 +763,10 @@ namespace Hexagon.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Hexagon.Domain.Models.Users.Staff", "staff")
+                        .WithMany("UserCertificates")
+                        .HasForeignKey("StaffId");
+
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
                         .WithMany("UserCertificates")
                         .HasForeignKey("UserId")
@@ -726,6 +774,8 @@ namespace Hexagon.Infra.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("certificate");
+
+                    b.Navigation("staff");
 
                     b.Navigation("user");
                 });
@@ -777,19 +827,11 @@ namespace Hexagon.Infra.Data.Migrations
 
             modelBuilder.Entity("Hexagon.Domain.Models.Users.Staff", b =>
                 {
-                    b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
-                        .WithMany("Staffs")
-                        .HasForeignKey("GymId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
                         .WithMany("staffes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("gym");
 
                     b.Navigation("user");
                 });
@@ -817,11 +859,11 @@ namespace Hexagon.Infra.Data.Migrations
                 {
                     b.Navigation("Gallery");
 
+                    b.Navigation("GymStaffs");
+
                     b.Navigation("GymUsers");
 
                     b.Navigation("SportClasses");
-
-                    b.Navigation("Staffs");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.Sport", b =>
@@ -856,6 +898,10 @@ namespace Hexagon.Infra.Data.Migrations
             modelBuilder.Entity("Hexagon.Domain.Models.Users.Staff", b =>
                 {
                     b.Navigation("SportClasses");
+
+                    b.Navigation("StaffGyms");
+
+                    b.Navigation("UserCertificates");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Users.User", b =>

@@ -15,5 +15,6 @@ namespace Hexagon.Domain.Interfaces
         Task<List<CertificateViewModel>?> GetAllCertificatesItemsAsync();
         Task<bool> DupliCateCertificateName(string certificateName);
         Task<bool> DupliCateCertificateName(string certificateName, int id);
+        Task<ICollection<Certificate>?> GetTrainerCertificate(int userId, int staffId);
     }
 }

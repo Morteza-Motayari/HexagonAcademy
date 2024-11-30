@@ -47,8 +47,6 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [Display(Name = "جنسیت")]
         [Required(ErrorMessage = "لطفا {0} را انتخاب کنید.")]
         public UserGender Gender { get; set; }
-        [Display(Name = "نقش")]
-        public UserSituation? Situation { get; set; }
         [Display(Name = "وضعیت")]
         public UserStatus Status { get; set; }
         public List<int>? RolesId { get; set; }

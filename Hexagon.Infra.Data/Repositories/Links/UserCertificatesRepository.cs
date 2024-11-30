@@ -28,6 +28,17 @@ namespace Hexagon.Infra.Data.Repositories.Links
                 _db.UserCertificates.RemoveRange(list);
         }
 
+        public async Task<bool> ExistCertificateForUser(int userId, int certificateId, int staffId, int editStaffId)
+        => await _db.UserCertificates.AnyAsync(u => u.UserId == userId && u.CertificateId == certificateId && u.StaffId == staffId&&u.StaffId!= editStaffId);
+        public async Task<bool> ExistCertificateForUser(int userId, int certificateId,int staffId)
+        => await _db.UserCertificates.AnyAsync(u => u.UserId == userId && u.CertificateId == certificateId&&u.StaffId==staffId);
+
+        public async Task<List<int>?> GetStaffCertificateIdsAsync(int staffId)
+        => await _db.UserCertificates.Where(u => u.StaffId == staffId).Select(x => x.CertificateId).ToListAsync();
+
+        public async Task<List<int>?> GetStaffCertificatesIdentityKeyAsync(int staffId)
+        => await _db.UserCertificates.Where(u => u.StaffId == staffId).Select(x => x.Id).ToListAsync();
+
         public async Task<UserCertificates?> GetUserCertificateAsync(int id)
         => await _db.UserCertificates.FirstOrDefaultAsync(u => u.Id == id);
 

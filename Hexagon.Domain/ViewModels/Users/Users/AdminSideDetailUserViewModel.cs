@@ -24,6 +24,7 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         public string Password { get; set; }
         [Display(Name = "کد ملی")]
         public string NationalCode { get; set; }
+        [Display(Name = "شهر")]
         public string? city { get; set; }
         [Display(Name = "ایمیل")]
         public string email { get; set; }
@@ -38,6 +39,6 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [Display(Name = "وضعیت کاربر")]
         public UserStatus? Status { get; set; }
         public List<Role>? Roles { get; set; }
-
+        public ICollection<Staff>? staffs { get; set; }
     }
 }

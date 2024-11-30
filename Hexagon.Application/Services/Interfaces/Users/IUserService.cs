@@ -2,6 +2,7 @@
 using Hexagon.Domain.ViewModels.Users.Users;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<UpdateUserViewModel> GetUserForEdit(int UserId);
         Task<UpdateUserResult> UpdateUserAsync(UpdateUserViewModel model);
         Task<DeleteUserResult> DeleteUserAsync(int UserId);
-        Task<List<UserViewModel>?> ListUsersAsync();
+        Task<ReadOnlyCollection<UserViewModel>?> ListUsersForItemsAsync(string term);
         Task<FilterUserViewModel> FilterUsersAsync(FilterUserViewModel filter);
         Task<UserClientSideView?> GetUserClientSideAsync(int UserId);
         Task<AdminSideDetailUserViewModel?> AdminSideDetailUserAsync(int userId);

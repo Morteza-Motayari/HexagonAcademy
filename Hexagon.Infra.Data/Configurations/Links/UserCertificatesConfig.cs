@@ -8,7 +8,7 @@ namespace Hexagon.Infra.Data.Configurations.Common
     {
         public void Configure(EntityTypeBuilder<UserCertificates> builder)
         {
-            builder.Property(g => g.PlaceOftake).HasMaxLength(150).IsRequired();           
+            builder.Property(g => g.PlaceOftake).HasMaxLength(150);           
         }
     }
 }

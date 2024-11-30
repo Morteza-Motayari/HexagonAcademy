@@ -9,6 +9,8 @@ using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Hexagon.Infra.Data.DataExtensions;
+using Hexagon.Domain.Models.Records;
+using System.Collections.ObjectModel;
 
 namespace Hexagon.Infra.Data.Repositories
 {
@@ -18,7 +20,7 @@ namespace Hexagon.Infra.Data.Repositories
         private readonly IRoleRepository _roleRepository;
         private readonly IUserRoleRepository _userRoleRepository;
 
-        public UserRepository(HexagonContext db,IRoleRepository roleRepository,IUserRoleRepository userRoleRepository) : base(db)
+        public UserRepository(HexagonContext db, IRoleRepository roleRepository, IUserRoleRepository userRoleRepository) : base(db)
         {
             _db = db;
             _roleRepository = roleRepository;
@@ -131,23 +133,27 @@ namespace Hexagon.Infra.Data.Repositories
             return filter;
         }
 
-        public async Task<List<UserViewModel>?> GetAllUsersAsync()
-        => await _db.Users.Select(u => new UserViewModel
+        public async Task<ReadOnlyCollection<UserViewModel>?> GetAllUsersForOptionsAsync(string term)
         {
-            Id = u.Id,
-            FirstName = u.FirstName,
-            LastName = u.LastName,
-            city = u.city,
-            PhoneNumber = u.PhoneNumber,
-            NationalCode = u.NationalCode,
-            BirthDay = u.BirthDay,
-            email = u.email,
-            Gender = u.Gender,
-            Situation = u.Situation,
-            Status = u.Status,
-            Avatar = u.Avatar,
-            CreatedDate = u.CreatedDate
-        }).ToListAsync();
+            var data = await _db.Users.Where(u => u.Status == UserStatus.Active && u.IsDeleted == false).Select(u => new UserViewModel
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                PhoneNumber = u.PhoneNumber,
+                BirthDay = u.BirthDay,
+                email = u.email,
+                Gender = u.Gender,
+                Avatar = u.Avatar
+            }).ToListAsync();
+
+            var search = data.Where(a => a.FirstName.Contains(term, StringComparison.OrdinalIgnoreCase)
+            || a.LastName.Contains(term, StringComparison.OrdinalIgnoreCase)
+            || a.PhoneNumber.Contains(term, StringComparison.OrdinalIgnoreCase)
+            || a.email.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList().AsReadOnly();
+            return search;
+        }
+
 
         public async Task<User?> GetbyMobileAndPassword(string mobile, string password)
         => await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == mobile && u.Password == password && u.IsDeleted == false);
@@ -156,13 +162,13 @@ namespace Hexagon.Infra.Data.Repositories
         => await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == mobile && u.VerificationCode == verificationCode && u.IsDeleted == false);
 
         public async Task<User?> GetByMobileAsync(string mobile)
-        => await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == mobile&&u.IsDeleted==false);
+        => await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == mobile && u.IsDeleted == false);
 
         public async Task<string?> GetJustUserName(int? userId)
         {
             if (userId == null)
                 return null;
-            var user = await _db.Users.Where(u=>u.Id==userId).Select(u => new User
+            var user = await _db.Users.Where(u => u.Id == userId).Select(u => new User
             {
                 Id = u.Id,
                 FirstName = u.FirstName,
@@ -202,6 +208,9 @@ namespace Hexagon.Infra.Data.Repositories
             Situation = u.Situation,
             Status = u.Status
         }).FirstAsync(u => u.Id == userId);
+
+        public async Task<User?> GetUserWithChilds(int userId)
+        => await _db.Users.Include(u => u.staffes).FirstOrDefaultAsync(u=>u.Id==userId);
 
         public async Task<bool> MobileDuplicatedAsync(string mobile, int userId)
         => await _db.Users.AnyAsync(u => u.PhoneNumber == mobile && u.Id != userId && u.IsDeleted == false);

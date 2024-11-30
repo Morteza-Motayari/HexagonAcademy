@@ -17,5 +17,9 @@ namespace Hexagon.Domain.Interfaces.Links
         Task DeleteUserCertificate(int id);
         Task DeleteUserCertificates(int userId);
         void Remove(UserCertificates userCertificate);
+        Task<List<int>?> GetStaffCertificateIdsAsync(int staffId);
+        Task<List<int>?> GetStaffCertificatesIdentityKeyAsync(int staffId);
+        Task<bool> ExistCertificateForUser(int userId,int certificateId, int staffId,int editStaffId);
+        Task<bool> ExistCertificateForUser(int userId, int certificateId, int staffId);
     }
 }

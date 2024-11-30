@@ -157,5 +157,21 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             return View(model);
         }
         #endregion
+
+        #region User Option
+        [HttpGet]
+        public async Task<IActionResult> Search(string term)
+        {
+            if (!string.IsNullOrEmpty(term))
+            {
+                var data = await userService.ListUsersForItemsAsync(term);
+                return Ok(data);
+            }
+            else
+            {
+                return Ok();
+            }
+        }
+        #endregion
     }
 }

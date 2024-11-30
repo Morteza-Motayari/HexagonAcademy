@@ -18,7 +18,7 @@ namespace Hexagon.Domain.Models.Gyms
 
         #region Relations
         public ICollection<GymUser>? GymUsers { get; set; }
-        public ICollection<Staff>? Staffs { get; set; }
+        public ICollection<GymStaff>? GymStaffs { get; set; }
         public ICollection<GymGallery>? Gallery { get; set; }
         public ICollection<SportClass>? SportClasses { get; set; }
         #endregion

@@ -54,6 +54,16 @@ namespace Hexagon.Domain.Shared
         public static string SportUpdatedSuccessfully = "رشته ورزشی مدنظر  با موفقیت ویرایش شده است.";
         public static string SportDeletedSuccessfully = "رشته ورزشی مدنظر  با موفقیت حذف شده است.";
         #endregion
+
+        #region Staffs
+
+        #region Trainer
+        public static string TrainerAddedSuccessfully = "مربی رشته ورزشی جدید با موفقیت اضافه شده است.";
+        public static string TrainerUpdatedSuccessfully = "مربی رشته ورزشی مدنظر  با موفقیت ویرایش شده است.";
+        public static string TrainerDeletedSuccessfully = "مربی رشته ورزشی مدنظر  با موفقیت حذف شده است.";
+        #endregion
+
+        #endregion
     }
     public class ErrorMessages
     {
@@ -106,6 +116,19 @@ namespace Hexagon.Domain.Shared
         public static string SportDuplicated = "رشته ورزشی مدنظر قبلا ثبت شده است.";
         public static string SportAlreadyDeleted = "رشته ورزشی مدنظر قبلا حذف شده است.";
         #endregion
+
+        #region Staffs
+
+        #region Trainer
+        public static string TrainerNotFound = "مربی رشته ورزشی مدنظر پیدا نشده است.";
+        public static string TrainerDuplicated = "مربی رشته ورزشی مدنظر قبلا ثبت شده است.";
+        public static string TrainerAlreadyDeleted = "مربی رشته ورزشی مدنظر قبلا حذف شده است.";
+        public static string TrainerPositionDuplicated = "برای این مربی رشته ورزشی مدنظر قبلا ثبت شده است.";
+        public static string InvalidSalaryInput = "دریافتی وارد شده نا معتبر است.";
+        public static string ExistCertificateForUserTrainer = "این مدرک برای این کاربر به عنوان مربی رشته دیگر ثبت شده است.";
+        #endregion
+
+        #endregion
     }
 
     public class WarningMessages
@@ -130,5 +153,20 @@ namespace Hexagon.Domain.Shared
         public static string SportCantbeEdited = "این رشته ورزشی حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
 
+        #region Staff
+
+        #region Trainer
+        public static string TrainerCantbeEdited = "مربی برای این رشته ورزشی حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
+        #endregion
+
+    }
+
+    public class InfoMessages
+    {
+        #region Certificate
+        public static string CertificateDontExisted = "مدرک رشته ورزشی یافت نشد لطفا برای افزودن مربی مدرک آن را ساخت سپس مربی ایجاد بکنید.";
+        #endregion
     }
 }

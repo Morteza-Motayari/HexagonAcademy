@@ -30,6 +30,7 @@ namespace Hexagon.Infra.Data.Context
         public DbSet<ClassUser> ClassUsers { get; set; }
         public DbSet<GymUser> GymUsers { get; set; }
         public DbSet<UserCertificates> UserCertificates { get; set; }
+        public DbSet<GymStaff> GymStaffs { get; set; }
         #endregion
 
         #region Records

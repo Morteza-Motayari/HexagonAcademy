@@ -11,12 +11,14 @@ using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
 using Hexagon.Infra.Data.Repositories;
+using System.Collections.ObjectModel;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
     public class UserService(IUserRepository UserRepository,
         IUserRoleRepository userRoleRepository,
-        IRoleRepository roleRepository) : IUserService
+        IRoleRepository roleRepository,
+        IStaffRepository staffRepository) : IUserService
     {
         public async Task<AdminChagePasswordResult> AdminChangeUserPasswordAsync(AdminChagePasswordViewModel model)
         {
@@ -44,7 +46,7 @@ namespace Hexagon.Application.Services.Implementation.Users
 
         public async Task<AdminSideDetailUserViewModel?> AdminSideDetailUserAsync(int userId)
         {
-            var user = await UserRepository.GetByIdAsync(userId);
+            var user = await UserRepository.GetUserWithChilds(userId);
             if (user == null)
                 return null;
             AdminSideDetailUserViewModel? Detail = new()
@@ -69,7 +71,8 @@ namespace Hexagon.Application.Services.Implementation.Users
                 CreatedBy = await UserRepository.GetJustUserName(user.CreatedBy),
                 LastModifiedBy = await UserRepository.GetJustUserName(user.LastModifiedBy),
                 ModifiedDate = user.LastModifiedDate,
-                Roles = await roleRepository.GetUserRoles(await userRoleRepository.GetUserRoleIdsAsync(user.Id))
+                Roles = await roleRepository.GetUserRoles(await userRoleRepository.GetUserRoleIdsAsync(user.Id)),
+                staffs=user.staffes
             };
 
             return Detail;
@@ -90,7 +93,7 @@ namespace Hexagon.Application.Services.Implementation.Users
                 PhoneNumber = model.PhoneNumber,
                 email = model.email,
                 Gender = model.Gender,
-                Situation = model.Situation,
+                Situation = UserSituation.Athlete,
                 Status = model.Status
             };
             if (model.BirthDay != null)
@@ -129,7 +132,7 @@ namespace Hexagon.Application.Services.Implementation.Users
 
         public async Task<DeleteUserResult> DeleteUserAsync(int UserId)
         {
-            var User = await UserRepository.GetByIdAsync(UserId);
+            var User = await UserRepository.GetUserWithChilds(UserId);
             if (User == null)
                 return DeleteUserResult.UserNotFound;
             if (User.IsDeleted == true)
@@ -137,10 +140,19 @@ namespace Hexagon.Application.Services.Implementation.Users
 
             #region Deleting Avatar
             if (User.Avatar != null)
+            { 
                 User.Avatar.DeleteImage(SavingPath.AvatarPath);
+                User.Avatar= null;
+            }
             #endregion
-
-
+            if (User.staffes.CheckNullability())
+            {
+                foreach (var staff in User.staffes)
+                {
+                    staff.IsDeleted = true;
+                    staffRepository.Update(staff);
+                }               
+            }
             User.IsDeleted = true;
             UserRepository.Update(User);
             await UserRepository.SaveChangeAsync();
@@ -175,7 +187,6 @@ namespace Hexagon.Application.Services.Implementation.Users
                 BirthDay = User.BirthDay?.ToShamsi(),
                 email = User.email,
                 Gender = User.Gender,
-                Situation = User.Situation,
                 Status = User.Status,
                 Avatar = User.Avatar,
                 RolesId = await userRoleRepository.GetUserRoleIdsAsync(UserId),
@@ -183,8 +194,8 @@ namespace Hexagon.Application.Services.Implementation.Users
             };
         }
 
-        public async Task<List<UserViewModel>?> ListUsersAsync()
-        => await UserRepository.GetAllUsersAsync();
+        public async Task<ReadOnlyCollection<UserViewModel>?> ListUsersForItemsAsync(string term)
+        => await UserRepository.GetAllUsersForOptionsAsync(term);
 
         public async Task<UpdateUserResult> UpdateUserAsync(UpdateUserViewModel model)
         {
@@ -211,7 +222,6 @@ namespace Hexagon.Application.Services.Implementation.Users
                 User.BirthDay = model.BirthDay.ToMiladi();
             }
             User.Gender = model.Gender;
-            User.Situation = model.Situation;
             User.Status = model.Status;
             
             #region Update Avatar

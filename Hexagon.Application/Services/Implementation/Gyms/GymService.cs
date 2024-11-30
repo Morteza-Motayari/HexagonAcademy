@@ -85,7 +85,10 @@ namespace Hexagon.Application.Services.Implementation.Gyms
 
             #region Deleting Image
             if (Gym.ImageUrl != null)
+            {
                 Gym.ImageUrl.DeleteImage(SavingPath.GymPath);
+                Gym.ImageUrl = null;
+            }               
             #endregion
 
             Gym.IsDeleted = true;

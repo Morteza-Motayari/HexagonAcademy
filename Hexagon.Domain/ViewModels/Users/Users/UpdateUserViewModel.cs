@@ -41,8 +41,6 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         public string? Avatar { get; set; }
         [Display(Name = "عکس")]
         public IFormFile? NewImage { get; set; }
-        [Display(Name = "نقش")]
-        public UserSituation? Situation { get; set; }
         [Display(Name = "جنسیت")]
         [Required(ErrorMessage = "لطفا {0} را انتخاب کنید.")]
         public UserGender? Gender { get; set; }

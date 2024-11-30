@@ -29,6 +29,7 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<ISmsSender, SmsSender>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IStaffService, StaffService>();
             #endregion
 
             #region Gyms
