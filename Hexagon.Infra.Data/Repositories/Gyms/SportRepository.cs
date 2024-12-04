@@ -64,6 +64,13 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             return filter;
         }
 
+        public async Task<List<SportViewModel>?> GetAllGymItemsAsync()
+        => await _db.Sports.Where(s=>s.IsDeleted==false).Select(s=>new SportViewModel
+        {
+            Id=s.Id,
+            Title=s.Title
+        }).ToListAsync();
+
         public async Task<List<SportViewModel>?> GetAllSportsAsync()
         => await _db.Sports.Select(u => new SportViewModel
         {
@@ -73,6 +80,12 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             CreatedDate = u.CreatedDate,
             IsDeleted = u.IsDeleted
         }).ToListAsync();
+
+        public async Task<int> GetSportCertifiacetId(int sportId)
+        => await _db.Sports.Where(s=>s.Id==sportId).Select(s=>s.CertificateId).FirstAsync();
+
+        public string GetSportTitle(int sportId)
+        =>_db.Sports.Where(s=>s.Id==sportId).Select(s=>s.Title).First();
 
         public async Task<Sport?> GetSportWithCertificate(int id)
         => await _db.Sports.Include(s=>s.Certificate).FirstOrDefaultAsync(s => s.Id == id);

@@ -15,5 +15,6 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<string> PutSpecificSlug(string slug);
         Task<FilterSportClassViewModel> FilterSportClassAsync(FilterSportClassViewModel filter);
         Task<List<SportClassViewModel>?> GetAllSportClasssAsync();
+        Task<SportClass?> GetSportClassWithDetails(int sportClassId);
     }
 }

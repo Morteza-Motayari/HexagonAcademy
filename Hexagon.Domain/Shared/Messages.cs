@@ -55,6 +55,12 @@ namespace Hexagon.Domain.Shared
         public static string SportDeletedSuccessfully = "رشته ورزشی مدنظر  با موفقیت حذف شده است.";
         #endregion
 
+        #region Sport Class
+        public static string SportClassAddedSuccessfully = "کلاس ورزشی جدید با موفقیت اضافه شده است.";
+        public static string SportClassUpdatedSuccessfully = "کلاس ورزشی مدنظر  با موفقیت ویرایش شده است.";
+        public static string SportClassDeletedSuccessfully = "کلاس ورزشی مدنظر  با موفقیت حذف شده است.";
+        #endregion
+
         #region Staffs
 
         #region Trainer
@@ -117,6 +123,14 @@ namespace Hexagon.Domain.Shared
         public static string SportAlreadyDeleted = "رشته ورزشی مدنظر قبلا حذف شده است.";
         #endregion
 
+        #region Sport Class
+        public static string SportClassNotFound = "کلاس ورزشی مدنظر پیدا نشده است.";
+        public static string SportClassAlreadyDeleted = "کلاس ورزشی مدنظر قبلا حذف شده است.";
+        public static string InvalidStartDateTimeInput = " تاریخ شروع وارد شده معتبر نمی باشد.";
+        public static string InvalidEndTime = "ساعت انتهایی کلاس وارد شده باید بعد از ساعت شروع آن باشد.";
+
+        #endregion
+
         #region Staffs
 
         #region Trainer
@@ -151,6 +165,10 @@ namespace Hexagon.Domain.Shared
 
         #region Sport
         public static string SportCantbeEdited = "این رشته ورزشی حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
+        #region Sport Class
+        public static string SportClassCantbeEdited = "این کلاس ورزشی حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
 
         #region Staff

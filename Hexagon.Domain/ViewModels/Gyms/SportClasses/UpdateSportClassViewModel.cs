@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Hexagon.Domain.Enums.SportClasses;
+using Hexagon.Domain.Enums.Users;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,7 +19,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.SportClasses
         public string Title { get; set; }
         [Display(Name = "تاریخ شروع")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
         [Display(Name = "از ساعت")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         public TimeOnly StartTime { get; set; }
@@ -29,20 +31,32 @@ namespace Hexagon.Domain.ViewModels.Gyms.SportClasses
         public double SubscriptionFee { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [Display(Name = " رشته ورزشی")]
-        public int? SportId { get; set; }
+        public int SportId { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [Display(Name = "باشگاه")]
-        public int? GymId { get; set; }
+        public int GymId { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [Display(Name = "مربی")]
-        public int? TrainerId { get; set; }
+        public int TrainerId { get; set; }
         [Display(Name = "عکس")]
         public IFormFile? NewImage { get; set; }
         public string? ImageUrl { get; set; }
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        [Display(Name = "حداکثر مقدار شاگردها")]
+        public int MaxSubscription { get; set; }
+        [Required(ErrorMessage = "لطفا {0} را انتخاب کنید.")]
+        [Display(Name = "جنسیت")]
+        public UserGender Gender { get; set; }
+        [Required(ErrorMessage = "لطفا {0} را انتخاب کنید.")]
+        [Display(Name = "وضعیت کلاس")]
+        public SportClassStatus ClassStatus { get; set; }
+        public bool IsDeleted {  get; set; }
     }
     public enum UpdateSportClassResult
     {
         Success,
-        SportClassNotFound
+        SportClassNotFound,
+        InvalidDateTime,
+        InvalidEndTime
     }
 }

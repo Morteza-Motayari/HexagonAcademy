@@ -1,4 +1,6 @@
-﻿using Hexagon.Domain.Models.Common;
+﻿using Hexagon.Domain.Enums.SportClasses;
+using Hexagon.Domain.Enums.Users;
+using Hexagon.Domain.Models.Common;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Users;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,10 +16,13 @@ namespace Hexagon.Domain.Models.Gyms
         public TimeOnly StartTime { get; set; }
         public TimeOnly EndTime { get; set; }
         public double SubscriptionFee { get; set; }
-        public int? SportId { get; set; }
-        public int? GymId {  get; set; }
-        public int? TrainerId {  get; set; }
+        public int SportId { get; set; }
+        public int GymId {  get; set; }
+        public int TrainerId {  get; set; }
         public string? ImageUrl { get; set; }
+        public int MaxSubscription {  get; set; }
+        public UserGender Gender { get; set; }
+        public SportClassStatus ClassStatus { get; set; }
         #endregion
 
         #region Relations

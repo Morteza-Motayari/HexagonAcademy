@@ -86,11 +86,9 @@
                 url: "/Admin/User/Search",
                 contentType: "application/json; charset=utf-8",
                 data: function (params) {
-                    console.log("Search term:", params.term);
                     return { term: params.term || "" }; // Ensure params.term is defined
                 },
                 processResults: function (result) {
-                    console.log(result);
                     return {
                         results: $.map(result, function (item) {
                             const firstName = item.firstName || "نام";

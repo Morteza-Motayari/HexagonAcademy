@@ -25,7 +25,7 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [Display(Name = "شهر")]
         public string? city { get; set; }
         [Display(Name = "ایمیل")]
-        public string email { get; set; }
+        public string? email { get; set; }
         [Display(Name = "تاریخ تولد")]
         public DateTime? BirthDay { get; set; }
         public string? Avatar { get; set; }

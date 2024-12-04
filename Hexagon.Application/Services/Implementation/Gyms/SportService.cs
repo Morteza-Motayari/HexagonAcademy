@@ -84,8 +84,8 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             };
         }
 
-        public async Task<List<SportViewModel>?> ListSportsAsync()
-        => await sportRepository.GetAllSportsAsync();
+        public async Task<List<SportViewModel>?> ListSportsForOptionsAsync()
+        => await sportRepository.GetAllGymItemsAsync();
 
         public async Task<UpdateSportResult> UpdateSportAsync(UpdateSportViewModel model)
         {

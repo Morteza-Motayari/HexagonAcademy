@@ -47,4 +47,15 @@ namespace Hexagon.Domain.Enums.Filter
         [Display(Name = "ورزشکار")]
         Athlete
     }
+    public enum FilterSportClassStatus
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "فعال")]
+        Active,
+        [Display(Name = "غیرفعال")]
+        NotActive,
+        [Display(Name = "بسته شده")]
+        Closed
+    }
 }

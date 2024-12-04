@@ -1,4 +1,5 @@
 ﻿using Hexagon.Domain.ViewModels.Gyms.SportClasses;
+using Hexagon.Domain.ViewModels.Gyms.Sports;
 
 namespace Hexagon.Application.Services.Interfaces.Gyms
 {
@@ -10,5 +11,7 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         Task<DeleteSportClassResult> DeleteSportClassAsync(int sportClassId);
         Task<List<SportClassViewModel>?> ListSportClassesAsync();
         Task<FilterSportClassViewModel> FilterSportClassesAsync(FilterSportClassViewModel filter);
+        Task<AdminSideDetailSportClassViewModel?> AdminSideDetailSportClassAsync(int SportClassId);
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Hexagon.Application.Extensions;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Services.Interfaces.Users;
+using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Records.Certificates;
 using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
@@ -9,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Hexagon.MVC.Areas.Admin.Controllers
 {
     public class TrainerController(IStaffService staffService
-        ,IUserService userService
-        ,ICertificateService certificateService) : AdminSideController
+        , IUserService userService
+        , ICertificateService certificateService) : AdminSideController
     {
         #region List
         public async Task<IActionResult> List(FilterTrainerViewModel filter)
@@ -55,7 +56,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
                 case CreateTrainerResult.UserNotFound:
                     TempData[ErrorMessage] = ErrorMessages.UserNotFound;
-                    break; 
+                    break;
                 case CreateTrainerResult.InValidSalary:
                     TempData[ErrorMessage] = ErrorMessages.InvalidSalaryInput;
                     break;
@@ -144,6 +145,29 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
             }
             return RedirectToAction(nameof(List));
+        }
+        #endregion
+
+        #region get Trainers For Options
+        [HttpGet]
+        public async Task<IActionResult> GetTrainers(UserGender genderval, int sportId)
+        {
+            if (sportId != 0)
+            {
+                var data = await staffService.ListTrainerForItemsAsync(genderval, sportId);
+                if (!data.CheckNullability())
+                {
+                    return Ok(new
+                    {
+                        status = 101
+                    });
+                }
+                return Ok(data);
+            }
+            else
+            {
+                return Ok();
+            }
         }
         #endregion
     }

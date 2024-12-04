@@ -37,10 +37,9 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [Display(Name = "شهر")]
         public string? city { get; set; }
         [Display(Name = "ایمیل")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [MaxLength(150, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [EmailAddress]
-        public string email { get; set; }
+        public string? email { get; set; }
         [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         public DateTime? BirthDay { get; set; }

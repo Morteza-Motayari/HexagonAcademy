@@ -12,5 +12,9 @@ namespace Hexagon.Application.Extensions
         {
             return money.ToString("#,0");
         }
+        public static string ToMoney(this double money)
+        {
+            return money.ToString("#,0");
+        }
     }
 }

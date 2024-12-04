@@ -141,16 +141,13 @@ namespace Hexagon.Infra.Data.Repositories
                 FirstName = u.FirstName,
                 LastName = u.LastName,
                 PhoneNumber = u.PhoneNumber,
-                BirthDay = u.BirthDay,
-                email = u.email,
                 Gender = u.Gender,
                 Avatar = u.Avatar
             }).ToListAsync();
 
             var search = data.Where(a => a.FirstName.Contains(term, StringComparison.OrdinalIgnoreCase)
             || a.LastName.Contains(term, StringComparison.OrdinalIgnoreCase)
-            || a.PhoneNumber.Contains(term, StringComparison.OrdinalIgnoreCase)
-            || a.email.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList().AsReadOnly();
+            || a.PhoneNumber.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList().AsReadOnly();
             return search;
         }
 

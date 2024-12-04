@@ -69,6 +69,13 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             return filter;
         }
 
+        public async Task<List<GymViewModel>?> GetAllGymItemsAsync()
+        => await _db.Gyms.Where(g=>g.IsDeleted==false).Select(u=>new GymViewModel
+        {
+            Id=u.Id,
+            Name=u.Name
+        }).ToListAsync();
+
         public async Task<List<GymViewModel>?> GetAllGymsAsync()
         => await _db.Gyms.Select(u => new GymViewModel
         {
@@ -81,6 +88,9 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             Name = u.Name,
             Area = u.Area
         }).ToListAsync();
+
+        public string GetGymName(int gymId)
+        => _db.Gyms.Where(g => g.Id == gymId).Select(g => g.Name).First();
 
         //the below method will contoll of duplicating the slug and never gonna have similar slug
         public async Task<string> PutSpecificSlug(string slug)
@@ -98,5 +108,6 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             }            
             return slug ;
         }
+
     }
 }

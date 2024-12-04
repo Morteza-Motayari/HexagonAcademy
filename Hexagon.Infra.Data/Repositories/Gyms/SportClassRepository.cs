@@ -1,4 +1,6 @@
 ﻿using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.Enums.SportClasses;
+using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.Gyms;
@@ -11,9 +13,14 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
     public class SportClassRepository : GenericRepository<SportClass>, ISportClassRepository
     {
         private readonly HexagonContext _db;
-        public SportClassRepository(HexagonContext db) : base(db)
+        private readonly IGymRepository _gymRepository;
+        private readonly ISportRepository _sportRepository;
+
+        public SportClassRepository(HexagonContext db,IGymRepository gymRepository,ISportRepository sportRepository) : base(db)
         {
             _db = db;
+            _gymRepository = gymRepository;
+            _sportRepository = sportRepository;
         }
         public async Task<bool> ExistSpecificSlug(string slug)
         => await _db.SportClasses.AnyAsync(u => u.Slug == slug);
@@ -34,7 +41,45 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
                     query = query.Where(u => !u.IsDeleted);
                     break;
             }
-
+            if (filter.Gender != null)
+            {
+                switch (filter.Gender)
+                {
+                    case FilterUserGender.All:
+                        break;
+                    case FilterUserGender.Male:
+                        query = query.Where(u => u.Gender == UserGender.Male);
+                        break;
+                    case FilterUserGender.Female:
+                        query = query.Where(u => u.Gender == UserGender.Female);
+                        break;
+                }
+            }
+            if (filter.ClassStatus != null)
+            {
+                switch (filter.ClassStatus)
+                {
+                    case FilterSportClassStatus.All:
+                        break;
+                    case FilterSportClassStatus.Active:
+                        query = query.Where(u => u.ClassStatus == SportClassStatus.Active);
+                        break;
+                    case FilterSportClassStatus.NotActive:
+                        query = query.Where(u => u.ClassStatus == SportClassStatus.NotActive);
+                        break;
+                    case FilterSportClassStatus.Closed:
+                        query = query.Where(u => u.ClassStatus == SportClassStatus.Closed);
+                        break;
+                }
+            }
+            if (filter.SportId.HasValue)
+            {
+                query = query.Where(s=>s.SportId == filter.SportId);
+            }
+            if (filter.GymId.HasValue)
+            {
+                query = query.Where(s => s.GymId == filter.GymId);
+            }
             if (filter.Title != null)
             {
                 query = query.Where(r => r.Title.Contains(filter.Title));
@@ -57,7 +102,12 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
                 Title=u.Title,
                 ImageUrl = u.ImageUrl,
                 IsDeleted = u.IsDeleted,
-                CreatedDate = u.CreatedDate
+                CreatedDate = u.CreatedDate,
+                MaxSubscription=u.MaxSubscription,
+                gym=_gymRepository.GetGymName(u.GymId),
+                sport=_sportRepository.GetSportTitle(u.SportId),
+                Gender=u.Gender,
+                ClassStatus=u.ClassStatus
             }));
             return filter;
         }
@@ -76,8 +126,14 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             Title = u.Title,
             ImageUrl = u.ImageUrl,
             IsDeleted = u.IsDeleted,
-            CreatedDate = u.CreatedDate
+            CreatedDate = u.CreatedDate,
+            MaxSubscription=u.MaxSubscription
         }).ToListAsync();
+
+        public async Task<SportClass?> GetSportClassWithDetails(int sportClassId)
+        => await _db.SportClasses.Include(u=>u.gym)
+            .Include(u => u.Trainer).Include(u => u.sport).Include(u => u.ClassUsers)
+            .FirstOrDefaultAsync(s=>s.Id == sportClassId);
 
         //the below method will contoll of duplicating the slug and never gonna have similar slug
         public async Task<string> PutSpecificSlug(string slug)

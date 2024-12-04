@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\Utilities.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\Utilities.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -409,6 +417,7 @@
     <None Include="wwwroot\AdminFiles\assets\js\topojson.min.js" />
     <None Include="wwwroot\AdminFiles\assets\js\uppy.min.js" />
     <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\Utilities.js" />
   </ItemGroup>
 
   <ItemGroup>

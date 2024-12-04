@@ -1,4 +1,5 @@
 ﻿using Hexagon.Application.Services.Interfaces.Users;
+using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;

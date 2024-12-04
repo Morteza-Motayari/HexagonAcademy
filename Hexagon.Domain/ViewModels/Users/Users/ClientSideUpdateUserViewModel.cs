@@ -28,10 +28,9 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [Display(Name = "شهر")]
         public string? city { get; set; }
         [Display(Name = "ایمیل")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [MaxLength(150, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [EmailAddress(ErrorMessage ="آدرس ایمیل وارد شده معتبر نمی باشد.")]
-        public string email { get; set; }
+        public string? email { get; set; }
         [Display(Name = "تاریخ تولد")]
         public string? BirthDay { get; set; }
         public string? Avatar { get; set; }

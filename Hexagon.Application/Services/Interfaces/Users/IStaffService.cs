@@ -1,4 +1,7 @@
-﻿using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
+﻿using Hexagon.Domain.Enums.Users;
+using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
+using Hexagon.Domain.ViewModels.Users.Users;
+using System.Collections.ObjectModel;
 
 namespace Hexagon.Application.Services.Interfaces.Users
 {
@@ -11,5 +14,8 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<List<TrainerViewModel>?> ListTrainersAsync();
         Task<FilterTrainerViewModel> FilterTrainersAsync(FilterTrainerViewModel filter);
         Task<AdminSideDetailTrainerViewModel?> AdminSideDetailTrainerAsync(int TrainerId);
+        Task<ReadOnlyCollection<TrainerViewModel>?> ListTrainerForItemsAsync(UserGender gender,int sportId);
+        Task<List<TrainerViewModel>?> ListTrainerForEditItemsAsync(UserGender gender,int sportId);
+        Task<TrainerViewModel> GetTrainerWithName(int trainerId);
     }
 }

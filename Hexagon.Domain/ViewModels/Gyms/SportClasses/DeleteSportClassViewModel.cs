@@ -11,6 +11,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.SportClasses
     public enum DeleteSportClassResult
     {
         Success,
-        SportClassNotFound
+        SportClassNotFound,
+        SportClassAlreadyDeleted
     }
 }

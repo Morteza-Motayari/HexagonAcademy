@@ -32,7 +32,6 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [Display(Name = "شهر")]
         public string? city { get; set; }
         [Display(Name = "ایمیل")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [EmailAddress]
         public string? email { get; set; }
         [Display(Name = "تاریخ تولد")]

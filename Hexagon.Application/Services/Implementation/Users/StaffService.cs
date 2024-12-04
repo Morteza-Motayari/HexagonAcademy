@@ -8,13 +8,17 @@ using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
 using Hexagon.Infra.Data.Repositories;
 using Hexagon.Application.Convertors;
+using System.Collections.ObjectModel;
+using Hexagon.Application.Services.Interfaces.Gyms;
+using Hexagon.Domain.Interfaces.Gyms;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
     public class StaffService(IStaffRepository staffRepository
         , IUserCertificatesRepository userCertificatesRepository
         ,IUserRepository userRepository
-        ,ICertificateRepository certificateRepository) : IStaffService
+        ,ICertificateRepository certificateRepository,
+        ISportRepository sportRepository) : IStaffService
     {
         public async Task<AdminSideDetailTrainerViewModel?> AdminSideDetailTrainerAsync(int TrainerId)
         {
@@ -136,6 +140,32 @@ namespace Hexagon.Application.Services.Implementation.Users
                 IsDeleted = trainer.IsDeleted,
                 TrainerName= await userRepository.GetJustUserName(trainer.UserId)
             };
+        }
+
+        public async Task<TrainerViewModel> GetTrainerWithName(int trainerId)
+        {
+            var trainer = await staffRepository.GetByIdAsync(trainerId);
+            if (trainer == null)
+                return null;
+            return new TrainerViewModel()
+            {
+                Id = trainer.Id,
+                FullName = await userRepository.GetJustUserName(trainer.UserId)
+            };
+        }
+
+        public async Task<List<TrainerViewModel>?> ListTrainerForEditItemsAsync(UserGender gender, int sportId)
+        {
+            int sportCertifiacetId = await sportRepository.GetSportCertifiacetId(sportId);
+            var list =await staffRepository.ListSuitableTrainersForEditClassAsync(gender, sportCertifiacetId);
+            return list;
+        }
+
+        public async Task<ReadOnlyCollection<TrainerViewModel>?> ListTrainerForItemsAsync(UserGender gender, int sportId)
+        {
+            int sportCertifiacetId = await sportRepository.GetSportCertifiacetId(sportId);
+            var list = staffRepository.ListSuitableTrainersForClassAsync(gender, sportCertifiacetId);
+            return list;
         }
 
         public Task<List<TrainerViewModel>?> ListTrainersAsync()

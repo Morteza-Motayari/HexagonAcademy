@@ -4,6 +4,7 @@ using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hexagon.Infra.Data.Migrations
 {
     [DbContext(typeof(HexagonContext))]
-    partial class HexagonContextModelSnapshot : ModelSnapshot
+    [Migration("20241130232103_Adding_MaxSubscription_To_SportClass")]
+    partial class Adding_MaxSubscription_To_SportClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,9 +162,6 @@ namespace Hexagon.Infra.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClassStatus")
-                        .HasColumnType("int");
-
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
@@ -171,10 +171,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Property<TimeOnly>("EndTime")
                         .HasColumnType("time");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GymId")
+                    b.Property<int?>("GymId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
@@ -197,7 +194,7 @@ namespace Hexagon.Infra.Data.Migrations
                         .HasMaxLength(230)
                         .HasColumnType("nvarchar(230)");
 
-                    b.Property<int>("SportId")
+                    b.Property<int?>("SportId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -214,7 +211,7 @@ namespace Hexagon.Infra.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("TrainerId")
+                    b.Property<int?>("TrainerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -669,7 +666,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
                         .WithMany("Gallery")
                         .HasForeignKey("GymId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("gym");
@@ -680,7 +677,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Records.Certificate", "Certificate")
                         .WithMany("Sports")
                         .HasForeignKey("CertificateId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Certificate");
@@ -690,21 +687,15 @@ namespace Hexagon.Infra.Data.Migrations
                 {
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
                         .WithMany("SportClasses")
-                        .HasForeignKey("GymId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("GymId");
 
                     b.HasOne("Hexagon.Domain.Models.Gyms.Sport", "sport")
                         .WithMany("Classes")
-                        .HasForeignKey("SportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("SportId");
 
                     b.HasOne("Hexagon.Domain.Models.Users.Staff", "Trainer")
                         .WithMany("SportClasses")
-                        .HasForeignKey("TrainerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TrainerId");
 
                     b.Navigation("Trainer");
 
@@ -718,13 +709,13 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Gyms.SportClass", "SportClass")
                         .WithMany("ClassUsers")
                         .HasForeignKey("SportClassId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
                         .WithMany("UserClasses")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("SportClass");
@@ -737,13 +728,13 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
                         .WithMany("GymStaffs")
                         .HasForeignKey("GymId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Hexagon.Domain.Models.Users.Staff", "staff")
                         .WithMany("StaffGyms")
                         .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("gym");
@@ -756,13 +747,13 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
                         .WithMany("GymUsers")
                         .HasForeignKey("GymId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
                         .WithMany("UserGyms")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("gym");
@@ -775,7 +766,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Records.Certificate", "certificate")
                         .WithMany("UserCertificates")
                         .HasForeignKey("CertificateId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Hexagon.Domain.Models.Users.Staff", "staff")
@@ -785,7 +776,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
                         .WithMany("UserCertificates")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("certificate");
@@ -804,7 +795,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
                         .WithMany("Experiences")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("certificate");
@@ -826,13 +817,13 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Users.Permission", "permission")
                         .WithMany("RolePermissions")
                         .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Hexagon.Domain.Models.Users.Role", "role")
                         .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("permission");
@@ -845,7 +836,7 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
                         .WithMany("staffes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("user");
@@ -856,13 +847,13 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasOne("Hexagon.Domain.Models.Users.Role", "role")
                         .WithMany("userRoles")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Hexagon.Domain.Models.Users.User", "user")
                         .WithMany("userRoles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("role");

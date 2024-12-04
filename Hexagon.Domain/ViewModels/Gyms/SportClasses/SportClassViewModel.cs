@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hexagon.Domain.Enums.SportClasses;
+using Hexagon.Domain.Enums.Users;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,34 +13,33 @@ namespace Hexagon.Domain.ViewModels.Gyms.SportClasses
     {
         public int Id { get; set; }
         [Display(Name = "اسم کلاس ورزشی")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
-        [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         public string Title { get; set; }
         [Display(Name = "تاریخ شروع")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         public DateTime StartDate { get; set; }
         [Display(Name = "از ساعت")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         public TimeOnly StartTime { get; set; }
         [Display(Name = "تا ساعت")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         public TimeOnly EndTime { get; set; }
         [Display(Name = "هزینه ثبت نام")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         public double SubscriptionFee { get; set; }
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [Display(Name = " رشته ورزشی")]
-        public int? SportId { get; set; }
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        public string? sport { get; set; }
+        public int SportId { get; set; }
         [Display(Name = "باشگاه")]
-        public int? GymId { get; set; }
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        public string gym { get; set; }
+        public int GymId { get; set; }
         [Display(Name = "مربی")]
-        public int? TrainerId { get; set; }
+        public int TrainerId { get; set; }
         [Display(Name = "عکس")]
         public string? ImageUrl { get; set; }
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreatedDate { get; set; }
+        [Display(Name = "حداکثر مقدار شاگردها")]
+        public int MaxSubscription { get; set; }
+        [Display(Name = "جنسیت")]
+        public UserGender Gender { get; set; }
+        [Display(Name = "وضعیت کلاس")]
+        public SportClassStatus ClassStatus { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

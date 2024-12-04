@@ -16,5 +16,8 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<FilterSportViewModel> FilterSportAsync(FilterSportViewModel filter);
         Task<List<SportViewModel>?> GetAllSportsAsync();
         Task<Sport?> GetSportWithCertificate(int id);
+        Task<List<SportViewModel>?> GetAllGymItemsAsync();
+        string GetSportTitle(int sportId);
+        Task<int> GetSportCertifiacetId(int sportId);
     }
 }

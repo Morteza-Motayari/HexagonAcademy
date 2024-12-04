@@ -18,5 +18,7 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<FilterGymViewModel> FilterGymAsync(FilterGymViewModel filter);
         Task<List<GymViewModel>?> GetAllGymsAsync();
         Task<bool> ExistGymAsync(int gymId);
+        Task<List<GymViewModel>?> GetAllGymItemsAsync();
+        string GetGymName(int gymId);
     }
 }

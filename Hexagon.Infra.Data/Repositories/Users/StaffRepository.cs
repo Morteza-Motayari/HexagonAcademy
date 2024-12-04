@@ -8,6 +8,7 @@ using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
 using Hexagon.Domain.ViewModels.Users.Users;
 using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 
 namespace Hexagon.Infra.Data.Repositories
 {
@@ -26,7 +27,7 @@ namespace Hexagon.Infra.Data.Repositories
         => await _db.Staffs.AnyAsync(s => s.Position == position && s.UserId == userId && s.Id != staffId && s.IsDeleted == false);
 
         public async Task<bool> ExistStaffForUser(int userId)
-        => await _db.Staffs.AnyAsync(s=>s.UserId == userId&&s.IsDeleted==false);
+        => await _db.Staffs.AnyAsync(s => s.UserId == userId && s.IsDeleted == false);
 
         public async Task<FilterTrainerViewModel> FilteTrainersAsync(FilterTrainerViewModel filter)
         {
@@ -44,7 +45,7 @@ namespace Hexagon.Infra.Data.Repositories
             }
             if (filter.CertificateId.HasValue)
             {
-                query = query.Include(u => u.UserCertificates).Where(u=>u.UserCertificates.Where(u=>u.CertificateId== filter.CertificateId).Any()).AsQueryable();
+                query = query.Include(u => u.UserCertificates).Where(u => u.UserCertificates.Where(u => u.CertificateId == filter.CertificateId).Any()).AsQueryable();
             }
             if (filter.PhoneNumber != null)
             {
@@ -83,7 +84,7 @@ namespace Hexagon.Infra.Data.Repositories
             await filter.Paging(query.Select(u => new TrainerViewModel
             {
                 Id = u.Id,
-                FullName=u.user.FirstName+" "+u.user.LastName,
+                FullName = u.user.FirstName + " " + u.user.LastName,
                 PhoneNumber = u.user.PhoneNumber,
                 email = u.user.email,
                 Gender = u.user.Gender,
@@ -96,10 +97,38 @@ namespace Hexagon.Infra.Data.Repositories
             return filter;
         }
 
+        public async Task<string> GetStaffNameAsync(int staffId)
+        {
+            var staff = await _db.Staffs.Include(s => s.user).FirstOrDefaultAsync(s => s.Id == staffId);
+            return staff.user.FirstName+" "+staff.user.LastName;
+         }
+
         public async Task<Staff?> GetStaffWithUser(int staffId)
         => await _db.Staffs.Include(s => s.user).FirstOrDefaultAsync(s => s.Id == staffId);
 
         public async Task<List<int>> GetUserStaffIds(int userId)
-        => await _db.Staffs.Where(s=>s.UserId==userId&&s.IsDeleted==false).Select(i=>i.Id).ToListAsync();
+        => await _db.Staffs.Where(s => s.UserId == userId && s.IsDeleted == false).Select(i => i.Id).ToListAsync();
+
+        public ReadOnlyCollection<TrainerViewModel>? ListSuitableTrainersForClassAsync(UserGender gender, int sportCertificateId)
+        {
+            return _db.Staffs.Include(s => s.user).Include(s => s.UserCertificates)
+             .Where(s => s.user.Gender == gender && s.UserCertificates.Where(u => u.CertificateId == sportCertificateId).Any()).Select(t => new TrainerViewModel
+             {
+                 Id = t.Id,
+                 FullName = t.user.FirstName + " " + t.user.LastName,
+                 Position = t.Position,
+                 PhoneNumber = t.user.PhoneNumber
+             }).ToList().AsReadOnly();
+        }
+
+        public async Task<List<TrainerViewModel>?> ListSuitableTrainersForEditClassAsync(UserGender gender, int sportCertificateId)
+        => await _db.Staffs.Include(s => s.user).Include(s => s.UserCertificates)
+             .Where(s => s.user.Gender == gender && s.UserCertificates.Where(u => u.CertificateId == sportCertificateId).Any()).Select(t => new TrainerViewModel
+             {
+                 Id = t.Id,
+                 FullName = t.user.FirstName + " " + t.user.LastName,
+                 Position = t.Position,
+                 PhoneNumber = t.user.PhoneNumber
+             }).ToListAsync();
     }
 }

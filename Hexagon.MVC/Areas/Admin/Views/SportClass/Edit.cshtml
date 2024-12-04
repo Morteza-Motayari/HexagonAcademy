@@ -1,0 +1,218 @@
+﻿@using Hexagon.Application.Extensions
+@using Hexagon.Application.Statics
+@using Hexagon.Domain.Enums.SportClasses
+@using Hexagon.Domain.Enums.Users
+@using Hexagon.Domain.ViewModels.Gyms.Gyms
+@using Hexagon.Domain.ViewModels.Gyms.SportClasses
+@using Hexagon.Domain.ViewModels.Gyms.Sports
+@using Hexagon.Domain.ViewModels.Users.Staffs.Trainers
+@model UpdateSportClassViewModel
+@{
+    ViewData["Title"] = "ویرایش کلاس ورزشی";
+    List<GymViewModel> GymItems = ViewData["Gyms"] as List<GymViewModel> ?? new List<GymViewModel>();
+    List<SportViewModel> SportItems = ViewData["Sports"] as List<SportViewModel> ?? new List<SportViewModel>();
+    List<TrainerViewModel> TrainerItems = ViewData["Trainers"] as List<TrainerViewModel> ?? new List<TrainerViewModel>();
+    var Gyms = new SelectList(GymItems, "Id", "Name");
+    var Sports = new SelectList(SportItems, "Id", "Title");
+    var Trainers = new SelectList(TrainerItems, "Id", "FullName");
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="SportClass" asp-action="List">کلاس های ورزشی</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="SportClass" asp-action="Edit" asp-route-id="@Model.Id">ویرایش کلاس ورزشی</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2 class="mt-3">
+                    <i class="bx bxs-category text-dark bxl"></i> @ViewData["Title"]
+                </h2>
+            </div>
+            <div class="body">
+                <form method="post" enctype="multipart/form-data" asp-area="Admin" class="row col-md-12" asp-controller="SportClass" asp-action="Edit">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="Title" class="form-control-label"></label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="Gender"></label>
+                                <div class="custom-radio">
+                                    <input asp-for="Gender" type="radio" value="@UserGender.Female" class=" bxs">
+                                    <label>
+                                        @UserGender.Female.GetDisplayName()
+                                    </label>
+                                </div>
+                                <div class=" custom-radio mb-3">
+                                    <input asp-for="Gender" type="radio" value="@UserGender.Male" class="bxs">
+                                    <label>
+                                        @UserGender.Male.GetDisplayName()
+                                    </label>
+                                </div>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="SportId" class="form-control-label"></label>
+                                <select asp-for="SportId" id="sportval" class="form-control" asp-items="Sports">
+                                </select>
+                                <span asp-validation-for="SportId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="GymId" class="form-control-label"></label>
+                                <select asp-for="GymId" class="form-control" asp-items="Gyms">
+                                </select>
+                                <span asp-validation-for="GymId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label asp-for="TrainerId" class="form-control-label"></label>
+                                <select asp-for="TrainerId" id="select2-dropdown" class="form-control" asp-items="Trainers">
+                                </select>
+                                <p></p>
+                                <span asp-validation-for="TrainerId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="StartDate" class="control-label"></label>
+                                <div class="input-group">
+                                    <input asp-for="StartDate" data-jdp type="text" autocomplete="off" onclick="PreventInput(this)" class="form-control">
+                                    <div class="input-group-append">
+                                        <div data-jdp class="input-group-text"><span class="fe fe-24 fe-calendar"></span></div>
+                                    </div>
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="StartTime" class="form-control-label"></label>
+                                <input data-jdp data-jdp-only-time autocomplete="off" asp-for="StartTime" onclick="PreventInput(this)" class="form-control" />
+                                <span asp-validation-for="StartTime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="EndTime" class="form-control-label"></label>
+                                <input data-jdp data-jdp-only-time asp-for="EndTime" onclick="PreventInput(this)" autocomplete="off" class="form-control" />
+                                <span asp-validation-for="EndTime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="SubscriptionFee" class="form-control-label"></label>
+                                <input asp-for="SubscriptionFee" onclick="setupMoney(this)" class="form-control" />
+                                <span asp-validation-for="SubscriptionFee" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="MaxSubscription" class="form-control-label"></label>
+                                <input asp-for="MaxSubscription" class="form-control" />
+                                <span asp-validation-for="MaxSubscription" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="ClassStatus" class="control-label"></label>
+                                <select asp-for="ClassStatus" class="form-control">
+                                    @foreach (var item in Enum.GetValues(typeof(SportClassStatus)).Cast<SportClassStatus>().ToList())
+                                    {
+                                        <option value="@item">@item.GetDisplayName()</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row ">
+                            <div class="col-md-3 text-center">
+                                <label asp-for="NewImage" class="control-label"></label>
+                                <div class="avatar avatar-xl contact-photo">
+                                    <img id="avatar" alt="..." class="img-responsive">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-file mb-3">
+                                    <input asp-for="NewImage" src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(Model.ImageUrl))?$"{Model.ImageUrl}":"default.png")" id="avaterFile" type="file">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="submit" value="ویرایش کلاس ورزشی" class="btn btn-primary" />
+                            <a asp-area="Admin" asp-controller="SportClass" asp-action="List" class="btn btn-secondary">برگشت به لیست</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/jalalidatepicker.min.js"></script>
+    <script>
+        jalaliDatepicker.startWatch();
+    </script>
+    <script>
+        $('input[name="Gender"],#sportval').on('change', function () {
+            var genderval = $('input[name="Gender"]:checked').val();
+            var sportId = $("#sportval").val();
+            if (genderval && sportId != 0) {
+                fetchTrainers(genderval, sportId);
+            }
+        })
+
+        function fetchTrainers(genderval, sportId) {
+            console.log(genderval);
+            $.ajax({
+                url: '/Admin/Trainer/GetTrainers', // Your server-side endpoint
+                type: 'GET',
+                data: { genderval, sportId }, // Parameters to send
+                success: function (response) {
+                    // Assuming the response is a list of entities
+                    if (response.status == 101) {
+                        Swal.fire({
+                            text: `مربی برای رشته و مخاطب مدنظر پیدا نشده است آیا می خواهید برای آن مربی تعریف بکنید؟`,
+                            icon: "question",
+                            showCancelButton: true,
+                            confirmButtonColor: "#2bbf26",
+                            cancelButtonColor: "#3085d6",
+                            confirmButtonText: "تعریف مربی",
+                            cancelButtonText: "خیر"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = "/Admin/Trainer/Create";
+                            }
+                        });
+                    }
+                    putTrainers(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+        function putTrainers(entities) {
+
+            const selectElement = document.getElementById("select2-dropdown");
+            entities.forEach(item => {
+                const option = document.createElement("option");
+                option.value = item.id; // Set the option value
+                option.textContent = item.fullName // Set the visible name
+                selectElement.appendChild(option);
+            });
+        }
+    </script>
+
+    <script>
+        avaterFile.onchange = evt => {
+            const [file] = avaterFile.files
+            if (file) {
+                avatar.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+    <script src="/js/utilities.js"></script>
+}
