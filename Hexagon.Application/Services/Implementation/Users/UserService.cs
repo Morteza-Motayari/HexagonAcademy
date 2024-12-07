@@ -5,12 +5,12 @@ using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Application.Statics;
 using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Interfaces;
+using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Interfaces.Users;
-using Hexagon.Domain.Models.Records;
+using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
-using Hexagon.Infra.Data.Repositories;
 using System.Collections.ObjectModel;
 
 namespace Hexagon.Application.Services.Implementation.Users
@@ -18,7 +18,8 @@ namespace Hexagon.Application.Services.Implementation.Users
     public class UserService(IUserRepository UserRepository,
         IUserRoleRepository userRoleRepository,
         IRoleRepository roleRepository,
-        IStaffRepository staffRepository) : IUserService
+        IStaffRepository staffRepository,
+        IRolePermissionRepository rolePermissionRepository) : IUserService
     {
         public async Task<AdminChagePasswordResult> AdminChangeUserPasswordAsync(AdminChagePasswordViewModel model)
         {
@@ -70,9 +71,10 @@ namespace Hexagon.Application.Services.Implementation.Users
                 CreatedDate = user.CreatedDate,
                 CreatedBy = await UserRepository.GetJustUserName(user.CreatedBy),
                 LastModifiedBy = await UserRepository.GetJustUserName(user.LastModifiedBy),
-                ModifiedDate = user.LastModifiedDate,
+                LastModifiedDate = user.LastModifiedDate,
                 Roles = await roleRepository.GetUserRoles(await userRoleRepository.GetUserRoleIdsAsync(user.Id)),
-                staffs=user.staffes
+                Trainers=user.staffes?.Where(u=>u.UserCertificates!=null).ToList(),
+                Caders= user.staffes?.Where(u => u.userRoles != null).ToList()
             };
 
             return Detail;
@@ -115,17 +117,6 @@ namespace Hexagon.Application.Services.Implementation.Users
 
             await UserRepository.InserAsync(User);
             await UserRepository.SaveChangeAsync();
-
-            #region Add User Roles
-            if (model.RolesId.CheckNullability())
-            {
-                foreach (var role in model.RolesId)
-                {
-                    await userRoleRepository.InserAsync(new UserRole { RoleId = role, UserId = User.Id });
-                }
-                await userRoleRepository.SaveChangeAsync();
-            }
-            #endregion
 
             return CreateUserResult.Success;
         }
@@ -189,7 +180,6 @@ namespace Hexagon.Application.Services.Implementation.Users
                 Gender = User.Gender,
                 Status = User.Status,
                 Avatar = User.Avatar,
-                RolesId = await userRoleRepository.GetUserRoleIdsAsync(UserId),
                 IsDeleted = User.IsDeleted
             };
         }
@@ -238,35 +228,31 @@ namespace Hexagon.Application.Services.Implementation.Users
             #endregion
             UserRepository.Update(User);
             await UserRepository.SaveChangeAsync();
-            #region Update User Roles
-            if (model.RolesId.CheckNullability())
-            {
-                var list = await userRoleRepository.GetUserRolesIdentityKeyAsync(model.Id);
-                if (list != null)
-                {
-                    foreach (var role in list)
-                    {
-                        userRoleRepository.Remove(new UserRole
-                        {
-                            UserRoleId = role
-                        });
-                    }
-                    await userRoleRepository.SaveChangeAsync();
-                }
-
-                #region Add User Roles
-                foreach (var role in model.RolesId)
-                {
-                    await userRoleRepository.InserAsync(new UserRole { RoleId = role, UserId = User.Id });
-                }
-                await userRoleRepository.SaveChangeAsync();
-                #endregion
-            }
-            #endregion
 
             #endregion
 
             return UpdateUserResult.Success;
+        }
+
+        public async Task<bool> CaderHasPermissionAsync(int UserId, string permission)
+        {
+            var rolePermissions = await rolePermissionRepository.GetRoleIdsWithPermissionName(permission);
+            var userRoles = await userRoleRepository.GetActiveUserRoleIdsAsync(UserId);
+            if (userRoles.CheckNullability())
+            {
+                foreach (var item in userRoles)
+                {
+                    if (rolePermissions.Contains(item))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+
+
+            //return true;
         }
 
     }

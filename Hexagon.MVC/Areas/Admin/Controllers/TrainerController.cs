@@ -5,6 +5,7 @@ using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Records.Certificates;
 using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -14,6 +15,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         , ICertificateService certificateService) : AdminSideController
     {
         #region List
+        [AuthorizePermission("ManageTrainers")]
         public async Task<IActionResult> List(FilterTrainerViewModel filter)
         {
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
@@ -23,6 +25,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Create
+        [AuthorizePermission("AddTrainer")]
         public async Task<IActionResult> Create()
         {
             //ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
@@ -70,6 +73,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Edit
+        [AuthorizePermission("EditTrainer")]
         public async Task<IActionResult> Edit(int id)
         {
             var Trainer = await staffService.GetTrainerForEdit(id);
@@ -102,7 +106,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 case UpdateTrainerResult.DuplicatedPosition:
                     TempData[ErrorMessage] = ErrorMessages.TrainerPositionDuplicated;
                     break;
-                case UpdateTrainerResult.TraninerNotFound:
+                case UpdateTrainerResult.TrainerNotFound:
                     TempData[ErrorMessage] = ErrorMessages.TrainerNotFound;
                     break;
                 case UpdateTrainerResult.InValidSalary:
@@ -118,6 +122,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
+        [AuthorizePermission("DetailTrainer")]
         public async Task<IActionResult> Detail(int id)
         {
             var Trainer = await staffService.AdminSideDetailTrainerAsync(id);
@@ -129,6 +134,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
+        [AuthorizePermission("DeleteTrainer")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await staffService.DeleteTrainerAsync(id);

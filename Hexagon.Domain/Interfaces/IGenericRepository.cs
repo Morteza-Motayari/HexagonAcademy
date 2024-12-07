@@ -9,7 +9,7 @@ namespace Hexagon.Domain.Interfaces
     public interface IGenericRepository<T> where T : class
     {
         Task InserAsync(T entity);
-        Task<List<T>> GetAllAsync();
+        Task<List<T>?> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
         Task SaveChangeAsync();
         void Update(T entity);

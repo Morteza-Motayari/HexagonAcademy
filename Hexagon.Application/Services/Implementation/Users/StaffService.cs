@@ -11,6 +11,9 @@ using Hexagon.Application.Convertors;
 using System.Collections.ObjectModel;
 using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.Gyms;
+using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
+using Hexagon.Domain.Interfaces.Users;
+using Hexagon.Infra.Data.Repositories.Users;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
@@ -18,8 +21,41 @@ namespace Hexagon.Application.Services.Implementation.Users
         , IUserCertificatesRepository userCertificatesRepository
         ,IUserRepository userRepository
         ,ICertificateRepository certificateRepository,
-        ISportRepository sportRepository) : IStaffService
+        ISportRepository sportRepository,
+        IRoleRepository roleRepository,
+        IUserRoleRepository userRoleRepository) : IStaffService
     {
+        public async Task<AdminSideDetailCaderViewModel?> AdminSideDetailCaderAsync(int CaderId)
+        {
+            var cader = await staffRepository.GetStaffWithUser(CaderId);
+            if (cader == null)
+                return null;
+            AdminSideDetailCaderViewModel? Detail = new()
+            {
+                Id = CaderId,
+                FullName = cader.user.GetUserName(),
+                Avatar = cader.user.Avatar,
+                Gender = cader.user.Gender,
+                email = cader.user.email,
+                city = cader.user.city,
+                NationalCode = cader.user.NationalCode,
+                PhoneNumber = cader.user.PhoneNumber,
+                Salary = cader.Salary,
+                Position = cader.Position,
+                UserId = cader.user.Id,
+                CaderRoles = await roleRepository.getCaderRoles(cader.user.Id, CaderId),
+                IsDeleted = cader.IsDeleted,
+                CreatedById = cader.CreatedBy,
+                LastModifiedById = cader.LastModifiedBy,
+                BirthDay = cader.user.BirthDay?.ToShamsi(),
+                CreatedDate = cader.CreatedDate,
+                CreatedBy = await userRepository.GetJustUserName(cader.CreatedBy),
+                LastModifiedBy = await userRepository.GetJustUserName(cader.LastModifiedBy),
+                LastModifiedDate = cader.LastModifiedDate
+            };
+
+            return Detail;
+        }
         public async Task<AdminSideDetailTrainerViewModel?> AdminSideDetailTrainerAsync(int TrainerId)
         {
             var trainer = await staffRepository.GetStaffWithUser(TrainerId);
@@ -28,17 +64,17 @@ namespace Hexagon.Application.Services.Implementation.Users
             AdminSideDetailTrainerViewModel? Detail = new()
             {
                 Id = TrainerId,
-                FullName=trainer.user.GetUserName(),
+                FullName = trainer.user.GetUserName(),
                 Avatar = trainer.user.Avatar,
                 Gender = trainer.user.Gender,
                 email = trainer.user.email,
-                city=trainer.user.city,
+                city = trainer.user.city,
                 NationalCode = trainer.user.NationalCode,
                 PhoneNumber = trainer.user.PhoneNumber,
-                Salary=trainer.Salary,
-                Position=trainer.Position,
-                UserId=trainer.user.Id,
-                TrainerCertificates=await certificateRepository.GetTrainerCertificate(trainer.user.Id,TrainerId),
+                Salary = trainer.Salary,
+                Position = trainer.Position,
+                UserId = trainer.user.Id,
+                TrainerCertificates = await certificateRepository.GetTrainerCertificate(trainer.user.Id, TrainerId),
                 IsDeleted = trainer.IsDeleted,
                 CreatedById = trainer.CreatedBy,
                 LastModifiedById = trainer.LastModifiedBy,
@@ -46,18 +82,79 @@ namespace Hexagon.Application.Services.Implementation.Users
                 CreatedDate = trainer.CreatedDate,
                 CreatedBy = await userRepository.GetJustUserName(trainer.CreatedBy),
                 LastModifiedBy = await userRepository.GetJustUserName(trainer.LastModifiedBy),
-                ModifiedDate = trainer.LastModifiedDate
+                LastModifiedDate = trainer.LastModifiedDate
             };
 
             return Detail;
         }
 
+        public async Task<CreateCaderResult> CreateCaderAsync(CreateCaderViewModel model)
+        {
+            var user = await userRepository.GetByIdAsync(model.UserId);
+            if (user == null)
+                return CreateCaderResult.UserNotFound;
+            if (await staffRepository.DuplicatedStaffPositionAsync(model.Position, model.UserId))
+                return CreateCaderResult.DuplicatedPosition;
+            //in below code we check out if there is any staff existed for the user that have the same role chosed for the new staff
+            if (await staffRepository.ExistStaffForUser(model.UserId))
+            {
+                List<int> staffIds = await staffRepository.GetUserStaffIds(model.UserId);
+                foreach (int staffId in staffIds)
+                {
+                    foreach (var role in model.CaderRoleIds)
+                    {
+                        if (await userRoleRepository.ExistRoleForUser(model.UserId, role, staffId))
+                        {
+                            return CreateCaderResult.ExistRoleForUser;
+                        }
+                    }
+                }
+            }
+
+            #region Changing User Situation
+            if(user.Situation != UserSituation.Trainer)
+            {
+                user.Situation = UserSituation.Cader;
+                userRepository.Update(user);
+            }            
+            #endregion
+            Staff cader = new()
+            {
+                Position = model.Position,
+                UserId = model.UserId
+            };
+            try
+            {
+                cader.Salary = int.Parse(model.Salary);
+            }
+            catch
+            {
+                return CreateCaderResult.InValidSalary;
+            }
+            await staffRepository.InserAsync(cader);
+            await staffRepository.SaveChangeAsync();
+            if (model.CaderRoleIds.CheckNullability())
+            {
+                foreach (var role in model.CaderRoleIds)
+                {
+                    await userRoleRepository.InserAsync(new UserRole
+                    {
+                        UserId = model.UserId,
+                        RoleId = role,
+                        CaderId = cader.Id
+                    });
+                }
+                await userRoleRepository.SaveChangeAsync();
+            }
+            return CreateCaderResult.Success;
+        }
+
         public async Task<CreateTrainerResult> CreateTrainerAsync(CreateTrainerViewModel model)
         {
-            var user=await userRepository.GetByIdAsync(model.UserId);
-            if (user==null)
+            var user = await userRepository.GetByIdAsync(model.UserId);
+            if (user == null)
                 return CreateTrainerResult.UserNotFound;
-            if(await staffRepository.DuplicatedStaffPositionAsync(model.Position,model.UserId))
+            if (await staffRepository.DuplicatedStaffPositionAsync(model.Position, model.UserId))
                 return CreateTrainerResult.DuplicatedPosition;
             //in below code we check out if there is any staff existed for the user that have the same certificate chosed for the new staff
             if (await staffRepository.ExistStaffForUser(model.UserId))
@@ -76,18 +173,20 @@ namespace Hexagon.Application.Services.Implementation.Users
             }
 
             #region Changing User Situation
-            user.Situation=UserSituation.Trainer;
+            user.Situation = UserSituation.Trainer;
             userRepository.Update(user);
             #endregion
             Staff trainer = new()
-            {                
+            {
                 Position = model.Position,
                 UserId = model.UserId
             };
-            try{
+            try
+            {
                 trainer.Salary = int.Parse(model.Salary);
             }
-            catch {
+            catch
+            {
                 return CreateTrainerResult.InValidSalary;
             }
             await staffRepository.InserAsync(trainer);
@@ -99,13 +198,27 @@ namespace Hexagon.Application.Services.Implementation.Users
                     await userCertificatesRepository.InserAsync(new UserCertificates
                     {
                         UserId = model.UserId,
-                        CertificateId= certificate,
-                        StaffId=trainer.Id
+                        CertificateId = certificate,
+                        StaffId = trainer.Id
                     });
                 }
                 await userCertificatesRepository.SaveChangeAsync();
             }
             return CreateTrainerResult.Success;
+        }
+
+        public async Task<DeleteCaderResult> DeleteCaderAsync(int CaderId)
+        {
+            var cader = await staffRepository.GetByIdAsync(CaderId);
+            if (cader == null)
+                return DeleteCaderResult.CaderNotFound;
+            if (cader.IsDeleted == true)
+                return DeleteCaderResult.CaderAlreadyDeleted;
+
+            cader.IsDeleted = true;
+            staffRepository.Update(cader);
+            await staffRepository.SaveChangeAsync();
+            return DeleteCaderResult.Success;
         }
 
         public async Task<DeleteTrainerResult> DeleteTrainerAsync(int TrainerId)
@@ -122,8 +235,28 @@ namespace Hexagon.Application.Services.Implementation.Users
             return DeleteTrainerResult.Success;
         }
 
+        public async Task<FilterCaderViewModel> FilterCadersAsync(FilterCaderViewModel filter)
+        => await staffRepository.FilterCadersAsync(filter);
+
         public async Task<FilterTrainerViewModel> FilterTrainersAsync(FilterTrainerViewModel filter)
-        => await staffRepository.FilteTrainersAsync(filter);
+        => await staffRepository.FilterTrainersAsync(filter);
+
+        public async Task<UpdateCaderViewModel?> GetCaderForEdit(int CaderId)
+        {
+            var cader = await staffRepository.GetByIdAsync(CaderId);
+            if (cader == null)
+                return null;
+            return new UpdateCaderViewModel()
+            {
+                Id = cader.Id,
+                CaderRoleIds = await userRoleRepository.GetCaderRoleIdsAsync(CaderId),
+                Position = cader.Position,
+                Salary = cader.Salary.ToString(),
+                UserId = cader.UserId,
+                IsDeleted = cader.IsDeleted,
+                CaderName = await userRepository.GetJustUserName(cader.UserId)
+            };
+        }
 
         public async Task<UpdateTrainerViewModel?> GetTrainerForEdit(int TrainerId)
         {
@@ -138,7 +271,7 @@ namespace Hexagon.Application.Services.Implementation.Users
                 Salary = trainer.Salary.ToString(),
                 UserId = trainer.UserId,
                 IsDeleted = trainer.IsDeleted,
-                TrainerName= await userRepository.GetJustUserName(trainer.UserId)
+                TrainerName = await userRepository.GetJustUserName(trainer.UserId)
             };
         }
 
@@ -157,7 +290,7 @@ namespace Hexagon.Application.Services.Implementation.Users
         public async Task<List<TrainerViewModel>?> ListTrainerForEditItemsAsync(UserGender gender, int sportId)
         {
             int sportCertifiacetId = await sportRepository.GetSportCertifiacetId(sportId);
-            var list =await staffRepository.ListSuitableTrainersForEditClassAsync(gender, sportCertifiacetId);
+            var list = await staffRepository.ListSuitableTrainersForEditClassAsync(gender, sportCertifiacetId);
             return list;
         }
 
@@ -168,31 +301,97 @@ namespace Hexagon.Application.Services.Implementation.Users
             return list;
         }
 
-        public Task<List<TrainerViewModel>?> ListTrainersAsync()
+        public async Task<UpdateCaderResult> UpdateCaderAsync(UpdateCaderViewModel model)
         {
-            throw new NotImplementedException();
+            var cader = await staffRepository.GetByIdAsync(model.Id);
+            if (cader == null)
+                return UpdateCaderResult.CaderNotFound;
+
+            if (await staffRepository.DuplicatedStaffPositionAsync(model.Position, model.UserId, model.Id))
+                return UpdateCaderResult.DuplicatedPosition;
+
+            List<int> staffIds = await staffRepository.GetUserStaffIds(model.UserId);
+            foreach (int staffId in staffIds)
+            {
+                foreach (var role in model.CaderRoleIds)
+                {
+                    if (await userRoleRepository.ExistRoleForUser(model.UserId, role, staffId, model.Id))
+                    {
+                        return UpdateCaderResult.ExistRoleForUser;
+                    }
+                }
+            }
+            #region Update Cader
+            cader.Position = model.Position;
+            try
+            {
+                cader.Salary = int.Parse(model.Salary);
+            }
+            catch
+            {
+                return UpdateCaderResult.InValidSalary;
+            }
+            cader.UserId = model.UserId;
+
+            #region Update Cader Roles
+            if (model.CaderRoleIds.CheckNullability())
+            {
+                var list = await userRoleRepository.GetCaderRolesIdentityKeyAsync(model.Id);
+                if (list != null)
+                {
+                    foreach (var role in list)
+                    {
+                        userRoleRepository.Remove(new UserRole
+                        {
+                            UserRoleId = role
+                        });
+                    }
+                    await userRoleRepository.SaveChangeAsync();
+                }
+
+                #region Add Cader Certificate
+                foreach (var role in model.CaderRoleIds)
+                {
+                    await userRoleRepository.InserAsync(new UserRole
+                    {
+                        UserId = model.UserId,
+                        RoleId = role,
+                        CaderId = cader.Id
+                    });
+                }
+                await userRoleRepository.SaveChangeAsync();
+                #endregion
+            }
+            #endregion
+
+            staffRepository.Update(cader);
+            await staffRepository.SaveChangeAsync();
+            #endregion
+
+            return UpdateCaderResult.Success;
+
         }
 
         public async Task<UpdateTrainerResult> UpdateTrainerAsync(UpdateTrainerViewModel model)
         {
-            var trainer=await staffRepository.GetByIdAsync(model.Id);
-            if(trainer == null)
-                return UpdateTrainerResult.TraninerNotFound;
+            var trainer = await staffRepository.GetByIdAsync(model.Id);
+            if (trainer == null)
+                return UpdateTrainerResult.TrainerNotFound;
 
-            if (await staffRepository.DuplicatedStaffPositionAsync(model.Position, model.UserId,model.Id))
+            if (await staffRepository.DuplicatedStaffPositionAsync(model.Position, model.UserId, model.Id))
                 return UpdateTrainerResult.DuplicatedPosition;
 
-                List<int> staffIds = await staffRepository.GetUserStaffIds(model.UserId);
-                foreach (int staffId in staffIds)
+            List<int> staffIds = await staffRepository.GetUserStaffIds(model.UserId);
+            foreach (int staffId in staffIds)
+            {
+                foreach (var certificate in model.TrainerCertificatesIds)
                 {
-                    foreach (var certificate in model.TrainerCertificatesIds)
+                    if (await userCertificatesRepository.ExistCertificateForUser(model.UserId, certificate, staffId, model.Id))
                     {
-                        if (await userCertificatesRepository.ExistCertificateForUser(model.UserId, certificate, staffId,model.Id))
-                        {
-                            return UpdateTrainerResult.ExistCertificateForUser;
-                        }
+                        return UpdateTrainerResult.ExistCertificateForUser;
                     }
                 }
+            }
             #region Update Trainer
             trainer.Position = model.Position;
             try
@@ -243,5 +442,8 @@ namespace Hexagon.Application.Services.Implementation.Users
             return UpdateTrainerResult.Success;
 
         }
+
+        public async Task<bool> UserHasPermission(int userId)
+        => await staffRepository.ExistActiveCaderForUser(userId);
     }
 }

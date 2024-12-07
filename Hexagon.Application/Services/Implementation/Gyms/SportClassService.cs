@@ -47,7 +47,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 Gender = sportClass.Gender,
                 ClassStatus = sportClass.ClassStatus,
                 CreatedDate = sportClass.CreatedDate,
-                ModifiedDate = sportClass.LastModifiedDate,
+                LastModifiedDate = sportClass.LastModifiedDate,
                 CreatedBy = await userRepository.GetJustUserName(sportClass.CreatedBy),
                 LastModifiedBy = await userRepository.GetJustUserName(sportClass.LastModifiedBy),
                 CreatedById = sportClass.CreatedBy,

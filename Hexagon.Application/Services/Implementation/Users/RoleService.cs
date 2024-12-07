@@ -1,14 +1,44 @@
 ﻿using Hexagon.Application.Extensions;
 using Hexagon.Application.Services.Interfaces.Users;
+using Hexagon.Domain.Interfaces;
+using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
+using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
+using Hexagon.Infra.Data.Repositories;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
     public class RoleService(IRoleRepository roleRepository,
-        IRolePermissionRepository rolePermissionRepository) : IRoleService
+        IRolePermissionRepository rolePermissionRepository,
+        IPermissionRepository permissionRepository,
+        IUserRepository userRepository,
+        IStaffRepository staffRepository) : IRoleService
     {
+        public async Task<AdminSideDetailRoleViewModel?> AdminSideDetailRoleAsync(int roleId)
+        {
+            var role = await roleRepository.GetByIdAsync(roleId);
+            if (role == null)
+                return null;
+            AdminSideDetailRoleViewModel? Detail = new()
+            {
+                Id = roleId,
+                RoleTitle=role.RoleTitle,
+                Permissions=await permissionRepository.GetRolePermissions(roleId),
+                caders=await staffRepository.GetCadersWithRoleAsync(roleId),
+                IsDeleted = role.IsDeleted,
+                CreatedById = role.CreatedBy,
+                LastModifiedById = role.LastModifiedBy,
+                CreatedDate = role.CreatedDate,
+                CreatedBy = await userRepository.GetJustUserName(role.CreatedBy),
+                LastModifiedBy = await userRepository.GetJustUserName(role.LastModifiedBy),
+                LastModifiedDate = role.LastModifiedDate
+            };
+
+            return Detail;
+        }
+
         public async Task<CreateRoleResult> CreateRoleAsync(CreateRoleViewModel model)
         {
             if (await roleRepository.ExistRoleTitle(model.RoleTitle))
@@ -48,6 +78,9 @@ namespace Hexagon.Application.Services.Implementation.Users
         public async Task<FilterRoleViewModel> FilterRolesAsync(FilterRoleViewModel filter)
         => await roleRepository.FilteRolesAsync(filter);
 
+        public async Task<List<Permission>> GetAllPermmisions()
+        => await permissionRepository.GetAllAsync();
+
         public async Task<UpdateRoleViewModel> GetRoleForEdit(int RoleId)
         {
             var role = await roleRepository.GetByIdAsync(RoleId);
@@ -57,11 +90,13 @@ namespace Hexagon.Application.Services.Implementation.Users
             {
                 RoleTitle = role.RoleTitle,
                 Id = role.Id,
+                IsDeleted=role.IsDeleted,
+                PermissionsId=await rolePermissionRepository.GetRolePermissionIdsAsync(role.Id)
             };
         }
 
         public async Task<List<RoleViewModel>> ListRolesAsync()
-        => await roleRepository.GetAllRolesAsync();
+        => await roleRepository.GetAllRolesOptionAsync();
 
         public async Task<UpdateRoleResult> UpdateRoleAsync(UpdateRoleViewModel model)
         {
@@ -69,7 +104,7 @@ namespace Hexagon.Application.Services.Implementation.Users
             if (role == null)
                 return UpdateRoleResult.NotFound;
 
-            if (await roleRepository.ExistRoleTitle(model.RoleTitle))
+            if (await roleRepository.ExistRoleTitle(model.RoleTitle,model.Id))
                 return UpdateRoleResult.DupliactedRole;
 
             #region Update Role

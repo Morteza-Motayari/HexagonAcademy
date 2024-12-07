@@ -11,8 +11,10 @@ namespace Hexagon.Domain.Interfaces.Users
     public interface IRoleRepository:IGenericRepository<Role>
     {
         Task<bool> ExistRoleTitle(string roleTilte);
-        Task<List<RoleViewModel>> GetAllRolesAsync();
+        Task<bool> ExistRoleTitle(string roleTilte,int roleId);
+        Task<List<RoleViewModel>> GetAllRolesOptionAsync();
         Task<FilterRoleViewModel> FilteRolesAsync(FilterRoleViewModel filter);
         Task<List<Role>?> GetUserRoles(List<int>? ids);
+        Task<List<Role>?> getCaderRoles(int userId, int caderId);
     }
 }

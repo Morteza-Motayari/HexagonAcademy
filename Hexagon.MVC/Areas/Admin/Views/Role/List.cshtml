@@ -21,7 +21,7 @@
     <div class="col-12">
         <div class="card">
             <div class="header">
-                <h2>فیلترها</h2>
+                <h2><i class="fe fe-24 fe-zoom-in"></i> فیلترها</h2>
                 <div class="toolbar">
                     <div class="col-12">
                         <form class="form" method="post" id="filter-search" asp-area="Admin" asp-controller="Role" asp-action="List">
@@ -71,13 +71,12 @@
                     </div>
                     <br />
                     <p class="col-12">
-                        <a onclick="ShowAddingItemForm('@Url.Action("Create","Role")',' افزودن نقش جدید')" class="btn btn-success text-white">ایجاد نقش جدید</a>
+                        <a asp-area="Admin" asp-controller="Role" asp-action="Create" class="btn btn-success text-white">افزودن نقش جدید</a>
                     </p>
-
                 </div>
             </div>
             <div class="body">
-                <h2>@ViewData["Title"]</h2>
+                <h2><i class="fe fe-lock fe-24"></i> @ViewData["Title"]</h2>
                 <div class="table-responsive">
                     <div id="tableExport_wrapper" class="dataTables_wrapper dt-bootstrap4">
                         <table class="table table-borderless dataTable table-responsive w-100 d-block d-table table-hover" role="grid">
@@ -111,9 +110,12 @@
                                             </td>
                                             <td class="center">@item.CreatedDate.ToShamsi()</td>
                                             <td class="center">
+                                                <a asp-area="Admin" asp-controller="Role" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
+                                                    <i class="fe fe-24 fe-alert-circle"></i>
+                                                </a>
                                                 @if (item.IsDeleted == false)
                                                 {
-                                                    <a onclick="ShowAddingItemForm('@Url.Action("Edit","Role",new{roleId=item.Id})',' ویرایش نقش ')" class="text-success">
+                                                    <a asp-area="Admin" asp-controller="Role" asp-action="Edit" asp-route-id="@item.Id" class="text-success">
                                                         <i class="fe fe-24 fe-edit-3"></i>
                                                     </a>
                                                     <a onclick="confirmDelete('@Url.Action("Delete","Role",new{id=item.Id})',event,'@item.RoleTitle')" class="text-danger">

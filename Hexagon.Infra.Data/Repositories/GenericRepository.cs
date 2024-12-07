@@ -9,7 +9,7 @@ namespace Hexagon.Infra.Data.Repositories
         public void Delete(T entity)
         => db.Remove(entity);
 
-        public async Task<List<T>> GetAllAsync()
+        public async Task<List<T>?> GetAllAsync()
         => await db.Set<T>().ToListAsync();
 
         public async Task<T?> GetByIdAsync(int id)

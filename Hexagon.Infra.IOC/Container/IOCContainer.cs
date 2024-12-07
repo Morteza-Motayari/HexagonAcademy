@@ -12,7 +12,6 @@ using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Infra.Data.Repositories;
 using Hexagon.Infra.Data.Repositories.Gyms;
 using Hexagon.Infra.Data.Repositories.Links;
-using Hexagon.Infra.Data.Repositories.roles;
 using Hexagon.Infra.Data.Repositories.Users;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -72,6 +71,7 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IRolePermissionRepository,RolePermissionRepository>();
+            services.AddScoped<IPermissionRepository,PermissionRepository>();
             #endregion
 
             #endregion

@@ -49,7 +49,6 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         public UserGender Gender { get; set; }
         [Display(Name = "وضعیت")]
         public UserStatus Status { get; set; }
-        public List<int>? RolesId { get; set; }
     }
     public enum CreateUserResult
     {

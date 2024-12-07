@@ -6,9 +6,6 @@
 @model UpdateUserViewModel
 @{
     ViewData["Title"] = "ویرایش کاربر";
-    int j = 0;
-    List<RoleViewModel> roles = ViewData["roles"] as List<RoleViewModel> ?? new List<RoleViewModel>();
-    List<int>? UserRoles = Model.RolesId ?? new List<int>();
 }
 <div class="row">
     <div class="pl-3">
@@ -120,21 +117,6 @@
                                     <input asp-for="NewImage" id="avaterFile" type="file">
                                 </div>
                             </div>
-                        </div>
-                        <br />
-                        <h2>نقش ها</h2>
-                        <hr />
-                        <div>
-                            @if (roles.CheckNullability())
-                            {
-                                @foreach (var item in roles)
-                                {
-                                    <div class="custom-checkbox">
-                                        <input type="checkbox" name="RolesId" value="@item.Id" @((UserRoles.Any(x => x == item.Id) ? "bxs checked" : "bxs"))>
-                                        <label for="customCheck1">@item.RoleTitle</label>
-                                    </div>
-                                }
-                            }
                         </div>
                     </div>
                     <div class="col-md-6">

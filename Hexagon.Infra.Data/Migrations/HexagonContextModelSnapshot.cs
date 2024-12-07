@@ -341,6 +341,34 @@ namespace Hexagon.Infra.Data.Migrations
                     b.ToTable("UserCertificates");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Links.UserRole", b =>
+                {
+                    b.Property<int>("UserRoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"));
+
+                    b.Property<int?>("CaderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserRoleId");
+
+                    b.HasIndex("CaderId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("userRoles");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Records.Certificate", b =>
                 {
                     b.Property<int>("Id")
@@ -447,9 +475,6 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PermissionId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("PermissionName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -460,9 +485,408 @@ namespace Hexagon.Infra.Data.Migrations
 
                     b.HasKey("PermissionId");
 
-                    b.HasIndex("PermissionId1");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Permissions");
+
+                    b.HasData(
+                        new
+                        {
+                            PermissionId = 1,
+                            PermissionName = "ManageUsers",
+                            PermissionTitle = "مدیریت کاربران"
+                        },
+                        new
+                        {
+                            PermissionId = 2,
+                            ParentId = 1,
+                            PermissionName = "AddUser",
+                            PermissionTitle = "افزودن کاربر"
+                        },
+                        new
+                        {
+                            PermissionId = 3,
+                            ParentId = 1,
+                            PermissionName = "EditUser",
+                            PermissionTitle = "ویرایش کاربر"
+                        },
+                        new
+                        {
+                            PermissionId = 4,
+                            ParentId = 1,
+                            PermissionName = "DeleteUser",
+                            PermissionTitle = "حذف کاربر"
+                        },
+                        new
+                        {
+                            PermissionId = 5,
+                            ParentId = 1,
+                            PermissionName = "DetailUser",
+                            PermissionTitle = "جزئیات کاربر"
+                        },
+                        new
+                        {
+                            PermissionId = 6,
+                            ParentId = 1,
+                            PermissionName = "DeleteUserForever",
+                            PermissionTitle = "حذف مطلق کاربر"
+                        },
+                        new
+                        {
+                            PermissionId = 58,
+                            ParentId = 1,
+                            PermissionName = "ChangeUserPassword",
+                            PermissionTitle = "تغییر رمز کاربر"
+                        },
+                        new
+                        {
+                            PermissionId = 7,
+                            PermissionName = "ManageRoles",
+                            PermissionTitle = "مدیریت نقش ها"
+                        },
+                        new
+                        {
+                            PermissionId = 8,
+                            ParentId = 7,
+                            PermissionName = "AddRole",
+                            PermissionTitle = "افزودن نقش"
+                        },
+                        new
+                        {
+                            PermissionId = 9,
+                            ParentId = 7,
+                            PermissionName = "EditRole",
+                            PermissionTitle = "ویرایش نقش"
+                        },
+                        new
+                        {
+                            PermissionId = 10,
+                            ParentId = 7,
+                            PermissionName = "DeleteRole",
+                            PermissionTitle = "حذف نقش"
+                        },
+                        new
+                        {
+                            PermissionId = 11,
+                            ParentId = 7,
+                            PermissionName = "DetailRole",
+                            PermissionTitle = "جزئیات نقش"
+                        },
+                        new
+                        {
+                            PermissionId = 12,
+                            ParentId = 7,
+                            PermissionName = "DeleteRoleForever",
+                            PermissionTitle = "حذف مطلق نقش"
+                        },
+                        new
+                        {
+                            PermissionId = 13,
+                            PermissionName = "ManageTrainers",
+                            PermissionTitle = "مدیریت مربی ها"
+                        },
+                        new
+                        {
+                            PermissionId = 14,
+                            ParentId = 13,
+                            PermissionName = "AddTrainer",
+                            PermissionTitle = "افزودن مربی"
+                        },
+                        new
+                        {
+                            PermissionId = 15,
+                            ParentId = 13,
+                            PermissionName = "EditTrainer",
+                            PermissionTitle = "ویرایش مربی"
+                        },
+                        new
+                        {
+                            PermissionId = 16,
+                            ParentId = 13,
+                            PermissionName = "DeleteTrainer",
+                            PermissionTitle = "حذف مربی"
+                        },
+                        new
+                        {
+                            PermissionId = 17,
+                            ParentId = 13,
+                            PermissionName = "DetailTrainer",
+                            PermissionTitle = "جزئیات مربی"
+                        },
+                        new
+                        {
+                            PermissionId = 18,
+                            ParentId = 13,
+                            PermissionName = "DeleteTrainerForever",
+                            PermissionTitle = "حذف مطلق مربی"
+                        },
+                        new
+                        {
+                            PermissionId = 19,
+                            PermissionName = "ManageCaders",
+                            PermissionTitle = "مدیریت کادرها"
+                        },
+                        new
+                        {
+                            PermissionId = 20,
+                            ParentId = 19,
+                            PermissionName = "AddCader",
+                            PermissionTitle = "افزودن کادر"
+                        },
+                        new
+                        {
+                            PermissionId = 21,
+                            ParentId = 19,
+                            PermissionName = "EditCader",
+                            PermissionTitle = "ویرایش کادر"
+                        },
+                        new
+                        {
+                            PermissionId = 22,
+                            ParentId = 19,
+                            PermissionName = "DeleteCader",
+                            PermissionTitle = "حذف کادر"
+                        },
+                        new
+                        {
+                            PermissionId = 23,
+                            ParentId = 19,
+                            PermissionName = "DetailCader",
+                            PermissionTitle = "جزئیات کادر"
+                        },
+                        new
+                        {
+                            PermissionId = 24,
+                            ParentId = 19,
+                            PermissionName = "DeleteCaderForever",
+                            PermissionTitle = "حذف مطلق کادر"
+                        },
+                        new
+                        {
+                            PermissionId = 25,
+                            PermissionName = "ManageCertificates",
+                            PermissionTitle = "مدیریت مدرک ها"
+                        },
+                        new
+                        {
+                            PermissionId = 26,
+                            ParentId = 25,
+                            PermissionName = "AddCertificate",
+                            PermissionTitle = "افزودن مدرک"
+                        },
+                        new
+                        {
+                            PermissionId = 27,
+                            ParentId = 25,
+                            PermissionName = "EditCertificate",
+                            PermissionTitle = "ویرایش مدرک"
+                        },
+                        new
+                        {
+                            PermissionId = 28,
+                            ParentId = 25,
+                            PermissionName = "DeleteCertificate",
+                            PermissionTitle = "حذف مدرک"
+                        },
+                        new
+                        {
+                            PermissionId = 29,
+                            ParentId = 25,
+                            PermissionName = "DetailCertificate",
+                            PermissionTitle = "جزئیات مدرک"
+                        },
+                        new
+                        {
+                            PermissionId = 30,
+                            ParentId = 25,
+                            PermissionName = "DeleteCertificateForever",
+                            PermissionTitle = "حذف مطلق مدرک"
+                        },
+                        new
+                        {
+                            PermissionId = 31,
+                            PermissionName = "ManageExperiences",
+                            PermissionTitle = "مدیریت سابقه ها"
+                        },
+                        new
+                        {
+                            PermissionId = 32,
+                            ParentId = 31,
+                            PermissionName = "AddExperience",
+                            PermissionTitle = "افزودن سابقه"
+                        },
+                        new
+                        {
+                            PermissionId = 33,
+                            ParentId = 31,
+                            PermissionName = "EditExperience",
+                            PermissionTitle = "ویرایش سابقه"
+                        },
+                        new
+                        {
+                            PermissionId = 34,
+                            ParentId = 31,
+                            PermissionName = "DeleteExperience",
+                            PermissionTitle = "حذف سابقه"
+                        },
+                        new
+                        {
+                            PermissionId = 35,
+                            ParentId = 31,
+                            PermissionName = "DetailExperience",
+                            PermissionTitle = "جزئیات سابقه"
+                        },
+                        new
+                        {
+                            PermissionId = 36,
+                            ParentId = 31,
+                            PermissionName = "DeleteExperienceForever",
+                            PermissionTitle = "حذف مطلق سابقه"
+                        },
+                        new
+                        {
+                            PermissionId = 37,
+                            PermissionName = "ManageGyms",
+                            PermissionTitle = "مدیریت باشگاه ها"
+                        },
+                        new
+                        {
+                            PermissionId = 38,
+                            ParentId = 37,
+                            PermissionName = "AddGym",
+                            PermissionTitle = "افزودن باشگاه"
+                        },
+                        new
+                        {
+                            PermissionId = 39,
+                            ParentId = 37,
+                            PermissionName = "EditGym",
+                            PermissionTitle = "ویرایش باشگاه"
+                        },
+                        new
+                        {
+                            PermissionId = 40,
+                            ParentId = 37,
+                            PermissionName = "DeleteGym",
+                            PermissionTitle = "حذف باشگاه"
+                        },
+                        new
+                        {
+                            PermissionId = 57,
+                            ParentId = 37,
+                            PermissionName = "DetailGym",
+                            PermissionTitle = "جزئیات باشگاه"
+                        },
+                        new
+                        {
+                            PermissionId = 41,
+                            ParentId = 37,
+                            PermissionName = "DeleteGymForever",
+                            PermissionTitle = "حذف مطلق باشگاه"
+                        },
+                        new
+                        {
+                            PermissionId = 42,
+                            ParentId = 37,
+                            PermissionName = "GalleryGym",
+                            PermissionTitle = "گالری باشگاه"
+                        },
+                        new
+                        {
+                            PermissionId = 43,
+                            ParentId = 37,
+                            PermissionName = "AddGalleryGym",
+                            PermissionTitle = "افزودن گالری باشگاه"
+                        },
+                        new
+                        {
+                            PermissionId = 44,
+                            ParentId = 37,
+                            PermissionName = "DeleteGalleryGym",
+                            PermissionTitle = "حذف گالری باشگاه"
+                        },
+                        new
+                        {
+                            PermissionId = 45,
+                            PermissionName = "ManageSports",
+                            PermissionTitle = "مدیریت رشته های ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 46,
+                            ParentId = 45,
+                            PermissionName = "AddSport",
+                            PermissionTitle = "افزودن رشته ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 47,
+                            ParentId = 45,
+                            PermissionName = "EditSport",
+                            PermissionTitle = "ویرایش رشته ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 48,
+                            ParentId = 45,
+                            PermissionName = "DeleteSport",
+                            PermissionTitle = "حذف رشته ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 49,
+                            ParentId = 45,
+                            PermissionName = "DetailSport",
+                            PermissionTitle = "جزئیات رشته ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 50,
+                            ParentId = 45,
+                            PermissionName = "DeleteSportForever",
+                            PermissionTitle = "حذف مطلق رشته ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 51,
+                            PermissionName = "ManageSportClasses",
+                            PermissionTitle = "مدیریت کلاس های ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 52,
+                            ParentId = 51,
+                            PermissionName = "AddSportClass",
+                            PermissionTitle = "افزودن کلاس ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 53,
+                            ParentId = 51,
+                            PermissionName = "EditSportClass",
+                            PermissionTitle = "ویرایش کلاس ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 54,
+                            ParentId = 51,
+                            PermissionName = "DeleteSportClass",
+                            PermissionTitle = "حذف کلاس ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 55,
+                            ParentId = 51,
+                            PermissionName = "DetailSportClass",
+                            PermissionTitle = "جزئیات کلاس ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 56,
+                            ParentId = 51,
+                            PermissionName = "DeleteSportClassForever",
+                            PermissionTitle = "حذف مطلق کلاس ورزشی"
+                        });
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Users.Role", b =>
@@ -641,29 +1065,6 @@ namespace Hexagon.Infra.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Hexagon.Domain.Models.Users.UserRole", b =>
-                {
-                    b.Property<int>("UserRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"));
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserRoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("userRoles");
-                });
-
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.GymGallery", b =>
                 {
                     b.HasOne("Hexagon.Domain.Models.Gyms.Gym", "gym")
@@ -795,6 +1196,31 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Links.UserRole", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Users.Staff", "Cader")
+                        .WithMany("userRoles")
+                        .HasForeignKey("CaderId");
+
+                    b.HasOne("Hexagon.Domain.Models.Users.Role", "role")
+                        .WithMany("userRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Hexagon.Domain.Models.Users.User", "user")
+                        .WithMany("userRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cader");
+
+                    b.Navigation("role");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Records.Experience", b =>
                 {
                     b.HasOne("Hexagon.Domain.Models.Records.Certificate", "certificate")
@@ -816,7 +1242,7 @@ namespace Hexagon.Infra.Data.Migrations
                 {
                     b.HasOne("Hexagon.Domain.Models.Users.Permission", "permission")
                         .WithMany()
-                        .HasForeignKey("PermissionId1");
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("permission");
                 });
@@ -847,25 +1273,6 @@ namespace Hexagon.Infra.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("Hexagon.Domain.Models.Users.UserRole", b =>
-                {
-                    b.HasOne("Hexagon.Domain.Models.Users.Role", "role")
-                        .WithMany("userRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Hexagon.Domain.Models.Users.User", "user")
-                        .WithMany("userRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("role");
 
                     b.Navigation("user");
                 });
@@ -917,6 +1324,8 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("StaffGyms");
 
                     b.Navigation("UserCertificates");
+
+                    b.Navigation("userRoles");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Users.User", b =>

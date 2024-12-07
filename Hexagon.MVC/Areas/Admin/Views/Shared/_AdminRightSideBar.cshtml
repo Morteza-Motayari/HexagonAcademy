@@ -57,8 +57,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pl-3" onclick="ShowAddingItemForm('@Url.Action("Create","Role")',' افزودن نقش جدید')">
-                            <span class="ml-1 item-text">افزودن نقش </span>
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Role" asp-action="Create">
+                            <span class="ml-1 item-text">افزودن نقش</span>
                         </a>
                     </li>
                 </ul>
@@ -87,6 +87,16 @@
                     <li class="nav-item">
                         <a class="nav-link pl-3" asp-area="Admin" asp-controller="Trainer" asp-action="Create">
                             <span class="ml-1 item-text">افزودن مربی </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Cader" asp-action="List">
+                            <span class="ml-1 item-text">لیست کادر ها</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" asp-area="Admin" asp-controller="Cader" asp-action="Create">
+                            <span class="ml-1 item-text">افزودن کادر </span>
                         </a>
                     </li>
                 </ul>

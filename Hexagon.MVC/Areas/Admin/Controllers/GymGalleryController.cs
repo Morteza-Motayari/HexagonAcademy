@@ -1,6 +1,7 @@
 ﻿using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.GymGalleries;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -9,6 +10,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
     {
         //TODO Making the Table responsive in sm-size
         [HttpGet]
+        [AuthorizePermission("GalleryGym")]
         public async Task<IActionResult> Gallery(int gymId)
         {
             if(!await gymGalleryService.GymExistForGalleyAsync(gymId))
@@ -23,6 +25,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             });
         }
         [HttpPost]
+        [AuthorizePermission("AddGalleryGym")]
         public async Task<IActionResult> Gallery(CreateGymGalleryViewModel model)
         {
             #region Validations
@@ -49,7 +52,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             ViewData["GymGallery"] = await gymGalleryService.ListGymGallerysAsync(model.GymId);
             return View(model);
         }
-
+        [AuthorizePermission("DeleteGalleryGym")]
         public async Task DeleteImage(int id)
         {
             if(id==0)

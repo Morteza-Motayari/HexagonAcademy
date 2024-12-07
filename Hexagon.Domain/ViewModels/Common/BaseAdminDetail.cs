@@ -12,7 +12,7 @@ namespace Hexagon.Domain.ViewModels.Common
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreatedDate { get; set; }
         [Display(Name = "آخرین تاریخ ویرایش شده")]
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
         public int? CreatedById { get; set; }
         public int? LastModifiedById { get; set; }
         [Display(Name = "ساخته شده توسط")]

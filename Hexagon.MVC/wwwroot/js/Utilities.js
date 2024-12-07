@@ -33,3 +33,41 @@ function PreventInput(element) {
         event.preventDefault();
     });
 }
+
+function checkFather(parentid) {
+    const ischecked = document.getElementById(`father_${parentid}`).checked;
+    const childs = document.getElementsByClassName(`child_${parentid}`);
+    if (ischecked == false) {
+        for (var i = 0; i < childs.length; i++) {
+            childs[i].checked = false;
+        }       
+    }
+    else {
+        for (var i = 0; i < childs.length; i++) {
+            childs[i].checked = true;
+        }
+    }
+}
+function checkChild(parentid) {
+    const childs = document.getElementsByClassName(`child_${parentid}`);
+    for (var i = 0; i < childs.length; i++) {
+        var ischecked = childs[i].checked;
+        if (ischecked == true) {
+            break;
+        }
+        if (i == childs.length - 1) {
+            const father = document.getElementById(`father_${parentid}`);
+            father.checked = false;
+        }
+    }
+    for (var i = 0; i < childs.length; i++) {
+        var ischecked = childs[i].checked;
+        if (ischecked == false) {
+            break;
+        }
+        if (i == childs.length - 1) {
+            const father = document.getElementById(`father_${parentid}`);
+            father.checked = true;
+        }
+    }
+}

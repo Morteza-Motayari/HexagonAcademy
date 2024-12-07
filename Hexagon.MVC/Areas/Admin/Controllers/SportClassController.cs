@@ -4,6 +4,7 @@ using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -14,6 +15,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         IStaffService staffService) : AdminSideController
     {
         #region List
+        [AuthorizePermission("ManageSportClasses")]
         public async Task<IActionResult> List(FilterSportClassViewModel filter)
         {
             ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
@@ -24,6 +26,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Create
+        [AuthorizePermission("AddSportClass")]
         public async Task<IActionResult> Create()
         {
             ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
@@ -61,6 +64,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Edit
+        [AuthorizePermission("EditSportClass")]
         public async Task<IActionResult> Edit(int id)
         {
             var SportClass = await SportClassService.GetSportClassForEdit(id);
@@ -112,6 +116,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
+        [AuthorizePermission("DetailSportClass")]
         public async Task<IActionResult> Detail(int id)
         {
             var SportClass = await SportClassService.AdminSideDetailSportClassAsync(id);
@@ -123,6 +128,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
         //TODO check out that all entities implement case AlreadyDeleted
         #region Delete
+        [AuthorizePermission("DeleteSportClass")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await SportClassService.DeleteSportClassAsync(id);

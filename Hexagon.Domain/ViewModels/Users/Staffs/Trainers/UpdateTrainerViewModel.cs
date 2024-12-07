@@ -21,6 +21,7 @@ namespace Hexagon.Domain.ViewModels.Users.Staffs.Trainers
         [Display(Name = "کاربر")]
         [Required(ErrorMessage = "لطفا {0} را انتخاب کنید.")]
         public int UserId { get; set; }
+        [Display(Name = "مربی")]
         public string? TrainerName { get; set; }
         public List<int>? TrainerCertificatesIds { get; set; }
         public bool IsDeleted { get; set; }
@@ -29,7 +30,7 @@ namespace Hexagon.Domain.ViewModels.Users.Staffs.Trainers
     {
         Success,
         DuplicatedPosition,
-        TraninerNotFound,
+        TrainerNotFound,
         InValidSalary,
         ExistCertificateForUser
     }

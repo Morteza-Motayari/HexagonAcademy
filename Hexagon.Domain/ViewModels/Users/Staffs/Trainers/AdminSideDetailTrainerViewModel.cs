@@ -36,9 +36,5 @@ namespace Hexagon.Domain.ViewModels.Users.Staffs.Trainers
         [Display(Name = "جنسیت")]
         public UserGender? Gender { get; set; }
         public ICollection<Certificate>? TrainerCertificates { get; set; }
-        [Display(Name = "وضعیت")]
-        public bool IsDeleted { get; set; }
-        [Display(Name = "تاریخ ایجاد")]
-        public DateTime CreatedDate { get; set; }
     }
 }

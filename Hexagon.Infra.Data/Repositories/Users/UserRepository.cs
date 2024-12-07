@@ -11,6 +11,7 @@ using System.Reflection;
 using Hexagon.Infra.Data.DataExtensions;
 using Hexagon.Domain.Models.Records;
 using System.Collections.ObjectModel;
+using Hexagon.Domain.Interfaces.Links;
 
 namespace Hexagon.Infra.Data.Repositories
 {
@@ -81,7 +82,7 @@ namespace Hexagon.Infra.Data.Repositories
                     case FilterUserSituation.All:
                         break;
                     case FilterUserSituation.Cadre:
-                        query = query.Where(u => u.Situation == UserSituation.Cadre);
+                        query = query.Where(u => u.Situation == UserSituation.Cader);
                         break;
                     case FilterUserSituation.Athlete:
                         query = query.Where(u => u.Situation == UserSituation.Athlete);
@@ -207,7 +208,7 @@ namespace Hexagon.Infra.Data.Repositories
         }).FirstAsync(u => u.Id == userId);
 
         public async Task<User?> GetUserWithChilds(int userId)
-        => await _db.Users.Include(u => u.staffes).FirstOrDefaultAsync(u=>u.Id==userId);
+        => await _db.Users.Include(u => u.staffes).Include(u=>u.userRoles).Include(u => u.UserCertificates).FirstOrDefaultAsync(u=>u.Id==userId);
 
         public async Task<bool> MobileDuplicatedAsync(string mobile, int userId)
         => await _db.Users.AnyAsync(u => u.PhoneNumber == mobile && u.Id != userId && u.IsDeleted == false);

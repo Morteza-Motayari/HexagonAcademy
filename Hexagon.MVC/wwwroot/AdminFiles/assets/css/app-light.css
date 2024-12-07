@@ -12311,3 +12311,6 @@ html {
 .color-disabled {
     background-color: #e9ecef;
 }
+.list-nothing {
+    list-style-type: none;
+}

@@ -3,6 +3,7 @@ using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -10,6 +11,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
     public class UserController(IUserService userService, IRoleService roleService) : AdminSideController
     {
         #region List
+        [AuthorizePermission("ManageUsers")]
         public async Task<IActionResult> List(FilterUserViewModel filter)
         {
             var list = await userService.FilterUsersAsync(filter);
@@ -18,9 +20,9 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Create
+        [AuthorizePermission("AddUser")]
         public async Task<IActionResult> Create()
         {
-            ViewData["roles"] = await roleService.ListRolesAsync();
             return View();
         }
         [HttpPost]
@@ -29,7 +31,6 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
-                ViewData["roles"] = await roleService.ListRolesAsync();
                 return View(model);
             }
             #endregion
@@ -46,12 +47,12 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.InvalidDateTimeInput;
                     break;
             }
-            ViewData["roles"] = await roleService.ListRolesAsync();
             return View(model);
         }
         #endregion
 
         #region Edit
+        [AuthorizePermission("EditUser")]
         public async Task<IActionResult> Edit(int id)
         {
             var user = await userService.GetUserForEdit(id);
@@ -63,7 +64,6 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 return RedirectToAction("List", "User", new {area="Admin"});
             }
 
-            ViewData["roles"] = await roleService.ListRolesAsync();
             return View(user);
         }
         [HttpPost]
@@ -72,7 +72,6 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
-                ViewData["roles"] = await roleService.ListRolesAsync();
                 return View(model);
             }
             #endregion
@@ -92,12 +91,12 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.InvalidDateTimeInput;
                     break;
             }
-            ViewData["roles"] = await roleService.ListRolesAsync();
             return View(model);
         }
         #endregion
 
         #region Detail
+        [AuthorizePermission("DetailUser")]
         public async Task<IActionResult> Detail(int id)
         {
             var user = await userService.AdminSideDetailUserAsync(id);
@@ -109,6 +108,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
+        [AuthorizePermission("DeleteUser")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await userService.DeleteUserAsync(id);
@@ -129,6 +129,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Change Password
+        [AuthorizePermission("ChangeUserPassword")]
         public async Task<IActionResult> ChangePassword(int id)
         {
             var user=await userService.AdminGetUserForChangePassword(id);

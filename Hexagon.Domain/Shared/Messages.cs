@@ -69,6 +69,12 @@ namespace Hexagon.Domain.Shared
         public static string TrainerDeletedSuccessfully = "مربی رشته ورزشی مدنظر  با موفقیت حذف شده است.";
         #endregion
 
+        #region Cader
+        public static string CaderAddedSuccessfully = "کادر جدید با موفقیت اضافه شده است.";
+        public static string CaderUpdatedSuccessfully = "کادر مدنظر  با موفقیت ویرایش شده است.";
+        public static string CaderDeletedSuccessfully = "کادر مدنظر  با موفقیت حذف شده است.";
+        #endregion
+
         #endregion
     }
     public class ErrorMessages
@@ -132,14 +138,21 @@ namespace Hexagon.Domain.Shared
         #endregion
 
         #region Staffs
-
+        public static string InvalidSalaryInput = "دریافتی وارد شده نا معتبر است.";
         #region Trainer
         public static string TrainerNotFound = "مربی رشته ورزشی مدنظر پیدا نشده است.";
         public static string TrainerDuplicated = "مربی رشته ورزشی مدنظر قبلا ثبت شده است.";
         public static string TrainerAlreadyDeleted = "مربی رشته ورزشی مدنظر قبلا حذف شده است.";
-        public static string TrainerPositionDuplicated = "برای این مربی رشته ورزشی مدنظر قبلا ثبت شده است.";
-        public static string InvalidSalaryInput = "دریافتی وارد شده نا معتبر است.";
+        public static string TrainerPositionDuplicated = "این موقعیت برای این مربی مدنظر قبلا ثبت شده است.";
         public static string ExistCertificateForUserTrainer = "این مدرک برای این کاربر به عنوان مربی رشته دیگر ثبت شده است.";
+        #endregion
+
+        #region Cader
+        public static string CaderNotFound = "کادر مدنظر پیدا نشده است.";
+        public static string CaderDuplicated = "کادر مدنظر قبلا ثبت شده است.";
+        public static string CaderAlreadyDeleted = "کادر مدنظر قبلا حذف شده است.";
+        public static string CaderPositionDuplicated = "این موقعیت برای این کادر مدنظر قبلا ثبت شده است.";
+        public static string ExistRoleForUserCader = "این نقش برای این کاربر به عنوان کادر دیگر ثبت شده است.";
         #endregion
 
         #endregion
@@ -147,6 +160,10 @@ namespace Hexagon.Domain.Shared
 
     public class WarningMessages
     {
+        #region Role
+        public static string RoleCantbeEdited = "این نقش حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
         #region User
         public static string UserCantbeEdited = "این کاربر حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
@@ -175,6 +192,10 @@ namespace Hexagon.Domain.Shared
 
         #region Trainer
         public static string TrainerCantbeEdited = "مربی برای این رشته ورزشی حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
+        #region Cader
+        public static string CaderCantbeEdited = "این کادر حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
 
         #endregion

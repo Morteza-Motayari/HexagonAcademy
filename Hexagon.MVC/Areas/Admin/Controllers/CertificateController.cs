@@ -1,6 +1,7 @@
 ﻿using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -8,6 +9,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
     public class CertificateController(ICertificateService certificateService) : AdminSideController
     {
         #region List
+        [AuthorizePermission("ManageCertificates")]
         public async Task<IActionResult> List(FilterCertificateViewModel filter)
         {
             var list = await certificateService.FilterCertificateesAsync(filter);
@@ -16,6 +18,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Create
+        [AuthorizePermission("AddCertificate")]
         public IActionResult Create()
         {
             return View();
@@ -44,6 +47,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Edit
+        [AuthorizePermission("EditCertificate")]
         public async Task<IActionResult> Edit(int id)
         {
             var certificate = await certificateService.GetCertificateForEdit(id);
@@ -84,6 +88,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
+        [AuthorizePermission("DetailCertificate")]
         public async Task<IActionResult> Detail(int id)
         {
             var certificate = await certificateService.AdminSideDetailCertificateAsync(id);
@@ -95,6 +100,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
+        [AuthorizePermission("DeleteCertificate")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await certificateService.DeleteCertificateAsync(id);

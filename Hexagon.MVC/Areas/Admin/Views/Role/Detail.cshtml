@@ -1,0 +1,144 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Domain.Models.Users
+@using Hexagon.Domain.ViewModels.Users.Roles
+@model AdminSideDetailRoleViewModel
+@{
+    List<Permission> AllPermissions = ViewData["Permissions"] as List<Permission> ?? new List<Permission>();
+    ViewData["Title"] = "جزئیات نقش";
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Role" asp-action="List">نقش ها</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Role" asp-action="Detail" asp-route-id="@Model.Id">جزئیات نقش</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2 class="mt-3">
+                    <i class="bx bxs-user-detail bxl"></i> @ViewData["Title"]
+                </h2>
+            </div>
+            <div class="body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="RoleTitle" class="form-control-label"></label>
+                            <input asp-for="RoleTitle" class="form-control" disabled="" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            @if (Model.IsDeleted == true)
+                            {
+                                <div class="col-md-9">
+                                    <div class=" text-center">
+                                        <p class="h2 mb-3 text-danger">این نقش حذف شده است</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group col-md-12">
+                            
+                                @if (Model.Permissions.CheckNullability())
+                                {
+                                    <h2 class="d-flex justify-content-center">دسترسی ها</h2>
+                                    <hr />
+                                <div class="row">
+                                    @foreach (var item in AllPermissions.Where(permissions => permissions.ParentId == null))
+                                    {
+                                        @if (Model.Permissions.Any(p => p == item) || Model.Permissions.Any(p => p.ParentId == item.PermissionId))
+                                        {
+                                            <div class="col-md-3 col-sm-5">
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        @if (Model.Permissions.Any(p => p == item))
+                                                        {
+                                                            <div class="m-l-10">
+                                                                <label>
+                                                                    @item.PermissionTitle
+                                                                </label>
+                                                            </div>
+                                                            
+                                                        }
+                                                    </li>
+                                                    @if (Model.Permissions.Any(p => p.ParentId == item.PermissionId))
+                                                    {
+                                                        <ul class="list-nothing">
+                                                            @foreach (var x in Model.Permissions.Where(u => u.ParentId == item.PermissionId))
+                                                            {
+                                                                <li>
+                                                                    <label>
+                                                                        @x.PermissionTitle
+                                                                    </label>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }                                        
+                                    }
+                                </div>
+                                }
+                                else
+                                {
+                                    <p class="h2 mb-4">این نقش هیچ دسترسی ندارد</p>
+                                }
+                            </div>             
+                        <div class="col-md-6">
+                        <div class="row">
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label asp-for="CreatedDate" class="control-label"></label>
+                                    <input value="@Model.CreatedDate.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                                </div>
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label asp-for="LastModifiedDate" class="control-label"></label>
+                                    <input value="@Model.LastModifiedDate?.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                                </div>
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label asp-for="CreatedBy" class="form-control-label"></label>
+                                    <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.CreatedById">@Model.CreatedBy</a>
+                                </div>
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label asp-for="LastModifiedBy" class="form-control-label"></label>
+                                    <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.LastModifiedById">@Model.LastModifiedBy</a>
+                                </div>
+                        </div>                           
+                        </div>
+                        <div class="col-md-6">
+                            @if (Model.caders.CheckNullability())
+                            {
+                                <div>
+                                    <h2 class="d-flex justify-content-center">کادر ها</h2>
+                                    <hr />
+                                    <div class="custom-checkbox">
+                                        @foreach (var item in Model.caders)
+                                        {
+                                            <a asp-area="Admin" asp-controller="Cader" asp-action="Detail" class="btn mb-2 @((item.IsDeleted==true)?"btn-outline-danger":"btn-outline-primary")" asp-route-id="@item.Id">
+                                                @item.FullName
+                                                <span class="fe fe-arrow-left fe-16 bxs"></span>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @if (Model.IsDeleted == false)
+                                {
+                                    <a asp-area="Admin" asp-controller="Role" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">ویرایش نقش</a>
+                                }
+                                <a asp-area="Admin" asp-controller="Role" asp-action="List" class="btn btn-secondary">برگشت به لیست</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,6 @@
-﻿using Hexagon.Domain.ViewModels.Users.Roles;
+﻿using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Users.Roles;
+using Hexagon.Domain.ViewModels.Users.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,7 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<DeleteRoleResult> DeleteRoleAsync(int RoleId);
         Task<List<RoleViewModel>> ListRolesAsync();
         Task<FilterRoleViewModel> FilterRolesAsync(FilterRoleViewModel filter);
+        Task<List<Permission>> GetAllPermmisions();
+        Task<AdminSideDetailRoleViewModel?> AdminSideDetailRoleAsync(int roleId);
     }
 }

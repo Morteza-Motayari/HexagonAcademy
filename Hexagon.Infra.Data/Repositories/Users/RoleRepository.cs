@@ -22,6 +22,9 @@ namespace Hexagon.Infra.Data.Repositories.Users
         public async Task<bool> ExistRoleTitle(string roleTilte)
         => await _db.Roles.AnyAsync(u => u.RoleTitle == roleTilte&&u.IsDeleted==false);
 
+        public async Task<bool> ExistRoleTitle(string roleTilte, int roleId)
+        => await _db.Roles.AnyAsync(u => u.RoleTitle == roleTilte && u.IsDeleted == false&&u.Id!=roleId);
+
         public async Task<FilterRoleViewModel> FilteRolesAsync(FilterRoleViewModel filter)
         {
             var query = _db.Roles.AsQueryable();
@@ -57,9 +60,9 @@ namespace Hexagon.Infra.Data.Repositories.Users
             return filter;
         }
 
-        public async Task<List<RoleViewModel>> GetAllRolesAsync()
+        public async Task<List<RoleViewModel>> GetAllRolesOptionAsync()
         {
-            var roles = await _db.Roles.Select(u => new RoleViewModel
+            var roles = await _db.Roles.Where(r=>r.IsDeleted==false).Select(u => new RoleViewModel
             {
                 Id = u.Id,
                 RoleTitle = u.RoleTitle,
@@ -67,6 +70,9 @@ namespace Hexagon.Infra.Data.Repositories.Users
             }).ToListAsync();
             return roles;
         }
+
+        public async Task<List<Role>?> getCaderRoles(int userId, int caderId)
+        => await _db.Roles.Include(u=>u.userRoles).Where(r=>r.userRoles.Where(u=>u.UserId==userId&&u.CaderId==caderId).Any()).ToListAsync();
 
         public async Task<List<Role>?> GetUserRoles(List<int>? ids)
         {

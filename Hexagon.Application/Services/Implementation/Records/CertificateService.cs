@@ -25,7 +25,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 Name = user.Name,
                 Details=user.Details,
                 CreatedDate = user.CreatedDate,
-                ModifiedDate = user.LastModifiedDate,
+                LastModifiedDate = user.LastModifiedDate,
                 CreatedBy = await userRepository.GetJustUserName(user.CreatedBy),
                 LastModifiedBy = await userRepository.GetJustUserName(user.LastModifiedBy),                
                 CreatedById = user.CreatedBy,

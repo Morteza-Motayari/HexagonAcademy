@@ -1,4 +1,5 @@
 ﻿using Hexagon.Domain.Models.Common;
+using Hexagon.Domain.Models.Links;
 using System;
 using System.Collections.Generic;
 using System.Linq;

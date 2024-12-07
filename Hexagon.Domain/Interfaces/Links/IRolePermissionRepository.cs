@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hexagon.Domain.Interfaces.Users
+namespace Hexagon.Domain.Interfaces.Links
 {
-    public interface IRolePermissionRepository:IGenericRepository<RolePermission>
+    public interface IRolePermissionRepository : IGenericRepository<RolePermission>
     {
         Task<List<RolePermission>?> GetRolePermissionsAsync(int roleId);
         Task<List<int>?> GetRolePermissionIdsAsync(int roleId);
@@ -16,5 +16,6 @@ namespace Hexagon.Domain.Interfaces.Users
         Task DeleteRolePermission(int id);
         Task DeleteRolePermissions(int roleId);
         void Remove(RolePermission rolePermission);
+        Task<List<int>> GetRoleIdsWithPermissionName(string permissionName);
     }
 }

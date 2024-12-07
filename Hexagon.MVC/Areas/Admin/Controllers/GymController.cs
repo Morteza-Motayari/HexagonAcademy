@@ -6,6 +6,7 @@ using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.Gyms;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -13,6 +14,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
     public class GymController(IGymService gymService) : AdminSideController
     {
         #region List
+        [AuthorizePermission("ManageGyms")]
         public async Task<IActionResult> List(FilterGymViewModel filter)
         {
             var list=await gymService.FilterGymsAsync(filter);
@@ -21,6 +23,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Create
+        [AuthorizePermission("AddGym")]
         public IActionResult Create()
         {
             return View();
@@ -49,6 +52,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Edit
+        [AuthorizePermission("EditGym")]
         public async Task<IActionResult> Edit(int id)
         {
             var gym = await gymService.GetGymForEdit(id);
@@ -89,6 +93,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
+        [AuthorizePermission("DetailGym")]
         public async Task<IActionResult> Detail(int id)
         {
             var Gym = await gymService.AdminSideDetailGymAsync(id);
@@ -100,6 +105,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
+        [AuthorizePermission("DeleteGym")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await gymService.DeleteGymAsync(id);

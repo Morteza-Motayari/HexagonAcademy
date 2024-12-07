@@ -21,7 +21,7 @@ namespace Hexagon.Domain.Models.Users
         #region Relations
         [ForeignKey(nameof(ParentId))]
         public Permission? permission { get; set; }
-        ICollection<Permission> permissions { get; set; }
+        ICollection<Permission>? permissions { get; set; }
         public List<RolePermission>? RolePermissions { get; set; }
         #endregion
     }

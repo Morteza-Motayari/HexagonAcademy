@@ -39,6 +39,7 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [Display(Name = "وضعیت کاربر")]
         public UserStatus? Status { get; set; }
         public List<Role>? Roles { get; set; }
-        public ICollection<Staff>? staffs { get; set; }
+        public ICollection<Staff>? Trainers { get; set; }
+        public ICollection<Staff>? Caders { get; set; }
     }
 }

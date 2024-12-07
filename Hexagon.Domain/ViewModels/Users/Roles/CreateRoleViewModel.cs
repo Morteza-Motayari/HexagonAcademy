@@ -13,7 +13,7 @@ namespace Hexagon.Domain.ViewModels.Users.Roles
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [MaxLength(230, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         public string RoleTitle { get; set; }
-        public List<int>? PermissionsId { get; set; }
+        public List<int> PermissionsId { get; set; }
     }
     public enum CreateRoleResult
     {

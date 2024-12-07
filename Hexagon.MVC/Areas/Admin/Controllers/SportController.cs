@@ -2,6 +2,7 @@
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -9,6 +10,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
     public class SportController(ISportService sportService,ICertificateService certificateService) : AdminSideController
     {
         #region List
+        [AuthorizePermission("ManageSports")]
         public async Task<IActionResult> List(FilterSportViewModel filter)
         {
             var list = await sportService.FilterSportsAsync(filter);
@@ -17,6 +19,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Create
+        [AuthorizePermission("AddSport")]
         public async Task<IActionResult> Create()
         {
             ViewData["Certificates"]=await certificateService.ListCertificatesForOptionsAsync();
@@ -60,6 +63,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Edit
+        [AuthorizePermission("EditSport")]
         public async Task<IActionResult> Edit(int id)
         {
             var Sport = await sportService.GetSportForEdit(id);
@@ -117,6 +121,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
+        [AuthorizePermission("DetailSport")]
         public async Task<IActionResult> Detail(int id)
         {
             var Sport = await sportService.AdminSideDetailSportAsync(id);
@@ -128,6 +133,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
+        [AuthorizePermission("DeleteSport")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await sportService.DeleteSportAsync(id);

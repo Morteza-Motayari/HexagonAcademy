@@ -15,6 +15,7 @@ namespace Hexagon.Domain.ViewModels.Users.Roles
         [MaxLength(230, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         public string RoleTitle { get; set; }
         public List<int>? PermissionsId { get; set; }
+        public bool IsDeleted { get; set; }
     }
     public enum UpdateRoleResult
     {

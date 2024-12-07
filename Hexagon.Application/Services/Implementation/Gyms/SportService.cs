@@ -25,7 +25,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 Certificate=sport.Certificate?.Name,
                 Title = sport.Title,
                 CreatedDate = sport.CreatedDate,
-                ModifiedDate = sport.LastModifiedDate,
+                LastModifiedDate = sport.LastModifiedDate,
                 CreatedBy = await userRepository.GetJustUserName(sport.CreatedBy),
                 LastModifiedBy = await userRepository.GetJustUserName(sport.LastModifiedBy),
                 CreatedById = sport.CreatedBy,

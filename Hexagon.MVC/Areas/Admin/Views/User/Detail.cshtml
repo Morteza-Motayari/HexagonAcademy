@@ -76,8 +76,8 @@
                                 <input value="@Model.CreatedDate.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
                             </div>
                             <div class="form-group col-md-6">
-                                <label asp-for="ModifiedDate" class="control-label"></label>
-                                <input value="@Model.ModifiedDate?.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                                <label asp-for="LastModifiedDate" class="control-label"></label>
+                                <input value="@Model.LastModifiedDate?.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
                             </div>
                             <div class="form-group col-md-6">
                                 <label asp-for="CreatedBy" class="form-control-label"></label>
@@ -124,15 +124,31 @@
                                 <p class="h2 mb-4">این کاربر هیچ نقشی ندارد</p>
                             }
                         </div>
-                        @if (Model.staffs.CheckNullability())
+                        @if (Model.Trainers.CheckNullability())
                         {
                             <div>
                                 <h2>مربیگری ها</h2>
                                 <hr />
                                 <div class="custom-checkbox">
-                                    @foreach (var item in Model.staffs)
+                                    @foreach (var item in Model.Trainers)
                                     {
                                         <a asp-area="Admin" asp-controller="Trainer" asp-action="Detail" class="btn mb-2 @((item.IsDeleted==true)?"btn-outline-danger":"btn-outline-primary")" asp-route-id="@item.Id">
+                                            @item.Position
+                                            <span class="fe fe-arrow-left fe-16 bxs"></span>
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Caders.CheckNullability())
+                        {
+                            <div>
+                                <h2>سمت ها</h2>
+                                <hr />
+                                <div class="custom-checkbox">
+                                    @foreach (var item in Model.Caders)
+                                    {
+                                        <a asp-area="Admin" asp-controller="Cader" asp-action="Detail" class="btn mb-2 @((item.IsDeleted==true)?"btn-outline-danger":"btn-outline-primary")" asp-route-id="@item.Id">
                                             @item.Position
                                             <span class="fe fe-arrow-left fe-16 bxs"></span>
                                         </a>

@@ -26,7 +26,7 @@ namespace Hexagon.Domain.Enums.Users
     public enum UserSituation
     {
         [Display(Name ="کادر")]
-        Cadre,
+        Cader,
         [Display(Name = "مربی")]
         Trainer,
         [Display(Name = "ورزشکار")]

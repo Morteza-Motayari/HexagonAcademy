@@ -37,7 +37,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 CreatedDate = gym.CreatedDate,
                 CreatedBy = await userRepository.GetJustUserName(gym.CreatedBy),
                 LastModifiedBy = await userRepository.GetJustUserName(gym.LastModifiedBy),
-                ModifiedDate = gym.LastModifiedDate
+                LastModifiedDate = gym.LastModifiedDate
             };
             return Detail;
         }
