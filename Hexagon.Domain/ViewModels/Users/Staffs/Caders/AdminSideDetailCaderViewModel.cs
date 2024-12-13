@@ -13,7 +13,6 @@ namespace Hexagon.Domain.ViewModels.Users.Staffs.Caders
 {
     public class AdminSideDetailCaderViewModel:BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "نام کامل")]
         public string FullName { get; set; }
         [Display(Name = "شماره موبایل")]

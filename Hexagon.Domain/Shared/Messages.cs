@@ -90,6 +90,12 @@ namespace Hexagon.Domain.Shared
         public static string CommentAcceptedSuccessfully = "نظر مدنظر  با موفقیت تایید شده است.";
         public static string CommentRejectedSuccessfully = "نظر مدنظر  با موفقیت رد شده است.";
         #endregion
+
+        #region Contact Us
+        public static string ContactUsAddedSuccessfully = "پیام شما با موفقیت ثبت شد منتظر پاسخ آن توسط ادمین باشید.";
+        public static string ContactUsAnsweredSuccessfully = "پاسخ به درخواست کاربر با موفقیت به آن ارسال شد.";
+        public static string ContactUsDeletedSuccessfully = "درخواست مدنظر شما با موفقیت حذف شده است.";
+        #endregion
     }
     public class ErrorMessages
     {
@@ -181,6 +187,13 @@ namespace Hexagon.Domain.Shared
         public static string CommentNotFound = "نظر مدنظر پیدا نشده است.";
         public static string CommentAlreadyDeleted = "نظر مدنظر قبلا حذف شده است.";
         #endregion
+
+        #region Contact Us
+        public static string ContactUsNotFound = "درخواست کاربر یافت نشد.";
+        public static string ContactUsFailedSendingEmail = "در ارسال ایمیل به کاربر با خطا مواجه شده ایم لطفا دوباره تلاش بکنید.";
+        public static string ContactUsAlreadyDeleted = "درخواست مدنظر قبلا حذف شده است.";
+
+        #endregion
     }
 
     public class WarningMessages
@@ -227,6 +240,11 @@ namespace Hexagon.Domain.Shared
 
         #region Key Word
         public static string KeyWordCantbeEdited = "این کلمه کلیدی حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
+        #region Key Word
+        public static string ContactUsCantbeAnsweredForDeletion = "این درخواست حذف شده است و امکان پاسخ به آن وجود ندارد.";
+        public static string ContactUsAlreadyAnswered= "این درخواست قبلا به آن پاسخ داده شده است و امکان پاسخ مجدد به آن وجود ندارد.";
         #endregion
     }
 

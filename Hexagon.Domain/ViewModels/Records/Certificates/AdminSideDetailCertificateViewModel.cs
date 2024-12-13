@@ -10,7 +10,6 @@ namespace Hexagon.Domain.ViewModels.Records.Certificates
 {
     public class AdminSideDetailCertificateViewModel:BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "مدرک")]
         public string Name { get; set; }
         [Display(Name = "جزئیات")]

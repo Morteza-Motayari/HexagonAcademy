@@ -1,0 +1,119 @@
+﻿using Hexagon.Application.Services.Implementation.Gyms;
+using Hexagon.Application.Services.Interfaces.Contact_Us;
+using Hexagon.Application.Services.Interfaces.Records;
+using Hexagon.Domain.Shared;
+using Hexagon.Domain.ViewModels.Contact_Us;
+using Hexagon.Domain.ViewModels.Gyms.SportClasses;
+using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.MVC.Utilities;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Hexagon.MVC.Areas.Admin.Controllers
+{
+    public class ContactUsController(IContactUsService contactUsService) : AdminSideController
+    {
+        #region List
+        //[AuthorizePermission("ManageSportClasses")]
+        public async Task<IActionResult> List(FilterContactUsViewModel filter)
+        {
+            var list = await contactUsService.FilterContactUsAsync(filter);
+            return View(list);
+        }
+        #endregion
+
+        #region Answer
+        [HttpGet]
+        public async Task<IActionResult> Answer(int id)
+        {
+            var contact=await contactUsService.GetContactUsForAnswer(id);
+            if(contact==null)
+                return NotFound();
+            if(contact.IsDeleted==true)
+            {
+                TempData[WarningMessage]=WarningMessages.ContactUsCantbeAnsweredForDeletion;
+                return RedirectToAction("List", "ContactUs", new { area = "Admin" });
+            }
+            if(contact.IsAnswered==true)
+            {
+                TempData[WarningMessage] = WarningMessages.ContactUsAlreadyAnswered;
+                return RedirectToAction("List", "ContactUs", new { area = "Admin" });
+            }
+            return PartialView("_AnswerMessage", contact);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Answer(AnswerContactUsViewModel model)
+        {
+            #region Validations
+            if (!ModelState.IsValid)
+            {
+                return Ok(new
+                {
+                    status = 204,
+                    message = ErrorMessages.InsufficintInputs
+                });
+            }
+            #endregion
+            var result=await contactUsService.AnswerContactUs(model);
+            switch(result)
+            {
+                case AnswerContactUsResult.Success:
+                    return Ok(new
+                    {
+                        status = 200,
+                        message = SuccessMessages.ContactUsAnsweredSuccessfully
+                    });
+                case AnswerContactUsResult.ContactUsNotFound:
+                    return Ok(new
+                    {
+                        status = 409,
+                        message = ErrorMessages.ContactUsNotFound
+                    });
+                case AnswerContactUsResult.FailSendingEmail:
+                    return Ok(new
+                    {
+                        status = 409,
+                        message = ErrorMessages.ContactUsFailedSendingEmail
+                    });
+            }
+            return Ok(new
+            {
+                status = 204,
+                message = ErrorMessages.ErrorOccured
+            });
+        }
+        #endregion
+
+        #region Detail
+        //[AuthorizePermission("DetailCertificate")]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var contact = await contactUsService.AdminSideDetailContactUsAsync(id);
+            if (contact == null)
+                return NotFound();
+
+            return View(contact);
+        }
+        #endregion
+
+        #region Delete
+        //[AuthorizePermission("DeleteCertificate")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await contactUsService.DeleteContactUsAsync(id);
+            switch (result)
+            {
+                case DeleteContactUsResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.ContactUsDeletedSuccessfully;
+                    break;
+                case DeleteContactUsResult.ContactUsNotFound:
+                    TempData[ErrorMessage] = ErrorMessages.ContactUsNotFound;
+                    break;
+                case DeleteContactUsResult.ContactUsAlreadyDeleted:
+                    TempData[ErrorMessage] = ErrorMessages.ContactUsAlreadyDeleted;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
+    }
+}

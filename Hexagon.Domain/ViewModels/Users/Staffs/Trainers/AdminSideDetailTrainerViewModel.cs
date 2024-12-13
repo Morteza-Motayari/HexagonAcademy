@@ -12,7 +12,6 @@ namespace Hexagon.Domain.ViewModels.Users.Staffs.Trainers
 {
     public class AdminSideDetailTrainerViewModel:BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "نام کامل")]
         public string FullName { get; set; }
         [Display(Name = "شماره موبایل")]

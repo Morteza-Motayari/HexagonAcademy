@@ -13,7 +13,6 @@ namespace Hexagon.Domain.ViewModels.Users.Users
 {
     public class AdminSideDetailUserViewModel: BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "نام")]
         public string FirstName { get; set; }
         [Display(Name = "نام خانوادگی")]

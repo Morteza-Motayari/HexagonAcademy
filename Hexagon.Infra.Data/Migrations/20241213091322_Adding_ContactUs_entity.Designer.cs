@@ -4,6 +4,7 @@ using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hexagon.Infra.Data.Migrations
 {
     [DbContext(typeof(HexagonContext))]
-    partial class HexagonContextModelSnapshot : ModelSnapshot
+    [Migration("20241213091322_Adding_ContactUs_entity")]
+    partial class Adding_ContactUs_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1260,11 +1263,11 @@ namespace Hexagon.Infra.Data.Migrations
 
             modelBuilder.Entity("Hexagon.Domain.Models.Contact_Us.ContactUs", b =>
                 {
-                    b.HasOne("Hexagon.Domain.Models.Users.User", "AnsweredUser")
+                    b.HasOne("Hexagon.Domain.Models.Users.User", "AnswerUserId")
                         .WithMany("AnswersContactUs")
                         .HasForeignKey("LastModifiedBy");
 
-                    b.Navigation("AnsweredUser");
+                    b.Navigation("AnswerUserId");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.ClassComment", b =>

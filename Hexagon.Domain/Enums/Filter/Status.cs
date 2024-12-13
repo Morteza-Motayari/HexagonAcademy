@@ -58,4 +58,13 @@ namespace Hexagon.Domain.Enums.Filter
         [Display(Name = "بسته شده")]
         Closed
     }
+    public enum FilterContactUsStatus
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "پاسخ داده شده")]
+        Answered,
+        [Display(Name = "منتظر پاسخ")]
+        UnAnswered
+    }
 }

@@ -10,7 +10,6 @@ namespace Hexagon.Domain.ViewModels.KeyWords
 {
     public class AdminSideDetailKeyWordViewModel : BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "عبارت")]
         public string Key { get; set; }
         [Display(Name = "کلاس ورزشی")]

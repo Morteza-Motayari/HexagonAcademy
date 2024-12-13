@@ -12,7 +12,6 @@ namespace Hexagon.Domain.ViewModels.Users.Roles
 {
     public class AdminSideDetailRoleViewModel:BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "عنوان نقش")]
         public string RoleTitle { get; set; }
         [Display(Name = "دسترسی ها")]

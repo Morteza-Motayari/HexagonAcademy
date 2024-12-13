@@ -16,10 +16,12 @@ namespace Hexagon.Domain.ViewModels.Users.Users
         [Display(Name = "نام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
+        [RegularExpression(@"\D+", ErrorMessage = "نام وارد شده نمی تواند شامل اعداد باشد .")]
         public string FirstName { get; set; }
         [Display(Name = "نام خانوادگی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
+        [RegularExpression(@"\D+", ErrorMessage = "نام وارد شده نمی تواند شامل اعداد باشد .")]
         public string LastName { get; set; }
         [Display(Name = "کد ملی")]
         [MaxLength(10, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]

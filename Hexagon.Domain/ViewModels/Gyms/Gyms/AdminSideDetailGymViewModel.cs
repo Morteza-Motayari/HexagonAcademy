@@ -10,7 +10,6 @@ namespace Hexagon.Domain.ViewModels.Gyms.Gyms
 {
     public class AdminSideDetailGymViewModel: BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "اسم باشگاه")]
         public string Name { get; set; }
         [Display(Name = "آدرس")]

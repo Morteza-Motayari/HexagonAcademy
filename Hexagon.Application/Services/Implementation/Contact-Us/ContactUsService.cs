@@ -1,0 +1,115 @@
+﻿using Hexagon.Application.Senders.Interfaces;
+using Hexagon.Application.Services.Interfaces.Contact_Us;
+using Hexagon.Domain.Interfaces;
+using Hexagon.Domain.Interfaces.Contact_Us;
+using Hexagon.Domain.Models.Contact_Us;
+using Hexagon.Domain.Models.Gyms;
+using Hexagon.Domain.ViewModels.Contact_Us;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Hexagon.Application.Services.Implementation.Contact_Us
+{
+    public class ContactUsService(IContactUsRepository contactUsRepository
+        ,IUserRepository userRepository
+        ,IEmailSender emailSender) : IContactUsService
+    {
+        public async Task<AdminSideDetailContactUsViewModel?> AdminSideDetailContactUsAsync(int ContactUsId)
+        {
+            var contact=await contactUsRepository.GetByIdAsync(ContactUsId);
+            if(contact == null) 
+                return null;
+            return new AdminSideDetailContactUsViewModel
+            {
+                Id = contact.Id,
+                Subject = contact.Subject,
+                Answer = contact.Answer,
+                FullName = contact.FullName,
+                Description = contact.Description,
+                IP = contact.IP,
+                Email = contact.Email,
+                Phone = contact.Phone,
+                IsAnswered = contact.IsAnswered,
+                IsDeleted = contact.IsDeleted,
+                CreatedDate = contact.CreatedDate,
+                LastModifiedDate = contact.LastModifiedDate,
+                CreatedBy = await userRepository.GetJustUserName(contact.CreatedBy),
+                LastModifiedBy = await userRepository.GetJustUserName(contact.LastModifiedBy),
+                CreatedById = contact.CreatedBy,
+                LastModifiedById = contact.LastModifiedBy
+            };
+        }
+
+        public async Task<AnswerContactUsResult> AnswerContactUs(AnswerContactUsViewModel ContactUs)
+        {
+           var contact=await contactUsRepository.GetByIdAsync(ContactUs.Id);
+            if (contact == null) 
+                return AnswerContactUsResult.ContactUsNotFound;
+            contact.Answer=ContactUs.Answer;
+            contact.IsAnswered=true;
+
+            #region Sending Email
+            string body = $@"
+<h3>پاسخ به پیام با عنوان {contact.Subject} به شرح زیر می باشد</h3>
+<p>پاسخ:{ContactUs.Answer}</p>
+";
+            var sendEmailResult=await emailSender.Send(contact.Email,contact.Subject,body);
+            if(sendEmailResult==false )
+                return AnswerContactUsResult.FailSendingEmail;
+            #endregion
+
+            contactUsRepository.Update(contact);
+            await contactUsRepository.SaveChangeAsync();
+            return AnswerContactUsResult.Success;
+        }
+
+        public async Task<CreateContactUsResult> CreateContactUsAsync(CreateContactUsViewModel model)
+        {
+            ContactUs contact = new()
+            {
+                Subject = model.Subject,
+                FullName = model.FullName,
+                Email = model.Email,
+                Description = model.Description,
+                IP=model.IP,
+                Phone=model.Phone
+            };
+            await contactUsRepository.InserAsync(contact);
+            await contactUsRepository.SaveChangeAsync();
+            return CreateContactUsResult.Success;
+        }
+
+        public async Task<DeleteContactUsResult> DeleteContactUsAsync(int ContactUsId)
+        {
+            var contact=await contactUsRepository.GetByIdAsync(ContactUsId);
+            if(contact == null)
+                return DeleteContactUsResult.ContactUsNotFound;
+            if(contact.IsDeleted==true)
+                return DeleteContactUsResult.ContactUsAlreadyDeleted;
+            contact.IsDeleted = true;
+            contactUsRepository.Update(contact);
+            await contactUsRepository.SaveChangeAsync();
+            return DeleteContactUsResult.Success;
+        }
+
+        public async Task<FilterContactUsViewModel> FilterContactUsAsync(FilterContactUsViewModel filter)
+        => await contactUsRepository.FilterContactUsAsync(filter);
+
+        public async Task<AnswerContactUsViewModel> GetContactUsForAnswer(int ContactUsId)
+        {
+            var contactus=await contactUsRepository.GetByIdAsync(ContactUsId);
+            if (contactus == null)
+                return null;
+            return new AnswerContactUsViewModel()
+            {
+                Id = contactus.Id,
+                FullName = contactus.FullName,
+                IsAnswered = contactus.IsAnswered,
+                IsDeleted = contactus.IsDeleted
+            };
+        }
+    }
+}

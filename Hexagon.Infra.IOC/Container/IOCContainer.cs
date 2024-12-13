@@ -1,18 +1,22 @@
 ﻿using Hexagon.Application.Senders.Implementation;
 using Hexagon.Application.Senders.Interfaces;
+using Hexagon.Application.Services.Implementation.Contact_Us;
 using Hexagon.Application.Services.Implementation.Gyms;
 using Hexagon.Application.Services.Implementation.KeyWords;
 using Hexagon.Application.Services.Implementation.Users;
+using Hexagon.Application.Services.Interfaces.Contact_Us;
 using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Application.Services.Interfaces.KeyWords;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Interfaces;
+using Hexagon.Domain.Interfaces.Contact_Us;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.KeyWords;
 using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Infra.Data.Repositories;
+using Hexagon.Infra.Data.Repositories.Contact_Us;
 using Hexagon.Infra.Data.Repositories.Gyms;
 using Hexagon.Infra.Data.Repositories.KeyWords;
 using Hexagon.Infra.Data.Repositories.Links;
@@ -33,6 +37,11 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IStaffService, StaffService>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            #endregion
+
+            #region Contact Us
+            services.AddScoped<IContactUsService, ContactUsService>();
             #endregion
 
             #region Gyms
@@ -57,6 +66,11 @@ namespace Hexagon.Infra.IOC.Container
 
             #region Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            #region Contact Us
+            services.AddScoped<IContactUsRepository, ContactUsRepository>();
+            #endregion
+
             #region Gyms
             services.AddScoped<IGymRepository, GymRepository>();
             services.AddScoped<IGymGalleryRepository, GymGalleryRepository>();

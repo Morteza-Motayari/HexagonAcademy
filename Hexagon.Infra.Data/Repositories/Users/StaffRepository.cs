@@ -29,7 +29,7 @@ namespace Hexagon.Infra.Data.Repositories
 
         public async Task<bool> ExistActiveCaderForUser(int userId)
         => await _db.Staffs.Include(s => s.userRoles).Where(c => c.UserId == userId)
-            .AnyAsync(c => c.userRoles != null && !c.IsDeleted);
+            .AnyAsync(c => c.userRoles.Count>0 && !c.IsDeleted);
 
         public async Task<bool> ExistStaffForUser(int userId)
         => await _db.Staffs.AnyAsync(s => s.UserId == userId && s.IsDeleted == false);

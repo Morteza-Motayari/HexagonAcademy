@@ -11,7 +11,6 @@ namespace Hexagon.Domain.ViewModels.Gyms.ClassComments
 {
     public class AdminSideDetailClassCommentViewModel:BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "نظر")]
         public string Comment { get; set; }
         [Display(Name = "کلاس ورزشی")]

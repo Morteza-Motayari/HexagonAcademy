@@ -12,7 +12,6 @@ namespace Hexagon.Domain.ViewModels.Gyms.SportClasses
 {
     public class AdminSideDetailSportClassViewModel:BaseAdminDetail
     {
-        public int Id { get; set; }
         [Display(Name = "اسم کلاس ورزشی")]
         public string Title { get; set; }
         [Display(Name = "تاریخ شروع")]

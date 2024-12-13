@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Models.Common;
+using Hexagon.Domain.Models.Contact_Us;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Records;
@@ -34,6 +35,7 @@ namespace Hexagon.Domain.Models.Users
         public List<UserRole>? userRoles { get; set; }
         public ICollection<ClassComment>? ClassComments { get; set; }
         public ICollection<ClassCommentReaction>? ClassCommentReactions { get; set; }
+        public ICollection<ContactUs>? AnswersContactUs { get; set; }
         #endregion
 
     }

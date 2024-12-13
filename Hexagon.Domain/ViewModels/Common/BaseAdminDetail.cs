@@ -9,6 +9,7 @@ namespace Hexagon.Domain.ViewModels.Common
 {
     public abstract class BaseAdminDetail
     {
+        public int Id { get; set; }
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreatedDate { get; set; }
         [Display(Name = "آخرین تاریخ ویرایش شده")]

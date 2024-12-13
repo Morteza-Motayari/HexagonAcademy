@@ -1,4 +1,5 @@
 ﻿using Hexagon.Domain.Models.Common;
+using Hexagon.Domain.Models.Contact_Us;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.KeyWords;
 using Hexagon.Domain.Models.Links;
@@ -52,6 +53,10 @@ namespace Hexagon.Infra.Data.Context
 
         #region KeyWords
         public DbSet<KeyWord> KeyWords { get; set; }
+        #endregion
+
+        #region Contact Us
+        public DbSet<ContactUs> ContactUs { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
