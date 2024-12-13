@@ -22,5 +22,6 @@ namespace Hexagon.Domain.Interfaces
         Task<FilterCaderViewModel>FilterCadersAsync(FilterCaderViewModel filter);
         Task<List<CaderViewModel>> GetCadersWithRoleAsync(int roleId);
         Task<bool> ExistActiveCaderForUser(int userId);
+        Task<ClientSideTrainerForClass?> GetTrainerNameAndImageAsync(int staffId);
     }
 }

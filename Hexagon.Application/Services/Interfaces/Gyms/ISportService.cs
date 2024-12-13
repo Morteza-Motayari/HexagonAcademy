@@ -13,6 +13,7 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         Task<List<SportViewModel>?> ListSportsForOptionsAsync();
         Task<FilterSportViewModel> FilterSportsAsync(FilterSportViewModel filter);
         Task<AdminSideDetailSportViewModel?> AdminSideDetailSportAsync(int SportId);
+        Task<List<ClientSideSportExisted>?> GetSportExistedAsync();
 
     }
 }

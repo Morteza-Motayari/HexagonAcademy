@@ -16,5 +16,9 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<FilterSportClassViewModel> FilterSportClassAsync(FilterSportClassViewModel filter);
         Task<List<SportClassViewModel>?> GetAllSportClasssAsync();
         Task<SportClass?> GetSportClassWithDetails(int sportClassId);
+        Task<ClientSideFilterSportClassViewModel> ClientSideFilterClasses(ClientSideFilterSportClassViewModel filter);
+        Task<SportClass?> GetClassBySlugAsync(string slug);
+        Task<string?> getSportClassName(int sportClassId);
+
     }
 }

@@ -4,6 +4,7 @@ using Hexagon.Infra.IOC.Container;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,6 +50,14 @@ builder.Configuration.GetSection("KaveNegarInfo").Get<KaveNegarStatics>();
 #region HtppContextAccessor
 builder.Services.AddHttpContextAccessor();
 #endregion
+
+#region Add Json Serialization
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+#endregion
+
 var app = builder.Build();
 
 
@@ -70,6 +79,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "areas",

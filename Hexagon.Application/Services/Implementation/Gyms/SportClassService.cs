@@ -6,6 +6,7 @@ using Hexagon.Application.Statics;
 using Hexagon.Domain.Enums.SportClasses;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Gyms;
+using Hexagon.Domain.Interfaces.KeyWords;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
@@ -20,7 +21,9 @@ namespace Hexagon.Application.Services.Implementation.Gyms
         ,IUserRepository userRepository,
         IGymRepository gymRepository,
         ISportRepository sportRepository,
-        IStaffRepository staffRepository) : ISportClassService
+        IStaffRepository staffRepository,
+        IKeyWordRepository keyWordRepository,
+        IClassCommentRepository classCommentRepository) : ISportClassService
     {
         public async Task<AdminSideDetailSportClassViewModel?> AdminSideDetailSportClassAsync(int SportClassId)
         {
@@ -55,6 +58,42 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 IsDeleted = sportClass.IsDeleted
             };
             return Detail;
+        }
+
+        public async Task<ClientSideFilterSportClassViewModel> ClientSideFilterClasses(ClientSideFilterSportClassViewModel filter)
+        => await SportClassRepository.ClientSideFilterClasses(filter);
+
+        public async Task<ClientSideSportClassDeatilViewModel> ClientSideSportClassViewModel(string slug)
+        {
+            var sportClass=await SportClassRepository.GetClassBySlugAsync(slug);
+            if (sportClass == null)
+                return null;
+            if (sportClass.IsDeleted == true || sportClass.ClassStatus == SportClassStatus.NotActive)
+                return null;
+            var trainer = await staffRepository.GetTrainerNameAndImageAsync(sportClass.TrainerId);
+            ClientSideSportClassDeatilViewModel detail = new()
+            {
+                Id = sportClass.Id,
+                slug = sportClass.Slug,
+                StartDate = sportClass.StartDate,
+                StartTime = sportClass.StartTime,
+                EndTime = sportClass.EndTime,
+                Gender = sportClass.Gender,
+                SubscriptionFee = sportClass.SubscriptionFee,
+                MaxSubscription = sportClass.MaxSubscription,
+                sport = sportRepository.GetSportTitle(sportClass.SportId),
+                SportId = sportClass.SportId,
+                Trainer = trainer.FullName,
+                TrainerImage = trainer.ImageUrl,
+                gym = gymRepository.GetGymName(sportClass.GymId),
+                GymId = sportClass.GymId,
+                ImageUrl = sportClass.ImageUrl,
+                Title = sportClass.Title,
+                TrainerSlug = trainer.TrainerSlug,
+                KeyWords=await keyWordRepository.GetClassKeyWordsAsync(sportClass.Id),
+                CommentsAmount=await classCommentRepository.ClassCommentAmountAsync(sportClass.Id)
+            };
+            return detail;
         }
 
         public async Task<CreateSportClassResult> CreateSportClassAsync(CreateSportClassViewModel model)
@@ -197,6 +236,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 if (SportClass.ImageUrl != null)
                 {
                     SportClass.ImageUrl.DeleteImage(SavingPath.AvatarPath);
+                    SportClass.ImageUrl = null;
                 }
                 string imageName = Guid.NewGuid().ToString() + Path.GetExtension(model.NewImage.FileName);
                 model.NewImage.AddImageToServer(imageName, SavingPath.SportClassPath);

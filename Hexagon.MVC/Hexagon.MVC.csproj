@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\AdminFiles\assets\Admin\Admin-comment.js" />
     <Content Remove="wwwroot\js\Utilities.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\AdminFiles\assets\Admin\Admin-comment.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\Utilities.js" />
   </ItemGroup>
 
@@ -33,10 +35,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\Images\Avatars\" />
     <Folder Include="wwwroot\Images\GymGalleries\" />
-    <Folder Include="wwwroot\Images\SportClasses\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\AdminFiles\assets\Admin\Admin-comment.js" />
     <None Include="wwwroot\AdminFiles\assets\fonts\fa-solid-900.woff2" />
     <None Include="wwwroot\AdminFiles\assets\fonts\feather.svg" />
     <None Include="wwwroot\AdminFiles\assets\fonts\fontawesome\fa-brands-400.woff2" />
@@ -418,9 +420,24 @@
     <None Include="wwwroot\AdminFiles\assets\js\uppy.min.js" />
     <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\js\Utilities.js" />
+    <None Include="wwwroot\lib\animate\counterup\counterup.min.js" />
+    <None Include="wwwroot\lib\animate\easing\easing.js" />
+    <None Include="wwwroot\lib\animate\easing\easing.min.js" />
+    <None Include="wwwroot\lib\animate\lightbox\js\lightbox.min.js" />
+    <None Include="wwwroot\lib\animate\owlcarousel\LICENSE" />
+    <None Include="wwwroot\lib\animate\owlcarousel\owl.carousel.js" />
+    <None Include="wwwroot\lib\animate\owlcarousel\owl.carousel.min.js" />
+    <None Include="wwwroot\lib\animate\waypoints\links.php" />
+    <None Include="wwwroot\lib\animate\waypoints\waypoints.min.js" />
+    <None Include="wwwroot\lib\animate\wow\wow.js" />
+    <None Include="wwwroot\lib\animate\wow\wow.min.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Admin\Views\KeyWord\_EditKey.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="Areas\UserManagement\Views\_ViewImports.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

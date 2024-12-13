@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,9 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<FilterSportViewModel> FilterSportAsync(FilterSportViewModel filter);
         Task<List<SportViewModel>?> GetAllSportsAsync();
         Task<Sport?> GetSportWithCertificate(int id);
-        Task<List<SportViewModel>?> GetAllGymItemsAsync();
+        Task<List<SportViewModel>?> GetAllSportsItemsAsync();
         string GetSportTitle(int sportId);
         Task<int> GetSportCertifiacetId(int sportId);
+        Task<List<ClientSideSportExisted>> GetSportExistedWithRelationAsync();
     }
 }

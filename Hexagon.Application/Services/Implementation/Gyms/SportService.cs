@@ -70,6 +70,9 @@ namespace Hexagon.Application.Services.Implementation.Gyms
         public async Task<FilterSportViewModel> FilterSportsAsync(FilterSportViewModel filter)
         => await sportRepository.FilterSportAsync(filter);
 
+        public async Task<List<ClientSideSportExisted>?> GetSportExistedAsync()
+        => await sportRepository.GetSportExistedWithRelationAsync();
+
         public async Task<UpdateSportViewModel> GetSportForEdit(int SportId)
         {
             var Sport = await sportRepository.GetByIdAsync(SportId);
@@ -85,7 +88,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
         }
 
         public async Task<List<SportViewModel>?> ListSportsForOptionsAsync()
-        => await sportRepository.GetAllGymItemsAsync();
+        => await sportRepository.GetAllSportsItemsAsync();
 
         public async Task<UpdateSportResult> UpdateSportAsync(UpdateSportViewModel model)
         {

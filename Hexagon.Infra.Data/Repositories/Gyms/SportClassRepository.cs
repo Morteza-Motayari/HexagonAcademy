@@ -22,6 +22,57 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             _gymRepository = gymRepository;
             _sportRepository = sportRepository;
         }
+
+        public async Task<ClientSideFilterSportClassViewModel> ClientSideFilterClasses(ClientSideFilterSportClassViewModel filter)
+
+        {
+            var query = _db.SportClasses.Where(s=>!s.IsDeleted&&s.ClassStatus==SportClassStatus.Active).AsQueryable();
+
+            #region Filter Search
+            if (filter.Gender != null)
+            {
+                switch (filter.Gender)
+                {
+                    case FilterUserGender.All:
+                        break;
+                    case FilterUserGender.Male:
+                        query = query.Where(u => u.Gender == UserGender.Male);
+                        break;
+                    case FilterUserGender.Female:
+                        query = query.Where(u => u.Gender == UserGender.Female);
+                        break;
+                }
+            }
+
+            if (filter.SportId.HasValue)
+            {
+                query = query.Where(s => s.SportId == filter.SportId);
+            }
+            if (filter.GymId.HasValue)
+            {
+                query = query.Where(s => s.GymId == filter.GymId);
+            }
+            if (filter.Title != null)
+            {
+                query = query.Where(r => r.Title.Contains(filter.Title));
+            }
+
+            #endregion
+
+            query = query.OrderByDescending(u => u.CreatedDate);
+
+            await filter.Paging(query.Select(u => new ClientSideSportClassViewModel
+            {
+                slug = u.Slug,
+                Title = u.Title,
+                StartTime = u.StartTime,
+                EndTime = u.EndTime,
+                ImageUrl = u.ImageUrl,
+                Gender = u.Gender
+            }));
+            return filter;
+        }
+
         public async Task<bool> ExistSpecificSlug(string slug)
         => await _db.SportClasses.AnyAsync(u => u.Slug == slug);
 
@@ -129,6 +180,12 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             CreatedDate = u.CreatedDate,
             MaxSubscription=u.MaxSubscription
         }).ToListAsync();
+
+        public async Task<SportClass?> GetClassBySlugAsync(string slug)
+        =>await _db.SportClasses.FirstAsync(u => u.Slug == slug);
+
+        public async Task<string?> getSportClassName(int sportClassId)
+        =>await _db.SportClasses.Where(s=>s.Id == sportClassId).Select(s=>s.Title).FirstAsync();
 
         public async Task<SportClass?> GetSportClassWithDetails(int sportClassId)
         => await _db.SportClasses.Include(u=>u.gym)

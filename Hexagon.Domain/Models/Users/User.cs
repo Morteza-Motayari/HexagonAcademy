@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Models.Common;
+using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Records;
 
@@ -10,6 +11,7 @@ namespace Hexagon.Domain.Models.Users
         #region Properties
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public string? Slug { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string? VerificationCode { get; set; }
@@ -30,6 +32,8 @@ namespace Hexagon.Domain.Models.Users
         public ICollection<GymUser>? UserGyms { get; set; }
         public ICollection<ClassUser>? UserClasses { get; set; }
         public List<UserRole>? userRoles { get; set; }
+        public ICollection<ClassComment>? ClassComments { get; set; }
+        public ICollection<ClassCommentReaction>? ClassCommentReactions { get; set; }
         #endregion
 
     }

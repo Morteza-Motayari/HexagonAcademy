@@ -1,7 +1,9 @@
 ﻿using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.Enums.SportClasses;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.Gyms;
+using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
 using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +66,7 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             return filter;
         }
 
-        public async Task<List<SportViewModel>?> GetAllGymItemsAsync()
+        public async Task<List<SportViewModel>?> GetAllSportsItemsAsync()
         => await _db.Sports.Where(s=>s.IsDeleted==false).Select(s=>new SportViewModel
         {
             Id=s.Id,
@@ -89,5 +91,14 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
 
         public async Task<Sport?> GetSportWithCertificate(int id)
         => await _db.Sports.Include(s=>s.Certificate).FirstOrDefaultAsync(s => s.Id == id);
+
+        public async Task<List<ClientSideSportExisted>> GetSportExistedWithRelationAsync()
+        => await _db.Sports.Include(s => s.Classes).Where(s=>!s.IsDeleted).Select(s => new ClientSideSportExisted
+        {
+            Id = s.Id,
+            Title = s.Title,
+            Slug = s.Slug,
+            Classes = s.Classes.Where(c => !c.IsDeleted && c.ClassStatus != SportClassStatus.NotActive).Count()
+        }).ToListAsync();
     }
 }

@@ -185,6 +185,14 @@ namespace Hexagon.MVC.Controllers
         }
         #endregion
 
+        #region Check User Authentication
+        [HttpGet]
+        public JsonResult IsAuthenticated()
+        {
+            return Json(User.Identity.IsAuthenticated);
+        }
+        #endregion
+
         #endregion
 
     }

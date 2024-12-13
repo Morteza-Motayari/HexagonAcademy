@@ -1,16 +1,20 @@
 ﻿using Hexagon.Application.Senders.Implementation;
 using Hexagon.Application.Senders.Interfaces;
 using Hexagon.Application.Services.Implementation.Gyms;
+using Hexagon.Application.Services.Implementation.KeyWords;
 using Hexagon.Application.Services.Implementation.Users;
 using Hexagon.Application.Services.Interfaces.Gyms;
+using Hexagon.Application.Services.Interfaces.KeyWords;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Gyms;
+using Hexagon.Domain.Interfaces.KeyWords;
 using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Infra.Data.Repositories;
 using Hexagon.Infra.Data.Repositories.Gyms;
+using Hexagon.Infra.Data.Repositories.KeyWords;
 using Hexagon.Infra.Data.Repositories.Links;
 using Hexagon.Infra.Data.Repositories.Users;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +40,12 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IGymGalleryService, GymGalleryService>();
             services.AddScoped<ISportService, SportService>();
             services.AddScoped<ISportClassService, SportClassService>();
+            services.AddScoped<IClassCommentService, ClassCommentService>();
+            services.AddScoped<IClassCommentReactionService, ClassCommentReactionService>();
+            #endregion
+
+            #region Key Words
+            services.AddScoped<IKeyWordService, KeyWordService>();
             #endregion
 
             #region Records
@@ -52,6 +62,13 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IGymGalleryRepository, GymGalleryRepository>();
             services.AddScoped<ISportRepository, SportRepository>();
             services.AddScoped<ISportClassRepository, SportClassRepository>();
+            services.AddScoped<ISportClassRepository, SportClassRepository>();
+            services.AddScoped<IClassCommentRepository, ClassCommentRepository>();
+            services.AddScoped<IClassCommentReactionRepository, ClassCommentReactionRepository>();
+            #endregion
+
+            #region Key Words
+            services.AddScoped<IKeyWordRepository, KeyWordRepository>();
             #endregion
 
             #region Links

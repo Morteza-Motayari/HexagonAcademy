@@ -34,6 +34,8 @@ namespace Hexagon.Infra.Data.Repositories
         public async Task<bool> ExistMobileAsync(string mobile, int id)
         => await _db.Users.AnyAsync(u => u.PhoneNumber == mobile && u.Id != id && u.IsDeleted == false);
 
+        public async Task<bool> ExistSpecificSlug(string slug)
+        => await _db.SportClasses.AnyAsync(u => u.Slug == slug);
 
         public async Task<FilterUserViewModel> FilteUsersAsync(FilterUserViewModel filter)
         {
@@ -162,6 +164,9 @@ namespace Hexagon.Infra.Data.Repositories
         public async Task<User?> GetByMobileAsync(string mobile)
         => await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == mobile && u.IsDeleted == false);
 
+        public async Task<string?> GetJustAvatarAsync(int? userId)
+        =>await _db.Users.Where(u=>u.Id==userId).Select(u=>u.Avatar).FirstAsync();
+
         public async Task<string?> GetJustUserName(int? userId)
         {
             if (userId == null)
@@ -213,5 +218,20 @@ namespace Hexagon.Infra.Data.Repositories
         public async Task<bool> MobileDuplicatedAsync(string mobile, int userId)
         => await _db.Users.AnyAsync(u => u.PhoneNumber == mobile && u.Id != userId && u.IsDeleted == false);
 
+        public async Task<string> PutSpecificSlug(string slug)
+        {
+            slug = slug + $"-{1}";
+            if (await ExistSpecificSlug(slug))
+            {
+                int lastIndex = slug.LastIndexOf('-');
+                int Count = int.Parse(slug.Substring(lastIndex + 1));
+                while (await ExistSpecificSlug(slug))
+                {
+                    Count++;
+                    slug = slug.Substring(0, lastIndex + 1) + $"{Count}";
+                }
+            }
+            return slug;
+        }
     }
 }

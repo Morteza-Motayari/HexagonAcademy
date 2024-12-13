@@ -14,6 +14,7 @@ namespace Hexagon.Domain.Interfaces
         Task SaveChangeAsync();
         void Update(T entity);
         void Delete(T entity);
+
     }
     public class T
     {

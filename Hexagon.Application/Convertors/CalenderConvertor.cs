@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -36,6 +37,62 @@ namespace Hexagon.Application.Convertors
             int day=int.Parse(date.Substring(8,2));
             DateTime x = p.ToDateTime(year, month, day,12,0,0,0);
             return x;
+        }
+
+        public static string ToHoure(this TimeOnly time)
+        {
+            return time.ToString("HH:mm");
+        }
+        public static string ToShamsiWithPersianMonth(this DateTime date)
+        {
+            PersianCalendar calender = new();
+            int year = calender.GetYear(date);
+            int mounth = calender.GetMonth(date);
+            int day = calender.GetDayOfMonth(date);
+            //return $"{date.Hour}:{date.Minute} {year}/{mounth.ToString("00")}/{day.ToString("00")}";
+            //string month = date.Substring(5, 2);
+            //int monthNumber = int.Parse(mounth);
+            string persianMonth = "ماه";
+            switch(mounth)
+            {
+                case 1:
+                    persianMonth = "فروردین";
+                    break;
+                case 2:
+                    persianMonth = "اردیبهشت";
+                    break;
+                case 3:
+                    persianMonth = "خرداد";
+                    break;
+                case 4:
+                    persianMonth = "تیر";
+                    break;
+                case 5:
+                    persianMonth = "مرداد";
+                    break;
+                case 6:
+                    persianMonth = "شهریور";
+                    break;
+                case 7:
+                    persianMonth = "مهر";
+                    break;
+                case 8:
+                    persianMonth = "آبان";
+                    break;
+                case 9:
+                    persianMonth = "آذر";
+                    break;
+                case 10:
+                    persianMonth = "دی";
+                    break;
+                case 11:
+                    persianMonth = "بهمن";
+                    break;
+                case 12:
+                    persianMonth = "اسفند";
+                    break;
+            }
+            return $"{day.ToString("00")} {persianMonth} {year} {date.Hour}:{date.Minute}";
         }
     }
 }

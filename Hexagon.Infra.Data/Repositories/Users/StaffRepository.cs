@@ -179,6 +179,15 @@ namespace Hexagon.Infra.Data.Repositories
                 IsDeleted=c.IsDeleted
             }).ToListAsync();
 
+        public async Task<ClientSideTrainerForClass?> GetTrainerNameAndImageAsync(int staffId)
+        => await _db.Staffs.Include(u=>u.user).Where(s=>s.Id==staffId)
+            .Select(s=>new ClientSideTrainerForClass
+            {
+                FullName=s.user.FirstName+" "+s.user.LastName,
+                ImageUrl=s.user.Avatar,
+                TrainerSlug=s.user.Slug
+            }).FirstAsync();
+
         public async Task<string> GetStaffNameAsync(int staffId)
         {
             var staff = await _db.Staffs.Include(s => s.user).FirstOrDefaultAsync(s => s.Id == staffId);
@@ -212,5 +221,6 @@ namespace Hexagon.Infra.Data.Repositories
                  Position = t.Position,
                  PhoneNumber = t.user.PhoneNumber
              }).ToListAsync();
+
     }
 }

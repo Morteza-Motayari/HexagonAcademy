@@ -25,5 +25,8 @@ namespace Hexagon.Domain.Interfaces
         Task<UserClientSideView?> GetUserForViewClientSide(int userId);
         Task<string?> GetJustUserName(int? userId);
         Task<User?> GetUserWithChilds(int userId);
+        Task<bool> ExistSpecificSlug(string slug);
+        Task<string> PutSpecificSlug(string slug);
+        Task<string?> GetJustAvatarAsync(int? userId);
     }
 }

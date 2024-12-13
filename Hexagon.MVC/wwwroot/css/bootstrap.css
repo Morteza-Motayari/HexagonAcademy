@@ -13543,3 +13543,7 @@ fieldset:disabled .btn {
         display: none !important;
     }
 }
+.like-btn{
+    background-color:transparent;
+    border:0;
+}

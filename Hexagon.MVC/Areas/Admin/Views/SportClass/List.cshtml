@@ -194,7 +194,7 @@
                                                 }
                                             </td>
                                             <td class="center">@item.CreatedDate.ToShamsi()</td>
-                                            <td class="center">
+                                            <td class="center">                                                
                                                 <a asp-area="Admin" asp-controller="SportClass" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
                                                     <i class="fe fe-24 fe-alert-circle"></i>
                                                 </a>
@@ -207,6 +207,9 @@
                                                         <i class="fe fe-24 fe-trash-2"></i>
                                                     </a>
                                                 }
+                                                <a asp-area="Admin" asp-controller="KeyWord" asp-action="List" asp-route-sportClassId="@item.Id" class="text-warning">
+                                                    <i class="fe fe-24 fe-key"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     }

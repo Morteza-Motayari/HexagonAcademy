@@ -22,6 +22,92 @@ namespace Hexagon.Infra.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Gyms.ClassComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("CommentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SportClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("SportClassId");
+
+                    b.ToTable("ClassComments");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Gyms.ClassCommentReaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReactionType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SportClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("SportClassId");
+
+                    b.ToTable("ClassCommentReactions");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.Gym", b =>
                 {
                     b.Property<int>("Id")
@@ -226,6 +312,44 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasIndex("TrainerId");
 
                     b.ToTable("SportClasses");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.KeyWords.KeyWord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("KeyWords");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Links.ClassUser", b =>
@@ -1045,6 +1169,9 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Property<int?>("Situation")
                         .HasColumnType("int");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -1063,6 +1190,48 @@ namespace Hexagon.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Gyms.ClassComment", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Users.User", "User")
+                        .WithMany("ClassComments")
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("Hexagon.Domain.Models.Gyms.SportClass", "sportClass")
+                        .WithMany("ClassComments")
+                        .HasForeignKey("SportClassId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("sportClass");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Gyms.ClassCommentReaction", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Gyms.ClassComment", "Comment")
+                        .WithMany("CommentReactions")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Hexagon.Domain.Models.Users.User", "User")
+                        .WithMany("ClassCommentReactions")
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("Hexagon.Domain.Models.Gyms.SportClass", "SportClass")
+                        .WithMany("ClassCommentReactions")
+                        .HasForeignKey("SportClassId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("SportClass");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.GymGallery", b =>
@@ -1112,6 +1281,15 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("gym");
 
                     b.Navigation("sport");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.KeyWords.KeyWord", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Gyms.SportClass", "sportClass")
+                        .WithMany("KeyWords")
+                        .HasForeignKey("ClassId");
+
+                    b.Navigation("sportClass");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Links.ClassUser", b =>
@@ -1277,6 +1455,11 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Gyms.ClassComment", b =>
+                {
+                    b.Navigation("CommentReactions");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.Gym", b =>
                 {
                     b.Navigation("Gallery");
@@ -1295,7 +1478,13 @@ namespace Hexagon.Infra.Data.Migrations
 
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.SportClass", b =>
                 {
+                    b.Navigation("ClassCommentReactions");
+
+                    b.Navigation("ClassComments");
+
                     b.Navigation("ClassUsers");
+
+                    b.Navigation("KeyWords");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Records.Certificate", b =>
@@ -1330,6 +1519,10 @@ namespace Hexagon.Infra.Data.Migrations
 
             modelBuilder.Entity("Hexagon.Domain.Models.Users.User", b =>
                 {
+                    b.Navigation("ClassCommentReactions");
+
+                    b.Navigation("ClassComments");
+
                     b.Navigation("Experiences");
 
                     b.Navigation("UserCertificates");

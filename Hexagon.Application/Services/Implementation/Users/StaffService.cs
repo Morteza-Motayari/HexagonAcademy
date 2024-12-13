@@ -14,6 +14,9 @@ using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Infra.Data.Repositories.Users;
+using Hexagon.Domain.Models.Gyms;
+using Hexagon.Infra.Data.Repositories.Gyms;
+using Hexagon.Application.Generators;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
@@ -172,10 +175,6 @@ namespace Hexagon.Application.Services.Implementation.Users
                 }
             }
 
-            #region Changing User Situation
-            user.Situation = UserSituation.Trainer;
-            userRepository.Update(user);
-            #endregion
             Staff trainer = new()
             {
                 Position = model.Position,
@@ -189,6 +188,21 @@ namespace Hexagon.Application.Services.Implementation.Users
             {
                 return CreateTrainerResult.InValidSalary;
             }
+
+            #region Adding Slug to user
+            string slug = user.GetUserName().GenerateSlug();
+            if (await userRepository.ExistSpecificSlug(slug))
+            {
+                slug = await userRepository.PutSpecificSlug(slug);
+            }
+            user.Slug = slug;
+            #endregion
+
+            #region Changing User Situation
+            user.Situation = UserSituation.Trainer;
+            userRepository.Update(user);
+            #endregion
+
             await staffRepository.InserAsync(trainer);
             await staffRepository.SaveChangeAsync();
             if (model.TrainerCertificatesIds.CheckNullability())

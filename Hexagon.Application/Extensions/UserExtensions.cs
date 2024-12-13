@@ -22,6 +22,14 @@ namespace Hexagon.Application.Extensions
         public static string GetUserName(this UserViewModel user)
         {
             return user.FirstName + " " + user.LastName;
+        }       
+        public static string GetUserName(this UpdateUserViewModel user)
+        {
+            return user.FirstName + " " + user.LastName;
+        }
+        public static string GetUserName(this ClientSideUpdateUserViewModel user)
+        {
+            return user.FirstName + " " + user.LastName;
         }
         public static int GetUserId(this ClaimsPrincipal claimsPrincipal)
         {

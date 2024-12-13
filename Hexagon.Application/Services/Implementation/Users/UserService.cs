@@ -1,5 +1,6 @@
 ﻿using Hexagon.Application.Convertors;
 using Hexagon.Application.Extensions;
+using Hexagon.Application.Generators;
 using Hexagon.Application.Security;
 using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Application.Statics;
@@ -11,6 +12,7 @@ using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
+using Hexagon.Infra.Data.Repositories;
 using System.Collections.ObjectModel;
 
 namespace Hexagon.Application.Services.Implementation.Users
@@ -213,7 +215,21 @@ namespace Hexagon.Application.Services.Implementation.Users
             }
             User.Gender = model.Gender;
             User.Status = model.Status;
-            
+            #region Update Trainer Slug 
+            if (User.Situation == UserSituation.Trainer)
+            {
+                if(User.FirstName!=model.FirstName|| User.LastName != model.LastName)
+                {                    
+                    string slug = model.GetUserName().GenerateSlug();
+                    if (await UserRepository.ExistSpecificSlug(slug))
+                    {
+                        slug = await UserRepository.PutSpecificSlug(slug);
+                    }
+                    User.Slug = slug;                    
+                }
+            }
+            #endregion
+
             #region Update Avatar
             if (model.NewImage != null)
             {

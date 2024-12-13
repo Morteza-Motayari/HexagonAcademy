@@ -76,6 +76,20 @@ namespace Hexagon.Domain.Shared
         #endregion
 
         #endregion
+
+        #region Key Words
+        public static string KeyWordAddedSuccessfully = "کلمه کلیدی جدید با موفقیت اضافه شده است.";
+        public static string KeyWordUpdatedSuccessfully = "کلمه کلیدی مدنظر  با موفقیت ویرایش شده است.";
+        public static string KeyWordDeletedSuccessfully = "کلمه کلیدی مدنظر  با موفقیت حذف شده است.";
+        #endregion
+
+        #region Comment
+        public static string CommentAddedSuccessfully = " نظر شما ثبت شد منتظر تایید آن توسط ادمین باشید.";
+        public static string CommentUpdatedSuccessfully = "نظر شما ویرایش شد منتظر تایید آن توسط ادمین باشید.";
+        public static string CommentDeletedSuccessfully = "نظر مدنظر شما با موفقیت حذف شده است.";
+        public static string CommentAcceptedSuccessfully = "نظر مدنظر  با موفقیت تایید شده است.";
+        public static string CommentRejectedSuccessfully = "نظر مدنظر  با موفقیت رد شده است.";
+        #endregion
     }
     public class ErrorMessages
     {
@@ -156,6 +170,17 @@ namespace Hexagon.Domain.Shared
         #endregion
 
         #endregion
+
+        #region Key Word
+        public static string KeyWordNotFound = "کلمه کلیدی مدنظر پیدا نشده است.";
+        public static string KeyWordDuplicated = "کلمه کلیدی مدنظر قبلا ثبت شده است.";
+        public static string KeyWordAlreadyDeleted = "کلمه کلیدی مدنظر قبلا حذف شده است.";
+        #endregion
+
+        #region Comment
+        public static string CommentNotFound = "نظر مدنظر پیدا نشده است.";
+        public static string CommentAlreadyDeleted = "نظر مدنظر قبلا حذف شده است.";
+        #endregion
     }
 
     public class WarningMessages
@@ -200,6 +225,9 @@ namespace Hexagon.Domain.Shared
 
         #endregion
 
+        #region Key Word
+        public static string KeyWordCantbeEdited = "این کلمه کلیدی حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
     }
 
     public class InfoMessages

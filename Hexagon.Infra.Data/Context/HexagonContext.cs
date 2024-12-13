@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Models.Common;
 using Hexagon.Domain.Models.Gyms;
+using Hexagon.Domain.Models.KeyWords;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.Models.Users;
@@ -24,6 +25,8 @@ namespace Hexagon.Infra.Data.Context
         public DbSet<GymGallery> GymGalleries { get; set; }
         public DbSet<Sport> Sports { get; set; }
         public DbSet<SportClass> SportClasses { get; set; }
+        public DbSet<ClassComment> ClassComments { get; set; }
+        public DbSet<ClassCommentReaction> ClassCommentReactions { get; set; }
         #endregion
 
         #region Links
@@ -45,6 +48,10 @@ namespace Hexagon.Infra.Data.Context
         public DbSet<UserRole> userRoles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermission>? RolePermissions { get; set; }
+        #endregion
+
+        #region KeyWords
+        public DbSet<KeyWord> KeyWords { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

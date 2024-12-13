@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Hexagon.Application.Extensions;
 using Hexagon.Application.Statics;
 using Hexagon.Application.Convertors;
+using Hexagon.Infra.Data.Repositories;
 
 
 namespace Hexagon.Application.Services.Implementation.Users
@@ -135,6 +136,20 @@ namespace Hexagon.Application.Services.Implementation.Users
             user.NationalCode = model.NationalCode;
             user.email=model.email;
             user.city = model.city;
+            #region Update Trainer Slug 
+            if (user.Situation == UserSituation.Trainer)
+            {
+                if (user.FirstName != model.FirstName || user.LastName != model.LastName)
+                {
+                    string slug = model.GetUserName().GenerateSlug();
+                    if (await userRepository.ExistSpecificSlug(slug))
+                    {
+                        slug = await userRepository.PutSpecificSlug(slug);
+                    }
+                    user.Slug = slug;
+                }
+            }
+            #endregion
             #region Adding Avatar
             if (model.NewImage != null)
             {

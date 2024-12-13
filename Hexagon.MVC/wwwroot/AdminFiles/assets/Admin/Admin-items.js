@@ -7,7 +7,6 @@
             $("#LargeModal").modal('show');
         })
 }
-
 function OnSuccessAddingItem(res) {
     if (res.status == 200) {
         Swal.fire({

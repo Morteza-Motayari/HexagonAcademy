@@ -1,0 +1,108 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Application.Statics
+@using Hexagon.Domain.Enums.Filter
+@using Hexagon.Domain.ViewModels.Gyms.Gyms
+@using Hexagon.Domain.ViewModels.Gyms.SportClasses
+@using Hexagon.Domain.ViewModels.Gyms.Sports
+@model ClientSideFilterSportClassViewModel
+@{
+    List<GymViewModel> GymItems = ViewData["Gyms"] as List<GymViewModel> ?? new List<GymViewModel>();
+    List<SportViewModel> SportItems = ViewData["Sports"] as List<SportViewModel> ?? new List<SportViewModel>();
+    var Gyms = new SelectList(GymItems, "Id", "Name");
+    var Sports = new SelectList(SportItems, "Id", "Title");
+}
+<div class="container-fluid service py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px; visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+            <h3 class="text-primary">کلاس های ورزشی ما</h3>
+            <h5 class="display-7 mb-4">در باشگاه <span class="text-green h4">قلب سبز</span> تلاش بر این می شود که بهترین کلاس ها برگزار بشود</h5>
+            <p class="mb-0">
+                کلاس های ما توسط مربی های با تجربه و حرفه ای به صورت هدفمند برای آمادگی برای شرکت در مسابقات برگزار می شود.
+            </p>
+        </div>
+        <div class="row border-service p-3 mb-5 bg-body rounded-service g-4">
+            <div class="col-12">
+                <form class="form" method="post" id="filter-search" asp-area="" asp-controller="SportClass" asp-action="List">
+                    <input type="hidden" asp-for="Page" />
+                    <div class="form-row row pl-4">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Title" class="control-label"></label>
+                                    <input asp-for="Title" class="form-control form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="SportId" class="form-control-label"></label>
+                                    <select asp-for="SportId" class="form-control" asp-items="Sports">
+                                        <option value="">همه</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="GymId" class="form-control-label"></label>
+                                    <select asp-for="GymId" class="form-control" asp-items="Gyms">
+                                        <option value="">همه</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 padding-top">
+                            <input type="submit" value="جستجو" class="btn btn-outline-success" />
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    @if (Model.Entities.CheckNullability())
+                    {
+                        <div class="row shadow-sm  g-4">
+                            @foreach(var item in Model.Entities)
+                            {
+                                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                    <div class="service-item">
+                                        <div class="service-img">
+                                            <img src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(item.ImageUrl))?$"{item.ImageUrl}":"defaultClass.jpg")" class="img-fluid rounded-top mx-auto d-block " alt="@item.Title">
+                                        </div>
+                                        <div class="rounded-bottom-service p-4 d-flex flex-column">
+                                            <a asp-area="" asp-controller="SportClass" asp-action="Detail" asp-route-slug="@item.slug" class="h5 d-inline-block mb-4 service-a-tag">@item.Title</a>
+                                            <p class="mb-4">
+                                            مخاطب:@item.Gender.GetDisplayName()
+                                            <br />
+                                                ساعت برگزاری:@item.StartTime.ToHoure() تا @item.EndTime.ToHoure()
+                                            </p>
+                                            <a class="btn btn-primary rounded-pill py-2 px-4  mt-auto" asp-area="" asp-controller="SportClass" asp-action="Detail" asp-route-slug="@item.slug">جزئیات بیشتر</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            
+                        </div>
+                    }
+                    else
+                    {
+                        <h3>کلاسی با مشخصات جستجو شده یافت نشد.</h3>
+                    }
+                </form>
+                @if (Model.PageCount > 1)
+                {
+                    <div class="dataTables_info"  role="status" >نمایش @Model.StartItemFromList تا @Model.EndItemFromList از @Model.AllEntitiesCount کلاس</div>
+                    <partial name="_ClientSidePaging" model="Model.GetCurrentPaging()" />
+                }                
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="/js/client-custom.js"></script>
+    @* TODO animate this section*@
+    @*<script src="~/lib/wow/wow.min.js"></script>
+    // <script src="~/lib/animate/easing/easing.min.js"></script>
+    // <script src="~/lib/animate/waypoints/waypoints.min.js"></script>
+    // <script src="~/lib/animate/counterup/counterup.min.js"></script>
+    // <script src="~/lib/animate/lightbox/js/lightbox.min.js"></script>
+    // <script src="~/lib/animate/owlcarousel/owl.carousel.min.js"></script>*@
+}

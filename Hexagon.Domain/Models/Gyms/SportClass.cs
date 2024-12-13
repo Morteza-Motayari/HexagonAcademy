@@ -1,6 +1,7 @@
 ﻿using Hexagon.Domain.Enums.SportClasses;
 using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Models.Common;
+using Hexagon.Domain.Models.KeyWords;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Users;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -33,7 +34,9 @@ namespace Hexagon.Domain.Models.Gyms
         [ForeignKey(nameof(TrainerId))]
         public Staff? Trainer { get; set; }
         public ICollection<ClassUser>? ClassUsers { get; set; }
-
+        public ICollection<KeyWord>? KeyWords { get; set; }
+        public ICollection<ClassComment>? ClassComments { get; set; }
+        public ICollection<ClassCommentReaction>? ClassCommentReactions { get; set; }
         #endregion
     }
 }

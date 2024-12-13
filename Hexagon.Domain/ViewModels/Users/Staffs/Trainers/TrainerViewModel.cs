@@ -31,6 +31,6 @@ namespace Hexagon.Domain.ViewModels.Users.Staffs.Trainers
         [Display(Name = "وضعیت")]
         public bool IsDeleted { get; set; }
         [Display(Name = "تاریخ ایجاد")]
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }        
     }
 }
