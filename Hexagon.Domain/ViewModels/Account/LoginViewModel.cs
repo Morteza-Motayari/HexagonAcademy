@@ -19,12 +19,17 @@ namespace Hexagon.Domain.ViewModels.Account
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         public string Password { get; set; }
+        [Display(Name = "کد اعتبار سنجی")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        [StringLength(4)]
+        public string CaptchaCode { get; set; }
     }
     public enum LoginResult
     {
         Success,
         UserNotFound,
         UserIsBaned,
-        UserIsNotActive
+        UserIsNotActive,
+        InValidCaptcha
     }
 }

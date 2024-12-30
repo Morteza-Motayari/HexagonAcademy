@@ -1,0 +1,186 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Domain.Enums.Filter
+@using Hexagon.Domain.Enums.Wallets
+@using Hexagon.Domain.ViewModels.Wallets
+@model FilterWalletViewModel
+@{
+    ViewData["Title"] = "لیست تراکنش ها";
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Wallet" asp-action="List">تراکنش ها</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2><i class="fe fe-24 fe-zoom-in"></i> فیلترها</h2>
+                <div class="toolbar">
+                    <div class="col-12">
+                        <form class="form" method="post" id="filter-search" asp-area="Admin" asp-controller="Wallet" asp-action="List">
+                            <input type="hidden" asp-for="Page" />
+                            <div class="form-row row pl-4">
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Case" class="control-label"></label>
+                                        <select asp-for="Case" class="form-control">
+                                            @foreach (var item in Enum.GetValues(typeof(FilterTransactionCase)).Cast<FilterTransactionCase>().ToList())
+                                            {
+                                                @if (Model.Case == item)
+                                                {
+                                                    <option selected value="@item">@item.GetDisplayName()</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item">@item.GetDisplayName()</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Type" class="control-label"></label>
+                                        <select asp-for="Type" class="form-control">
+                                            @foreach (var item in Enum.GetValues(typeof(FilterTransactionType)).Cast<FilterTransactionType>().ToList())
+                                            {
+                                                @if (Model.Type == item)
+                                                {
+                                                    <option selected value="@item">@item.GetDisplayName()</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item">@item.GetDisplayName()</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="PayementStatus" class="control-label"></label>
+                                        <select asp-for="PayementStatus" class="form-control">
+                                            @foreach (var item in Enum.GetValues(typeof(FilterPayementStatus)).Cast<FilterPayementStatus>().ToList())
+                                            {
+                                                @if (Model.PayementStatus == item)
+                                                {
+                                                    <option selected value="@item">@item.GetDisplayName()</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item">@item.GetDisplayName()</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="UserName" class="control-label"></label>
+                                        <input asp-for="UserName" class="form-control form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-2 py-2">
+                                    <label class="control-label">
+                                        نمایش ورودی
+                                        <select asp-for="TakeEntity" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">
+                                            <option value="2">2</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-12 col-sm-12 ">
+                                    <input type="submit" value="جستجو" class="btn btn-outline-success" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <h2><i class="bx bx-wallet fe-24 "></i> @ViewData["Title"]</h2>
+                <div class="table-responsive">
+                    <div id="tableExport_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table class="table table-borderless dataTable table-responsive w-100 d-block d-table table-hover" role="grid">
+                            <thead class="thead-dark">
+                                <tr role="row">
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="کاربر: activate to sort column ascending" style="width: 70.8875px;">کاربر</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="مبلغ: activate to sort column ascending" style="width: 70.8875px;">مبلغ</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="نوع: activate to sort column ascending" style="width: 70.8875px;">نوع</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="علت: activate to sort column ascending" style="width: 70.8875px;">علت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="وضعیت پرداخت: activate to sort column ascending" style="width: 70.8875px;">وضعیت پرداخت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="IP: activate to sort column ascending" style="width: 70.8875px;">IP</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="سیستم عامل: activate to sort column ascending" style="width: 70.8875px;">سیستم عامل</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="کد پیگیری: activate to sort column ascending" style="width: 70.8875px;">کد پیگیری</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ ایجاد: activate to sort column ascending" style="width: 70.8875px;">تاریخ ایجاد</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending" style="width: 70.8875px;">اقدام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Entities.CheckNullability())
+                                {
+                                    @foreach (var item in Model.Entities)
+                                    {
+                                        <tr role="row" class=" @((item.IsDeleted==true)?"bg-danger":"") text-dark">
+                                            <td class="center">@item.UserName</td>
+                                            <td class="center">@item.Price.ToMoney()</td>
+                                            <td class="center">
+                                                <span class="badge @((item.Type==TransactionType.Deposit)?"badge-green":"badge-warning") text-white">@item.Type.GetDisplayName()</span>
+                                            </td>
+                                            <td class="center">
+                                                <span class="badge @((item.Case==TransactionCase.ChargeWallet)?"badge-blue":"badge-primary") text-white">@item.Case.GetDisplayName()</span>
+                                            </td>                                            
+                                            <td class="center">
+                                                @if (item.IsPayed == true)
+                                                {
+                                                    <span class="badge badge-success text-white">پرداخت شده</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-danger text-white">پرداخت نشده</span>
+                                                }
+                                            </td>
+                                            <td class="center">@item.IP</td>
+                                            <td class="center">@item.OS</td>
+                                            <td class="center">@item.RefId</td>
+                                            <td class="center">@item.CreatedDate.ToShamsi()</td>
+                                            <td class="center">
+                                                <a asp-area="Admin" asp-controller="Wallet" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
+                                                    <i class="fe fe-24 fe-alert-circle text-warning"></i>
+                                                </a>
+                                                @if (item.IsDeleted == false)
+                                                {
+                                                    <a onclick="confirmDelete('@Url.Action("Delete","Wallet",new{id=item.Id})',event,'تراکنش @item.UserName')" class="text-danger">
+                                                        <i class="fe fe-24 fe-trash-2"></i>
+                                                    </a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="dataTables_info" id="tableExport_info" role="status" aria-live="polite">نمایش @Model.StartItemFromList تا @Model.EndItemFromList از @Model.AllEntitiesCount ورودی</div>
+                @if (Model.PageCount > 1)
+                {
+                    <partial name="_AdminPaging" model="Model.GetCurrentPaging()" />
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

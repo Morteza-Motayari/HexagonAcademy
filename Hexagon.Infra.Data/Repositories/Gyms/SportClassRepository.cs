@@ -5,6 +5,7 @@ using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
+using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -183,6 +184,9 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
 
         public async Task<SportClass?> GetClassBySlugAsync(string slug)
         =>await _db.SportClasses.FirstAsync(u => u.Slug == slug);
+
+        public async Task<int> GetMaxClassAthleteSpace(int sportClassId)
+        => await _db.SportClasses.Where(c=>c.Id == sportClassId).Select(s=>s.MaxSubscription).FirstAsync();
 
         public async Task<string?> getSportClassName(int sportClassId)
         =>await _db.SportClasses.Where(s=>s.Id == sportClassId).Select(s=>s.Title).FirstAsync();

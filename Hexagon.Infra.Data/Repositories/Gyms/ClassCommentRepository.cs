@@ -19,7 +19,7 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         }
 
         public async Task<int> ClassCommentAmountAsync(int classId)
-        => await _db.ClassComments.Where(c=>c.SportClassId == classId).CountAsync();
+        => await _db.ClassComments.Where(c=>c.SportClassId == classId&&c.CommentStatus==ClassCommentPending.Accepted&&!c.IsDeleted).CountAsync();
 
         public async Task<int> CommentClassId(int commentId)
         => await _db.ClassComments.Where(c => c.Id == commentId).Select(u => u.SportClassId).FirstAsync();

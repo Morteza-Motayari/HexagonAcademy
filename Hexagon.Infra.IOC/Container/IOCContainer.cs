@@ -3,24 +3,34 @@ using Hexagon.Application.Senders.Interfaces;
 using Hexagon.Application.Services.Implementation.Contact_Us;
 using Hexagon.Application.Services.Implementation.Gyms;
 using Hexagon.Application.Services.Implementation.KeyWords;
+using Hexagon.Application.Services.Implementation.Orders;
+using Hexagon.Application.Services.Implementation.Payment;
 using Hexagon.Application.Services.Implementation.Users;
+using Hexagon.Application.Services.Implementation.Wallets;
 using Hexagon.Application.Services.Interfaces.Contact_Us;
 using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Application.Services.Interfaces.KeyWords;
+using Hexagon.Application.Services.Interfaces.Orders;
+using Hexagon.Application.Services.Interfaces.Payment;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Services.Interfaces.Users;
+using Hexagon.Application.Services.Interfaces.Wallets;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Contact_Us;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.KeyWords;
 using Hexagon.Domain.Interfaces.Links;
+using Hexagon.Domain.Interfaces.Orders;
 using Hexagon.Domain.Interfaces.Users;
+using Hexagon.Domain.Interfaces.Wallets;
 using Hexagon.Infra.Data.Repositories;
 using Hexagon.Infra.Data.Repositories.Contact_Us;
 using Hexagon.Infra.Data.Repositories.Gyms;
 using Hexagon.Infra.Data.Repositories.KeyWords;
 using Hexagon.Infra.Data.Repositories.Links;
+using Hexagon.Infra.Data.Repositories.Orders;
 using Hexagon.Infra.Data.Repositories.Users;
+using Hexagon.Infra.Data.Repositories.Wallets;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hexagon.Infra.IOC.Container
@@ -57,9 +67,21 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IKeyWordService, KeyWordService>();
             #endregion
 
+            #region Orders
+            services.AddScoped<IOrderService, OrderService>();
+            #endregion
+
+            #region Payment
+            services.AddScoped<INovinoService, NovinoService>();
+            #endregion
+
             #region Records
             services.AddScoped<ICertificateService, CertificateService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+            #endregion
+
+            #region Wallets
+            services.AddScoped<IWalletService, WalletService>();
             #endregion
 
             #endregion
@@ -91,6 +113,11 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IUserCertificatesRepository, UserCertificatesRepository>();
             #endregion
 
+            #region Orders
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IClassOrderRepository, ClassOrderRepository>();
+            #endregion
+
             #region Records
             services.AddScoped<ICertificateRepository, CertificateRepository>();
             services.AddScoped<IExperienceRepository, ExperienceRepository>();
@@ -103,6 +130,10 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IRolePermissionRepository,RolePermissionRepository>();
             services.AddScoped<IPermissionRepository,PermissionRepository>();
+            #endregion
+
+            #region Wallets
+            services.AddScoped<IWalletRepository, WalletRepository>();
             #endregion
 
             #endregion

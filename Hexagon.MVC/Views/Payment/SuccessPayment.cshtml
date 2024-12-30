@@ -1,0 +1,20 @@
+﻿@using Hexagon.Domain.ViewModels.Payment
+@model SuccessPaymentViewModel
+<div class="card shadow mb-4 ui-box-profile">
+    <div class="card-header">
+        <strong class="card-title">
+            <i class='bx bxs-shopping-bags bxs'></i> فاکتورها
+        </strong>
+    </div>
+    <div class="card-body">
+        <div class="ui-box-content">
+            <h1 class="text-success">پرداخت شما با موفقیت انجام شد</h1>
+            <h3>شماره پیگیری:@Model.RefId</h3>
+            @* @if (Model.Message != null)
+            {
+                <p>توضیحات:@Model.Message</p>
+            } *@
+            <a class="btn btn-outline-success" asp-area="UserManagement" asp-controller="Wallet" asp-action="List">برگشت به لیست فاکتورها</a>
+        </div>
+    </div>
+</div>

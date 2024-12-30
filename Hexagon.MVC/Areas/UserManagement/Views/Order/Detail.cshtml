@@ -1,0 +1,61 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Domain.ViewModels.Orders.Orders
+@model ClientSideOrderDetailViewModel
+@{
+    ViewData["Title"] = "جزئیات فاکتور";
+}
+<div class="card shadow mb-4 ui-box-profile">
+    <div class="card-header">
+        <strong class="card-title">
+            <i class='bx bxs-shopping-bags bxs'></i> @ViewData["Title"]
+        </strong>
+    </div>
+    <div class="card-body">
+        <div class="ui-box-content">
+            @if (Model.IsFainally == true)
+            {
+                <h2 class="text-success">این فاکتور در تاریخ @Model.PayedDate.ToShamsiWithPersianMonth() پرداخت شده است</h2>
+            }
+            else
+            {
+                <a asp-area="UserManagement" asp-controller="Order" asp-action="PayOrder" asp-route-orderId="@Model.Id" class="btn btn-success">پرداخت فاکتور</a>
+            }
+            <h3>مبلغ کل:@Model.TotalPrice.ToMoney() ریال</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>کلاس</th>
+                            <th>مبلغ</th>
+                            <th>تاریخ ثبت</th>
+                            @if (Model.IsFainally == false)
+                            {
+                                <th>عملیات</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ClassesOrder)
+                        {
+                            <tr id="tr_@item.Id">
+                                <td class="fa-num"><a asp-area="" asp-controller="SportClass" asp-action="Detail" asp-route-slug="@item.ClassSlug">@item.ClassName</a></td>
+                                <td class="fa-num">@item.Price.ToMoney()</td>
+                                <td class="fa-num">@item.CreatedDate.ToShamsiWithPersianMonth()</td>
+                                @if (Model.IsFainally == false)
+                                {
+                                    <td>
+                                        <a onclick="confirmDeleteClassOrder('@item.Id',event,'@item.ClassName')" class="bx bx-trash text-danger"><i class="ri-eye-line"></i></a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="/js/useractions.js"></script>
+}

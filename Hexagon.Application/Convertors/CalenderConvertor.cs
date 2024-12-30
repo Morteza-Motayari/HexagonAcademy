@@ -49,9 +49,6 @@ namespace Hexagon.Application.Convertors
             int year = calender.GetYear(date);
             int mounth = calender.GetMonth(date);
             int day = calender.GetDayOfMonth(date);
-            //return $"{date.Hour}:{date.Minute} {year}/{mounth.ToString("00")}/{day.ToString("00")}";
-            //string month = date.Substring(5, 2);
-            //int monthNumber = int.Parse(mounth);
             string persianMonth = "ماه";
             switch(mounth)
             {
@@ -92,7 +89,7 @@ namespace Hexagon.Application.Convertors
                     persianMonth = "اسفند";
                     break;
             }
-            return $"{day.ToString("00")} {persianMonth} {year} {date.Hour}:{date.Minute}";
+            return $"{date.Hour}:{date.Minute} {day.ToString("00")} {persianMonth} {year}";
         }
     }
 }

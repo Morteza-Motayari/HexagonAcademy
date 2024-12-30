@@ -3,7 +3,9 @@ using Hexagon.Domain.Models.Common;
 using Hexagon.Domain.Models.Contact_Us;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Links;
+using Hexagon.Domain.Models.Orders;
 using Hexagon.Domain.Models.Records;
+using Hexagon.Domain.Models.Wallets;
 
 namespace Hexagon.Domain.Models.Users
 {
@@ -36,6 +38,8 @@ namespace Hexagon.Domain.Models.Users
         public ICollection<ClassComment>? ClassComments { get; set; }
         public ICollection<ClassCommentReaction>? ClassCommentReactions { get; set; }
         public ICollection<ContactUs>? AnswersContactUs { get; set; }
+        public ICollection<Order>? Orders { get; set; }
+        public ICollection<Wallet>? Wallets { get; set; }
         #endregion
 
     }

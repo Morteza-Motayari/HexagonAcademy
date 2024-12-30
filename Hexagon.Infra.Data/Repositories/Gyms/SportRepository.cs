@@ -47,7 +47,7 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             }
             if (filter.Certificate != null)
             {
-                query = query.Where(r => r.Certificate.Name.Contains(filter.Certificate));
+                query = query.Where(u => u.Certificate.Name.Contains(filter.Certificate));
             }
 
             #endregion

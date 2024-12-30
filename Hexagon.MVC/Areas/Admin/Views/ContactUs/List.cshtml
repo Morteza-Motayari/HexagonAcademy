@@ -148,7 +148,7 @@
                                             <td class="center">@item.AnsweredDate.ToShamsi()</td>
                                             <td class="center">
                                                 <a asp-area="Admin" asp-controller="ContactUs" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
-                                                    <i class="fe fe-24 fe-alert-circle"></i>
+                                                    <i class="fe fe-24 fe-alert-circle text-warning"></i>
                                                 </a>
                                                 @if (item.IsDeleted == false)
                                                 {

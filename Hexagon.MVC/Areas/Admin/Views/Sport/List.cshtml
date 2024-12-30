@@ -2,9 +2,12 @@
 @using Hexagon.Application.Extensions
 @using Hexagon.Domain.Enums.Filter
 @using Hexagon.Domain.ViewModels.Gyms.Sports
+@using Hexagon.Domain.ViewModels.Records.Certificates
 @model FilterSportViewModel
 @{
     ViewData["Title"] = "لیست رشته های ورزشی";
+    List<CertificateViewModel> CertificateItems = ViewData["Certificates"] as List<CertificateViewModel> ?? new List<CertificateViewModel>();
+    var Options = new SelectList(CertificateItems, "Id", "Name");
 }
 <div class="row">
     <div class="pl-3">
@@ -27,13 +30,13 @@
                                 <div class="col-12 col-sm-6 col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Title" class="control-label"></label>
-                                        <input asp-for="Title" class="form-control form-control">
+                                        <input asp-for="Title" class="form-control ">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4">
                                     <div class="form-group">
                                         <label asp-for="Certificate" class="control-label"></label>
-                                        <input asp-for="Certificate" class="form-control form-control">
+                                        <input asp-for="Certificate" class="form-control" >                                                                                   
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4">
@@ -112,8 +115,8 @@
                                             </td>
                                             <td class="center">
                                                 <a asp-area="Admin" asp-controller="Sport" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
-                                                    <i class="fe fe-24 fe-alert-circle"></i>
-                                                </a>
+                                                    <i class="fe fe-24 fe-alert-circle text-warning"></i>
+                                                </a>                                                
                                                 @if (item.IsDeleted == false)
                                                 {
                                                     <a onclick="ShowAddingItemForm('@Url.Action("Edit","Sport",new{id=item.Id})','ویرایش رشته ورزشی')" class="text-success">
@@ -121,6 +124,9 @@
                                                     </a>
                                                     <a onclick="confirmDelete('@Url.Action("Delete","Sport",new{id=item.Id})',event,'@item.Title')" class="text-danger">
                                                         <i class="fe fe-24 fe-trash-2"></i>
+                                                    </a>
+                                                    <a asp-area="Admin" asp-controller="SportClass" asp-action="List" asp-route-SportId="@item.Id" class="text-secondary">
+                                                        <i class="bx bxs-category text-info fe-24"></i>
                                                     </a>
                                                 }
                                             </td>

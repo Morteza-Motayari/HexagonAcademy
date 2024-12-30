@@ -2,6 +2,9 @@
 @using Hexagon.Application.Statics
 @using Hexagon.Domain.ViewModels.Users.Users
 @model UserClientSideView
+@{
+    int budget = (int)ViewData["Budget"];
+}
 <div class="col-xl-3 col-lg-4 col-md-5 mb-md-0 mb-4 row-pannel-inner">
     <div class="ui-sticky ui-sticky-top">
         <div class="profile-user-info py-3 ui-box-pannel  bg-white">
@@ -22,8 +25,8 @@
                         <li>
                             <span class="label">کیف پول</span>
                             <span class="detail">
-                                <span class="d-block">۰ <span class="currency fs-7 fw-bold">تومان</span></span>
-                                <a href="#" class="link border-bottom-0 text-info fs-7 fw-bold link-decor">
+                                <span class="d-block">@budget.ToMoney() <span class="currency fs-7 fw-bold">ریال</span></span>
+                                <a asp-area="UserManagement" asp-controller="Wallet" asp-action="List" class="link border-bottom-0 text-info fs-7 fw-bold link-decor">
                                     افزایش
                                     موجودی <i class='bx bx-chevron-left'></i>
                                 </a>
@@ -58,10 +61,22 @@
                         نظرات
                     </a>
                 </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="bx bx-map bxs"></i> نشانی
                         ها
+                    </a>
+                </li>
+                <li class="nav-item">
+                    
+                    <a class="nav-link" asp-area="UserManagement" asp-controller="Order" asp-action="List">
+                        <i class='bx bxs-shopping-bags bxs'></i> فاکتورها
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="UserManagement" asp-controller="Wallet" asp-action="List">
+                        <i class='bx bx-wallet bxs'></i>تراکنش ها
                     </a>
                 </li>
                 <li class="nav-item">

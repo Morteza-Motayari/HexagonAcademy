@@ -70,6 +70,9 @@ namespace Hexagon.MVC.Controllers
                 case LoginResult.UserNotFound:
                     TempData[ErrorMessage] = ErrorMessages.UserNotExisted;
                     break;
+                case LoginResult.InValidCaptcha:
+                    TempData[ErrorMessage] = ErrorMessages.InvalidCaptcha;
+                    break;
                 case LoginResult.Success:
                     User? user = await accountService.GetUserByMobileAsync(model.PhoneNumber);
                     if (user == null)

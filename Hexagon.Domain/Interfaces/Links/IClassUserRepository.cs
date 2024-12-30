@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,9 @@ namespace Hexagon.Domain.Interfaces.Links
         Task DeleteClassUser(int id);
         Task DeleteClassUsers(int classId);
         void Remove(ClassUser classUser);
+        Task<int> RegisteredUserLastMonth(int classId);
+        Task<bool> IsUserRegisteredInClass(int userId,int classId);
+        Task<DateTime> LastUserRegistrationDateInClass(int userId,int classId);
+
     }
 }

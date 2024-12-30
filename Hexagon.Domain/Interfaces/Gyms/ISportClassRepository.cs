@@ -1,6 +1,7 @@
 ﻿using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
+using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,6 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<ClientSideFilterSportClassViewModel> ClientSideFilterClasses(ClientSideFilterSportClassViewModel filter);
         Task<SportClass?> GetClassBySlugAsync(string slug);
         Task<string?> getSportClassName(int sportClassId);
-
+        Task<int> GetMaxClassAthleteSpace(int sportClassId);
     }
 }

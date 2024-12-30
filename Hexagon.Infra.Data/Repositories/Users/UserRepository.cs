@@ -154,7 +154,6 @@ namespace Hexagon.Infra.Data.Repositories
             return search;
         }
 
-
         public async Task<User?> GetbyMobileAndPassword(string mobile, string password)
         => await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == mobile && u.Password == password && u.IsDeleted == false);
 
@@ -211,6 +210,10 @@ namespace Hexagon.Infra.Data.Repositories
             Situation = u.Situation,
             Status = u.Status
         }).FirstAsync(u => u.Id == userId);
+
+        public async Task<UserGender?> GetUserGenderAsync(int userId)
+        => await _db.Users.Where(u => u.Id == userId)
+            .Select(u =>(UserGender)u.Gender).FirstAsync();
 
         public async Task<User?> GetUserWithChilds(int userId)
         => await _db.Users.Include(u => u.staffes).Include(u=>u.userRoles).Include(u => u.UserCertificates).FirstOrDefaultAsync(u=>u.Id==userId);

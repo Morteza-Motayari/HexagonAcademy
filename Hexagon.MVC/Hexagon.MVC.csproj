@@ -8,11 +8,13 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\AdminFiles\assets\Admin\Admin-comment.js" />
+    <Content Remove="wwwroot\js\UserActions.js" />
     <Content Remove="wwwroot\js\Utilities.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\AdminFiles\assets\Admin\Admin-comment.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\UserActions.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\Utilities.js" />
   </ItemGroup>
 
@@ -419,6 +421,7 @@
     <None Include="wwwroot\AdminFiles\assets\js\topojson.min.js" />
     <None Include="wwwroot\AdminFiles\assets\js\uppy.min.js" />
     <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\useractions.js" />
     <None Include="wwwroot\js\Utilities.js" />
     <None Include="wwwroot\lib\animate\counterup\counterup.min.js" />
     <None Include="wwwroot\lib\animate\easing\easing.js" />

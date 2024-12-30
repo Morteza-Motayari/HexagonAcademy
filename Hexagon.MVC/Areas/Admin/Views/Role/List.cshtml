@@ -111,7 +111,7 @@
                                             <td class="center">@item.CreatedDate.ToShamsi()</td>
                                             <td class="center">
                                                 <a asp-area="Admin" asp-controller="Role" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
-                                                    <i class="fe fe-24 fe-alert-circle"></i>
+                                                    <i class="fe fe-24 fe-alert-circle text-info"></i>
                                                 </a>
                                                 @if (item.IsDeleted == false)
                                                 {
@@ -120,6 +120,9 @@
                                                     </a>
                                                     <a onclick="confirmDelete('@Url.Action("Delete","Role",new{id=item.Id})',event,'@item.RoleTitle')" class="text-danger">
                                                         <i class="fe fe-24 fe-trash-2"></i>
+                                                    </a>
+                                                    <a asp-area="Admin" asp-controller="Cader" asp-action="List" asp-route-RoleId="@item.Id" class="text-secondary">
+                                                        <i class="fe fe-24 fe fe-users text-primary"></i>
                                                     </a>
                                                 }
                                             </td>

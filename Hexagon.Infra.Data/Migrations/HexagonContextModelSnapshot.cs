@@ -559,6 +559,80 @@ namespace Hexagon.Infra.Data.Migrations
                     b.ToTable("userRoles");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Orders.ClassOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ClassOrders");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Orders.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFainally")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Records.Certificate", b =>
                 {
                     b.Property<int>("Id")
@@ -1258,6 +1332,78 @@ namespace Hexagon.Infra.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Wallets.Wallet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Authority")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Case")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(600)
+                        .HasColumnType("nvarchar(600)");
+
+                    b.Property<string>("IP")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPayed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OS")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("RefId")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Wallets");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Contact_Us.ContactUs", b =>
                 {
                     b.HasOne("Hexagon.Domain.Models.Users.User", "AnsweredUser")
@@ -1474,6 +1620,34 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Orders.ClassOrder", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Gyms.SportClass", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Hexagon.Domain.Models.Orders.Order", "order")
+                        .WithMany("ClassesOrder")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("order");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Orders.Order", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Users.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("CreatedBy");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Records.Experience", b =>
                 {
                     b.HasOne("Hexagon.Domain.Models.Records.Certificate", "certificate")
@@ -1530,6 +1704,23 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Hexagon.Domain.Models.Wallets.Wallet", b =>
+                {
+                    b.HasOne("Hexagon.Domain.Models.Orders.Order", "Order")
+                        .WithMany("Wallets")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("Hexagon.Domain.Models.Users.User", "User")
+                        .WithMany("Wallets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Hexagon.Domain.Models.Gyms.ClassComment", b =>
                 {
                     b.Navigation("CommentReactions");
@@ -1560,6 +1751,13 @@ namespace Hexagon.Infra.Data.Migrations
                     b.Navigation("ClassUsers");
 
                     b.Navigation("KeyWords");
+                });
+
+            modelBuilder.Entity("Hexagon.Domain.Models.Orders.Order", b =>
+                {
+                    b.Navigation("ClassesOrder");
+
+                    b.Navigation("Wallets");
                 });
 
             modelBuilder.Entity("Hexagon.Domain.Models.Records.Certificate", b =>
@@ -1602,11 +1800,15 @@ namespace Hexagon.Infra.Data.Migrations
 
                     b.Navigation("Experiences");
 
+                    b.Navigation("Orders");
+
                     b.Navigation("UserCertificates");
 
                     b.Navigation("UserClasses");
 
                     b.Navigation("UserGyms");
+
+                    b.Navigation("Wallets");
 
                     b.Navigation("staffes");
 

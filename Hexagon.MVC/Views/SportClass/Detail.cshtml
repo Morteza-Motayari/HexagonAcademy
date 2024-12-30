@@ -2,6 +2,7 @@
 @using Hexagon.Application.Extensions
 @using Hexagon.Application.Statics
 @using Hexagon.Domain.ViewModels.Gyms.SportClasses
+@using Hexagon.Domain.ViewModels.Orders.ClassesOrder
 @model ClientSideSportClassDeatilViewModel
 <!--Start Slider-->
 <div class="services-area">
@@ -33,24 +34,45 @@
                             <li><a asp-area="" asp-controller="SportClass" asp-action="List" asp-route-slug="@Model.TrainerSlug"><i class='bx bx-dumbbell bxs bx-25'></i></i> @Model.sport</a></li>
                             <li><a href="#"><i class="bx bx-chat bxs bx-25"></i> نظرات @Model.CommentsAmount </a></li>
                         </ul>
-                        <p class="excert">
-                            مربی:<a asp-area="" asp-controller="Trainer" asp-action="Detail" asp-route-slug="@Model.TrainerSlug">@Model.Trainer</a>
-                            <br />
-                            مخاطب:@Model.Gender.GetDisplayName()
-                            <br />
-                            تاریخ ایجاد کلاس:@Model.StartDate.ToShamsi()
-                            <br />
-                            ساعت برگزاری کلاس:@Model.StartTime.ToHoure() تا @Model.EndTime.ToHoure()
-                            <br />
-                            هزینه کلاس:@Model.SubscriptionFee.ToMoney()
-                            <br />
-                            محل برگزاری:@Model.gym
-                        </p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p class="excert">
+                                    مربی:<a asp-area="" asp-controller="Trainer" asp-action="Detail" asp-route-slug="@Model.TrainerSlug">@Model.Trainer</a>
+                                    <br />
+                                    مخاطب:@Model.Gender.GetDisplayName()
+                                    <br />
+                                    تاریخ ایجاد کلاس:@Model.StartDate.ToShamsi()
+                                    <br />
+                                    ساعت برگزاری کلاس:@Model.StartTime.ToHoure() تا @Model.EndTime.ToHoure()
+                                    <br />
+                                    هزینه کلاس:@Model.SubscriptionFee.ToMoney() ریال
+                                    <br />
+                                    محل برگزاری:@Model.gym
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                @if (Model.IsRegisterted == true&&!Model.RegistraionDate.OneMonthPassed())
+                                {
+                                    <a asp-area="UserManagement" asp-controller="" asp-action="" class="btn btn-success w-100">شما در این کلاس شرکت کرده اید</a>
+                                }
+                                else
+                                {                                
+                                <partial name="_AddClassToOrder" model="@(new CreateClassOrderViewModel(){
+Price=(int)Model.SubscriptionFee,
+Gender=Model.Gender,
+ClassId=Model.Id,
+ClassSlug=Model.slug,
+IsRegisterted=Model.IsRegisterted
+})" />
+                                }
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                
+
                 <div class="navigation-top">
-                    <div class="d-sm-flex justify-content-between text-center">                      
+                    <div class="d-sm-flex justify-content-between text-center">
                         <ul class="social-icons">
                             <li><a href="#"><i class="bx bxl-instagram"></i></a></li>
                             <li><a href="#"><i class="bx bxl-telegram"></i></a></li>
@@ -59,27 +81,27 @@
                 </div>
                 <div class="comments-area">
                     <button type="submit" class="btn btn-primary btn-rounded mb-4" onclick="ShowAddingCommentForm(@Model.Id)">افزودن نظر</button>
-                @await Component.InvokeAsync("ClassComments",Model.Id)
+                    @await Component.InvokeAsync("ClassComments", Model.Id)
                 </div>
 
             </div>
             <div class="col-lg-4">
-                <div class="blog_right_sidebar">                    
+                <div class="blog_right_sidebar">
                     @await Component.InvokeAsync("SportExisted")
                     @if (Model.KeyWords.CheckNullability())
                     {
                         <aside class="single_sidebar_widget tag_cloud_widget">
                             <h4 class="widget_title">کلمات کلیدی</h4>
                             <ul class="list">
-                                @foreach(var item in Model.KeyWords)
+                                @foreach (var item in Model.KeyWords)
                                 {
                                     <li>
                                         <a href="#">@item.Key</a>
                                     </li>
-                                }                                
+                                }
                             </ul>
                         </aside>
-                    }                    
+                    }
                 </div>
             </div>
         </div>

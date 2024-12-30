@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.UserManagement.Controllers
 {
     [Area("UserManagement")]
+    [Authorize]
     public class UserManagementBaseSideController : Controller
     {
         protected static string SuccessMessage = "SuccessMessage";

@@ -19,6 +19,21 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="row ">
+                <div class="col-12">
+                    <div class="input-group-prepend img-captcha">
+                        <img id="img-captcha" src="~/get-captcha-image" class="img-fluid" />
+                        <a onclick="resetCaptchaImage()" class="a-simp"><i class="fe fe-16 fe-rotate-cw text-primary"></i></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-10">
+                    <label class="text-label text-captcha">(لطفا متن داخل تصویر را وارد بکنید)</label>
+                    <input type="text" class="form-control"  asp-for="CaptchaCode" maxlength="4" />
+                    <span asp-validation-for="CaptchaCode" class="text-danger"></span>
+                </div>      
+            </div>
+        </div>
+        <div class="form-group">
             <div class="form-check">
                 <label class="form-check-label text-muted">
                     <input type="checkbox" class="form-check-input h-6">
@@ -38,3 +53,6 @@
         </div>
     </form>
 </div>
+@section Scripts {
+    <script src="/js/captcha-reload.js"></script>
+}

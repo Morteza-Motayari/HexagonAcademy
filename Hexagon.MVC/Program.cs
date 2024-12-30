@@ -21,6 +21,8 @@ UnicodeRanges.Arabic }));
 
 #region register Sevices
 builder.Services.RegisterServices();
+
+builder.Services.AddHttpClient();
 #endregion
 
 builder.Services.AddControllersWithViews();
@@ -58,6 +60,13 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 #endregion
 
+#region Adding Session Support
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    options.Cookie.HttpOnly = true;
+});
+#endregion
 var app = builder.Build();
 
 
@@ -80,6 +89,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseSession();
 
 app.MapControllerRoute(
     name: "areas",

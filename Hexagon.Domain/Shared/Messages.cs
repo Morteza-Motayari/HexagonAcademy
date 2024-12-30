@@ -96,12 +96,27 @@ namespace Hexagon.Domain.Shared
         public static string ContactUsAnsweredSuccessfully = "پاسخ به درخواست کاربر با موفقیت به آن ارسال شد.";
         public static string ContactUsDeletedSuccessfully = "درخواست مدنظر شما با موفقیت حذف شده است.";
         #endregion
+
+        #region Wallet
+        public static string AdminWalletChargedSuccessfully = "تراکنش برای کاربر با موفقیت ثبت شد.";
+        #endregion
+
+        #region Payment
+        public static string PaymentDoneSuccessfully= "پرداخت شما با موفقیت انچام شد.";
+        #endregion
+
+        #region Order
+        public static string ClassOrderAddSuccessFullyDone = "کلاس مدنظر به فاکتور شما اضافه شده است.";
+        public static string ClassOrderDeletedSuccessFully = "کلاس مدنظر از فاکتور شما حذف شده است.";
+        public static string OrderPayedSuccessFully = "فاکتور با موفقیت پرداخت شد.";
+        #endregion
     }
     public class ErrorMessages
     {
         #region Public Message
         public static string InsufficintInputs = "لطفا فیلدهای ضروری را پر بکنید.";
         public static string ErrorOccured = "خطایی در هنگام اجرای عملیات رخ داده است لطفا دوباره سعی بکنید.";
+        public static string InvalidCaptcha = "کد اعتبارسنجی وارد شده نادرست می باشد لطفا دوباره آن را وارد بکنید.";
         #endregion
 
         #region Roles
@@ -192,7 +207,22 @@ namespace Hexagon.Domain.Shared
         public static string ContactUsNotFound = "درخواست کاربر یافت نشد.";
         public static string ContactUsFailedSendingEmail = "در ارسال ایمیل به کاربر با خطا مواجه شده ایم لطفا دوباره تلاش بکنید.";
         public static string ContactUsAlreadyDeleted = "درخواست مدنظر قبلا حذف شده است.";
+        #endregion
 
+        #region Wallet
+        public static string InValidPriceInput = "مبلغ وارد شده نامعتبر می باشد.";
+        #endregion
+
+        #region Payment
+        public static string ErrorOccuredWhileEnteringGateway = "عملیات پرداخت با شکست مواجه شد لطفا دقایقی دیگر تلاش بکنید.";
+        public static string ErrorOccuredContactUs = "خطایی رخ داده است لطفا مشکل را از طریق تماس با ما اطلاع رسانی بکنید.";
+        #endregion
+
+        #region Order
+        public static string ClassOrderAlreadyRegistered = "این کلاس به فاکتور شما اضافه شده بود.";
+        public static string IncorrectClassForYou = "شما جز مخاطب های این کلاس نمی باشید.";
+        public static string ClassOrderNotFound = "کلاس مدنظر در فاکتور شما پیدا نشده است.";
+        public static string InsufficientWalletmoney = "مقدار پول موجود در کیف پول شما کافی نمی باشد.";
         #endregion
     }
 
@@ -246,12 +276,23 @@ namespace Hexagon.Domain.Shared
         public static string ContactUsCantbeAnsweredForDeletion = "این درخواست حذف شده است و امکان پاسخ به آن وجود ندارد.";
         public static string ContactUsAlreadyAnswered= "این درخواست قبلا به آن پاسخ داده شده است و امکان پاسخ مجدد به آن وجود ندارد.";
         #endregion
+
+        #region Order
+        public static string OrderAlreadyPayed = "این  فاکتور قبلا پرداخت شده بود.";
+        #endregion
     }
 
     public class InfoMessages
     {
         #region Certificate
         public static string CertificateDontExisted = "مدرک رشته ورزشی یافت نشد لطفا برای افزودن مربی مدرک آن را ساخت سپس مربی ایجاد بکنید.";
+        #endregion
+
+        #region Payment
+        public static string ChargeWallet = "شارژ کیف پول";
+        public static string PayOrder = "پرداخت فاکتور";
+        public static string PayOrderFromWallet = "پرداخت فاکتور از کیف پول";
+        public static string ChargeForPayOrder = "شارژ برای پرداخت فاکتور";
         #endregion
     }
 }

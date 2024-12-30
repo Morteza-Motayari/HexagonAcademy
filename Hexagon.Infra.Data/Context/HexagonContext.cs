@@ -3,8 +3,10 @@ using Hexagon.Domain.Models.Contact_Us;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.KeyWords;
 using Hexagon.Domain.Models.Links;
+using Hexagon.Domain.Models.Orders;
 using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.Models.Wallets;
 using Hexagon.Infra.Data.DataExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,10 @@ namespace Hexagon.Infra.Data.Context
         {
             _accessor = accessor;
         }
+
+        #region Contact Us
+        public DbSet<ContactUs> ContactUs { get; set; }
+        #endregion
 
         #region Gym
         public DbSet<Gym> Gyms { get; set; }
@@ -42,6 +48,11 @@ namespace Hexagon.Infra.Data.Context
         public DbSet<Experience> Experiences { get; set; }
         #endregion
 
+        #region Orders
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<ClassOrder> ClassOrders { get; set; }
+        #endregion
+
         #region Users
         public DbSet<User> Users { get; set; }
         public DbSet<Staff> Staffs { get; set; }
@@ -55,8 +66,8 @@ namespace Hexagon.Infra.Data.Context
         public DbSet<KeyWord> KeyWords { get; set; }
         #endregion
 
-        #region Contact Us
-        public DbSet<ContactUs> ContactUs { get; set; }
+        #region Wallets
+        public DbSet<Wallet> Wallets { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

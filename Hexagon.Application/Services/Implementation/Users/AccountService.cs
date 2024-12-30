@@ -17,11 +17,12 @@ using Hexagon.Application.Extensions;
 using Hexagon.Application.Statics;
 using Hexagon.Application.Convertors;
 using Hexagon.Infra.Data.Repositories;
+using Microsoft.AspNetCore.Http;
 
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
-    public class AccountService(IUserRepository userRepository) : IAccountService
+    public class AccountService(IUserRepository userRepository,IHttpContextAccessor httpContextAccessor) : IAccountService
     {
         public async Task<ForgotPasswordResult> ForgotPasswordAsync(ForgotPasswordViewModel model)
         {
@@ -72,6 +73,10 @@ namespace Hexagon.Application.Services.Implementation.Users
 
         public async Task<LoginResult> loginAsync(LoginViewModel model)
         {
+            if (!CaptchaGenerator.ValidateCaptchaCode(model.CaptchaCode, httpContextAccessor.HttpContext))
+            {
+                return LoginResult.InValidCaptcha;
+            }
             string hashPassword = model.Password.EncodePasswordMd5();
             User? user = await userRepository.GetbyMobileAndPassword(model.PhoneNumber, hashPassword);
             if (user == null)

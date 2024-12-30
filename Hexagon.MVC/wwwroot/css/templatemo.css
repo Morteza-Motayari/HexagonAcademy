@@ -766,7 +766,7 @@ border-radius: 50%;
 .user-panerl {
     font-size: 14px;
     direction: rtl;
-    font-family: iranyekan;
+    font-family: iranyekanfanum;
     text-align: var(--bs-body-text-align);
     background-color: #fff;
     -webkit-text-size-adjust: 100%;
@@ -842,7 +842,7 @@ border-radius: 50%;
     position: -webkit-sticky;
     position: sticky;
     z-index: 2;
-    font-family: iranyekan;
+    font-family: iranyekanfanum;
     font-size: 14px;
 }
 
@@ -852,7 +852,7 @@ border-radius: 50%;
     margin-top: calc(-1* var(--bs-gutter-y));
     margin-left: calc(-.5* var(--bs-gutter-x));
     margin-right: calc(-.5* var(--bs-gutter-x));
-    font-family: iranyekan;
+    font-family: iranyekanfanum;
     font-size: 14px;
 }
 .row-pannel-inner {
@@ -872,7 +872,7 @@ border-radius: 50%;
     -ms-flex-direction: column;
     flex-direction: column;
     min-height: 100vh;
-    font-family: iranyekan;
+    font-family: iranyekanfanum;
     font-size: 14px;
 }
 

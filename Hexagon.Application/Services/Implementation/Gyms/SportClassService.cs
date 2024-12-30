@@ -7,6 +7,7 @@ using Hexagon.Domain.Enums.SportClasses;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.KeyWords;
+using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
@@ -14,6 +15,7 @@ using Hexagon.Domain.ViewModels.Gyms.Sports;
 using Hexagon.Domain.ViewModels.Users.Users;
 using Hexagon.Infra.Data.Repositories;
 using Hexagon.Infra.Data.Repositories.Gyms;
+using Microsoft.AspNetCore.Http;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
@@ -23,7 +25,9 @@ namespace Hexagon.Application.Services.Implementation.Gyms
         ISportRepository sportRepository,
         IStaffRepository staffRepository,
         IKeyWordRepository keyWordRepository,
-        IClassCommentRepository classCommentRepository) : ISportClassService
+        IClassCommentRepository classCommentRepository,
+        IHttpContextAccessor httpContextAccessor,
+        IClassUserRepository classUserRepository) : ISportClassService
     {
         public async Task<AdminSideDetailSportClassViewModel?> AdminSideDetailSportClassAsync(int SportClassId)
         {
@@ -93,6 +97,14 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 KeyWords=await keyWordRepository.GetClassKeyWordsAsync(sportClass.Id),
                 CommentsAmount=await classCommentRepository.ClassCommentAmountAsync(sportClass.Id)
             };
+            if (httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+            {
+                detail.IsRegisterted = await classUserRepository.IsUserRegisteredInClass(httpContextAccessor.HttpContext.User.GetUserId(), sportClass.Id);
+                if (detail.IsRegisterted)
+                {
+                    detail.RegistraionDate = await classUserRepository.LastUserRegistrationDateInClass(httpContextAccessor.HttpContext.User.GetUserId(), sportClass.Id);
+                }
+            }
             return detail;
         }
 
@@ -219,6 +231,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             SportClass.GymId = model.GymId;
             SportClass.TrainerId = model.TrainerId;
             SportClass.SportId = model.SportId;
+            SportClass.ClassStatus= model.ClassStatus;
             SportClass.SubscriptionFee = model.SubscriptionFee;
             if (SportClass.Title != model.Title)
             {

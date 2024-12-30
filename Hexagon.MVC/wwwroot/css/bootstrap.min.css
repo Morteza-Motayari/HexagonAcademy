@@ -12618,3 +12618,16 @@ blog_right_sidebar .widget_title {
     max-height:70px;
     max-width:70px;
 }
+.text-captcha{
+    color:rgb(213, 60, 60);
+}
+.img-captcha {
+    display: flex;
+    padding-left: 5px !important;
+}
+.img-captcha img {
+    width: 100% !important;
+}
+.img-cap{
+    max-width:700px;
+}

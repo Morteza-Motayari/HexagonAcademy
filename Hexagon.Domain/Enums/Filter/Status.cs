@@ -67,4 +67,40 @@ namespace Hexagon.Domain.Enums.Filter
         [Display(Name = "منتظر پاسخ")]
         UnAnswered
     }
+    public enum FilterOrderStatus
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "نهایی شده")]
+        Payed,
+        [Display(Name = "منتظر پرداخت")]
+        UnPayed
+    }
+    public enum FilterTransactionType
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "برداشت")]
+        Creditor,
+        [Display(Name = "واریز")]
+        Deposit
+    }
+    public enum FilterTransactionCase
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "شارژ کیف پول")]
+        ChargeWallet,
+        [Display(Name = "پرداخت فاکتور")]
+        PayOrder
+    }
+    public enum FilterPayementStatus
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "پرداخت شده")]
+        Payed,
+        [Display(Name = "پرداخت نشده")]
+        UnPayed
+    }
 }

@@ -104,7 +104,7 @@
                                             </td>
                                             <td class="center">
                                                 <a asp-area="Admin" asp-controller="Certificate" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
-                                                    <i class="fe fe-24 fe-alert-circle"></i>
+                                                    <i class="fe fe-24 fe-alert-circle text-warning"></i>
                                                 </a>
                                                 @if (item.IsDeleted == false)
                                                 {
@@ -113,6 +113,9 @@
                                                     </a>
                                                     <a onclick="confirmDelete('@Url.Action("Delete","Certificate",new{id=item.Id})',event,'@item.Name')" class="text-danger">
                                                         <i class="fe fe-24 fe-trash-2"></i>
+                                                    </a>
+                                                    <a asp-area="Admin" asp-controller="Trainer" asp-action="List" asp-route-CertificateId="@item.Id" class="text-secondary">
+                                                        <i class="fe fe-24 fe fe-users text-primary"></i>
                                                     </a>
                                                 }
                                             </td>

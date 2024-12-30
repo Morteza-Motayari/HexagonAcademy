@@ -1,0 +1,20 @@
+﻿<form asp-area="UserManagement"
+    asp-controller="Wallet" asp-action="ChargeWallet" method="post">
+    <div class="col-md-12">
+        <div class="row d-flex align-items-center">
+            <div class="col-md-8 col-sm-8">
+                <div class="form-element-row mb-4">
+                    <label class="form-control-label">مبلغ(ریال)</label>
+                    <input  name="Price" class="form-control" placeholder="مبلغ" />
+                </div>                
+            </div>
+            <div class="col-4 col-md-4 col-sm-4 mb-2">
+                <button type="submit" class="btn btn-primary ">شارژ کیف پول</button>
+            </div>
+        </div>
+        <div class="form-element-row mb-5">
+            <label  class="form-control-label">توضیحات</label>
+            <textarea  name="Description" rows="5" class="form-control" placeholder="توضیحات"></textarea>
+        </div>
+    </div>
+</form>

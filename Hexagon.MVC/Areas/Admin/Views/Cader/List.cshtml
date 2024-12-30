@@ -127,7 +127,7 @@
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="ایمیل: activate to sort column ascending" style="width: 70.8875px;">ایمیل</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="جنسیت: activate to sort column ascending" style="width: 70.8875px;">جنسیت</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="دریافتی: activate to sort column ascending" style="width: 70.8875px;">دریافتی</th>
-                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="عنوان: activate to sort column ascending" style="width: 70.8875px;">عنوان</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="نقش: activate to sort column ascending" style="width: 70.8875px;">نقش</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="وضعیت: activate to sort column ascending" style="width: 70.8875px;">وضعیت</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ ایجاد: activate to sort column ascending" style="width: 70.8875px;">تاریخ ایجاد</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending" style="width: 70.8875px;">اقدام</th>
@@ -167,7 +167,7 @@
                                             <td class="center">@item.CreatedDate.ToShamsi()</td>
                                             <td class="center">
                                                 <a asp-area="Admin" asp-controller="Cader" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
-                                                    <i class="fe fe-24 fe-alert-circle"></i>
+                                                    <i class="fe fe-24 fe-alert-circle text-warning"></i>
                                                 </a>
                                                 @if (item.IsDeleted == false)
                                                 {

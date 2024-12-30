@@ -14,6 +14,10 @@ namespace Hexagon.Domain.ViewModels.Account
         [Display(Name = "شماره تلفن همراه")]
         [RegularExpression(@"^([0-9]{11})$", ErrorMessage = "موبایل وارد شده معتبر نمی باشد")]
         public string PhoneNumber { get; set; }
+        [Display(Name = "کد اعتبار سنجی")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        [StringLength(4)]
+        public string CaptchaCode { get; set; }
     }
     public enum ForgotPasswordResult
     {

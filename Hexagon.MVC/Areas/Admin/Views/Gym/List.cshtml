@@ -116,17 +116,20 @@
                                             <td class="center">
                                                 <a asp-area="Admin" asp-controller="Gym" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
                                                     <i class="fe fe-24 fe-alert-circle"></i>
-                                                </a>
+                                                </a>                                                
                                                 @if (item.IsDeleted == false)
                                                 {
                                                     <a asp-area="Admin" asp-controller="Gym" asp-action="Edit" asp-route-id="@item.Id" class="text-success">
-                                                        <i class="fe fe-24 fe-edit-3"></i>
+                                                        <i class="fe fe-24 fe-edit-3 text-warning"></i>
                                                     </a>
                                                     <a onclick="confirmDelete('@Url.Action("Delete","Gym",new{id=item.Id})',event,'@item.Name')" class="text-danger">
                                                         <i class="fe fe-24 fe-trash-2"></i>
                                                     </a>
                                                     <a asp-area="Admin" asp-controller="GymGallery" asp-action="Gallery" asp-route-gymId="@item.Id" class="text-primary">
                                                         <i class="fe fe-24 fe-image"></i>
+                                                    </a>
+                                                    <a asp-area="Admin" asp-controller="SportClass" asp-action="List" asp-route-GymId="@item.Id" class="text-secondary">
+                                                        <i class="bx bxs-category text-info fe-24"></i>
                                                     </a>
                                                 }
                                             </td>

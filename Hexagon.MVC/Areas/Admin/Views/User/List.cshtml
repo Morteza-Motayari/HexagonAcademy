@@ -6,7 +6,6 @@
 @model FilterUserViewModel
 @{
     ViewData["Title"] = "لیست کاربران";
-    int j = 0;
 }
 <div class="row">
     <div class="pl-3">
@@ -158,10 +157,7 @@
                                 {
                                     @foreach (var item in Model.Entities)
                                     {
-                                        {
-                                            j++;
-                                        }
-                                        <tr role="row" class="@((j%2==0)?"even":"odd")@((item.Status==UserStatus.Ban)?" bg-warning":"") @((item.IsDeleted==true)?"bg-danger":"") text-dark">
+                                        <tr role="row" class="@((item.Status==UserStatus.Ban)?" bg-warning":"") @((item.IsDeleted==true)?"bg-danger":"") text-dark">
                                             <td class="center">@item.FirstName</td>
                                             <td class="center">@item.LastName</td>
                                             <td class="center">@item.CreatedDate.ToShamsi()</td>
@@ -207,7 +203,7 @@
                                             </td>
                                             <td class="center">
                                                 <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
-                                                    <i class="fe fe-24 fe-alert-circle"></i>
+                                                    <i class="fe fe-24 fe-alert-circle text-info"></i>
                                                 </a>
                                                 @if (item.IsDeleted == false)
                                                 {
@@ -219,6 +215,12 @@
                                                     </a>
                                                     <a asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-id="@item.Id" class="text-lock">
                                                         <i class="fe fe-24 fe-lock"></i>
+                                                    </a>
+                                                    <a onclick="ShowAddingItemForm('@Url.Action("ChargeWallet","Wallet",new{userId=item.Id})','تراکنش @item.GetUserName()')" class="text-warning">
+                                                        <i class="fe fe-24 fe-dollar-sign "></i>
+                                                    </a>
+                                                    <a asp-area="Admin" asp-controller="Wallet" asp-action="List" asp-route-UserName="@item.GetUserName()" asp-route-UserId="@item.Id" class="text-primary">
+                                                        <i class="bx bx-wallet fe-24"></i>
                                                     </a>
                                                 }                                                
                                             </td>

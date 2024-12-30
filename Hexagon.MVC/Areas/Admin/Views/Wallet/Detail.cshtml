@@ -1,0 +1,107 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Domain.ViewModels.Wallets
+@model AdminSideDetailWalletViewModel
+@{
+    ViewData["Title"] = "جزئیات تراکنش";
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Wallet" asp-action="List">تراکنش ها</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Wallet" asp-action="Detail" asp-route-id="@Model.Id">جزئیات تراکنش</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2 class="mt-3">
+                    <i class="bx bx-wallet fe-24 bxl"></i> @ViewData["Title"]
+                </h2>
+            </div>
+            <div class="body">
+                <div class="row col-md-12">
+                    <div class="col-md-12">
+                        <div class="row">
+                            @if (Model.IsDeleted == true)
+                            {
+                                <div class="form-group col-md-12 ">
+                                    <p class="h2 mb-3 text-danger">این تراکنش حذف شده است</p>
+                                </div>
+                            }
+                            <div class="form-group col-md-6">
+                                <label asp-for="Price" class="form-control-label"></label>
+                                <p class="form-control disable">@Model.Price.ToMoney()</p>
+@*                                 <input asp-for="Price.ToMoney()" class="form-control" disabled="" />
+ *@                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="col-md-9">
+                                    <div class=" text-center">
+                                        <p class="h2 mb-3 @((Model.IsPayed==true)?"text-success":"text-warning")">این تراکنش پرداخت @((Model.IsPayed == true) ? "شده" : "نشده") است</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserName" class="form-control-label"></label>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" class="form-control color-disabled" asp-route-id="@Model.UserId">@Model.UserName</a>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="RefId" class="form-control-label"></label>
+                                <input asp-for="RefId" class="form-control" disabled="" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Type" class="control-label"></label>
+                                <input asp-for="Type" value="@Model.Type.GetDisplayName()" disabled="" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Case" class="control-label"></label>
+                                <input asp-for="Case" value="@Model.Case.GetDisplayName()" disabled="" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="IP" class="control-label"></label>
+                                <input asp-for="IP" disabled="" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="OS" class="control-label"></label>
+                                <input asp-for="OS" disabled="" class="form-control">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label asp-for="Description" class="control-label"></label>
+                                <textarea asp-for="Description" class="form-control" disabled=""></textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="Authority" class="control-label"></label>
+                                <input asp-for="Authority" disabled="" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="CreatedDate" class="control-label"></label>
+                                <input value="@Model.CreatedDate.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="LastModifiedDate" class="control-label"></label>
+                                <input value="@Model.LastModifiedDate?.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="CreatedBy" class="form-control-label"></label>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.CreatedById">@Model.CreatedBy</a>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="LastModifiedBy" class="form-control-label"></label>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.LastModifiedById">@Model.LastModifiedBy</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <a asp-area="Admin" asp-controller="Wallet" asp-action="List" class="btn btn-secondary">برگشت به لیست</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -43,5 +43,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.SportClasses
         [Display(Name = "کلمات کلیدی")]
         public ICollection<KeyWord>? KeyWords { get; set; }
         public int CommentsAmount {  get; set; }
+        public bool IsRegisterted { get; set; }
+        public DateTime RegistraionDate { get; set; }
     }
 }

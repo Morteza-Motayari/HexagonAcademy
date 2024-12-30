@@ -1,4 +1,5 @@
-﻿using Hexagon.Domain.Models.Records;
+﻿using Hexagon.Domain.Enums.Users;
+using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
@@ -28,5 +29,6 @@ namespace Hexagon.Domain.Interfaces
         Task<bool> ExistSpecificSlug(string slug);
         Task<string> PutSpecificSlug(string slug);
         Task<string?> GetJustAvatarAsync(int? userId);
+        Task<UserGender?> GetUserGenderAsync(int userId);
     }
 }

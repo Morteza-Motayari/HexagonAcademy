@@ -59,7 +59,10 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 TempData[WarningMessage] = WarningMessages.GymGalleryIdZero;
             }
-            await gymGalleryService.DeleteGymGalleryAsync(id);
+            else
+            {
+                await gymGalleryService.DeleteGymGalleryAsync(id);
+            }            
         }
     }
 }

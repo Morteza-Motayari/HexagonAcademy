@@ -1,6 +1,7 @@
 ﻿using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,22 @@ namespace Hexagon.Infra.Data.Repositories.Links
 
         public async Task<List<int>?> GetClassUsersIdentityKeyAsync(int classId)
         => await _db.ClassUsers.Where(u => u.SportClassId == classId).Select(x => x.Id).ToListAsync();
+
+        public async Task<bool> IsUserRegisteredInClass(int userId, int classId)
+        => await _db.ClassUsers.Where(u=>u.UserId==userId&&u.SportClassId==classId).AnyAsync();
+
+        public async Task<DateTime> LastUserRegistrationDateInClass(int userId, int classId)
+        => await _db.ClassUsers.Where(u => u.UserId == userId && u.SportClassId == classId).OrderByDescending(c=>c.SubscriptionDate).Select(u=>u.SubscriptionDate).FirstAsync();
+
+        public async Task<int> RegisteredUserLastMonth(int classId)
+        {
+            var thirtyDaysAgo = DateTime.Now.AddDays(-30);
+
+            return await _db.ClassUsers
+                .Where(c => c.SportClassId == classId && c.SubscriptionDate >= thirtyDaysAgo)
+                .CountAsync();
+        }
+
 
         public void Remove(ClassUser ClassUser)
         {

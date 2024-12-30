@@ -1,0 +1,98 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Domain.Enums.Payment
+@using Hexagon.Domain.ViewModels.Orders.Orders
+@using Newtonsoft.Json;
+@model ClientSidePayOrderViewModel
+<div class="card shadow mb-4 ui-box-profile">
+    <div class="card-header">
+        <strong class="card-title">
+            <i class='bx bxs-shopping-bags bxs'></i> @ViewData["Title"]
+        </strong>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-body">
+                <div class="ui-box-content">
+                    <h2>مبلغ کل:@Model.TotalPrice.ToMoney()</h2>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>کلاس</th>
+                                    <th>مبلغ</th>
+                                    <th>تاریخ ثبت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ClassesOrder)
+                                {
+                                    <tr id="tr_@item.Id">
+                                        <td class="fa-num"><a asp-area="" asp-controller="SportClass" asp-action="Detail" asp-route-slug="@item.ClassSlug">@item.ClassName</a></td>
+                                        <td class="fa-num">@item.Price.ToMoney()</td>
+                                        <td class="fa-num">@item.CreatedDate.ToShamsiWithPersianMonth()</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <form method="post" asp-area="UserManagement" asp-controller="Order" asp-action="PayOrder">
+                <input asp-for="Id" type="hidden" />
+                <input asp-for="TotalPrice" type="hidden" />
+                @* <input asp-for="ClassesOrder" type="hidden" /> *@
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class='bx bxs-badge-dollar bxs'></i> هزینه کل:@Model.TotalPrice.ToMoney() ریال
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="col-md-6 mb-3">
+                                <label class="control-label">روش پرداخت</label>
+                                <div class="custom-control custom-radio">
+                                    <input asp-for="Payment" type="radio" value="@PaymentType.GateWay" class="custom-control-input bxs">
+                                    <label class="custom-control-label">
+                                        @PaymentType.GateWay.GetDisplayName()
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio mb-3">
+                                    <input asp-for="Payment" type="radio" value="@PaymentType.Wallet" class="custom-control-input bxs">
+                                    <label class="custom-control-label">
+                                        @PaymentType.Wallet.GetDisplayName()
+                                    </label>
+                                </div>
+                                <span asp-validation-for="Payment" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row ">
+                                <div class="col-12">
+                                    <div class="input-group-prepend img-captcha">
+                                        <img id="img-captcha" src="~/get-captcha-image" class="img-fluid img-cap" />
+                                        <a onclick="resetCaptchaImage()" class="a-simp"><i class="fe fe-16 fe-rotate-cw text-primary"></i></a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-10">
+                                    <label class="text-label text-captcha">(لطفا متن داخل تصویر را وارد بکنید)</label>
+                                    <input type="text" class="form-control" asp-for="CaptchaCode" maxlength="4" />
+                                    <span asp-validation-for="CaptchaCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">پرداخت فاکتور</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="/js/captcha-reload.js"></script>
+}
