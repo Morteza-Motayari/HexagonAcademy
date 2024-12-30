@@ -4,6 +4,7 @@ using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
 using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
 using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -174,6 +175,31 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 return Ok();
             }
+        }
+        #endregion
+
+        #region Delete Forever
+        [AuthorizePermission("DeleteTrainerForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await staffService.DeleteTrainerForever(id);
+            switch (result)
+            {
+                case DeleteForeverTrainerResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.TrainerDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverTrainerResult.CantDeletedNow:
+                    string message = await staffService.CantDeleteTrainerForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverTrainerResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteTrainer;
+                    break;
+                case DeleteForeverTrainerResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.TrainerNotFound;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
         }
         #endregion
     }

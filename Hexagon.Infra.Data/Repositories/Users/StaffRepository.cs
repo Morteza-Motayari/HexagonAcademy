@@ -222,5 +222,7 @@ namespace Hexagon.Infra.Data.Repositories
                  PhoneNumber = t.user.PhoneNumber
              }).ToListAsync();
 
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.Staffs.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

@@ -87,5 +87,7 @@ namespace Hexagon.Infra.Data.Repositories.Contact_Us
             return filter;
         }
 
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.ContactUs.Where(d=>d.Id == id).Select(s=>(DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

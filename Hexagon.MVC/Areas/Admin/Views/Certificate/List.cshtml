@@ -118,6 +118,12 @@
                                                         <i class="fe fe-24 fe fe-users text-primary"></i>
                                                     </a>
                                                 }
+                                                else
+                                                {
+                                                    <a onclick="confirmDeleteForever('@Url.Action("DeleteForever","Certificate",new{id=item.Id})',event,'@item.Name')" class="text-warning">
+                                                        <i class="fe fe-24 fe-trash"></i>
+                                                    </a>
+                                                }
                                             </td>
                                         </tr>
                                     }

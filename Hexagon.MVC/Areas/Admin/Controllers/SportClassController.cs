@@ -1,9 +1,11 @@
-﻿using Hexagon.Application.Services.Interfaces.Gyms;
+﻿using Hexagon.Application.Services.Implementation.Users;
+using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
+using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -148,5 +150,29 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         }
         #endregion
 
+        #region Delete Forever
+        [AuthorizePermission("DeleteSportClassForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await SportClassService.DeleteSportClassForever(id);
+            switch (result)
+            {
+                case DeleteForeverSportClassResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.SportClassDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverSportClassResult.CantDeletedNow:
+                    string message = await SportClassService.CantDeleteSportClassForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverSportClassResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteSportClass;
+                    break;
+                case DeleteForeverSportClassResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.SportClassNotFound;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
     }
 }

@@ -19,5 +19,7 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<FilterRoleViewModel> FilterRolesAsync(FilterRoleViewModel filter);
         Task<List<Permission>> GetAllPermmisions();
         Task<AdminSideDetailRoleViewModel?> AdminSideDetailRoleAsync(int roleId);
+        Task<DeleteForeverRoleResult> DeleteRoleForever(int RoleId);
+        Task<string> CantDeleteRoleForeverNowMessage(int RoleId);
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Hexagon.Application.Services.Implementation.Gyms;
+using Hexagon.Application.Services.Implementation.Users;
 using Hexagon.Application.Services.Interfaces.Contact_Us;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Contact_Us;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -110,6 +112,30 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
                 case DeleteContactUsResult.ContactUsAlreadyDeleted:
                     TempData[ErrorMessage] = ErrorMessages.ContactUsAlreadyDeleted;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
+
+        #region Delete Forever
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await contactUsService.DeleteContactUsForever(id);
+            switch (result)
+            {
+                case DeleteForeverContactUsResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.ContactUsDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverContactUsResult.CantDeletedNow:
+                    string message = await contactUsService.CantDeleteContactUsForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverContactUsResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteContactUs;
+                    break;
+                case DeleteForeverContactUsResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.ContactUsNotFound;
                     break;
             }
             return RedirectToAction(nameof(List));

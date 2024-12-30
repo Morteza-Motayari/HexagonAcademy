@@ -85,5 +85,8 @@ namespace Hexagon.Infra.Data.Repositories.Users
             }
             return roles;
         }
+
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.Roles.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

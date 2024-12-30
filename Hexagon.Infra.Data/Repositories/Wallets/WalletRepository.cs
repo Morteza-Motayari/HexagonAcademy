@@ -165,5 +165,8 @@ namespace Hexagon.Infra.Data.Repositories.Wallets
         => await _db.Wallets.Where(w=>w.Id==walletId)
             .ExecuteUpdateAsync(sp=>sp.SetProperty(w=>w.Authority, authority)
             .SetProperty(w=>w.LastModifiedDate,DateTime.Now));
+
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.Wallets.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.ClassComments;
+using Hexagon.Domain.ViewModels.Users.Roles;
 
 namespace Hexagon.Application.Services.Interfaces.Gyms
 {
@@ -16,6 +17,8 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         Task<List<ClientSideCommentViewModel>?> GetClientClassActiveCommentAsync(int classId);
         Task<UpdateCommentStatusResult> AcceptCommentAsync(int commentId);
         Task<UpdateCommentStatusResult> RejectCommentAsync(int commentId);
+        Task<DeleteForeverCommentResult> DeleteClassCommentForever(int ClassCommentId);
+        Task<string> CantDeleteClassCommentForeverNowMessage(int ClassCommentId);
 
 
 

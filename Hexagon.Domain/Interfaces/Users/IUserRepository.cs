@@ -30,5 +30,6 @@ namespace Hexagon.Domain.Interfaces
         Task<string> PutSpecificSlug(string slug);
         Task<string?> GetJustAvatarAsync(int? userId);
         Task<UserGender?> GetUserGenderAsync(int userId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

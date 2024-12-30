@@ -16,5 +16,6 @@ namespace Hexagon.Domain.Interfaces.Orders
         Task<ClassOrder> GetUserClassOrder(int classId,int userId);
         Task<List<int>?> GetUserOrderClassesIdForRegistration(int userId, int orderId);
         Task<List<DeleteClassOrderViewModel>> GetUnRegisterAbleClassesName(int userId,int orderId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

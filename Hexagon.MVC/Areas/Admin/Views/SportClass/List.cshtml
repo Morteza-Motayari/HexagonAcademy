@@ -207,6 +207,12 @@
                                                         <i class="fe fe-24 fe-trash-2"></i>
                                                     </a>
                                                 }
+                                                else
+                                                {
+                                                    <a onclick="confirmDeleteForever('@Url.Action("DeleteForever","SportClass",new{id=item.Id})',event,'@item.Title')" class="text-warning">
+                                                        <i class="fe fe-24 fe-trash"></i>
+                                                    </a>
+                                                }
                                                 <a asp-area="Admin" asp-controller="KeyWord" asp-action="List" asp-route-sportClassId="@item.Id" class="text-warning">
                                                     <i class="fe fe-24 fe-key"></i>
                                                 </a>

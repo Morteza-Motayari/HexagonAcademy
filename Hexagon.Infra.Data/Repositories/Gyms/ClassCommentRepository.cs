@@ -90,6 +90,7 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         public async Task<List<int>> GetClassActiveCommentsIds(int classId)
         => await _db.ClassComments.Where(c => !c.IsDeleted && c.CommentStatus == ClassCommentPending.Accepted&&c.SportClassId==classId)
             .Select(c=>c.Id).ToListAsync();
-
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.ClassComments.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

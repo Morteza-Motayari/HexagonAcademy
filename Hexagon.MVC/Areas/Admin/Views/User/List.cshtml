@@ -222,7 +222,13 @@
                                                     <a asp-area="Admin" asp-controller="Wallet" asp-action="List" asp-route-UserName="@item.GetUserName()" asp-route-UserId="@item.Id" class="text-primary">
                                                         <i class="bx bx-wallet fe-24"></i>
                                                     </a>
-                                                }                                                
+                                                }
+                                                else
+                                                {
+                                                    <a onclick="confirmDeleteForever('@Url.Action("DeleteForever","User",new{id=item.Id})',event,'@item.GetUserName()')" class="text-warning">
+                                                        <i class="fe fe-24 fe-trash"></i>
+                                                    </a>
+                                                }
                                             </td>
                                         </tr>
                                     }

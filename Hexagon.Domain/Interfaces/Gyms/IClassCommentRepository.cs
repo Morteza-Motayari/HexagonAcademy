@@ -14,6 +14,7 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<List<int>> GetClassActiveCommentsIds(int classId);
         Task<int> ClassCommentAmountAsync(int classId);
         Task<int> CommentClassId(int commentId);
+        Task<DateTime> GetLastModifiedDate(int id);
 
     }
 }

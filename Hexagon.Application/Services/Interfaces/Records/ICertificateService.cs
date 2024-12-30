@@ -1,4 +1,5 @@
 ﻿using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Domain.ViewModels.Users.Roles;
 
 namespace Hexagon.Application.Services.Interfaces.Records
 {
@@ -11,6 +12,8 @@ namespace Hexagon.Application.Services.Interfaces.Records
         Task<List<CertificateViewModel>?> ListCertificatesForOptionsAsync();
         Task<FilterCertificateViewModel> FilterCertificateesAsync(FilterCertificateViewModel filter);
         Task<AdminSideDetailCertificateViewModel?> AdminSideDetailCertificateAsync(int CertificateId);
+        Task<DeleteForeverCertificateResult> DeleteCertificateForever(int CertificateId);
+        Task<string> CantDeleteCertificateForeverNowMessage(int CertificateId);
 
     }
 }

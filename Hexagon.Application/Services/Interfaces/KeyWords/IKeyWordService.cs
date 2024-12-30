@@ -1,4 +1,5 @@
 ﻿using Hexagon.Domain.ViewModels.KeyWords;
+using Hexagon.Domain.ViewModels.Users.Roles;
 
 namespace Hexagon.Application.Services.Interfaces.KeyWords
 {
@@ -10,5 +11,7 @@ namespace Hexagon.Application.Services.Interfaces.KeyWords
         Task<DeletekeyWordResult> DeleteKeyWordAsync(int KeyWordId);
         Task<FilterkeyWordViewModel> FilterKeyWordsAsync(FilterkeyWordViewModel filter, int sportClassId);
         Task<AdminSideDetailKeyWordViewModel?> AdminSideDetailKeyWordAsync(int KeyWordId);
+        Task<DeleteForeverkeyWordResult> DeleteKeyWordForever(int KeyWordId);
+        Task<string> CantDeleteKeyWordForeverNowMessage(int KeyWordId);
     }
 }

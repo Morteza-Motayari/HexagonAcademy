@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 using Hexagon.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Hexagon.Domain.Enums.SportClasses;
+using Hexagon.Domain.ViewModels.Users.Roles;
+using Hexagon.Application.Extensions;
+using Hexagon.Domain.Models.Users;
+using Hexagon.Infra.Data.Repositories.Users;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
@@ -180,6 +184,36 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             classCommentRepository.Update(comment);
             await classCommentRepository.SaveChangeAsync();
             return UpdateCommentStatusResult.Success;
+        }
+
+        public async Task<DeleteForeverCommentResult> DeleteClassCommentForever(int ClassCommentId)
+        {
+            DateTime lastDate = await classCommentRepository.GetLastModifiedDate(ClassCommentId);
+            if (lastDate.SixMonthPassed())
+            {
+                var classcomment = await classCommentRepository.GetByIdAsync(ClassCommentId);
+
+                if (classcomment == null)
+                    return DeleteForeverCommentResult.NotFound;
+
+                if (classcomment.IsDeleted == false)
+                    return DeleteForeverCommentResult.FirstDeleteSimple;
+
+                classCommentRepository.Delete(classcomment);
+                await classCommentRepository.SaveChangeAsync();
+                return DeleteForeverCommentResult.Success;
+            }
+            else
+            {
+                return DeleteForeverCommentResult.CantDeletedNow;
+            }
+        }
+
+        public async Task<string> CantDeleteClassCommentForeverNowMessage(int ClassCommentId)
+        {
+            DateTime lastEdit = await classCommentRepository.GetLastModifiedDate(ClassCommentId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این کامنت تا {leftdays} روز آینده را ندارید.";
         }
     }
 }

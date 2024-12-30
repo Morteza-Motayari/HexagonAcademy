@@ -271,5 +271,34 @@ namespace Hexagon.Application.Services.Implementation.Users
             //return true;
         }
 
+        public async Task<DeleteForeverUserResult> DeleteUserForever(int UserId)
+        {
+            DateTime lastDate = await UserRepository.GetLastModifiedDate(UserId);
+            if (lastDate.SixMonthPassed())
+            {
+                var user = await UserRepository.GetByIdAsync(UserId);
+
+                if (user == null)
+                    return DeleteForeverUserResult.NotFound;
+
+                if (user.IsDeleted == false)
+                    return DeleteForeverUserResult.FirstDeleteSimple;
+
+                UserRepository.Delete(user);
+                await UserRepository.SaveChangeAsync();
+                return DeleteForeverUserResult.Success;
+            }
+            else
+            {
+                return DeleteForeverUserResult.CantDeletedNow;
+            }
+        }
+
+        public async Task<string> CantDeleteUserForeverNowMessage(int UserId)
+        {
+            DateTime lastEdit = await UserRepository.GetLastModifiedDate(UserId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این کاربر تا {leftdays} روز آینده را ندارید.";
+        }
     }
 }

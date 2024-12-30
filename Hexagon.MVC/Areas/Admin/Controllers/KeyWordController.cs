@@ -1,9 +1,11 @@
-﻿using Hexagon.Application.Services.Interfaces.KeyWords;
+﻿using Hexagon.Application.Services.Implementation.Users;
+using Hexagon.Application.Services.Interfaces.KeyWords;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.KeyWords;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.KeyWords;
+using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -153,6 +155,30 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
             }
             return RedirectToAction("List", "KeyWord", new { area = "Admin", sportClassId = ClassId });
+        }
+        #endregion
+
+        #region Delete Forever
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await KeyWordService.DeleteKeyWordForever(id);
+            switch (result)
+            {
+                case DeleteForeverkeyWordResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.KeyWordDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverkeyWordResult.CantDeletedNow:
+                    string message = await KeyWordService.CantDeleteKeyWordForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverkeyWordResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteKeyWord;
+                    break;
+                case DeleteForeverkeyWordResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.KeyWordNotFound;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
         }
         #endregion
 

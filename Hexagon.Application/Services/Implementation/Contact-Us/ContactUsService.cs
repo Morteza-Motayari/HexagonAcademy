@@ -1,10 +1,15 @@
-﻿using Hexagon.Application.Senders.Interfaces;
+﻿using Hexagon.Application.Extensions;
+using Hexagon.Application.Senders.Interfaces;
 using Hexagon.Application.Services.Interfaces.Contact_Us;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Contact_Us;
+using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Domain.Models.Contact_Us;
 using Hexagon.Domain.Models.Gyms;
+using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Contact_Us;
+using Hexagon.Domain.ViewModels.Users.Roles;
+using Hexagon.Infra.Data.Repositories.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +71,11 @@ namespace Hexagon.Application.Services.Implementation.Contact_Us
             return AnswerContactUsResult.Success;
         }
 
+        public Task<string> CantDeleteContactUsForeverNowMessage(int ContactUsId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<CreateContactUsResult> CreateContactUsAsync(CreateContactUsViewModel model)
         {
             ContactUs contact = new()
@@ -95,6 +105,29 @@ namespace Hexagon.Application.Services.Implementation.Contact_Us
             return DeleteContactUsResult.Success;
         }
 
+        public async Task<DeleteForeverContactUsResult> DeleteContactUsForever(int ContactUsId)
+        {
+            DateTime lastDate = await contactUsRepository.GetLastModifiedDate(ContactUsId);
+            if (lastDate.SixMonthPassed())
+            {
+                var contactus = await contactUsRepository.GetByIdAsync(ContactUsId);
+
+                if (contactus == null)
+                    return DeleteForeverContactUsResult.NotFound;
+
+                if (contactus.IsDeleted == false)
+                    return DeleteForeverContactUsResult.FirstDeleteSimple;
+
+                contactUsRepository.Delete(contactus);
+                await contactUsRepository.SaveChangeAsync();
+                return DeleteForeverContactUsResult.Success;
+            }
+            else
+            {
+                return DeleteForeverContactUsResult.CantDeletedNow;
+            }
+        }
+
         public async Task<FilterContactUsViewModel> FilterContactUsAsync(FilterContactUsViewModel filter)
         => await contactUsRepository.FilterContactUsAsync(filter);
 
@@ -111,5 +144,6 @@ namespace Hexagon.Application.Services.Implementation.Contact_Us
                 IsDeleted = contactus.IsDeleted
             };
         }
+
     }
 }

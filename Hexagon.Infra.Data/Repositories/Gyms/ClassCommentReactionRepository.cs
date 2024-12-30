@@ -37,5 +37,8 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
 
         public async Task<ClassCommentReaction> GetCommentReaction(int coomentId, int userId)
         =>await _db.ClassCommentReactions.Where(r=>r.CreatedBy==userId&&r.CommentId==coomentId).FirstAsync();
+
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.ClassCommentReactions.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

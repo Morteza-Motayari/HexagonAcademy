@@ -55,5 +55,8 @@ namespace Hexagon.Infra.Data.Repositories.Orders
 
         public async Task<List<int>?> GetUserOrderClassesIdForRegistration(int userId, int orderId)
         => await _db.ClassOrders.Where(co=>co.CreatedBy==userId&&co.OrderId==orderId).Select(s=>s.ClassId).ToListAsync();
+
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.ClassOrders.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

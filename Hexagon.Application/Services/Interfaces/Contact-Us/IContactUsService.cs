@@ -16,5 +16,7 @@ namespace Hexagon.Application.Services.Interfaces.Contact_Us
         Task<DeleteContactUsResult> DeleteContactUsAsync(int ContactUsId);
         Task<FilterContactUsViewModel> FilterContactUsAsync(FilterContactUsViewModel filter);
         Task<AdminSideDetailContactUsViewModel?> AdminSideDetailContactUsAsync(int ContactUsId);
+        Task<DeleteForeverContactUsResult> DeleteContactUsForever(int ContactUsId);
+        Task<string> CantDeleteContactUsForeverNowMessage(int ContactUsId);
     }
 }

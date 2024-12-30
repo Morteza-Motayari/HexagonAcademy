@@ -12,6 +12,7 @@ namespace Hexagon.Domain.Shared
         public static string RoleAddedSuccessfully = "نقش با موفقیت اضافه شده است.";
         public static string RoleUpdatedSuccessfully = "نقش با موفقیت ویرایش شده است.";
         public static string RoleDeletedSuccessfully = "نقش با موفقیت حذف شده است.";
+        public static string RoleDeletedForeverSuccessfully = "نقش مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Account
@@ -30,12 +31,14 @@ namespace Hexagon.Domain.Shared
         public static string UserStatusChangedSuccessfully = "کاربر جدید با موفقیت اضافه شده است.";
         public static string UserDeletedSuccessfully = "کاربر مدنظر با موفقیت حذف شده است.";
         public static string UserPasswordChangedSuccessfully = "رمز کاربر مدنظر با موفقیت تغییر کرده است.";
+        public static string UserDeletedForeverSuccessfully = "کاربر مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Gym
         public static string GymAddedSuccessfully = "باشگاه جدید با موفقیت اضافه شده است.";
         public static string GymUpdatedSuccessfully = "باشگاه مدنظر  با موفقیت ویرایش شده است.";
         public static string GymDeletedSuccessfully = "باشگاه مدنظر  با موفقیت حذف شده است.";
+        public static string GymDeletedForeverSuccessfully = "باشگاه مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region GymGallery
@@ -47,18 +50,21 @@ namespace Hexagon.Domain.Shared
         public static string CertificateAddedSuccessfully = "مدرک جدید با موفقیت اضافه شده است.";
         public static string CertificateUpdatedSuccessfully = "مدرک مدنظر  با موفقیت ویرایش شده است.";
         public static string CertificateDeletedSuccessfully = "مدرک مدنظر  با موفقیت حذف شده است.";
+        public static string CertificateDeletedForeverSuccessfully = "مدرک مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Sport
         public static string SportAddedSuccessfully = "رشته ورزشی جدید با موفقیت اضافه شده است.";
         public static string SportUpdatedSuccessfully = "رشته ورزشی مدنظر  با موفقیت ویرایش شده است.";
         public static string SportDeletedSuccessfully = "رشته ورزشی مدنظر  با موفقیت حذف شده است.";
+        public static string SportDeletedForeverSuccessfully = "رشته ورزشی مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Sport Class
         public static string SportClassAddedSuccessfully = "کلاس ورزشی جدید با موفقیت اضافه شده است.";
         public static string SportClassUpdatedSuccessfully = "کلاس ورزشی مدنظر  با موفقیت ویرایش شده است.";
         public static string SportClassDeletedSuccessfully = "کلاس ورزشی مدنظر  با موفقیت حذف شده است.";
+        public static string SportClassDeletedForeverSuccessfully = "کلاس مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Staffs
@@ -67,12 +73,14 @@ namespace Hexagon.Domain.Shared
         public static string TrainerAddedSuccessfully = "مربی رشته ورزشی جدید با موفقیت اضافه شده است.";
         public static string TrainerUpdatedSuccessfully = "مربی رشته ورزشی مدنظر  با موفقیت ویرایش شده است.";
         public static string TrainerDeletedSuccessfully = "مربی رشته ورزشی مدنظر  با موفقیت حذف شده است.";
+        public static string TrainerDeletedForeverSuccessfully = "مربی مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Cader
         public static string CaderAddedSuccessfully = "کادر جدید با موفقیت اضافه شده است.";
         public static string CaderUpdatedSuccessfully = "کادر مدنظر  با موفقیت ویرایش شده است.";
         public static string CaderDeletedSuccessfully = "کادر مدنظر  با موفقیت حذف شده است.";
+        public static string CaderDeletedForeverSuccessfully = "کادر مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #endregion
@@ -81,6 +89,7 @@ namespace Hexagon.Domain.Shared
         public static string KeyWordAddedSuccessfully = "کلمه کلیدی جدید با موفقیت اضافه شده است.";
         public static string KeyWordUpdatedSuccessfully = "کلمه کلیدی مدنظر  با موفقیت ویرایش شده است.";
         public static string KeyWordDeletedSuccessfully = "کلمه کلیدی مدنظر  با موفقیت حذف شده است.";
+        public static string KeyWordDeletedForeverSuccessfully = "کلمه کلیدی مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Comment
@@ -89,12 +98,14 @@ namespace Hexagon.Domain.Shared
         public static string CommentDeletedSuccessfully = "نظر مدنظر شما با موفقیت حذف شده است.";
         public static string CommentAcceptedSuccessfully = "نظر مدنظر  با موفقیت تایید شده است.";
         public static string CommentRejectedSuccessfully = "نظر مدنظر  با موفقیت رد شده است.";
+        public static string CommentDeletedForeverSuccessfully = "نظر مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Contact Us
         public static string ContactUsAddedSuccessfully = "پیام شما با موفقیت ثبت شد منتظر پاسخ آن توسط ادمین باشید.";
         public static string ContactUsAnsweredSuccessfully = "پاسخ به درخواست کاربر با موفقیت به آن ارسال شد.";
         public static string ContactUsDeletedSuccessfully = "درخواست مدنظر شما با موفقیت حذف شده است.";
+        public static string ContactUsDeletedForeverSuccessfully = "درخواست مدنظر به طور کامل پاک شده است.";
         #endregion
 
         #region Wallet
@@ -122,6 +133,7 @@ namespace Hexagon.Domain.Shared
         #region Roles
         public static string RoleNotFound = "نقش مورد نظر پیدا نشده است.";
         public static string RoleTitleDuplicated = "نقشی با این عنوان پیدا شده است.";
+        public static string FirstSimpleDeleteRole = "ابتدا نقش مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Account
@@ -139,12 +151,14 @@ namespace Hexagon.Domain.Shared
         public static string UserNotFound = "کاربر مدنظر پیدا نشده است.";
         public static string UserPhoneNumberDuplicated = "شماره مدنظر قبلا ثبت شده است.";
         public static string UserAlreadyDeleted = "کاربر مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteUser = "ابتدا کاربر مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Gym
         public static string GymNotFound = "باشگاه مدنظر پیدا نشده است.";
         public static string GymConstatntPhoneNumberDuplicated = "شماره ثابت مدنظر قبلا ثبت شده است.";
         public static string GymAlreadyDeleted = "باشگاه مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteGym = "ابتدا باشگاه مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region GymGallery
@@ -156,12 +170,14 @@ namespace Hexagon.Domain.Shared
         public static string CertificateNotFound = "مدرک مدنظر پیدا نشده است.";
         public static string CertificateDuplicated = "مدرک مدنظر قبلا ثبت شده است.";
         public static string CertificateAlreadyDeleted = "مدرک مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteCertificate = "ابتدا مدرک مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Sport
         public static string SportNotFound = "رشته ورزشی مدنظر پیدا نشده است.";
         public static string SportDuplicated = "رشته ورزشی مدنظر قبلا ثبت شده است.";
         public static string SportAlreadyDeleted = "رشته ورزشی مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteSport = "ابتدا رشته ورزشی مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Sport Class
@@ -169,7 +185,7 @@ namespace Hexagon.Domain.Shared
         public static string SportClassAlreadyDeleted = "کلاس ورزشی مدنظر قبلا حذف شده است.";
         public static string InvalidStartDateTimeInput = " تاریخ شروع وارد شده معتبر نمی باشد.";
         public static string InvalidEndTime = "ساعت انتهایی کلاس وارد شده باید بعد از ساعت شروع آن باشد.";
-
+        public static string FirstSimpleDeleteSportClass = "ابتدا کلاس مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Staffs
@@ -180,6 +196,7 @@ namespace Hexagon.Domain.Shared
         public static string TrainerAlreadyDeleted = "مربی رشته ورزشی مدنظر قبلا حذف شده است.";
         public static string TrainerPositionDuplicated = "این موقعیت برای این مربی مدنظر قبلا ثبت شده است.";
         public static string ExistCertificateForUserTrainer = "این مدرک برای این کاربر به عنوان مربی رشته دیگر ثبت شده است.";
+        public static string FirstSimpleDeleteTrainer = "ابتدا مربی مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Cader
@@ -188,6 +205,7 @@ namespace Hexagon.Domain.Shared
         public static string CaderAlreadyDeleted = "کادر مدنظر قبلا حذف شده است.";
         public static string CaderPositionDuplicated = "این موقعیت برای این کادر مدنظر قبلا ثبت شده است.";
         public static string ExistRoleForUserCader = "این نقش برای این کاربر به عنوان کادر دیگر ثبت شده است.";
+        public static string FirstSimpleDeleteCader = "ابتدا کادر مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #endregion
@@ -196,17 +214,20 @@ namespace Hexagon.Domain.Shared
         public static string KeyWordNotFound = "کلمه کلیدی مدنظر پیدا نشده است.";
         public static string KeyWordDuplicated = "کلمه کلیدی مدنظر قبلا ثبت شده است.";
         public static string KeyWordAlreadyDeleted = "کلمه کلیدی مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteKeyWord = "ابتدا کلمه کلیدی مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Comment
         public static string CommentNotFound = "نظر مدنظر پیدا نشده است.";
         public static string CommentAlreadyDeleted = "نظر مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteComment = "ابتدا نظر مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Contact Us
         public static string ContactUsNotFound = "درخواست کاربر یافت نشد.";
         public static string ContactUsFailedSendingEmail = "در ارسال ایمیل به کاربر با خطا مواجه شده ایم لطفا دوباره تلاش بکنید.";
         public static string ContactUsAlreadyDeleted = "درخواست مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteContactUs = "ابتدا درخواست مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
         #region Wallet

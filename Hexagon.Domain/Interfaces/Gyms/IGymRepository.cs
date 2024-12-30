@@ -20,5 +20,6 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<bool> ExistGymAsync(int gymId);
         Task<List<GymViewModel>?> GetAllGymItemsAsync();
         string GetGymName(int gymId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

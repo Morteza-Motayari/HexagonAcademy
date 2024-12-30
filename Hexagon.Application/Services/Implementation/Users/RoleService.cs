@@ -3,10 +3,12 @@ using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Interfaces.Users;
+using Hexagon.Domain.Models.Contact_Us;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
 using Hexagon.Infra.Data.Repositories;
+using Hexagon.Infra.Data.Repositories.Contact_Us;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
@@ -37,6 +39,13 @@ namespace Hexagon.Application.Services.Implementation.Users
             };
 
             return Detail;
+        }
+
+        public async Task<string> CantDeleteRoleForeverNowMessage(int RoleId)
+        {
+            DateTime lastEdit=await roleRepository.GetLastModifiedDate(RoleId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این نقش تا {leftdays} روز آینده را ندارید.";
         }
 
         public async Task<CreateRoleResult> CreateRoleAsync(CreateRoleViewModel model)
@@ -73,6 +82,29 @@ namespace Hexagon.Application.Services.Implementation.Users
             roleRepository.Update(role);
             await roleRepository.SaveChangeAsync();
             return DeleteRoleResult.Success;
+        }
+
+        public async Task<DeleteForeverRoleResult> DeleteRoleForever(int RoleId)
+        {
+            DateTime lastDate = await roleRepository.GetLastModifiedDate(RoleId);
+            if (lastDate.SixMonthPassed())
+            {
+                var role = await roleRepository.GetByIdAsync(RoleId);
+                               
+                if (role == null)
+                    return DeleteForeverRoleResult.NotFound;
+
+                if (role.IsDeleted == false)
+                    return DeleteForeverRoleResult.FirstDeleteSimple;
+
+                roleRepository.Delete(role);
+                await roleRepository.SaveChangeAsync();
+                return DeleteForeverRoleResult.Success;
+            }
+            else
+            {
+                return DeleteForeverRoleResult.CantDeletedNow;
+            }
         }
 
         public async Task<FilterRoleViewModel> FilterRolesAsync(FilterRoleViewModel filter)

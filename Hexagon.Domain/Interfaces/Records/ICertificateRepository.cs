@@ -16,5 +16,6 @@ namespace Hexagon.Domain.Interfaces
         Task<bool> DupliCateCertificateName(string certificateName);
         Task<bool> DupliCateCertificateName(string certificateName, int id);
         Task<ICollection<Certificate>?> GetTrainerCertificate(int userId, int staffId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

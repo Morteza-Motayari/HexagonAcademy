@@ -9,6 +9,8 @@ using Hexagon.Domain.ViewModels.Records.Certificates;
 using Hexagon.Domain.ViewModels.Users.Users;
 using Hexagon.Infra.Data.Repositories.Users;
 using Hexagon.Infra.Data.Repositories;
+using Hexagon.Domain.Interfaces.Users;
+using Hexagon.Domain.ViewModels.Users.Roles;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
@@ -33,6 +35,13 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 IsDeleted = user.IsDeleted
             };
             return Detail;
+        }
+
+        public async Task<string> CantDeleteCertificateForeverNowMessage(int CertificateId)
+        {
+            DateTime lastEdit = await CertificateRepository.GetLastModifiedDate(CertificateId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این کاربر تا {leftdays} روز آینده را ندارید.";
         }
 
         public async Task<CreateCertificateResult> CreateCertificateAsync(CreateCertificateViewModel model)
@@ -62,6 +71,29 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             CertificateRepository.Update(certificate);
             await CertificateRepository.SaveChangeAsync();
             return DeleteCertificateResult.Success;
+        }
+
+        public async Task<DeleteForeverCertificateResult> DeleteCertificateForever(int CertificateId)
+        {
+            DateTime lastDate = await CertificateRepository.GetLastModifiedDate(CertificateId);
+            if (lastDate.SixMonthPassed())
+            {
+                var certificate = await CertificateRepository.GetByIdAsync(CertificateId);
+
+                if (certificate == null)
+                    return DeleteForeverCertificateResult.NotFound;
+
+                if (certificate.IsDeleted == false)
+                    return DeleteForeverCertificateResult.FirstDeleteSimple;
+
+                CertificateRepository.Delete(certificate);
+                await CertificateRepository.SaveChangeAsync();
+                return DeleteForeverCertificateResult.Success;
+            }
+            else
+            {
+                return DeleteForeverCertificateResult.CantDeletedNow;
+            }
         }
 
         public async Task<FilterCertificateViewModel> FilterCertificateesAsync(FilterCertificateViewModel filter)

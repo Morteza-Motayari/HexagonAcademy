@@ -1,6 +1,7 @@
 ﻿using Hexagon.Domain.ViewModels.Gyms.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
 using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Domain.ViewModels.Users.Roles;
 
 namespace Hexagon.Application.Services.Interfaces.Gyms
 {
@@ -14,6 +15,8 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         Task<FilterSportViewModel> FilterSportsAsync(FilterSportViewModel filter);
         Task<AdminSideDetailSportViewModel?> AdminSideDetailSportAsync(int SportId);
         Task<List<ClientSideSportExisted>?> GetSportExistedAsync();
+        Task<DeleteForeverSportResult> DeleteSportForever(int SportId);
+        Task<string> CantDeleteSportForeverNowMessage(int SportId);
 
     }
 }

@@ -97,5 +97,8 @@ namespace Hexagon.Infra.Data.Repositories.Orders
 
         public async Task<Order> GetUnFinallalizedUserOrderId(int userId)
         => await _db.Orders.Where(o=>o.CreatedBy==userId&&!o.IsFainally).FirstAsync();
+
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.Orders.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

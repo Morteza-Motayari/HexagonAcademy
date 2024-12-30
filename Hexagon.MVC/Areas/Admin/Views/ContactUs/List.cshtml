@@ -159,6 +159,12 @@
                                                         <i class="fe fe-24 fe-trash-2"></i>
                                                     </a>
                                                 }
+                                                else
+                                                {
+                                                    <a onclick="confirmDeleteForever('@Url.Action("DeleteForever","ContactUs",new{id=item.Id})',event,'@item.FullName')" class="text-warning">
+                                                        <i class="fe fe-24 fe-trash"></i>
+                                                    </a>
+                                                }
                                             </td>
                                         </tr>
                                     }

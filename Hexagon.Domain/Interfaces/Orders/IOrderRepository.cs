@@ -17,5 +17,6 @@ namespace Hexagon.Domain.Interfaces.Orders
         Task<FilterOrderViewModel> FilterOrdersAsync(FilterOrderViewModel filter);
         Task<int> GetTotalOrderPriceAsync(int orderId);
         Task FinalizingOrderAsync(int orderId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

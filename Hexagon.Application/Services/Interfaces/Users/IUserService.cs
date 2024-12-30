@@ -22,5 +22,7 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<AdminChagePasswordViewModel?> AdminGetUserForChangePassword(int UserId);
         Task<AdminChagePasswordResult> AdminChangeUserPasswordAsync(AdminChagePasswordViewModel model);
         Task<bool> CaderHasPermissionAsync(int UserId, string permission);
+        Task<DeleteForeverUserResult> DeleteUserForever(int UserId);
+        Task<string> CantDeleteUserForeverNowMessage(int UserId);
     }
 }

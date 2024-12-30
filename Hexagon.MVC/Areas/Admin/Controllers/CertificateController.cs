@@ -1,6 +1,8 @@
-﻿using Hexagon.Application.Services.Interfaces.Records;
+﻿using Hexagon.Application.Services.Implementation.Users;
+using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
 using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -120,5 +122,29 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         }
         #endregion
 
+        #region Delete Forever
+        [AuthorizePermission("DeleteCertificateForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await certificateService.DeleteCertificateForever(id);
+            switch (result)
+            {
+                case DeleteForeverCertificateResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.CertificateDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverCertificateResult.CantDeletedNow:
+                    string message = await certificateService.CantDeleteCertificateForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverCertificateResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteCertificate;
+                    break;
+                case DeleteForeverCertificateResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.CertificateNotFound;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
     }
 }

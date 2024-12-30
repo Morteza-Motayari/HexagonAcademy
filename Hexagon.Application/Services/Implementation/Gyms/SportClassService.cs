@@ -12,9 +12,11 @@ using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
+using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Users;
 using Hexagon.Infra.Data.Repositories;
 using Hexagon.Infra.Data.Repositories.Gyms;
+using Hexagon.Infra.Data.Repositories.Users;
 using Microsoft.AspNetCore.Http;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
@@ -62,6 +64,13 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 IsDeleted = sportClass.IsDeleted
             };
             return Detail;
+        }
+
+        public async Task<string> CantDeleteSportClassForeverNowMessage(int SportClassId)
+        {
+            DateTime lastEdit = await SportClassRepository.GetLastModifiedDate(SportClassId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این کلاس تا {leftdays} روز آینده را ندارید.";
         }
 
         public async Task<ClientSideFilterSportClassViewModel> ClientSideFilterClasses(ClientSideFilterSportClassViewModel filter)
@@ -176,6 +185,29 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             SportClassRepository.Update(SportClass);
             await SportClassRepository.SaveChangeAsync();
             return DeleteSportClassResult.Success;
+        }
+
+        public async Task<DeleteForeverSportClassResult> DeleteSportClassForever(int SportClassId)
+        {
+            DateTime lastDate = await SportClassRepository.GetLastModifiedDate(SportClassId);
+            if (lastDate.SixMonthPassed())
+            {
+                var sportclass = await SportClassRepository.GetByIdAsync(SportClassId);
+
+                if (sportclass == null)
+                    return DeleteForeverSportClassResult.NotFound;
+
+                if (sportclass.IsDeleted == false)
+                    return DeleteForeverSportClassResult.FirstDeleteSimple;
+
+                SportClassRepository.Delete(sportclass);
+                await SportClassRepository.SaveChangeAsync();
+                return DeleteForeverSportClassResult.Success;
+            }
+            else
+            {
+                return DeleteForeverSportClassResult.CantDeletedNow;
+            }
         }
 
         public async Task<FilterSportClassViewModel> FilterSportClassesAsync(FilterSportClassViewModel filter)

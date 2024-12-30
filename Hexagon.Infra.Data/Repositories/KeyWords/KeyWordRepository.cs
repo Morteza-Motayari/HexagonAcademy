@@ -70,5 +70,8 @@ namespace Hexagon.Infra.Data.Repositories.KeyWords
 
         public async Task<KeyWord?> GetKeyWordWithDetail(int keyId)
         => await _db.KeyWords.Include(a => a.sportClass).FirstOrDefaultAsync(u => u.Id == keyId);
+
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.KeyWords.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

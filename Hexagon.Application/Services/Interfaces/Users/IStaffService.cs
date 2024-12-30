@@ -1,4 +1,5 @@
 ﻿using Hexagon.Domain.Enums.Users;
+using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
 using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
 using Hexagon.Domain.ViewModels.Users.Users;
@@ -18,6 +19,9 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<ReadOnlyCollection<TrainerViewModel>?> ListTrainerForItemsAsync(UserGender gender, int sportId);
         Task<List<TrainerViewModel>?> ListTrainerForEditItemsAsync(UserGender gender, int sportId);
         Task<TrainerViewModel> GetTrainerWithName(int trainerId);
+        Task<DeleteForeverTrainerResult> DeleteTrainerForever(int TrainerId);
+        Task<string> CantDeleteTrainerForeverNowMessage(int TrainerId);
+
         #endregion
 
         #region Cader
@@ -28,6 +32,8 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<FilterCaderViewModel> FilterCadersAsync(FilterCaderViewModel filter);
         Task<AdminSideDetailCaderViewModel?> AdminSideDetailCaderAsync(int CaderId);
         Task<bool> UserHasPermission(int userId);
+        Task<DeleteForeverCaderResult> DeleteCaderForever(int CaderId);
+        Task<string> CantDeleteCaderForeverNowMessage(int CaderId);
         #endregion
     }
 }

@@ -125,5 +125,29 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         }
         #endregion
 
+        #region Delete Forever
+        [AuthorizePermission("DeleteGymForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await gymService.DeleteGymForever(id);
+            switch (result)
+            {
+                case DeleteForeverGymResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.GymDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverGymResult.CantDeletedNow:
+                    string message = await gymService.CantDeleteGymForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverGymResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteGym;
+                    break;
+                case DeleteForeverGymResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.GymNotFound;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
     }
 }

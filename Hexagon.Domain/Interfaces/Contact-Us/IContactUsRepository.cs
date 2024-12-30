@@ -11,5 +11,6 @@ namespace Hexagon.Domain.Interfaces.Contact_Us
     public interface IContactUsRepository:IGenericRepository<ContactUs>
     {
         Task<FilterContactUsViewModel> FilterContactUsAsync(FilterContactUsViewModel filter);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

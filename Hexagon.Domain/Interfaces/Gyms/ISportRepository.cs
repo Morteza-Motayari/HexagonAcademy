@@ -21,5 +21,6 @@ namespace Hexagon.Domain.Interfaces.Gyms
         string GetSportTitle(int sportId);
         Task<int> GetSportCertifiacetId(int sportId);
         Task<List<ClientSideSportExisted>> GetSportExistedWithRelationAsync();
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

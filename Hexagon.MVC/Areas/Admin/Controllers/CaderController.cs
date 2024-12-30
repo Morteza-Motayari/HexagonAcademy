@@ -5,6 +5,7 @@ using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
 using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -144,6 +145,31 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
                 case DeleteCaderResult.CaderAlreadyDeleted:
                     TempData[ErrorMessage] = ErrorMessages.CaderAlreadyDeleted;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
+
+        #region Delete Forever
+        [AuthorizePermission("DeleteCaderForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await staffService.DeleteCaderForever(id);
+            switch (result)
+            {
+                case DeleteForeverCaderResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.CaderDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverCaderResult.CantDeletedNow:
+                    string message = await staffService.CantDeleteCaderForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverCaderResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteCader;
+                    break;
+                case DeleteForeverCaderResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.CaderNotFound;
                     break;
             }
             return RedirectToAction(nameof(List));

@@ -17,5 +17,6 @@ namespace Hexagon.Domain.Interfaces.Wallets
         Task UpdateWalletAuthorityAsync(int walletId, string authority);
         Task<Wallet?> GetWalletByOrderId(int orderId);
         Task<bool> IsWalletHaveOrder(int walletId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

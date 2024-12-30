@@ -20,5 +20,22 @@ namespace Hexagon.Application.Extensions
                 return false;
             }
         }
+        public static bool SixMonthPassed(this DateTime date)
+        {
+            TimeSpan passedTime = DateTime.Now - date;
+            if (passedTime.TotalDays > 183)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static int HowManyDayLeftToDelete(this DateTime date)
+        {
+            TimeSpan passedTime = DateTime.Now - date;
+            return 183-(int)passedTime.TotalDays;
+        }
     }
 }

@@ -17,6 +17,7 @@ using Hexagon.Infra.Data.Repositories.Users;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Infra.Data.Repositories.Gyms;
 using Hexagon.Application.Generators;
+using Hexagon.Domain.ViewModels.Users.Roles;
 
 namespace Hexagon.Application.Services.Implementation.Users
 {
@@ -89,6 +90,20 @@ namespace Hexagon.Application.Services.Implementation.Users
             };
 
             return Detail;
+        }
+
+        public async Task<string> CantDeleteCaderForeverNowMessage(int CaderId)
+        {
+            DateTime lastEdit = await staffRepository.GetLastModifiedDate(CaderId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این کادر تا {leftdays} روز آینده را ندارید.";
+        }
+
+        public async Task<string> CantDeleteTrainerForeverNowMessage(int TrainerId)
+        {
+            DateTime lastEdit = await staffRepository.GetLastModifiedDate(TrainerId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این مربی تا {leftdays} روز آینده را ندارید.";
         }
 
         public async Task<CreateCaderResult> CreateCaderAsync(CreateCaderViewModel model)
@@ -235,6 +250,29 @@ namespace Hexagon.Application.Services.Implementation.Users
             return DeleteCaderResult.Success;
         }
 
+        public async Task<DeleteForeverCaderResult> DeleteCaderForever(int CaderId)
+        {
+            DateTime lastDate = await staffRepository.GetLastModifiedDate(CaderId);
+            if (lastDate.SixMonthPassed())
+            {
+                var cader = await staffRepository.GetByIdAsync(CaderId);
+
+                if (cader == null)
+                    return DeleteForeverCaderResult.NotFound;
+
+                if (cader.IsDeleted == false)
+                    return DeleteForeverCaderResult.FirstDeleteSimple;
+
+                staffRepository.Delete(cader);
+                await staffRepository.SaveChangeAsync();
+                return DeleteForeverCaderResult.Success;
+            }
+            else
+            {
+                return DeleteForeverCaderResult.CantDeletedNow;
+            }
+        }
+
         public async Task<DeleteTrainerResult> DeleteTrainerAsync(int TrainerId)
         {
             var trainer = await staffRepository.GetByIdAsync(TrainerId);
@@ -247,6 +285,29 @@ namespace Hexagon.Application.Services.Implementation.Users
             staffRepository.Update(trainer);
             await staffRepository.SaveChangeAsync();
             return DeleteTrainerResult.Success;
+        }
+
+        public async Task<DeleteForeverTrainerResult> DeleteTrainerForever(int TrainerId)
+        {
+            DateTime lastDate = await staffRepository.GetLastModifiedDate(TrainerId);
+            if (lastDate.SixMonthPassed())
+            {
+                var trainer = await staffRepository.GetByIdAsync(TrainerId);
+
+                if (trainer == null)
+                    return DeleteForeverTrainerResult.NotFound;
+
+                if (trainer.IsDeleted == false)
+                    return DeleteForeverTrainerResult.FirstDeleteSimple;
+
+                staffRepository.Delete(trainer);
+                await staffRepository.SaveChangeAsync();
+                return DeleteForeverTrainerResult.Success;
+            }
+            else
+            {
+                return DeleteForeverTrainerResult.CantDeletedNow;
+            }
         }
 
         public async Task<FilterCaderViewModel> FilterCadersAsync(FilterCaderViewModel filter)

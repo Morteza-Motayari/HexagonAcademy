@@ -16,5 +16,6 @@ namespace Hexagon.Domain.Interfaces.Users
         Task<FilterRoleViewModel> FilteRolesAsync(FilterRoleViewModel filter);
         Task<List<Role>?> GetUserRoles(List<int>? ids);
         Task<List<Role>?> getCaderRoles(int userId, int caderId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

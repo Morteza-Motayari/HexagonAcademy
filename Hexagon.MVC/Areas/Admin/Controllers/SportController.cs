@@ -1,7 +1,9 @@
-﻿using Hexagon.Application.Services.Interfaces.Gyms;
+﻿using Hexagon.Application.Services.Implementation.Users;
+using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
+using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -147,6 +149,31 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
                 case DeleteSportResult.SportAlreadyDeleted:
                     TempData[ErrorMessage] = ErrorMessages.SportAlreadyDeleted;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
+
+        #region Delete Forever
+        [AuthorizePermission("DeleteSportForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await sportService.DeleteSportForever(id);
+            switch (result)
+            {
+                case DeleteForeverSportResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.SportDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverSportResult.CantDeletedNow:
+                    string message = await sportService.CantDeleteSportForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverSportResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteSport;
+                    break;
+                case DeleteForeverSportResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.SportNotFound;
                     break;
             }
             return RedirectToAction(nameof(List));

@@ -67,6 +67,9 @@ namespace Hexagon.Infra.Data.Repositories
             Name = u.Name
         }).ToListAsync();
 
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.Certificates.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
         public async Task<ICollection<Certificate>?> GetTrainerCertificate(int userId, int staffId)
         => await _db.Certificates.Include(c=>c.UserCertificates).Where(u=>u.UserCertificates.Where(c=>c.UserId==userId&&c.StaffId==staffId).Any()).ToListAsync();
 

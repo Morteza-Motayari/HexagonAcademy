@@ -129,5 +129,30 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             return RedirectToAction(nameof(List));
         }
         #endregion
+
+        #region Delete Forever
+        [AuthorizePermission("DeleteRoleForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await roleService.DeleteRoleForever(id);
+            switch (result)
+            {
+                case DeleteForeverRoleResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.RoleDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverRoleResult.CantDeletedNow:
+                    string message=await roleService.CantDeleteRoleForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverRoleResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteRole;
+                    break;
+                case DeleteForeverRoleResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.RoleNotFound;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
     }
 }

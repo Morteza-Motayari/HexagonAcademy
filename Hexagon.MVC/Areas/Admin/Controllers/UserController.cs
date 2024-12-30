@@ -128,6 +128,31 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         }
         #endregion
 
+        #region Delete Forever
+        [AuthorizePermission("DeleteUserForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await userService.DeleteUserForever(id);
+            switch (result)
+            {
+                case DeleteForeverUserResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.UserDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverUserResult.CantDeletedNow:
+                    string message = await userService.CantDeleteUserForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverUserResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteUser;
+                    break;
+                case DeleteForeverUserResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.UserNotFound;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
+
         #region Change Password
         [AuthorizePermission("ChangeUserPassword")]
         public async Task<IActionResult> ChangePassword(int id)

@@ -21,5 +21,6 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<SportClass?> GetClassBySlugAsync(string slug);
         Task<string?> getSportClassName(int sportClassId);
         Task<int> GetMaxClassAthleteSpace(int sportClassId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

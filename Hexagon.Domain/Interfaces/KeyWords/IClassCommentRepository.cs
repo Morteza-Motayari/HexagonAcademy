@@ -10,5 +10,6 @@ namespace Hexagon.Domain.Interfaces.KeyWords
         Task<FilterkeyWordViewModel> FilterKeyWordAsync(FilterkeyWordViewModel filter, int sportClassId);
         Task<KeyWord?> GetKeyWordWithDetail(int keyId);
         Task<List<KeyWord>> GetClassKeyWordsAsync(int classId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

@@ -129,6 +129,12 @@
                                                         <i class="bx bxs-category text-info fe-24"></i>
                                                     </a>
                                                 }
+                                                else
+                                                {
+                                                    <a onclick="confirmDeleteForever('@Url.Action("DeleteForever","Sport",new{id=item.Id})',event,'@item.Title')" class="text-warning">
+                                                        <i class="fe fe-24 fe-trash"></i>
+                                                    </a>
+                                                }
                                             </td>
                                         </tr>
                                     }

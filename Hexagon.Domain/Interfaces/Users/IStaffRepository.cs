@@ -23,5 +23,6 @@ namespace Hexagon.Domain.Interfaces
         Task<List<CaderViewModel>> GetCadersWithRoleAsync(int roleId);
         Task<bool> ExistActiveCaderForUser(int userId);
         Task<ClientSideTrainerForClass?> GetTrainerNameAndImageAsync(int staffId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

@@ -100,5 +100,8 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             Slug = s.Slug,
             Classes = s.Classes.Where(c => !c.IsDeleted && c.ClassStatus != SportClassStatus.NotActive).Count()
         }).ToListAsync();
+
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.Sports.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
     }
 }

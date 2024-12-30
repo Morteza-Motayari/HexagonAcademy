@@ -11,5 +11,6 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<ClassCommentReaction> GetCommentReaction(int coomentId, int userId);
         Task<int> CountCommentlikes(int coomentId);
         Task<int> CountCommentDislikes(int coomentId);
+        Task<DateTime> GetLastModifiedDate(int id);
     }
 }

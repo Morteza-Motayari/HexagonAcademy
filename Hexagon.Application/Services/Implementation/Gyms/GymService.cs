@@ -12,6 +12,7 @@ using Hexagon.Infra.Data.Repositories;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Infra.Data.Repositories.Gyms;
+using Hexagon.Domain.Interfaces.Users;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
@@ -40,6 +41,13 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 LastModifiedDate = gym.LastModifiedDate
             };
             return Detail;
+        }
+
+        public async Task<string> CantDeleteGymForeverNowMessage(int GymId)
+        {
+            DateTime lastEdit = await gymRepository.GetLastModifiedDate(GymId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این باشگاه تا {leftdays} روز آینده را ندارید.";
         }
 
         public async Task<CreateGymResult> CreateGymAsync(CreateGymViewModel model)
@@ -95,6 +103,29 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             gymRepository.Update(Gym);
             await gymRepository.SaveChangeAsync();
             return DeleteGymResult.Success;
+        }
+
+        public async Task<DeleteForeverGymResult> DeleteGymForever(int GymId)
+        {
+            DateTime lastDate = await gymRepository.GetLastModifiedDate(GymId);
+            if (lastDate.SixMonthPassed())
+            {
+                var gym = await gymRepository.GetByIdAsync(GymId);
+
+                if (gym == null)
+                    return DeleteForeverGymResult.NotFound;
+
+                if (gym.IsDeleted == false)
+                    return DeleteForeverGymResult.FirstDeleteSimple;
+
+                gymRepository.Delete(gym);
+                await gymRepository.SaveChangeAsync();
+                return DeleteForeverGymResult.Success;
+            }
+            else
+            {
+                return DeleteForeverGymResult.CantDeletedNow;
+            }
         }
 
         public async Task<FilterGymViewModel> FilterGymsAsync(FilterGymViewModel filter)

@@ -1,9 +1,14 @@
-﻿using Hexagon.Application.Services.Interfaces.KeyWords;
+﻿using Hexagon.Application.Extensions;
+using Hexagon.Application.Services.Interfaces.KeyWords;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.KeyWords;
 using Hexagon.Domain.Models.KeyWords;
+using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.KeyWords;
+using Hexagon.Domain.ViewModels.Users.Roles;
+using Hexagon.Infra.Data.Repositories;
+using Hexagon.Infra.Data.Repositories.Users;
 
 namespace Hexagon.Application.Services.Implementation.KeyWords
 {
@@ -30,6 +35,13 @@ namespace Hexagon.Application.Services.Implementation.KeyWords
                 IsDeleted = keyword.IsDeleted
             };
             return Detail;
+        }
+
+        public async Task<string> CantDeleteKeyWordForeverNowMessage(int KeyWordId)
+        {
+            DateTime lastEdit = await keyWordRepository.GetLastModifiedDate(KeyWordId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این کلمه تا {leftdays} روز آینده را ندارید.";
         }
 
         public async Task<CreatekeyWordResult> CreateKeyWordAsync(CreatekeyWordViewModel model)
@@ -60,6 +72,29 @@ namespace Hexagon.Application.Services.Implementation.KeyWords
             keyWordRepository.Update(KeyWord);
             await keyWordRepository.SaveChangeAsync();
             return DeletekeyWordResult.Success;
+        }
+
+        public async Task<DeleteForeverkeyWordResult> DeleteKeyWordForever(int KeyWordId)
+        {
+            DateTime lastDate = await keyWordRepository.GetLastModifiedDate(KeyWordId);
+            if (lastDate.SixMonthPassed())
+            {
+                var keyword = await keyWordRepository.GetByIdAsync(KeyWordId);
+
+                if (keyword == null)
+                    return DeleteForeverkeyWordResult.NotFound;
+
+                if (keyword.IsDeleted == false)
+                    return DeleteForeverkeyWordResult.FirstDeleteSimple;
+
+                keyWordRepository.Delete(keyword);
+                await keyWordRepository.SaveChangeAsync();
+                return DeleteForeverkeyWordResult.Success;
+            }
+            else
+            {
+                return DeleteForeverkeyWordResult.CantDeletedNow;
+            }
         }
 
         public async Task<FilterkeyWordViewModel> FilterKeyWordsAsync(FilterkeyWordViewModel filter, int sportClassId)

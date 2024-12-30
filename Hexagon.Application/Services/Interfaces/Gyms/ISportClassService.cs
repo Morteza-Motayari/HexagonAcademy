@@ -1,5 +1,6 @@
 ﻿using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
+using Hexagon.Domain.ViewModels.Users.Roles;
 
 namespace Hexagon.Application.Services.Interfaces.Gyms
 {
@@ -13,6 +14,8 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         Task<List<SportClassViewModel>?> ListSportClassesAsync();
         Task<FilterSportClassViewModel> FilterSportClassesAsync(FilterSportClassViewModel filter);
         Task<AdminSideDetailSportClassViewModel?> AdminSideDetailSportClassAsync(int SportClassId);
+        Task<DeleteForeverSportClassResult> DeleteSportClassForever(int SportClassId);
+        Task<string> CantDeleteSportClassForeverNowMessage(int SportClassId);
         #endregion
 
         #region Client
