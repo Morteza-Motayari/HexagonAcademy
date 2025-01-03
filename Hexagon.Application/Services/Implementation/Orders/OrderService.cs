@@ -15,6 +15,7 @@ using Hexagon.Domain.Models.Wallets;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using Hexagon.Domain.ViewModels.Orders.Orders;
+using Hexagon.Domain.ViewModels.Wallets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -45,6 +46,28 @@ namespace Hexagon.Application.Services.Implementation.Orders
                 }
                 await classUserRepository.SaveChangeAsync();
             }            
+        }
+
+        public async Task<AdminSideDetailOrderViewModel> AdminSideDetailOrderAsync(int orderId)
+        {
+            var order = await orderRepository.GetByIdAsync(orderId);
+            if (order == null)
+                return null;
+            return new AdminSideDetailOrderViewModel()
+            {
+                Id = order.Id,
+                IsFainally=order.IsFainally,
+                TotalPrice= await orderRepository.GetTotalOrderPriceAsync(orderId),
+                IsDeleted = order.IsDeleted,
+                Wallets=await walletRepository.GetOrderWalletsViewModel(orderId),
+                ClassesOrder= await classOrderRepository.GetClassesOrderAdminDetailViewModel(orderId),
+                CreatedDate = order.CreatedDate,
+                LastModifiedDate = order.LastModifiedDate,
+                CreatedBy = await userRepository.GetJustUserName(order.CreatedBy),
+                LastModifiedBy = await userRepository.GetJustUserName(order.LastModifiedBy),
+                CreatedById = order.CreatedBy,
+                LastModifiedById = order.LastModifiedBy
+            };
         }
 
         public async Task<bool> CheckFinalizedOrderFormClassOrderAsync(int classOrderId)

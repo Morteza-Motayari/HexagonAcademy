@@ -1,0 +1,116 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Domain.ViewModels.Orders.Orders
+@model AdminSideDetailOrderViewModel
+@{
+    ViewData["Title"] = "جزئیات فاکتور";
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Order" asp-action="List">فاکتور ها</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Order" asp-action="Detail" asp-route-id="@Model.Id">جزئیات فاکتور</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2 class="mt-3">
+                    <i class="bx bxs-shopping-bags fe-24 bxl"></i> @ViewData["Title"]
+                </h2>
+            </div>
+            <div class="body">
+                <div class="row col-md-12">
+                    <div class="col-md-12">
+                        <div class="row">
+                            @if (Model.IsFainally == true)
+                            {
+                                <div class="form-group col-md-12 ">
+                                    <p class="h2 mb-3 text-success">این فاکتور پرداخت شده است</p>
+                                    <p class="h5 mb-3 text-primary">هزینه کل:<span class="text-wallet-ad">@Model.TotalPrice.ToMoney()ریال</span></p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group col-md-12 ">
+                                    <p class="h2 mb-3 text-warning">این فاکتور منتظر پرداخت است</p>
+                                    <p class="h5 mb-3 text-primary">هزینه کل:@Model.TotalPrice.ToMoney()ریال</p>
+                                </div>
+                            }
+                            @if (Model.ClassesOrder.CheckNullability())
+                            {
+                                <p class="h2 mb-3 text-info">کلاس هاس ثبت نام شده</p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="text-dark">
+                                            <tr>
+                                                <th>کلاس</th>
+                                                <th>مبلغ</th>
+                                                <th>تاریخ ثبت</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ClassesOrder)
+                                            {
+                                                <tr id="tr_@item.Id">
+                                                    <td class="fa-num"><a asp-area="Admin" asp-controller="SportClass" asp-action="Detail" asp-route-id="@item.ClassId" >@item.ClassName</a></td>
+                                                    <td class="fa-num">@item.Price.ToMoney()</td>
+                                                    <td class="fa-num">@item.CreatedDate.ToShamsiWithPersianMonth()</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @if (Model.Wallets.CheckNullability())
+                                {
+                                    <p class="h2 mb-3 text-info">تراکنش های انجام شده برای این فاکتور</p>
+                                    <div class="row col-12">
+                                    @foreach (var wallet in Model.Wallets)
+                                    {
+                                        <div class="form-group col-md-6 ">
+                                            <a class="h5 mb-3 text-success" asp-area="Admin" asp-controller="Wallet" asp-action="Detail" asp-route-id="@wallet.Id">@wallet.Type.GetDisplayName()</a>
+                                            <p class="h5 mb-3 text-primary">وضعیت : @((wallet.IsPayed==true)?"پرداخت شده":"پرداخت نشده")</p>
+                                        </div>
+                                    }
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="form-group col-md-12 ">
+                                    <p class="h2 mb-3 text-danger">ایتم های این فاکتور حذف شده اند.</p>
+                                </div>
+                            }
+                            
+                            <div class="form-group col-md-6">
+                                <label asp-for="CreatedDate" class="control-label"></label>
+                                <input value="@Model.CreatedDate.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="LastModifiedDate" class="control-label"></label>
+                                <input value="@Model.LastModifiedDate?.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="CreatedBy" class="form-control-label"></label>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.CreatedById">@Model.CreatedBy</a>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="LastModifiedBy" class="form-control-label"></label>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.LastModifiedById">@Model.LastModifiedBy</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <a asp-area="Admin" asp-controller="Order" asp-action="List" class="btn btn-secondary">برگشت به لیست</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

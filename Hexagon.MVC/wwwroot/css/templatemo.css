@@ -248,6 +248,10 @@ footer a.text-light:hover {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+
+    @media only screen (max-width: 768px) {
+        margin-left: 15px;
+    }
 }
 
     .user-options .user-option {
@@ -338,8 +342,8 @@ footer a.text-light:hover {
     }
 
     .user-options .user-option .user-option--dropdown.user-option--dropdown-right {
-        right: 0;
-        left: auto;
+        /*right: 0;
+        left: auto;*/
     }
 
 .user-options .user-option .mini-cart {
@@ -368,8 +372,8 @@ footer a.text-light:hover {
 }
 
     .user-options .user-option .mini-cart.mini-cart-dropdown-right {
-        right: 0;
-        left: auto;
+        /*right: 0;
+        left: auto;*/
     }
 
     .user-options .user-option .mini-cart .mini-cart-header {

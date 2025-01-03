@@ -168,5 +168,15 @@ namespace Hexagon.Infra.Data.Repositories.Wallets
 
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.Wallets.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
+        public async Task<List<OrderWalletViewModel>> GetOrderWalletsViewModel(int orderId)
+        => await _db.Wallets.Where(o=>o.OrderId==orderId).
+            Select(o => new OrderWalletViewModel
+            {
+                Id=o.Id,
+                IsPayed=o.IsPayed,
+                OrderId=o.OrderId,
+                Type=o.Type
+            }).ToListAsync();
     }
 }

@@ -18,5 +18,6 @@ namespace Hexagon.Domain.Interfaces.Wallets
         Task<Wallet?> GetWalletByOrderId(int orderId);
         Task<bool> IsWalletHaveOrder(int walletId);
         Task<DateTime> GetLastModifiedDate(int id);
+        Task<List<OrderWalletViewModel>> GetOrderWalletsViewModel(int orderId);
     }
 }

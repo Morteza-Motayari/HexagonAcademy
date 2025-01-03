@@ -1,6 +1,6 @@
 ﻿using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using Hexagon.Domain.ViewModels.Orders.Orders;
-using Hexagon.Domain.ViewModels.Wallets;
+using Hexagon.Domain.ViewModels.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,5 +28,7 @@ namespace Hexagon.Application.Services.Interfaces.Orders
         Task<string> UnRegisterAbleClasses(int userId, int orderId);
         Task<string> FilledClasses(int userId, int orderId, ICollection<ClientSideClassOrderDetail>? ClassesOrder);
         Task<List<ClientSideClassOrderDetail>?> GetOrderClassesForOrderAsync(int orderId);
+        Task<AdminSideDetailOrderViewModel> AdminSideDetailOrderAsync(int orderId);
+
     }
 }

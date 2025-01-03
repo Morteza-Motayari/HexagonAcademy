@@ -58,5 +58,18 @@ namespace Hexagon.Infra.Data.Repositories.Orders
 
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.ClassOrders.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
+        public async Task<List<ClassOrderDetailViewModel>> GetClassesOrderAdminDetailViewModel(int orderId)
+        => await _db.ClassOrders.Include(co => co.Class).Where(o => o.OrderId == orderId)
+            .Select(co => new ClassOrderDetailViewModel
+            {
+                Id = co.Id,
+                OrderId = orderId,
+                ClassId = co.ClassId,
+                ClassName = co.Class.Title,
+                CreatedDate = co.CreatedDate,
+                Price = co.Price,
+                ClassStatus = co.Class.ClassStatus
+            }).ToListAsync();
     }
 }
