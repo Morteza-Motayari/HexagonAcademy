@@ -17,6 +17,16 @@
     
 }
 
+function EditCommentForm(commentId) {
+    fetch(`/UserManagement/ClassComment/Edit/${commentId}`)
+        .then(res => res.text())
+        .then(data => {
+            $("#myLargeModalLabel").html("ویرایش نظر");
+            $("#largeModalBody").html(data);
+            $("#LargeModal").modal('show');
+        });
+}
+
 function OnSuccessAddingItem(res) {
     if (res.status == 200) {
         Swal.fire({

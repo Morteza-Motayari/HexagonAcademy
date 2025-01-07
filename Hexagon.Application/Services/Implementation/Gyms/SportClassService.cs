@@ -237,6 +237,10 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             };
         }
 
+        public async Task<UserSideFilterSportClassViewModel> GetUserSportClassesAsync(int userId, UserSideFilterSportClassViewModel filter)
+        => await SportClassRepository.GetUserClassesAsync(userId, filter);
+        //=> await classUserRepository.GetUserClassesAsync(userId, filter);
+
         public async Task<List<SportClassViewModel>?> ListSportClassesAsync()
         => await SportClassRepository.GetAllSportClasssAsync();
 

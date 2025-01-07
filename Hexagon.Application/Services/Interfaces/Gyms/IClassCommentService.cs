@@ -19,8 +19,7 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         Task<UpdateCommentStatusResult> RejectCommentAsync(int commentId);
         Task<DeleteForeverCommentResult> DeleteClassCommentForever(int ClassCommentId);
         Task<string> CantDeleteClassCommentForeverNowMessage(int ClassCommentId);
-
-
-
+        Task<ClientSideFilterCommentViewModel> GetUserCommentsAsync(int UserId, ClientSideFilterCommentViewModel filter);
+        Task<ClientSideDeleteForeverCommentResult> ClientSideDeleteCommentAsync(int commentId);
     }
 }

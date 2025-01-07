@@ -215,5 +215,45 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
 
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.SportClasses.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
+        public async Task<UserSideFilterSportClassViewModel> GetUserClassesAsync(int userId, UserSideFilterSportClassViewModel filter)
+        {
+            var query = _db.SportClasses.Include(sc=>sc.ClassUsers).Where(s => !s.IsDeleted&&s.ClassUsers.Where(s=>s.UserId==userId).Any()).AsQueryable();
+
+            #region Filter Search
+
+            if (filter.SportId.HasValue)
+            {
+                query = query.Where(s => s.SportId == filter.SportId);
+            }
+            if (filter.GymId.HasValue)
+            {
+                query = query.Where(s => s.GymId == filter.GymId);
+            }
+            if (filter.Title != null)
+            {
+                query = query.Where(r => r.Title.Contains(filter.Title));
+            }
+
+            #endregion
+
+            query = query.OrderByDescending(u => u.CreatedDate);
+
+            await filter.Paging(query.Select(u => new UserSideSportClassViewModel
+            {
+                slug = u.Slug,
+                Title = u.Title,
+                StartTime = u.StartTime,
+                EndTime = u.EndTime,
+                ImageUrl = u.ImageUrl,
+                Status=u.ClassStatus,
+                ClassId=u.Id,
+                Gender=u.Gender,
+                SubscriptionFee=u.SubscriptionFee,
+                RegistraionDate=u.ClassUsers.Where(cu=>cu.UserId==userId&&cu.SportClassId==u.Id).OrderBy(s=>s.SubscriptionDate).Select(cu=>cu.SubscriptionDate).First(),
+                ExtensionDate=u.ClassUsers.Where(cu=>cu.UserId==userId&&cu.SportClassId==u.Id).OrderByDescending(s=>s.SubscriptionDate).Select(cu=>cu.SubscriptionDate).First()
+            }));
+            return filter;
+        }
     }
 }

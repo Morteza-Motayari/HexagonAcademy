@@ -1,0 +1,78 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Application.Statics
+@using Hexagon.Domain.Enums.SportClasses
+@using Hexagon.Domain.ViewModels.Gyms.ClassComments
+@model ClientSideFilterCommentViewModel
+@{
+    ViewData["Tilte"] = "نظرات";
+}
+<div class="card shadow mb-4 ui-box-profile">
+    <div class="card-header">
+        <strong class="card-title">
+            <i class='bx bx-chat bxs'></i> @ViewData["Tilte"]
+        </strong>
+    </div>
+    @if(Model.Entities.CheckNullability())
+    {
+        <div class="row card-deck g-4">
+            <form method="post" id="filter-search" asp-area="UserManagement" asp-controller="ClassComment" asp-action="List">
+                <input type="hidden" asp-for="Page" />
+            </form>
+            @foreach (var item in Model.Entities)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="card">
+                        <img class="img-fluid rounded-top mx-auto d-block img-panel-comment" src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(item.ClassImg))?$"{item.ClassImg}":"defaultClass.jpg")" alt="@item.ClassName">
+                        <div class="card-body">
+                            <h5 class="card-title"><a asp-area="" asp-controller="SportClass" asp-action="Detail" asp-route-slug="@item.ClassSlug">@item.ClassName</a></h5>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success"><i class="fa fa-briefcase" style="font-size:20px;"></i>متن:@item.Comment.UserCommentShow()</li>
+                                <li class="list-group-item list-group-item-success">
+                                    <i class="fa fa-user" style="font-size:20px;"></i>تاریخ ثبت:@item.CreatedDate.ToShamsiWithPersianMonth()
+                                </li>
+                                <li class="list-group-item list-group-item-success"><i class="fa fa-briefcase" style="font-size:20px;"></i>وضعیت:
+                                    @switch (item.CommentStatus)
+                                    {
+                                        case ClassCommentPending.CommentSent:
+                                            <span class="badge bg-yellow rounded-pill">@item.CommentStatus.GetDisplayName()</span>
+                                            break;
+                                        case ClassCommentPending.Accepted:
+                                            <span class="badge bg-primary rounded-pill">@item.CommentStatus.GetDisplayName()</span>
+                                            break;
+                                        case ClassCommentPending.Rejected:
+                                            <span class="badge bg-danger rounded-pill">@item.CommentStatus.GetDisplayName()</span>
+                                            break;
+                                    }
+                                    </li>
+                                <li class="list-group-item list-group-item-success"><i class="bx bx-like"><span class="like-count font-ori">@item.Like</span></i> <i class="bx bx-dislike"><span class="like-count font-ori">@item.DisLike</span></i></li>
+                            </ul>
+                        </div>
+                        <div class="card-footer buttons-space">
+                            <button type="button" class="btn btn-danger" onclick="DeleteComment('@item.Id',event,'@item.ClassName')">حذف</button>
+                            <button type="button" class="btn btn-yellow" onclick="EditCommentForm(@item.Id)">
+                                ویرایش
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="sep"></div>
+        @if (Model.PageCount > 1)
+        {
+            <div class="dataTables_info" role="status">نمایش @Model.StartItemFromList تا @Model.EndItemFromList از @Model.AllEntitiesCount نظر</div>
+            <partial name="_ClientSidePaging" model="Model.GetCurrentPaging()" />
+        }
+    }
+    else
+    {
+        <div>
+            <strong>شما هیچ نظری ندارید</strong>
+        </div>
+    }
+</div>
+@section Scripts {
+    <script src="/js/client-custom.js"></script>
+    <script src="/js/custom-comment.js"></script>
+}

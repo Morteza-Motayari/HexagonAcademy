@@ -24,6 +24,19 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         => await _db.ClassCommentReactions
             .Where(r => r.CommentId == coomentId && r.ReactionType == ClassCommentReactionType.DisLike).CountAsync();
 
+        public async Task DeleteCommentReactions(int commentId)
+        {
+            var reactions=await _db.ClassCommentReactions.Where(cr=>cr.CommentId==commentId).ToListAsync();
+            if (reactions.Any() && reactions != null)
+            {
+                foreach(var reaction in reactions)
+                {
+                    _db.ClassCommentReactions.Remove(reaction);
+                }
+                await _db.SaveChangesAsync();
+            }
+        }
+
         public async Task<bool> ExistCommentVoteForUser(int coomentId, int userId)
         => await _db.ClassCommentReactions.AnyAsync(v=>v.CommentId==coomentId&&v.CreatedBy==userId);
 

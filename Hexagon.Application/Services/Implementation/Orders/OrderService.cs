@@ -15,9 +15,7 @@ using Hexagon.Domain.Models.Wallets;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using Hexagon.Domain.ViewModels.Orders.Orders;
-using Hexagon.Domain.ViewModels.Wallets;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Hexagon.Application.Services.Implementation.Orders
 {

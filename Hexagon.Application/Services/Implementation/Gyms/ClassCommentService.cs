@@ -139,7 +139,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
 
             #region Update ClassComment
             ClassComment.Comment = model.Comment;
-
+            ClassComment.CommentStatus=ClassCommentPending.CommentSent;
             classCommentRepository.Update(ClassComment);
             await classCommentRepository.SaveChangeAsync();
             #endregion
@@ -214,6 +214,21 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             DateTime lastEdit = await classCommentRepository.GetLastModifiedDate(ClassCommentId);
             int leftdays = lastEdit.HowManyDayLeftToDelete();
             return $"شما فعلا توانایی حذف مطلق این کامنت تا {leftdays} روز آینده را ندارید.";
+        }
+
+        public async Task<ClientSideFilterCommentViewModel> GetUserCommentsAsync(int UserId, ClientSideFilterCommentViewModel filter)
+        => await classCommentRepository.GetUserComments(UserId,filter);
+
+        public async Task<ClientSideDeleteForeverCommentResult> ClientSideDeleteCommentAsync(int commentId)
+        {
+            var comment=await classCommentRepository.GetByIdAsync(commentId);
+            if (comment == null||comment.IsDeleted==true)
+                return ClientSideDeleteForeverCommentResult.NotFound;
+
+            await classCommentReactionRepository.DeleteCommentReactions(commentId);
+            classCommentRepository.Delete(comment);
+            await classCommentRepository.SaveChangeAsync();
+            return ClientSideDeleteForeverCommentResult.Success;
         }
     }
 }

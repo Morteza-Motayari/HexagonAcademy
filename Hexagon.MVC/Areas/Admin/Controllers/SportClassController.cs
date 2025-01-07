@@ -1,11 +1,7 @@
-﻿using Hexagon.Application.Services.Implementation.Users;
-using Hexagon.Application.Services.Interfaces.Gyms;
-using Hexagon.Application.Services.Interfaces.Records;
+﻿using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Application.Services.Interfaces.Users;
-using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
-using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -171,7 +167,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.SportClassNotFound;
                     break;
             }
-            return RedirectToAction(nameof(List));
+            return RedirectToAction(nameof(List), "SportClass", new {area= "Admin" });
         }
         #endregion
     }

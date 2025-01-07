@@ -20,6 +20,7 @@ namespace Hexagon.MVC.Controllers
         {
             return PartialView("_addComment",new ClientSideCreateCommentViewModel { ClassId= id });
         }
+        //TODO: preventing from inserting duplicated comment in comment
         [HttpPost]
         public async Task<IActionResult> CreateComment(ClientSideCreateCommentViewModel model)
         {

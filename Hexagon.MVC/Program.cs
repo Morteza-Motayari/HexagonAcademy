@@ -35,6 +35,10 @@ UnicodeRanges.Arabic }));
     #endregion
 
 
+    System.Net.ServicePointManager.SecurityProtocol =
+    System.Net.SecurityProtocolType.Tls12 |
+    System.Net.SecurityProtocolType.Tls13;
+
     #region Configure Hexagon Context
     var connectionString = builder.Configuration.GetConnectionString("AcademyConnectionStrings");
     builder.Services.AddDbContext<HexagonContext>(options =>

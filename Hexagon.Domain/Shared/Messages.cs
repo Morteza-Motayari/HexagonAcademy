@@ -99,6 +99,7 @@ namespace Hexagon.Domain.Shared
         public static string CommentAcceptedSuccessfully = "نظر مدنظر  با موفقیت تایید شده است.";
         public static string CommentRejectedSuccessfully = "نظر مدنظر  با موفقیت رد شده است.";
         public static string CommentDeletedForeverSuccessfully = "نظر مدنظر به طور کامل پاک شده است.";
+        public static string CommentEditedSuccessfully = "نظر مدنظر ویرایش شد منتظر تایید آن توسط ادمین باشید.";
         #endregion
 
         #region Contact Us

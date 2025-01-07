@@ -21,6 +21,7 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         #region Client
         Task<ClientSideFilterSportClassViewModel> ClientSideFilterClasses(ClientSideFilterSportClassViewModel filter);
         Task<ClientSideSportClassDeatilViewModel> ClientSideSportClassViewModel(string slug);
+        Task<UserSideFilterSportClassViewModel> GetUserSportClassesAsync(int userId, UserSideFilterSportClassViewModel filter);
         #endregion
     }
 }

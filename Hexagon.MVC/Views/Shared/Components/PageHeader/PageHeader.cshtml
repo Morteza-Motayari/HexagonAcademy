@@ -2,6 +2,9 @@
 @using Hexagon.Application.Statics
 @using Hexagon.Domain.ViewModels.Users.Users
 @model UserClientSideView
+@{
+    int budget = (int)ViewData["Budget"];
+}
 <div class="user-options">
     <div class="user-option user-option--account">
         <a asp-area="UserManagement" asp-controller="Home" asp-action="Index" class="user-option-btn user-option-btn--account">
@@ -27,8 +30,8 @@
                             <li>
                                 <span class="label">کیف پول</span>
                                 <span class="detail">
-                                    <span class="d-block">۰ <span class="currency fs-7 fw-bold">تومان</span></span>
-                                    <a href="#" class="link border-bottom-0 text-info fs-7 fw-bold link-decor">
+                                    <span class="d-block">@budget.ToMoney() <span class="currency fs-7 fw-bold">ریال</span></span>
+                                    <a asp-area="UserManagement" asp-controller="Wallet" asp-action="List" class="link border-bottom-0 text-info fs-7 fw-bold link-decor">
                                         افزایش
                                         موجودی <i class='bx bx-chevron-left'></i>
                                     </a>
@@ -45,7 +48,7 @@
                 </div>
                 <ul class="nav nav-items-with-icon flex-column">
                     <li class="nav-item">
-                        <a class="nav-link nav-decor" href="#">
+                        <a class="nav-link nav-decor" asp-area="UserManagement" asp-controller="SportClass" asp-action="List">
                             <i class="nav-link-icon bx bxs-category bxs"></i>
                             کلاس
                             های من

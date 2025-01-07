@@ -1,6 +1,7 @@
 ﻿using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Users;
+using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,48 @@ namespace Hexagon.Infra.Data.Repositories.Links
         public async Task<List<int>?> GetClassUsersIdentityKeyAsync(int classId)
         => await _db.ClassUsers.Where(u => u.SportClassId == classId).Select(x => x.Id).ToListAsync();
 
+        public async Task<UserSideFilterSportClassViewModel> GetUserClassesAsync(int userId, UserSideFilterSportClassViewModel filter)
+        {
+            var query = _db.ClassUsers.Include(sc => sc.SportClass).Where(s => !s.SportClass.IsDeleted && s.UserId == userId).AsQueryable();
+
+            #region Filter Search
+
+            if (filter.SportId.HasValue)
+            {
+                query = query.Where(s => s.SportClass.SportId == filter.SportId);
+            }
+            if (filter.GymId.HasValue)
+            {
+                query = query.Where(s => s.SportClass.GymId == filter.GymId);
+            }
+            if (filter.Title != null)
+            {
+                query = query.Where(r => r.SportClass.Title.Contains(filter.Title));
+            }
+
+            #endregion
+
+            query = query.OrderByDescending(u => u.SubscriptionDate)/*.GroupBy(u => u.SportClass).Select(u => u.First())*/;
+
+            await filter.Paging(query.Select( u => new UserSideSportClassViewModel
+            {
+                slug = u.SportClass.Slug,
+                Title = u.SportClass.Title,
+                StartTime = u.SportClass.StartTime,
+                EndTime = u.SportClass.EndTime,
+                ImageUrl = u.SportClass.ImageUrl,
+                Status = u.SportClass.ClassStatus,
+                RegistraionDate = _db.ClassUsers.Where(sc => sc.UserId == userId && sc.SportClassId == u.SportClass.Id).OrderBy(sc => sc.SubscriptionDate)
+            .Select(sc => sc.SubscriptionDate).First(),
+                ExtensionDate=u.SubscriptionDate,
+                ClassId=u.SportClass.Id,
+                SubscriptionFee=u.SportClass.SubscriptionFee,
+                Gender=u.SportClass.Gender
+            }));
+            return filter;
+        }
+
+
         public async Task<bool> IsUserRegisteredInClass(int userId, int classId)
         => await _db.ClassUsers.Where(u=>u.UserId==userId&&u.SportClassId==classId).AnyAsync();
 
@@ -55,6 +98,9 @@ namespace Hexagon.Infra.Data.Repositories.Links
                 .CountAsync();
         }
 
+        public DateTime RegistraionDate(int userId, int classId)
+        =>  _db.ClassUsers.Where(u => u.UserId == userId && u.SportClassId == classId).OrderBy(u => u.SubscriptionDate)
+            .Select(u => u.SubscriptionDate).First();
 
         public void Remove(ClassUser ClassUser)
         {

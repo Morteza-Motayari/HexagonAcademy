@@ -15,6 +15,7 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<int> ClassCommentAmountAsync(int classId);
         Task<int> CommentClassId(int commentId);
         Task<DateTime> GetLastModifiedDate(int id);
+        Task<ClientSideFilterCommentViewModel> GetUserComments(int userId, ClientSideFilterCommentViewModel filter);
 
     }
 }

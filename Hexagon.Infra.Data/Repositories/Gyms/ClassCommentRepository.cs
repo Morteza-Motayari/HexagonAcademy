@@ -4,6 +4,7 @@ using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.ViewModels.Gyms.ClassComments;
 using Hexagon.Domain.ViewModels.Gyms.Sports;
+using Hexagon.Domain.ViewModels.Orders.Orders;
 using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -92,5 +93,29 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             .Select(c=>c.Id).ToListAsync();
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.ClassComments.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
+        public async Task<ClientSideFilterCommentViewModel> GetUserComments(int userId, ClientSideFilterCommentViewModel filter)
+        {
+            var query = _db.ClassComments.Include(o => o.sportClass).Include(o => o.CommentReactions).Where(o => o.CreatedBy == userId && !o.IsDeleted).AsQueryable();
+
+            #region Filter Search
+
+            #endregion
+
+            query = query.OrderByDescending(u => u.CreatedDate);
+            await filter.Paging(query.Select(u => new UserSideCommentViewModel
+            {
+                Id = u.Id,
+                CreatedDate = u.CreatedDate,
+                ClassSlug=u.sportClass.Slug,
+                ClassImg=u.sportClass.ImageUrl,
+                CommentStatus=u.CommentStatus,
+                Comment=u.Comment,
+                ClassName=u.sportClass.Title,
+                Like=u.CommentReactions.Count(c=>c.ReactionType==ClassCommentReactionType.Like),
+                DisLike= u.CommentReactions.Count(c => c.ReactionType == ClassCommentReactionType.DisLike)                
+            }));
+            return filter;
+        }
     }
 }

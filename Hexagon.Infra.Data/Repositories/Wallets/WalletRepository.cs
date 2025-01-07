@@ -156,7 +156,7 @@ namespace Hexagon.Infra.Data.Repositories.Wallets
         }
 
         public async Task<Wallet?> GetWalletByOrderId(int orderId)
-        => await _db.Wallets.FirstOrDefaultAsync(w => w.OrderId == orderId);
+        => await _db.Wallets.OrderByDescending(u=>u.CreatedDate).FirstOrDefaultAsync(w => w.OrderId == orderId);
 
         public async Task<bool> IsWalletHaveOrder(int walletId)
         => await _db.Wallets.Where(w=>w.Id==walletId).AnyAsync(w=>w.OrderId!=null);
