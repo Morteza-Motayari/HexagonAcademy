@@ -24,5 +24,6 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<bool> CaderHasPermissionAsync(int UserId, string permission);
         Task<DeleteForeverUserResult> DeleteUserForever(int UserId);
         Task<string> CantDeleteUserForeverNowMessage(int UserId);
+        Task<bool> IsUserInfoCompleted(int UserId);
     }
 }

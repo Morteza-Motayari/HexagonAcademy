@@ -216,6 +216,9 @@
                                                 <a asp-area="Admin" asp-controller="KeyWord" asp-action="List" asp-route-sportClassId="@item.Id" class="text-warning">
                                                     <i class="fe fe-24 fe-key"></i>
                                                 </a>
+                                                <a asp-area="Admin" asp-controller="SportClass" asp-action="ClassAthletes" asp-route-SportClassId="@item.Id" class="text-primary">
+                                                    <i class="fe fe-24 fe-users"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     }

@@ -103,5 +103,12 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
 
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.Sports.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
+        public async Task<List<ClientSideSportNameViewModel>?> GetActiveSportName()
+        => await _db.Sports.Include(s=>s.Classes).Where(s=>!s.IsDeleted&&s.Classes.Count()>0&&s.Classes.Where(c=>!c.IsDeleted).Any()).Select(s=>new ClientSideSportNameViewModel
+        {
+            Slug=s.Slug,
+            Title=s.Title
+        }).ToListAsync();
     }
 }

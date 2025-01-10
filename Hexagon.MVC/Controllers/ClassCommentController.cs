@@ -4,6 +4,7 @@ using Hexagon.Domain.Enums.SportClasses;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.ClassCommentReactions;
 using Hexagon.Domain.ViewModels.Gyms.ClassComments;
+using Hexagon.MVC.Utilities.ActionFilters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.Design;
@@ -51,7 +52,6 @@ namespace Hexagon.MVC.Controllers
             });
         }
         [HttpGet]
-        //[Consumes("application/json")]
         public async Task<IActionResult> CommentVoteCreate(ClientSideInsertCommentReactionViewModel model)
             {
 

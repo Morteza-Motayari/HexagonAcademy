@@ -1,12 +1,6 @@
-﻿using Hexagon.Application.Services.Implementation.Users;
-using Hexagon.Application.Services.Interfaces.KeyWords;
-using Hexagon.Application.Services.Interfaces.Records;
-using Hexagon.Domain.Models.Gyms;
-using Hexagon.Domain.Models.KeyWords;
+﻿using Hexagon.Application.Services.Interfaces.KeyWords;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.KeyWords;
-using Hexagon.Domain.ViewModels.Users.Roles;
-using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers

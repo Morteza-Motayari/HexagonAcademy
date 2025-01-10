@@ -2,6 +2,7 @@
 using Hexagon.Application.Services.Interfaces.Wallets;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Wallets;
+using Hexagon.MVC.Utilities.ActionFilters;
 using Hexagon.MVC.WebExtensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
     public class WalletController(IWalletService walletService) : UserManagementBaseSideController
     {
         #region List
+        [ServiceFilter(typeof(UserInfoFilter))]
         public async Task<IActionResult> List(ClientSideFilterWallet filterWallet)
         {
             var userId = User.GetUserId();

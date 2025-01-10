@@ -300,5 +300,15 @@ namespace Hexagon.Application.Services.Implementation.Users
             int leftdays = lastEdit.HowManyDayLeftToDelete();
             return $"شما فعلا توانایی حذف مطلق این کاربر تا {leftdays} روز آینده را ندارید.";
         }
+
+        public async Task<bool> IsUserInfoCompleted(int UserId)
+        {
+            var user=await UserRepository.GetByIdAsync(UserId);
+            if (user.FirstName == null || user.LastName == null||user.Gender==null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace Hexagon.Domain.ViewModels.Gyms.SportClasses
         public string? Title { get; set; }
         [Display(Name = "رشته ورزشی")]
         public int? SportId { get; set; }
+        public string? SportSlug { get; set; }
+        public string? KeyWord { get; set; }
         [Display(Name = "باشگاه")]
         public int? GymId { get; set; }
         [Display(Name = "جنسیت")]

@@ -5,6 +5,7 @@ using Hexagon.Domain.Models.Wallets;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
 using Hexagon.Domain.ViewModels.Orders.Orders;
+using Hexagon.MVC.Utilities.ActionFilters;
 using Hexagon.MVC.WebExtensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
     public class OrderController(IOrderService orderService) : UserManagementBaseSideController
     {
         #region List
+        [ServiceFilter(typeof(UserInfoFilter))]
         public async Task<IActionResult> List()
         {
             var orders = await orderService.ClinetSideOrdersAsync(User.GetUserId());
@@ -22,6 +24,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
 
         #region Create ClassOrder
         [HttpPost]
+        [ServiceFilter(typeof(UserInfoFilter))]
         public async Task<IActionResult> AddClassToOrder(CreateClassOrderViewModel model)
         {
             model.UserId = User.GetUserId();
@@ -65,9 +68,15 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
 
         #region Pay Order 
         [HttpGet]
+        [ServiceFilter(typeof(UserInfoFilter))]
         public async Task<IActionResult> PayOrder(int orderId)
         {
             var order=await orderService.ClientSideOrderDetailAsync(orderId);
+            if (order.TotalPrice == 0)
+            {
+                TempData[WarningMessage] = WarningMessages.OrderHaveNoItem;
+                return RedirectToAction(nameof(List));
+            }
             if (order == null)
                 return NotFound();
             if (order.IsFainally == true)

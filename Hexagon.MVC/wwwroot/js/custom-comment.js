@@ -3,18 +3,27 @@
         .then(response => response.json())
         .then(isAuthenticated => {
             if (isAuthenticated) {
-                fetch(`/ClassComment/CreateComment/${classId}`)
-                    .then(res => res.text())
-                    .then(data => {
-                        $("#myLargeModalLabel").html("افزودن نظر به کلاس");
-                        $("#largeModalBody").html(data);
-                        $("#LargeModal").modal('show');
+                fetch('/Account/IsUserInfoCompleted')
+                    .then(result => result.json())
+                    .then(isCompleted => {
+                        if (isCompleted) {
+                            fetch(`/ClassComment/CreateComment/${classId}`)
+                                .then(res => res.text())
+                                .then(data => {
+                                    $("#myLargeModalLabel").html("افزودن نظر به کلاس");
+                                    $("#largeModalBody").html(data);
+                                    $("#LargeModal").modal('show');
+                                })
+                        } else {
+                            window.location.href = '/UserManagement/User/EditProfile';
+                        }
                     })
+
             } else {
-                window.location.href = '/LogIn'; 
+                window.location.href = '/LogIn';
             }
         })
-    
+
 }
 
 function EditCommentForm(commentId) {
@@ -55,25 +64,34 @@ function OnSuccessAddingItem(res) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // Add click event listeners to like and dislike buttons
     document.querySelectorAll('.comment-section').forEach(comment => {
-        
+
         var likeButton = comment.querySelector('.like-button');
         var dislikeButton = comment.querySelector('.dislike-button');
-        
+
         // Add click event for the like button
         likeButton.addEventListener('click', function () {
             fetch('/Account/IsAuthenticated')
                 .then(response => response.json())
                 .then(isAuthenticated => {
                     if (isAuthenticated) {
-                        toggleVote(comment, 'Like');
-                    } else {
-                        window.location.href = '/LogIn'; 
+                        fetch('/Account/IsUserInfoCompleted')
+                            .then(result => result.json())
+                            .then(isCompleted => {
+                                if (isCompleted) {
+                                    toggleVote(comment, 'Like');
+                                } else {
+                                    window.location.href = '/UserManagement/User/EditProfile';
+                                }
+                            })
+                    }
+                    else {
+                        window.location.href = '/LogIn';
                     }
                 })
-            
+
         });
 
         // Add click event for the dislike button
@@ -82,11 +100,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(isAuthenticated => {
                     if (isAuthenticated) {
-                        toggleVote(comment, 'DisLike');
+                        fetch('/Account/IsUserInfoCompleted')
+                            .then(result => result.json())
+                            .then(isCompleted => {
+                                if (isCompleted) {
+                                    toggleVote(comment, 'DisLike');
+                                } else {
+                                    window.location.href = '/UserManagement/User/EditProfile';
+                                }
+                            })                        
                     } else {
                         window.location.href = '/LogIn';
                     }
-                })           
+                })
         });
     });
 });
@@ -117,22 +143,22 @@ function toggleVote(commentElement, voteType) {
     }
     $.ajax({
         url: '/ClassComment/CommentVoteCreate',
-        contentType:'application/json; charset=utf-8',
+        contentType: 'application/json; charset=utf-8',
         //data: strjson,
         data: { commentId, commentReaction, classId },
         type: 'GET',
         success: function (response) {
             const linkecount = commentElement.querySelector('.like-count');
-            const dislinkecount = commentElement.querySelector('.dislike-count');           
+            const dislinkecount = commentElement.querySelector('.dislike-count');
             if (response.likeAmount == 0) {
-                response.likeAmount = "";              
+                response.likeAmount = "";
             }
             if (response.dislikeAmount == 0) {
-                response.dislikeAmount = "";                
+                response.dislikeAmount = "";
             }
             linkecount.textContent = response.likeAmount;
             dislinkecount.textContent = response.dislikeAmount;
-            
+
         },
         error: function (xhr, status, error) {
             console.error('Error:', error);

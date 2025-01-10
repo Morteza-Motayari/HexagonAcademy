@@ -1,4 +1,5 @@
-﻿using Hexagon.Domain.Interfaces.Links;
+﻿using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
@@ -27,6 +28,55 @@ namespace Hexagon.Infra.Data.Repositories.Links
             List<ClassUser>? list = await GetClassUsersAsync(classId);
             if (list != null)
                 _db.ClassUsers.RemoveRange(list);
+        }
+
+        public async Task<FilterSportClassAthleteViewModel> FilterSportClassAthlete(FilterSportClassAthleteViewModel filter)
+        {
+            var query = _db.ClassUsers.Include(u => u.user).Include(sc => sc.SportClass).Where(s=>s.SportClassId==filter.SportClassId).AsQueryable();
+            
+            filter.SportClassTitle =_db.SportClasses.Where(s=>s.Id==filter.SportClassId)
+                .Select(u=>u.Title).First();
+            //I(Morteza) write below code with help of artificial intelligence
+            // Materialize the query to enable client-side operations
+            query = query
+                .AsEnumerable() // Switch to client-side
+                .GroupBy(u => u.UserId)
+                .Select(g => g.OrderByDescending(u => u.SubscriptionDate).First())
+                .AsQueryable(); // Convert back to IQueryable for paging
+
+            #region Filter Search
+
+            if (filter.AthleteName!=null)
+            {
+                query = query.Where(s => s.user.FirstName.Contains(filter.AthleteName)|| s.user.LastName.Contains(filter.AthleteName)).Distinct();
+            }
+
+            if (filter.ExtensionStatus.HasValue)
+            {
+                switch (filter.ExtensionStatus.Value)
+                {
+                    case FilterRegisteredAthletesStatus.All:
+                        break;
+                    case FilterRegisteredAthletesStatus.Registered:
+                        query = query.Where(s => s.SubscriptionDate >= DateTime.Now.AddDays(-30));
+                        break;
+                    case FilterRegisteredAthletesStatus.NeedExtension:
+                        query = query.Where(s => s.SubscriptionDate < DateTime.Now.AddDays(-30));
+                        break;
+                }
+            }
+            #endregion
+            
+
+            await filter.Paging(query.Select(u => new SportClassAthleteViewModel
+            {
+                UserId = u.UserId,
+                UserName=_db.Users.Where(s=>s.Id==u.UserId).Select(d=>d.FirstName+" "+d.LastName).First(),
+                RegisteredDate = _db.ClassUsers.Where(sc => sc.UserId == u.UserId && sc.SportClassId == u.SportClass.Id).OrderBy(sc => sc.SubscriptionDate)
+            .Select(sc => sc.SubscriptionDate).First(),
+                ExtensionDate = u.SubscriptionDate                
+            }));
+            return filter;
         }
 
         public async Task<ClassUser?> GetClassUserAsync(int id)

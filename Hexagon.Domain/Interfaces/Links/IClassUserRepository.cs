@@ -24,6 +24,7 @@ namespace Hexagon.Domain.Interfaces.Links
         Task<DateTime> LastUserRegistrationDateInClass(int userId,int classId);
         Task<UserSideFilterSportClassViewModel> GetUserClassesAsync(int userId, UserSideFilterSportClassViewModel filter);
         DateTime RegistraionDate(int userId, int classId);
+        Task<FilterSportClassAthleteViewModel> FilterSportClassAthlete(FilterSportClassAthleteViewModel filter);
 
     }
 }

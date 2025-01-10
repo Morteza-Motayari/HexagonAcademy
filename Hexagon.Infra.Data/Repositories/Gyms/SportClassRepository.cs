@@ -27,7 +27,7 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         public async Task<ClientSideFilterSportClassViewModel> ClientSideFilterClasses(ClientSideFilterSportClassViewModel filter)
 
         {
-            var query = _db.SportClasses.Where(s=>!s.IsDeleted&&s.ClassStatus==SportClassStatus.Active).AsQueryable();
+            var query = _db.SportClasses.Include(s=>s.sport).Include(s=>s.KeyWords).Where(s=>!s.IsDeleted&&s.ClassStatus==SportClassStatus.Active).AsQueryable();
 
             #region Filter Search
             if (filter.Gender != null)
@@ -49,6 +49,10 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             {
                 query = query.Where(s => s.SportId == filter.SportId);
             }
+            if (filter.SportSlug!=null)
+            {
+                query = query.Where(s => s.sport.Slug == filter.SportSlug);
+            }
             if (filter.GymId.HasValue)
             {
                 query = query.Where(s => s.GymId == filter.GymId);
@@ -57,7 +61,10 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             {
                 query = query.Where(r => r.Title.Contains(filter.Title));
             }
-
+            if (filter.KeyWord != null)
+            {
+                query = query.Where(r => r.KeyWords.Any(k=>k.Key==filter.KeyWord));
+            }
             #endregion
 
             query = query.OrderByDescending(u => u.CreatedDate);
@@ -183,7 +190,7 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         }).ToListAsync();
 
         public async Task<SportClass?> GetClassBySlugAsync(string slug)
-        =>await _db.SportClasses.FirstAsync(u => u.Slug == slug);
+        =>await _db.SportClasses.Include(s=>s.sport).FirstAsync(u => u.Slug == slug);
 
         public async Task<int> GetMaxClassAthleteSpace(int sportClassId)
         => await _db.SportClasses.Where(c=>c.Id == sportClassId).Select(s=>s.MaxSubscription).FirstAsync();
@@ -255,5 +262,60 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
             }));
             return filter;
         }
+
+        public async Task<List<ClientSideSportClassViewModel>?> GetClassesForIndexPage(FilterUserGender filter)
+        {
+            var query = _db.SportClasses.Where(s => !s.IsDeleted && s.ClassStatus == SportClassStatus.Active).AsQueryable();
+
+            switch(filter)
+            {
+                case FilterUserGender.All:
+                    break;
+                case FilterUserGender.Male:
+                    query=query.Where(s=>s.Gender==UserGender.Male);
+                    break;
+                case FilterUserGender.Female:
+                    query = query.Where(s => s.Gender == UserGender.Female);
+                    break;
+            }
+            query.OrderBy(r => Guid.NewGuid()).Take(8);
+
+            return query.Select(s=>new ClientSideSportClassViewModel
+            {
+                Title = s.Title,
+                StartTime=s.StartTime,
+                EndTime=s.EndTime,
+                Gender=s.Gender,
+                ImageUrl=s.ImageUrl,
+                slug=s.Slug
+            }).ToList();
+        }
+
+        //public async Task<FilterSportClassAthleteViewModel> FilterSportClassAthlete(FilterSportClassAthleteViewModel filter)
+        //{
+
+        //    var query = _db.SportClasses.Include(sc => sc.ClassUsers).ThenInclude(u => u.user).Where(s => s.Id == filter.SportClassId).AsQueryable();
+
+        //    #region Filter Search
+
+        //    if (filter.AthleteName != null)
+        //    {
+        //        query = query.Where(s => s.ClassUsers.Where(s=>s.user.FirstName.Contains(filter.AthleteName)).FirstName.Contains(filter.AthleteName) || s.user.LastName.Contains(filter.AthleteName)).Distinct();
+        //    }
+
+        //    #endregion
+
+        //    query = query.OrderByDescending(u => u.SubscriptionDate)/*.GroupBy(u => u.UserId).Select(f => f.())*//*.GroupBy(u => u.SportClass).Select(u => u.First())*/;
+
+        //    await filter.Paging(query.Select(u => new SportClassAthleteViewModel
+        //    {
+        //        UserId = u.UserId,
+        //        UserName = _db.Users.Where(s => s.Id == u.UserId).Select(d => d.FirstName + " " + d.LastName).First(),
+        //        RegisteredDate = _db.ClassUsers.Where(sc => sc.UserId == u.UserId && sc.SportClassId == u.SportClass.Id).OrderBy(sc => sc.SubscriptionDate)
+        //    .Select(sc => sc.SubscriptionDate).First(),
+        //        ExtensionDate = u.SubscriptionDate
+        //    }));
+        //    return filter;
+        //}
     }
 }

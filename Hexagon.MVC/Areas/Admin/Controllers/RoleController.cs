@@ -122,6 +122,9 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 case DeleteRoleResult.Success:
                     TempData[SuccessMessage] = SuccessMessages.RoleDeletedSuccessfully;
                     break;
+                case DeleteRoleResult.RoleAlreadyDeleted:
+                    TempData[ErrorMessage] = ErrorMessages.RoleAlreadyDeleted;
+                    break;
                 case DeleteRoleResult.NotFound:
                     TempData[ErrorMessage] = ErrorMessages.RoleNotFound;
                     break;

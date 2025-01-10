@@ -8,7 +8,6 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
 {
     public class GymGalleryController(IGymGalleryService gymGalleryService) : AdminSideController
     {
-        //TODO Making the Table responsive in sm-size
         [HttpGet]
         [AuthorizePermission("GalleryGym")]
         public async Task<IActionResult> Gallery(int gymId)

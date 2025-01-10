@@ -17,6 +17,7 @@ namespace Hexagon.Application.Services.Interfaces.Gyms
         Task<List<ClientSideSportExisted>?> GetSportExistedAsync();
         Task<DeleteForeverSportResult> DeleteSportForever(int SportId);
         Task<string> CantDeleteSportForeverNowMessage(int SportId);
+        Task<List<ClientSideSportNameViewModel>?> GetActiveSportNameAsync();
 
     }
 }

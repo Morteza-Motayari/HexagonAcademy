@@ -24,11 +24,11 @@ namespace Hexagon.Infra.Data.Repositories.KeyWords
             _db = db;
         }
 
-        public async Task<bool> ExistKeyForClassAsync(string keyword)
-        => await _db.KeyWords.AnyAsync(s => s.Key == keyword&&!s.IsDeleted);
+        public async Task<bool> ExistKeyForClassAsync(string keyword, int classId)
+        => await _db.KeyWords.AnyAsync(s => s.Key == keyword&&!s.IsDeleted&&s.ClassId==classId);
 
-        public async Task<bool> ExistKeyForClassAsync(string keyword, int keyId)
-        => await _db.KeyWords.AnyAsync(s => s.Key == keyword && !s.IsDeleted&&s.Id!=keyId);
+        public async Task<bool> ExistKeyForClassAsync(string keyword, int keyId, int classId)
+        => await _db.KeyWords.AnyAsync(s => s.Key == keyword && !s.IsDeleted&&s.Id!=keyId&&s.ClassId==classId);
 
         public async Task<FilterkeyWordViewModel> FilterKeyWordAsync(FilterkeyWordViewModel filter, int sportClassId)
         {

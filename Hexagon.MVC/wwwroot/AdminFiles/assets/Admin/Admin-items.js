@@ -95,3 +95,24 @@ function confirmDeleteImage(id, e, title) {
         }
     });
 };
+
+function confirmDeleteBanner(id, e, title) {
+
+    e.preventDefault();
+
+    Swal.fire({
+        text: `آیا از حذف ${title} مطمئن هستید؟`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "بله",
+        cancelButtonText: "خیر"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.get("/Admin/Banner/Delete/" + id, function () {
+                $("#tr_" + id).hide('slow');
+            });
+        }
+    });
+};

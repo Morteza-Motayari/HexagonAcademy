@@ -103,4 +103,13 @@ namespace Hexagon.Domain.Enums.Filter
         [Display(Name = "پرداخت نشده")]
         UnPayed
     }
+    public enum FilterRegisteredAthletesStatus
+    {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "نیاز به تمدید")]
+        NeedExtension,
+        [Display(Name = "ثبت نام شده")]
+        Registered
+    }
 }

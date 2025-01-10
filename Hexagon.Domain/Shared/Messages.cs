@@ -134,6 +134,7 @@ namespace Hexagon.Domain.Shared
         #region Roles
         public static string RoleNotFound = "نقش مورد نظر پیدا نشده است.";
         public static string RoleTitleDuplicated = "نقشی با این عنوان پیدا شده است.";
+        public static string RoleAlreadyDeleted = "نقش مدنظر قبلا حذف شده است.";
         public static string FirstSimpleDeleteRole = "ابتدا نقش مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
@@ -246,6 +247,11 @@ namespace Hexagon.Domain.Shared
         public static string ClassOrderNotFound = "کلاس مدنظر در فاکتور شما پیدا نشده است.";
         public static string InsufficientWalletmoney = "مقدار پول موجود در کیف پول شما کافی نمی باشد.";
         #endregion
+
+        #region Banner
+        public static string BannerNameDuplicated = "اسم این بنر تکراری می باشد.";
+        public static string BannerReachedMaximumAmount = "تعداد بنرها به حد ماکزیمم 10 تا رسیده است..";
+        #endregion
     }
 
     public class WarningMessages
@@ -301,6 +307,7 @@ namespace Hexagon.Domain.Shared
 
         #region Order
         public static string OrderAlreadyPayed = "این  فاکتور قبلا پرداخت شده بود.";
+        public static string OrderHaveNoItem = "این  فاکتور هیچ چیزی برای پرداخت شدن ندارد.";
         #endregion
     }
 

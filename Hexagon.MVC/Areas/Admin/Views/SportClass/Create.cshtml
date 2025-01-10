@@ -221,9 +221,9 @@
 
             const selectElement = document.getElementById("select2-dropdown");
 
-            //TODO clear deafult options if there is no enetities
             // Clear existing options
-            selectElement.innerHTML = '<option value="">-- انتخاب مربی --</option>';
+                selectElement.innerHTML = '<option value="">-- انتخاب مربی --</option>';
+            
             // Add new options dynamically
             entities.forEach(item => {
                 const option = document.createElement("option");

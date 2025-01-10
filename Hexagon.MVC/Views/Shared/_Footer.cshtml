@@ -4,13 +4,13 @@
         <div class="row py-4">
 
             <div class="col-lg-3 col-12 align-left">
-                <a class="navbar-brand" href="index.html">
-                    <i class='bx bx-buildings bx-sm text-light'></i>
-                    <span class="text-light h5">Purple</span> <span class="text-light h5 semi-bold-600">Buzz</span>
+                <a class="navbar-brand" href="/">
+                    <i class='bx bx-dumbbell bx-sm text-light bxs fe-24'></i>
+                    <span class="text-light h5">آکادمی</span> <span class="text-light h5 semi-bold-600">هگزاگون</span>
                 </a>
                 <p class="text-light my-lg-4 my-2">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut.
+                    آکادمی ورزشی هگزاگون برگزارکننده رشته های ورزشی <a href="/"></a>
+                    برای تمامی رده های سنی میباشد.
                 </p>
                 <ul class="list-inline footer-icons light-300">
                     <li class="list-inline-item m-0">
@@ -43,58 +43,37 @@
 
             <div class="col-lg-3 col-md-4 my-sm-0 mt-4">
                 <h3 class="h4 pb-lg-3 text-light light-300">
-                    Our Company</h2>
+                    شرکت ما</h2>
                     <ul class="list-unstyled text-light light-300">
                         <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light" href="index.html">Home</a>
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light" href="/">خانه</a>
                         </li>
                         <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="about.html">About Us</a>
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="SportClass" asp-action="List">کلاس های ورزشی</a>
                         </li>
                         <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="work.html">Work</a>
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i></i><a class="text-decoration-none text-light py-1" href="pricing.html">خدمات</a>
                         </li>
                         <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i></i><a class="text-decoration-none text-light py-1" href="pricing.html">Price</a>
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="ContactUs" asp-action="ContactUs">ارتباط با ما</a>
                         </li>
+
                         <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="contact.html">Contact</a>
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
                         </li>
                     </ul>
             </div>
 
-            <div class="col-lg-3 col-md-4 my-sm-0 mt-4">
-                <h2 class="h4 pb-lg-3 text-light light-300">Our Works</h2>
-                <ul class="list-unstyled text-light light-300">
-                    <li class="pb-2">
-                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Branding</a>
-                    </li>
-                    <li class="pb-2">
-                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Business</a>
-                    </li>
-                    <li class="pb-2">
-                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Marketing</a>
-                    </li>
-                    <li class="pb-2">
-                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Social Media</a>
-                    </li>
-                    <li class="pb-2">
-                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Digital Solution</a>
-                    </li>
-                    <li class="pb-2">
-                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" href="#">Graphic</a>
-                    </li>
-                </ul>
-            </div>
+            @await Component.InvokeAsync("SportsName")
 
             <div class="col-lg-3 col-md-4 my-sm-0 mt-4">
-                <h2 class="h4 pb-lg-3 text-light light-300">For Client</h2>
+                <h2 class="h4 pb-lg-3 text-light light-300">برای ارتباط</h2>
                 <ul class="list-unstyled text-light light-300">
                     <li class="pb-2">
-                        <i class='bx-fw bx bx-phone bx-xs'></i><a class="text-decoration-none text-light py-1" href="tel:010-020-0340">010-020-0340</a>
+                        <i class='bx-fw bx bx-phone bx-xs'></i><a class="text-decoration-none text-light py-1" href="tel:010-020-0340">021-7731-2779</a>
                     </li>
                     <li class="pb-2">
-                        <i class='bx-fw bx bx-mail-send bx-xs'></i><a class="text-decoration-none text-light py-1" href="mailto:info@company.com">info@company.com</a>
+                        <i class='bx-fw bx bx-mail-send bx-xs'></i><a class="text-decoration-none text-light py-1" href="HexagonAcademy@gamil.com">HexagonAcademy@gamil.com</a>
                     </li>
                 </ul>
             </div>
@@ -107,12 +86,12 @@
             <div class="row pt-2">
                 <div class="col-lg-6 col-sm-12">
                     <p class="text-lg-start text-center text-light light-300">
-                        © Copyright 2021 Purple Buzz Company. All Rights Reserved.
+                        © تمامی حقوق این سایت برای آکادمی ورزشی هگزاگون محفوظ می باشد 1403.
                     </p>
                 </div>
                 <div class="col-lg-6 col-sm-12">
                     <p class="text-lg-end text-center text-light light-300">
-                        Designed by <a rel="sponsored" class="text-decoration-none text-light" href="https://templatemo.com/" target="_blank"><strong>TemplateMo</strong></a>
+                        طراحی و تدوین سایت توسط <a rel="sponsored" class="text-decoration-none text-light" href="MortezaMotayri@gmail.com" target="_blank"><strong>مرتضی مطیری</strong></a>
                     </p>
                 </div>
             </div>

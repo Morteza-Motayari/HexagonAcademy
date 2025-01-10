@@ -1,4 +1,5 @@
 ﻿using Hexagon.Application.Services.Interfaces.Gyms;
+using Hexagon.Domain.Enums.Filter;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,6 @@ namespace Hexagon.MVC.Controllers
                 return NotFound();
 
             return View(classDetail);
-        }
-
+        }        
     }
 }

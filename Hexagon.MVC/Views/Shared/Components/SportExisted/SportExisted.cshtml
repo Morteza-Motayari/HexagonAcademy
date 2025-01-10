@@ -6,7 +6,7 @@
         @foreach(var item in Model)
         {
             <li>
-                <a href="#" class="d-flex">
+                <a asp-area="" asp-controller="SportClass" asp-action="List" asp-route-SportSlug="@item.Slug" class="d-flex">
                     <p>@item.Title</p>
                     <p>(@item.Classes)</p>
                 </a>

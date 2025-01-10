@@ -1,4 +1,5 @@
-﻿using Hexagon.Domain.Models.Common;
+﻿using Hexagon.Domain.Models.Banners;
+using Hexagon.Domain.Models.Common;
 using Hexagon.Domain.Models.Contact_Us;
 using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.KeyWords;
@@ -22,6 +23,10 @@ namespace Hexagon.Infra.Data.Context
         {
             _accessor = accessor;
         }
+
+        #region Banner
+        public DbSet<Banner> Banners { get; set; }
+        #endregion
 
         #region Contact Us
         public DbSet<ContactUs> ContactUs { get; set; }

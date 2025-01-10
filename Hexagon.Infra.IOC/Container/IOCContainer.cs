@@ -1,5 +1,6 @@
 ﻿using Hexagon.Application.Senders.Implementation;
 using Hexagon.Application.Senders.Interfaces;
+using Hexagon.Application.Services.Implementation.Banners;
 using Hexagon.Application.Services.Implementation.Contact_Us;
 using Hexagon.Application.Services.Implementation.Gyms;
 using Hexagon.Application.Services.Implementation.KeyWords;
@@ -7,6 +8,7 @@ using Hexagon.Application.Services.Implementation.Orders;
 using Hexagon.Application.Services.Implementation.Payment;
 using Hexagon.Application.Services.Implementation.Users;
 using Hexagon.Application.Services.Implementation.Wallets;
+using Hexagon.Application.Services.Interfaces.Banners;
 using Hexagon.Application.Services.Interfaces.Contact_Us;
 using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Application.Services.Interfaces.KeyWords;
@@ -16,6 +18,7 @@ using Hexagon.Application.Services.Interfaces.Records;
 using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Application.Services.Interfaces.Wallets;
 using Hexagon.Domain.Interfaces;
+using Hexagon.Domain.Interfaces.Banners;
 using Hexagon.Domain.Interfaces.Contact_Us;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.KeyWords;
@@ -24,6 +27,7 @@ using Hexagon.Domain.Interfaces.Orders;
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Domain.Interfaces.Wallets;
 using Hexagon.Infra.Data.Repositories;
+using Hexagon.Infra.Data.Repositories.Banners;
 using Hexagon.Infra.Data.Repositories.Contact_Us;
 using Hexagon.Infra.Data.Repositories.Gyms;
 using Hexagon.Infra.Data.Repositories.KeyWords;
@@ -40,6 +44,10 @@ namespace Hexagon.Infra.IOC.Container
         public static void RegisterServices (this IServiceCollection services)
         {
             #region Services
+
+            #region Banners
+            services.AddScoped<IBannerService, BannerService>();
+            #endregion
 
             #region Users
             services.AddScoped<IAccountService, AccountService>();
@@ -88,6 +96,10 @@ namespace Hexagon.Infra.IOC.Container
 
             #region Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            #region Banners
+            services.AddScoped<IBannerRepository, BannerRepository>();
+            #endregion
 
             #region Contact Us
             services.AddScoped<IContactUsRepository, ContactUsRepository>();

@@ -3,7 +3,9 @@ using Hexagon.Application.Extensions;
 using Hexagon.Application.Generators;
 using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Application.Statics;
+using Hexagon.Domain.Enums.Filter;
 using Hexagon.Domain.Enums.SportClasses;
+using Hexagon.Domain.Enums.Users;
 using Hexagon.Domain.Interfaces;
 using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.KeyWords;
@@ -104,7 +106,8 @@ namespace Hexagon.Application.Services.Implementation.Gyms
                 Title = sportClass.Title,
                 TrainerSlug = trainer.TrainerSlug,
                 KeyWords=await keyWordRepository.GetClassKeyWordsAsync(sportClass.Id),
-                CommentsAmount=await classCommentRepository.ClassCommentAmountAsync(sportClass.Id)
+                CommentsAmount=await classCommentRepository.ClassCommentAmountAsync(sportClass.Id),
+                SportSlug =sportClass.sport.Slug
             };
             if (httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
             {
@@ -210,8 +213,14 @@ namespace Hexagon.Application.Services.Implementation.Gyms
             }
         }
 
+        public async Task<FilterSportClassAthleteViewModel> FilterSportClassAthleteAsync(FilterSportClassAthleteViewModel filter)
+        => await classUserRepository.FilterSportClassAthlete(filter);
+
         public async Task<FilterSportClassViewModel> FilterSportClassesAsync(FilterSportClassViewModel filter)
         => await SportClassRepository.FilterSportClassAsync(filter);
+
+        public async Task<List<ClientSideSportClassViewModel>?> GetClassesForIndexPage(FilterUserGender gender)
+        => await SportClassRepository.GetClassesForIndexPage(gender);
 
         public async Task<UpdateSportClassViewModel> GetSportClassForEdit(int SportClassId)
         {

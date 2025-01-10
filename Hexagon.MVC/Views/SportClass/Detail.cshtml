@@ -31,7 +31,7 @@
                             @Model.Title
                         </h2>
                         <ul class="blog-info-link mt-3 mb-4">
-                            <li><a asp-area="" asp-controller="SportClass" asp-action="List" asp-route-slug="@Model.TrainerSlug"><i class='bx bx-dumbbell bxs bx-25'></i></i> @Model.sport</a></li>
+                            <li><a asp-area="" asp-controller="SportClass" asp-action="List" asp-route-SportSlug="@Model.SportSlug"><i class='bx bx-dumbbell bxs bx-25'></i></i> @Model.sport</a></li>
                             <li><a href="#"><i class="bx bx-chat bxs bx-25"></i> نظرات @Model.CommentsAmount </a></li>
                         </ul>
                         <div class="row">
@@ -96,7 +96,7 @@ IsRegisterted=Model.IsRegisterted
                                 @foreach (var item in Model.KeyWords)
                                 {
                                     <li>
-                                        <a href="#">@item.Key</a>
+                                        <a asp-area="" asp-controller="SportClass" asp-action="List" asp-route-KeyWord="@item.Key">@item.Key</a>
                                     </li>
                                 }
                             </ul>

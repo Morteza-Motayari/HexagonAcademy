@@ -1,0 +1,114 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Application.Statics
+@using Hexagon.Domain.ViewModels.Banners
+@model CreateBannerViewModel
+@{
+    ViewData["Title"] = "بنرها";
+    var banners = ViewData["Banners"] as List<BannerViewModel>;
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Banner" asp-action="List">بنر ها</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2><i class="fe fe-24 fe-camera bxl"></i> افزودن بنر</h2>
+                <div class="toolbar">
+                    <div class="col-12">
+                        <form class="form" enctype="multipart/form-data" method="post" asp-area="Admin" asp-controller="Banner" asp-action="Banner">
+                            <div class="form-row row pl-4">
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="BannerName" class="control-label"></label>
+                                        <input asp-for="BannerName" class="form-control form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row ">
+                                        <div class="col-md-3 text-center">
+                                            <label asp-for="BannerImage" class="control-label"></label>
+                                            <div class="avatar avatar-xl contact-photo">
+                                                <img id="avatar" alt="..." class="img-responsive">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="custom-file mb-3">
+                                                <label for="avaterFile" class="btn btn-info">انتخاب تصویر</label>
+                                                <input asp-for="BannerImage" id="avaterFile" style="display:none" type="file">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 ">
+                                    <input type="submit" value="افزودن" class="btn btn-outline-success" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="body">
+                <h2><i class="bx bx-images fe-24 bxl"></i> @ViewData["Title"]</h2>
+                <div class="table-responsive">
+                    <div id="tableExport_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table class="table table-borderless dataTable table-responsive w-100 d-block d-table table-hover" role="grid">
+                            <thead class="thead-dark">
+                                <tr role="row">
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="عنوان بنر: activate to sort column ascending">عنوان تصویر</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تصویر: activate to sort column ascending"> تصویر</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="ثبت شده توسط: activate to sort column ascending">ثبت شده توسط</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ ثبت: activate to sort column ascending">تاریخ ثبت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending">اقدام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (banners.CheckNullability())
+                                {
+                                    @foreach (var item in banners)
+                                    {
+                                        <tr role="row" class="text-dark" id="tr_@item.Id">
+                                            <td class="center">@item.BannerName</td>
+                                            <td class="center">
+                                                <img src="@SavingPath.BannerPath@item.BannerUrl"
+                                                     class="img-thumbnail" style="max-width:180px" />
+                                            </td>
+                                            <td class="center"><a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@item.CreatedBy">@item.CreatedByName</a></td>
+                                            <td class="center">@item.CreatedDate.ToShamsiWithHour()</td>
+                                            <td class="center">
+                                                <a onclick="confirmDeleteBanner('@item.Id',event,'@item.BannerName')" class="text-danger">
+                                                    <i class="fe fe-24 fe-trash-2"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        avaterFile.onchange = evt => {
+            const [file] = avaterFile.files
+            if (file) {
+                avatar.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+}

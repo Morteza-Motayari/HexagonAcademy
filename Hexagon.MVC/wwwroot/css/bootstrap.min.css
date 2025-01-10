@@ -12723,3 +12723,52 @@ blog_right_sidebar .widget_title {
 .class-ext-height {
     height: 55px;
 }
+
+.slider {
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+    .slides img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+.slider-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+    .slider-dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.8);
+        cursor: pointer;
+    }
+
+    .slider-dots .active {
+        background-color: #333;
+    }
+    .banner-height{
+        max-height:750px;
+    }
+    .img-height-index{
+        height:220px;
+    }

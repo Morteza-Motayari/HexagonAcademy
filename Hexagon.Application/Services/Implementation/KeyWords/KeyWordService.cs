@@ -46,7 +46,7 @@ namespace Hexagon.Application.Services.Implementation.KeyWords
 
         public async Task<CreatekeyWordResult> CreateKeyWordAsync(CreatekeyWordViewModel model)
         {
-            if (await keyWordRepository.ExistKeyForClassAsync(model.Key))
+            if (await keyWordRepository.ExistKeyForClassAsync(model.Key,model.SportClassId))
                 return CreatekeyWordResult.KeyDuplicated;
 
             KeyWord keyword = new()
@@ -119,7 +119,7 @@ namespace Hexagon.Application.Services.Implementation.KeyWords
             var KeyWord = await keyWordRepository.GetByIdAsync(model.Id);
             if (KeyWord == null)
                 return UpdatekeyWordResult.KeyWordNotFound;
-            if (await keyWordRepository.ExistKeyForClassAsync(model.Key, model.Id))
+            if (await keyWordRepository.ExistKeyForClassAsync(model.Key, model.Id, (int)model.SportClassId))
                 return UpdatekeyWordResult.KeyDuplicated;
 
             #region Update KeyWord

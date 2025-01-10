@@ -124,7 +124,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             return View(SportClass);
         }
         #endregion
-        //TODO check out that all entities implement case AlreadyDeleted
+
         #region Delete
         [AuthorizePermission("DeleteSportClass")]
         public async Task<IActionResult> Delete(int id)
@@ -168,6 +168,14 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
             }
             return RedirectToAction(nameof(List), "SportClass", new {area= "Admin" });
+        }
+        #endregion
+
+        #region Class Athletes
+        public async Task<IActionResult> ClassAthletes(FilterSportClassAthleteViewModel filter)
+        {
+            var athletes = await SportClassService.FilterSportClassAthleteAsync(filter);
+            return View(athletes);
         }
         #endregion
     }

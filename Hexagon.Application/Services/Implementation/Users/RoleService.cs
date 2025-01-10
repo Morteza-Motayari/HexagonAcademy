@@ -78,6 +78,9 @@ namespace Hexagon.Application.Services.Implementation.Users
             var role = await roleRepository.GetByIdAsync(RoleId);
             if (role == null)
                 return DeleteRoleResult.NotFound;
+            if(role.IsDeleted==true)
+                return DeleteRoleResult.RoleAlreadyDeleted;
+
             role.IsDeleted = true;
             roleRepository.Update(role);
             await roleRepository.SaveChangeAsync();

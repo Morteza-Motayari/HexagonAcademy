@@ -104,6 +104,9 @@ namespace Hexagon.Application.Services.Implementation.Gyms
         public async Task<FilterSportViewModel> FilterSportsAsync(FilterSportViewModel filter)
         => await sportRepository.FilterSportAsync(filter);
 
+        public async Task<List<ClientSideSportNameViewModel>?> GetActiveSportNameAsync()
+        => await sportRepository.GetActiveSportName();
+
         public async Task<List<ClientSideSportExisted>?> GetSportExistedAsync()
         => await sportRepository.GetSportExistedWithRelationAsync();
 

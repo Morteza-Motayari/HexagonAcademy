@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace Hexagon.MVC.Controllers
 {
-    public class AccountController(IAccountService accountService) : BaseSiteController
+    public class AccountController(IAccountService accountService,IUserService userService) : BaseSiteController
     {
         #region Actions
 
@@ -64,7 +64,6 @@ namespace Hexagon.MVC.Controllers
             }
             #endregion
             var result = await accountService.loginAsync(model);
-            //TODO Adding isbanned and notactive cases
             switch (result)
             {
                 case LoginResult.UserNotFound:
@@ -193,6 +192,14 @@ namespace Hexagon.MVC.Controllers
         public JsonResult IsAuthenticated()
         {
             return Json(User.Identity.IsAuthenticated);
+        }
+        #endregion
+
+        #region Check User Info Completed
+        [HttpGet]
+        public async Task<JsonResult> IsUserInfoCompleted()
+        {
+            return Json(await userService.IsUserInfoCompleted(User.GetUserId()));
         }
         #endregion
 

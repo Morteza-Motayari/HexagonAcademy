@@ -12,6 +12,10 @@ namespace Hexagon.Application.Extensions
         {
             return list != null && list.Any();
         }
+        public static bool CheckNullability<T>(this IEnumerable<T?> list)
+        {
+            return list != null && list.Any();
+        }
         public static bool CheckNullability<T>(this List<T?> list)
         {
             return list != null && list.Any();

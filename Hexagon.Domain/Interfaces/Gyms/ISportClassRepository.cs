@@ -1,4 +1,5 @@
-﻿using Hexagon.Domain.Models.Gyms;
+﻿using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.Models.Gyms;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Hexagon.Domain.ViewModels.Orders.ClassesOrder;
@@ -23,5 +24,8 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<int> GetMaxClassAthleteSpace(int sportClassId);
         Task<DateTime> GetLastModifiedDate(int id);
         Task<UserSideFilterSportClassViewModel> GetUserClassesAsync(int userId, UserSideFilterSportClassViewModel filter);
+        Task<List<ClientSideSportClassViewModel>?> GetClassesForIndexPage(FilterUserGender filter);
+       // Task<FilterSportClassAthleteViewModel> FilterSportClassAthlete(FilterSportClassAthleteViewModel filter)
+
     }
 }

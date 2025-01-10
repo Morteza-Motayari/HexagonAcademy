@@ -1,8 +1,10 @@
 using Hexagon.Application.Statics;
 using Hexagon.Infra.Data.Context;
 using Hexagon.Infra.IOC.Container;
+using Hexagon.MVC.Utilities.ActionFilters;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using NLog.Web;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -16,6 +18,13 @@ try
 
     // Add services to the container.
     builder.Services.AddControllersWithViews();
+
+    //#region Action Filter
+    //builder.Services.AddControllers(options =>
+    //{
+    //    options.Filters.Add<UserInfoFilter>();
+    //});
+    //#endregion
 
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(LogLevel.Trace);
@@ -32,6 +41,7 @@ UnicodeRanges.Arabic }));
     builder.Services.RegisterServices();
 
     builder.Services.AddHttpClient();
+    builder.Services.AddScoped<UserInfoFilter>();
     #endregion
 
 
