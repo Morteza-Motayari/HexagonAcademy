@@ -6,6 +6,7 @@ using Hexagon.Application.Services.Implementation.Gyms;
 using Hexagon.Application.Services.Implementation.KeyWords;
 using Hexagon.Application.Services.Implementation.Orders;
 using Hexagon.Application.Services.Implementation.Payment;
+using Hexagon.Application.Services.Implementation.Tickets;
 using Hexagon.Application.Services.Implementation.Users;
 using Hexagon.Application.Services.Implementation.Wallets;
 using Hexagon.Application.Services.Interfaces.Banners;
@@ -15,6 +16,7 @@ using Hexagon.Application.Services.Interfaces.KeyWords;
 using Hexagon.Application.Services.Interfaces.Orders;
 using Hexagon.Application.Services.Interfaces.Payment;
 using Hexagon.Application.Services.Interfaces.Records;
+using Hexagon.Application.Services.Interfaces.Tickets;
 using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Application.Services.Interfaces.Wallets;
 using Hexagon.Domain.Interfaces;
@@ -24,6 +26,7 @@ using Hexagon.Domain.Interfaces.Gyms;
 using Hexagon.Domain.Interfaces.KeyWords;
 using Hexagon.Domain.Interfaces.Links;
 using Hexagon.Domain.Interfaces.Orders;
+using Hexagon.Domain.Interfaces.Tickets;
 using Hexagon.Domain.Interfaces.Users;
 using Hexagon.Domain.Interfaces.Wallets;
 using Hexagon.Infra.Data.Repositories;
@@ -33,6 +36,7 @@ using Hexagon.Infra.Data.Repositories.Gyms;
 using Hexagon.Infra.Data.Repositories.KeyWords;
 using Hexagon.Infra.Data.Repositories.Links;
 using Hexagon.Infra.Data.Repositories.Orders;
+using Hexagon.Infra.Data.Repositories.Tickets;
 using Hexagon.Infra.Data.Repositories.Users;
 using Hexagon.Infra.Data.Repositories.Wallets;
 using Microsoft.Extensions.DependencyInjection;
@@ -88,6 +92,11 @@ namespace Hexagon.Infra.IOC.Container
             services.AddScoped<IExperienceService, ExperienceService>();
             #endregion
 
+            #region Tickets
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<ITicketMessageService, TicketMessageService>();
+            #endregion
+
             #region Wallets
             services.AddScoped<IWalletService, WalletService>();
             #endregion
@@ -133,6 +142,11 @@ namespace Hexagon.Infra.IOC.Container
             #region Records
             services.AddScoped<ICertificateRepository, CertificateRepository>();
             services.AddScoped<IExperienceRepository, ExperienceRepository>();
+            #endregion
+
+            #region Tickets
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<ITicketMessageRepository, TicketMessageRepository>();
             #endregion
 
             #region Users

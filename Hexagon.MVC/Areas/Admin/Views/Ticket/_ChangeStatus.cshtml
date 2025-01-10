@@ -1,0 +1,27 @@
+﻿@using Hexagon.Application.Extensions
+@using Hexagon.Domain.Enums.Tickets
+@using Hexagon.Domain.ViewModels.Tickets.Tickets
+@model UpdateTicketStatusViewModel
+<form asp-area="Admin"
+      asp-controller="Ticket" asp-action="ChangeStatus"
+      data-ajax="true"
+      data-ajax-method="post"
+      data-ajax-success="OnSuccessAddingItem">
+    <input type="hidden" asp-for="TicketId" />
+    <div class="col-md-12">
+        <div class="row d-flex align-items-center">
+            <div class="form-element-row mb-4">
+                <label asp-for="Status" class="form-control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    @foreach (var item in Enum.GetValues(typeof(TicketStatus)).Cast<TicketStatus>().ToList())
+                    {
+                        <option value="@item">@item.GetDisplayName()</option>
+                    }
+                </select>
+            </div>
+            <div class="col-4 col-md-4 col-sm-4 mb-2">
+                <button type="submit" class="btn btn-primary ">تغییر وضعیت</button>
+            </div>
+        </div>
+    </div>
+</form>

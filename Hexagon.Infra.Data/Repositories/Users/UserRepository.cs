@@ -239,5 +239,8 @@ namespace Hexagon.Infra.Data.Repositories
 
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.Users.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
+        public async Task<string?> GetUserAvatar(int userId)
+        => await _db.Users.Where(u=>u.Id==userId).Select(u=>u.Avatar).FirstAsync();
     }
 }

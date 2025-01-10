@@ -31,5 +31,6 @@ namespace Hexagon.Domain.Interfaces
         Task<string?> GetJustAvatarAsync(int? userId);
         Task<UserGender?> GetUserGenderAsync(int userId);
         Task<DateTime> GetLastModifiedDate(int id);
+        Task<string?> GetUserAvatar(int userId);
     }
 }

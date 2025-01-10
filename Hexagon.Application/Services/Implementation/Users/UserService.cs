@@ -310,5 +310,8 @@ namespace Hexagon.Application.Services.Implementation.Users
             }
             return true;
         }
+
+        public async Task<string?> GetUserAvatarUrlAsync(int UserId)
+        => await UserRepository.GetUserAvatar(UserId);
     }
 }

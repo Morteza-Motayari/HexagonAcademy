@@ -1631,3 +1631,321 @@
 2025-01-10 01:48:08.6194 Info Adding target FileTarget(Name=SqlQueryLog)
 2025-01-10 01:48:08.6532 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
 2025-01-10 01:48:08.6772 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 08:10:39.1384 Info Message Template Auto Format enabled
+2025-01-10 08:10:39.1384 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 08:10:39.1645 Info Adding target FileTarget(Name=f)
+2025-01-10 08:10:39.1645 Info Adding target FileTarget(Name=All)
+2025-01-10 08:10:39.1645 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 08:10:39.1645 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 08:10:39.1862 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 08:10:39.4354 Info Shutdown() called. Logger closing...
+2025-01-10 08:10:39.4354 Info Closing old configuration.
+2025-01-10 08:10:39.4354 Info Logger has been closed down.
+2025-01-10 08:10:41.2123 Info AppDomain Shutting down. Logger closing...
+2025-01-10 08:10:41.2123 Info Logger has been shut down.
+2025-01-10 08:11:10.1045 Info Message Template Auto Format enabled
+2025-01-10 08:11:10.1045 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 08:11:10.1250 Info Adding target FileTarget(Name=f)
+2025-01-10 08:11:10.1250 Info Adding target FileTarget(Name=All)
+2025-01-10 08:11:10.1337 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 08:11:10.1337 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 08:11:10.1337 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 08:11:10.2713 Info Shutdown() called. Logger closing...
+2025-01-10 08:11:10.2713 Info Closing old configuration.
+2025-01-10 08:11:10.2802 Info Logger has been closed down.
+2025-01-10 08:11:11.2198 Info AppDomain Shutting down. Logger closing...
+2025-01-10 08:11:11.2198 Info Logger has been shut down.
+2025-01-10 15:38:32.6682 Info Message Template Auto Format enabled
+2025-01-10 15:38:32.6860 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 15:38:32.7472 Info Adding target FileTarget(Name=f)
+2025-01-10 15:38:32.7472 Info Adding target FileTarget(Name=All)
+2025-01-10 15:38:32.7592 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 15:38:32.7592 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 15:38:32.7867 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 15:44:05.1532 Info Message Template Auto Format enabled
+2025-01-10 15:44:05.1532 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 15:44:05.1970 Info Adding target FileTarget(Name=f)
+2025-01-10 15:44:05.1970 Info Adding target FileTarget(Name=All)
+2025-01-10 15:44:05.1970 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 15:44:05.2207 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 15:44:05.2404 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 15:46:15.4353 Info Message Template Auto Format enabled
+2025-01-10 15:46:15.4353 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 15:46:15.4773 Info Adding target FileTarget(Name=f)
+2025-01-10 15:46:15.4773 Info Adding target FileTarget(Name=All)
+2025-01-10 15:46:15.4773 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 15:46:15.4773 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 15:46:15.5080 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 16:00:12.3535 Info Message Template Auto Format enabled
+2025-01-10 16:00:12.3535 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 16:00:12.3847 Info Adding target FileTarget(Name=f)
+2025-01-10 16:00:12.3985 Info Adding target FileTarget(Name=All)
+2025-01-10 16:00:12.3985 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 16:00:12.3985 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 16:00:12.4274 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 16:01:47.3307 Info Message Template Auto Format enabled
+2025-01-10 16:01:47.3484 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 16:01:47.3830 Info Adding target FileTarget(Name=f)
+2025-01-10 16:01:47.3830 Info Adding target FileTarget(Name=All)
+2025-01-10 16:01:47.3830 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 16:01:47.4044 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 16:01:47.4202 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 16:07:26.8267 Info Message Template Auto Format enabled
+2025-01-10 16:07:26.8267 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 16:07:26.8672 Info Adding target FileTarget(Name=f)
+2025-01-10 16:07:26.8672 Info Adding target FileTarget(Name=All)
+2025-01-10 16:07:26.8672 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 16:07:26.8843 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 16:07:26.8843 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 16:11:36.7738 Info Message Template Auto Format enabled
+2025-01-10 16:11:36.7738 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 16:11:36.8218 Info Adding target FileTarget(Name=f)
+2025-01-10 16:11:36.8218 Info Adding target FileTarget(Name=All)
+2025-01-10 16:11:36.8218 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 16:11:36.8399 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 16:11:36.8567 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 16:15:10.2210 Info Message Template Auto Format enabled
+2025-01-10 16:15:10.2327 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 16:15:10.2741 Info Adding target FileTarget(Name=f)
+2025-01-10 16:15:10.2741 Info Adding target FileTarget(Name=All)
+2025-01-10 16:15:10.2741 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 16:15:10.2918 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 16:15:10.3116 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 17:10:31.5771 Info Message Template Auto Format enabled
+2025-01-10 17:10:31.5862 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 17:10:31.6175 Info Adding target FileTarget(Name=f)
+2025-01-10 17:10:31.6175 Info Adding target FileTarget(Name=All)
+2025-01-10 17:10:31.6175 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 17:10:31.6466 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 17:10:31.6644 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 17:13:08.7074 Info Message Template Auto Format enabled
+2025-01-10 17:13:08.7159 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 17:13:08.7442 Info Adding target FileTarget(Name=f)
+2025-01-10 17:13:08.7442 Info Adding target FileTarget(Name=All)
+2025-01-10 17:13:08.7442 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 17:13:08.7625 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 17:13:08.7776 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 17:50:20.3220 Info Message Template Auto Format enabled
+2025-01-10 17:50:20.3220 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 17:50:20.3682 Info Adding target FileTarget(Name=f)
+2025-01-10 17:50:20.3682 Info Adding target FileTarget(Name=All)
+2025-01-10 17:50:20.3682 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 17:50:20.3682 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 17:50:20.3955 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 17:51:09.1813 Info Message Template Auto Format enabled
+2025-01-10 17:51:09.1813 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 17:51:09.2154 Info Adding target FileTarget(Name=f)
+2025-01-10 17:51:09.2279 Info Adding target FileTarget(Name=All)
+2025-01-10 17:51:09.2279 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 17:51:09.2279 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 17:51:09.2544 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 18:22:37.3697 Info Message Template Auto Format enabled
+2025-01-10 18:22:37.3697 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 18:22:37.4000 Info Adding target FileTarget(Name=f)
+2025-01-10 18:22:37.4000 Info Adding target FileTarget(Name=All)
+2025-01-10 18:22:37.4153 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 18:22:37.4153 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 18:22:37.4416 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 18:24:23.0406 Info Message Template Auto Format enabled
+2025-01-10 18:24:23.0406 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 18:24:23.0705 Info Adding target FileTarget(Name=f)
+2025-01-10 18:24:23.0705 Info Adding target FileTarget(Name=All)
+2025-01-10 18:24:23.0705 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 18:24:23.0946 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 18:24:23.1071 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 18:26:28.8286 Info Message Template Auto Format enabled
+2025-01-10 18:26:28.8367 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 18:26:28.8697 Info Adding target FileTarget(Name=f)
+2025-01-10 18:26:28.8697 Info Adding target FileTarget(Name=All)
+2025-01-10 18:26:28.8697 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 18:26:28.8847 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 18:26:28.8989 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 18:27:02.4206 Info Message Template Auto Format enabled
+2025-01-10 18:27:02.4311 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 18:27:02.4611 Info Adding target FileTarget(Name=f)
+2025-01-10 18:27:02.4611 Info Adding target FileTarget(Name=All)
+2025-01-10 18:27:02.4611 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 18:27:02.4796 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 18:27:02.4796 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 18:36:31.3274 Info Message Template Auto Format enabled
+2025-01-10 18:36:31.3274 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 18:36:31.3687 Info Adding target FileTarget(Name=f)
+2025-01-10 18:36:31.3687 Info Adding target FileTarget(Name=All)
+2025-01-10 18:36:31.3687 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 18:36:31.3841 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 18:36:31.3841 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 19:04:38.8168 Info Message Template Auto Format enabled
+2025-01-10 19:04:38.8250 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 19:04:38.8692 Info Adding target FileTarget(Name=f)
+2025-01-10 19:04:38.8692 Info Adding target FileTarget(Name=All)
+2025-01-10 19:04:38.8692 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 19:04:38.8903 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 19:04:38.9058 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 19:25:50.1783 Info Message Template Auto Format enabled
+2025-01-10 19:25:50.1882 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 19:25:50.2134 Info Adding target FileTarget(Name=f)
+2025-01-10 19:25:50.2265 Info Adding target FileTarget(Name=All)
+2025-01-10 19:25:50.2265 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 19:25:50.2265 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 19:25:50.2513 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 20:05:29.2147 Info Message Template Auto Format enabled
+2025-01-10 20:05:29.2147 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 20:05:29.2460 Info Adding target FileTarget(Name=f)
+2025-01-10 20:05:29.2584 Info Adding target FileTarget(Name=All)
+2025-01-10 20:05:29.2584 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 20:05:29.2765 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 20:05:29.2973 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 20:06:55.1208 Info Message Template Auto Format enabled
+2025-01-10 20:06:55.1208 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 20:06:55.1653 Info Adding target FileTarget(Name=f)
+2025-01-10 20:06:55.1653 Info Adding target FileTarget(Name=All)
+2025-01-10 20:06:55.1653 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 20:06:55.1911 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 20:06:55.2045 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 22:40:12.6978 Info Message Template Auto Format enabled
+2025-01-10 22:40:12.6978 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 22:40:12.7459 Info Adding target FileTarget(Name=f)
+2025-01-10 22:40:12.7459 Info Adding target FileTarget(Name=All)
+2025-01-10 22:40:12.7459 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 22:40:12.7723 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 22:40:12.7913 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 22:58:34.2098 Info Message Template Auto Format enabled
+2025-01-10 22:58:34.2235 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 22:58:34.2626 Info Adding target FileTarget(Name=f)
+2025-01-10 22:58:34.2756 Info Adding target FileTarget(Name=All)
+2025-01-10 22:58:34.2756 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 22:58:34.2919 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 22:58:34.3104 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 23:03:53.2793 Info Message Template Auto Format enabled
+2025-01-10 23:03:53.2918 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 23:03:53.3270 Info Adding target FileTarget(Name=f)
+2025-01-10 23:03:53.3270 Info Adding target FileTarget(Name=All)
+2025-01-10 23:03:53.3270 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 23:03:53.3519 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 23:03:53.3735 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 23:07:11.5840 Info Message Template Auto Format enabled
+2025-01-10 23:07:11.5941 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 23:07:11.6357 Info Adding target FileTarget(Name=f)
+2025-01-10 23:07:11.6357 Info Adding target FileTarget(Name=All)
+2025-01-10 23:07:11.6357 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 23:07:11.6588 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 23:07:11.6811 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 23:11:11.5120 Info Message Template Auto Format enabled
+2025-01-10 23:11:11.5120 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 23:11:11.5795 Info Adding target FileTarget(Name=f)
+2025-01-10 23:11:11.5795 Info Adding target FileTarget(Name=All)
+2025-01-10 23:11:11.5795 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 23:11:11.5982 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 23:11:11.6161 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 23:12:35.1073 Info Message Template Auto Format enabled
+2025-01-10 23:12:35.1208 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 23:12:35.1670 Info Adding target FileTarget(Name=f)
+2025-01-10 23:12:35.1670 Info Adding target FileTarget(Name=All)
+2025-01-10 23:12:35.1670 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 23:12:35.1670 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 23:12:35.1982 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 23:13:28.2019 Info Message Template Auto Format enabled
+2025-01-10 23:13:28.2019 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 23:13:28.2606 Info Adding target FileTarget(Name=f)
+2025-01-10 23:13:28.2606 Info Adding target FileTarget(Name=All)
+2025-01-10 23:13:28.2606 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 23:13:28.2788 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 23:13:28.2988 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 23:28:45.7589 Info Message Template Auto Format enabled
+2025-01-10 23:28:45.7589 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 23:28:45.7896 Info Adding target FileTarget(Name=f)
+2025-01-10 23:28:45.7896 Info Adding target FileTarget(Name=All)
+2025-01-10 23:28:45.7896 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 23:28:45.8148 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 23:28:45.8294 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 23:40:16.2469 Info Message Template Auto Format enabled
+2025-01-10 23:40:16.2469 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 23:40:16.2753 Info Adding target FileTarget(Name=f)
+2025-01-10 23:40:16.2902 Info Adding target FileTarget(Name=All)
+2025-01-10 23:40:16.2902 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 23:40:16.2902 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 23:40:16.3189 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-10 23:41:40.1991 Info Message Template Auto Format enabled
+2025-01-10 23:41:40.1991 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-10 23:41:40.2434 Info Adding target FileTarget(Name=f)
+2025-01-10 23:41:40.2434 Info Adding target FileTarget(Name=All)
+2025-01-10 23:41:40.2434 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-10 23:41:40.2582 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-10 23:41:40.2768 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 01:39:57.9868 Info Message Template Auto Format enabled
+2025-01-11 01:39:57.9999 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 01:39:58.0421 Info Adding target FileTarget(Name=f)
+2025-01-11 01:39:58.0421 Info Adding target FileTarget(Name=All)
+2025-01-11 01:39:58.0421 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 01:39:58.0625 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 01:39:58.0773 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 01:53:24.2061 Info Message Template Auto Format enabled
+2025-01-11 01:53:24.2154 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 01:53:24.2582 Info Adding target FileTarget(Name=f)
+2025-01-11 01:53:24.2582 Info Adding target FileTarget(Name=All)
+2025-01-11 01:53:24.2582 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 01:53:24.2582 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 01:53:24.2926 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 01:54:30.3338 Info Message Template Auto Format enabled
+2025-01-11 01:54:30.3435 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 01:54:30.3850 Info Adding target FileTarget(Name=f)
+2025-01-11 01:54:30.3850 Info Adding target FileTarget(Name=All)
+2025-01-11 01:54:30.3850 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 01:54:30.3850 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 01:54:30.4111 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 02:06:42.1519 Info Message Template Auto Format enabled
+2025-01-11 02:06:42.1519 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 02:06:42.1960 Info Adding target FileTarget(Name=f)
+2025-01-11 02:06:42.1960 Info Adding target FileTarget(Name=All)
+2025-01-11 02:06:42.1960 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 02:06:42.1960 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 02:06:42.2842 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 02:33:19.2318 Info Message Template Auto Format enabled
+2025-01-11 02:33:19.2471 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 02:33:19.2951 Info Adding target FileTarget(Name=f)
+2025-01-11 02:33:19.2951 Info Adding target FileTarget(Name=All)
+2025-01-11 02:33:19.2951 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 02:33:19.3114 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 02:33:19.3305 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 02:36:23.2603 Info Message Template Auto Format enabled
+2025-01-11 02:36:23.2603 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 02:36:23.2912 Info Adding target FileTarget(Name=f)
+2025-01-11 02:36:23.2912 Info Adding target FileTarget(Name=All)
+2025-01-11 02:36:23.2912 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 02:36:23.3125 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 02:36:23.3350 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 02:38:55.5292 Info Message Template Auto Format enabled
+2025-01-11 02:38:55.5292 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 02:38:55.5590 Info Adding target FileTarget(Name=f)
+2025-01-11 02:38:55.5713 Info Adding target FileTarget(Name=All)
+2025-01-11 02:38:55.5713 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 02:38:55.5713 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 02:38:55.5956 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 02:41:18.4901 Info Message Template Auto Format enabled
+2025-01-11 02:41:18.4992 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 02:41:18.5262 Info Adding target FileTarget(Name=f)
+2025-01-11 02:41:18.5262 Info Adding target FileTarget(Name=All)
+2025-01-11 02:41:18.5262 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 02:41:18.5473 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 02:41:18.5620 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 02:43:27.6342 Info Message Template Auto Format enabled
+2025-01-11 02:43:27.6342 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 02:43:27.6642 Info Adding target FileTarget(Name=f)
+2025-01-11 02:43:27.6642 Info Adding target FileTarget(Name=All)
+2025-01-11 02:43:27.6642 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 02:43:27.6874 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 02:43:27.7009 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 02:44:05.5158 Info Message Template Auto Format enabled
+2025-01-11 02:44:05.5256 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 02:44:05.5570 Info Adding target FileTarget(Name=f)
+2025-01-11 02:44:05.5570 Info Adding target FileTarget(Name=All)
+2025-01-11 02:44:05.5570 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 02:44:05.5570 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 02:44:05.5833 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config
+2025-01-11 02:53:12.4821 Info Message Template Auto Format enabled
+2025-01-11 02:53:12.4821 Info Loading assembly: NLog.Web.AspNetCore
+2025-01-11 02:53:12.5274 Info Adding target FileTarget(Name=f)
+2025-01-11 02:53:12.5274 Info Adding target FileTarget(Name=All)
+2025-01-11 02:53:12.5396 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-01-11 02:53:12.5396 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-01-11 02:53:12.5683 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\HexagonAcademy\Hexagon.MVC\bin\Debug\net8.0\nlog.config

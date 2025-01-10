@@ -27,7 +27,6 @@ namespace Hexagon.Infra.Data.Repositories.Orders
         => await _db.Orders.AnyAsync(u=>u.CreatedBy == userId&&!u.IsFainally);
 
         public async Task<FilterOrderViewModel> FilterOrdersAsync(FilterOrderViewModel filter)
-
         {
             var query = _db.Orders.Include(o=>o.User).Include(o=>o.ClassesOrder).AsQueryable();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Design;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,16 @@ namespace Hexagon.Application.Extensions
         {
             TimeSpan passedTime = DateTime.Now - date;
             return 183-(int)passedTime.TotalDays;
+        }
+
+        public static bool OnehourePasse(this DateTime date)
+        {
+           TimeSpan passedTime= DateTime.Now - date;
+            if (passedTime.TotalHours >= 1)
+                return true;
+            
+            else
+                return false;
         }
     }
 }

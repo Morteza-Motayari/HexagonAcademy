@@ -1,0 +1,120 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Domain.Enums.Tickets
+@using Hexagon.Domain.ViewModels.Tickets.Tickets
+@model FilterClientSideTicketViewModel
+@{
+    ViewData["Tilte"] = "تیکت ها";
+}
+<div class="card shadow mb-4 ui-box-profile">
+    <div class="card-header">
+        <strong class="card-title">
+            <i class='bx bx-conversation bxs'></i>@ViewData["Tilte"]
+        </strong>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <a onclick="ShowAddingTicketForm()" class="btn btn-primary">ایجاد تیکت</a>
+            </div>
+            <br />
+            <form method="post" id="filter-search" asp-area="UserManagement" asp-controller="Ticket" asp-action="List">
+                <input type="hidden" asp-for="Page" />
+            </form>
+            <div class="col-12">
+                <div class="ui-box-content">
+                    <div class="table-responsive">
+                        @if (Model.Entities.CheckNullability())
+                        {
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>عنوان</th>
+                                        <th>وضعیت</th>
+                                        <th>بخش</th>
+                                        <th>اولویت</th>
+                                        <th>تاریخ</th>
+                                        <th>جزئیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.Entities.Count(); i++)
+                                    {
+                                        <tr>
+                                            <td class="fa-num">@(Model.StartItemFromList + i)</td>
+                                            <td class="fa-num">@(Model.Entities[i].Title)</td>
+                                            <td class="fa-num">
+                                                @switch (Model.Entities[i].Status)
+                                                {
+                                                    case TicketStatus.Close:
+                                                        <span class="badge bg-info rounded-pill">@Model.Entities[i].Status.GetDisplayName()</span>
+                                                        break;
+                                                    case TicketStatus.Pending:
+                                                        <span class="badge bg-warning rounded-pill">@Model.Entities[i].Status.GetDisplayName()</span>
+                                                        break;
+                                                    case TicketStatus.UserAnswered:
+                                                        <span class="badge bg-primary rounded-pill">@Model.Entities[i].Status.GetDisplayName()</span>
+                                                        break;
+                                                    case TicketStatus.AdminAnswered:
+                                                        <span class="badge bg-success rounded-pill">@Model.Entities[i].Status.GetDisplayName()</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td class="fa-num">
+                                                @switch (Model.Entities[i].Section)
+                                                {
+                                                    case TicketSection.Financial:
+                                                        <span class="badge bg-primary rounded-pill">@Model.Entities[i].Section.GetDisplayName()</span>
+                                                        break;
+                                                    case TicketSection.HR:
+                                                        <span class="badge bg-warning rounded-pill">@Model.Entities[i].Section.GetDisplayName()</span>
+                                                        break;
+                                                    case TicketSection.Technical:
+                                                        <span class="badge bg-info rounded-pill">@Model.Entities[i].Section.GetDisplayName()</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td class="fa-num">
+                                                @switch (Model.Entities[i].Priority)
+                                                {
+                                                    case TicketPriority.Important:
+                                                        <span class="badge bg-danger rounded-pill">@Model.Entities[i].Priority.GetDisplayName()</span>
+                                                        break;
+                                                    case TicketPriority.Medium:
+                                                        <span class="badge bg-warning rounded-pill">@Model.Entities[i].Priority.GetDisplayName()</span>
+                                                        break;
+                                                    case TicketPriority.Low:
+                                                        <span class="badge bg-info rounded-pill">@Model.Entities[i].Priority.GetDisplayName()</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td class="fa-num">@Model.Entities[i].CreatedDate.ToShamsiWithPersianMonth()</td>
+                                            <td class="fa-num"><a asp-area="UserManagement" asp-controller="Ticket" asp-action="Detail" asp-route-id="@Model.Entities[i].Id"><i class='bx bx-message-square-detail text-primary'></i></a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            @if (Model.PageCount > 1)
+                            {
+                                <div class="dataTables_info" role="status">نمایش @Model.StartItemFromList تا @Model.EndItemFromList از @Model.AllEntitiesCount تراکنش</div>
+                                <partial name="_ClientSidePaging" model="Model.GetCurrentPaging()" />
+                            }
+                        }
+                        else
+                        {
+                            <div>
+                                <strong>شما هیچ تیکتی ندارید</strong>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script src="/js/add-ticket.js"></script>
+    <script src="/js/custom-comment.js"></script>
+}

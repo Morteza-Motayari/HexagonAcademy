@@ -122,6 +122,17 @@ namespace Hexagon.Domain.Shared
         public static string ClassOrderDeletedSuccessFully = "کلاس مدنظر از فاکتور شما حذف شده است.";
         public static string OrderPayedSuccessFully = "فاکتور با موفقیت پرداخت شد.";
         #endregion
+
+        #region Tickets
+        public static string TicketMessageAddSuccessFullyDone = "تیکت شما با موفقیت ارسال شد منتظر پاسخ همکاران ما در اسرع وقت باشید.";
+        public static string TicketMessageAnsweredSuccessFullyDone = "تیکت مدنظر  با موفقیت پاسخ داده شد.";
+        public static string TicketMessageRespondedSuccessFullyDone = "بازخورد به تیکت شما با موفقیت ارسال شد منتظر پاسخ همکاران ما در اسرع وقت باشید.";
+        public static string TicketMessageDeletedSuccessFullyDone = "پیام تیکت مدنظر  با موفقیت حذف شد.";
+        public static string TicketDeletedSuccessFullyDone = "تیکت مدنظر  با موفقیت حذف شد.";
+        public static string TicketMessageDeletedForeverSuccessFullyDone = "پیام تیکت مدنظر  با موفقیت به طور مطلق حذف شد.";
+        public static string TicketDeletedForeverSuccessFullyDone = "تیکت مدنظر  با موفقیت به طور مطلق حذف شد.";
+        public static string TicketStatusChangedSuccessFullyDone = "وضعیت تیکت مدنظر  با موفقیت تغییر یافت.";
+        #endregion
     }
     public class ErrorMessages
     {
@@ -252,6 +263,16 @@ namespace Hexagon.Domain.Shared
         public static string BannerNameDuplicated = "اسم این بنر تکراری می باشد.";
         public static string BannerReachedMaximumAmount = "تعداد بنرها به حد ماکزیمم 10 تا رسیده است..";
         #endregion
+
+        #region Tickets
+        public static string TicketNotFound = "تیکت مدنظر شما پیدا نشده است.";
+        public static string TicketAlreadyDeleted = "تیکت مدنظر شما قبلا حذف شده است.";
+        public static string TicketMessageAlreadyDeleted = "پیام تیکت مدنظر شما قبلا حذف شده است.";
+        public static string TicketMessageNotFound = "پیام تیکت مدنظر شما پیدا نشده است.";
+        public static string TicketMessageCantDletedForPassedTime = "پیام تیکت مدنظر شما ارسال شده و به دلیل گذر زمان امکان حذف آن نیست.";
+        public static string FirstSimpleDeleteTicket = "ابتدا تیکت مد نظر را به طور ساده حذف بکنید.";
+        public static string FirstSimpleDeleteTicketMessage = "ابتدا پیام تیکت مد نظر را به طور ساده حذف بکنید.";
+        #endregion
     }
 
     public class WarningMessages
@@ -308,6 +329,11 @@ namespace Hexagon.Domain.Shared
         #region Order
         public static string OrderAlreadyPayed = "این  فاکتور قبلا پرداخت شده بود.";
         public static string OrderHaveNoItem = "این  فاکتور هیچ چیزی برای پرداخت شدن ندارد.";
+        #endregion
+
+        #region Tickets
+        public static string TicketClosedCantResponded = "تیکت مدنظر بسته شده است و امکان بازخورد به آن نیست.";
+        public static string TicketClosedCantAnswered = "تیکت مدنظر بسته شده است و امکان پاسخ به آن نیست.";
         #endregion
     }
 

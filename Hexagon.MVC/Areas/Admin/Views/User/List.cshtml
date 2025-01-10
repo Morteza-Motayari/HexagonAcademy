@@ -222,6 +222,9 @@
                                                     <a asp-area="Admin" asp-controller="Wallet" asp-action="List" asp-route-UserName="@item.GetUserName()" asp-route-UserId="@item.Id" class="text-primary">
                                                         <i class="bx bx-wallet fe-24"></i>
                                                     </a>
+                                                    <a asp-area="Admin" asp-controller="Ticket" asp-action="List" asp-route-CreatorName="@item.GetUserName()" asp-route-CreatorId="@item.Id" class="text-primary">
+                                                        <i class="bx bx-conversation fe-24"></i>
+                                                    </a>
                                                 }
                                                 else
                                                 {

@@ -6,6 +6,7 @@ using Hexagon.Domain.Models.KeyWords;
 using Hexagon.Domain.Models.Links;
 using Hexagon.Domain.Models.Orders;
 using Hexagon.Domain.Models.Records;
+using Hexagon.Domain.Models.Tickets;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.Models.Wallets;
 using Hexagon.Infra.Data.DataExtensions;
@@ -48,14 +49,19 @@ namespace Hexagon.Infra.Data.Context
         public DbSet<GymStaff> GymStaffs { get; set; }
         #endregion
 
+        #region Orders
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<ClassOrder> ClassOrders { get; set; }
+        #endregion
+
         #region Records
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<Experience> Experiences { get; set; }
         #endregion
 
-        #region Orders
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<ClassOrder> ClassOrders { get; set; }
+        #region Tickets
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketMessage> TicketMessages { get; set; }
         #endregion
 
         #region Users
