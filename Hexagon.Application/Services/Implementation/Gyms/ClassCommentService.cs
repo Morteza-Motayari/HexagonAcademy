@@ -17,13 +17,16 @@ using Hexagon.Domain.ViewModels.Users.Roles;
 using Hexagon.Application.Extensions;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Infra.Data.Repositories.Users;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Hexagon.Application.Services.Implementation.Gyms
 {
     public class ClassCommentService(IClassCommentRepository classCommentRepository
         ,IUserRepository userRepository
         ,ISportClassRepository sportClassRepository
-        ,IClassCommentReactionRepository classCommentReactionRepository) : IClassCommentService
+        ,IClassCommentReactionRepository classCommentReactionRepository
+        ,IHttpContextAccessor httpContextAccessor) : IClassCommentService
     {
         public async Task<AdminSideDetailClassCommentViewModel?> AdminSideDetailClassCommentAsync(int ClassCommentId)
         {
@@ -50,6 +53,11 @@ namespace Hexagon.Application.Services.Implementation.Gyms
 
         public async Task<ClientSideCreateCommentResult> CreateClassCommentAsync(ClientSideCreateCommentViewModel model)
         {
+            int userId = int.Parse(httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value);
+            if(await classCommentRepository.ExistUserCommentForSportClass(userId,model.ClassId,model.Comment))
+            {
+                return ClientSideCreateCommentResult.DuplicatedComment;
+            }
             ClassComment classcomment = new()
             {
                 Comment = model.Comment,

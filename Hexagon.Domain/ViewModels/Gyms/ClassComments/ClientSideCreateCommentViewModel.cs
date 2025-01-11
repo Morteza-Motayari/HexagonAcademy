@@ -17,6 +17,7 @@ namespace Hexagon.Domain.ViewModels.Gyms.ClassComments
     }
     public enum ClientSideCreateCommentResult
     {
-        Success
+        Success,
+        DuplicatedComment
     }
 }

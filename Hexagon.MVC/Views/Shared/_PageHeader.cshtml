@@ -7,26 +7,26 @@
             </button>
             <a class="navbar-brand h1 align-self-center" href="/">
                 @* <i class='bx bx-dumbbell text-dark '></i> *@
-                <img src="/img/logo/photo_2025-01-09_00-21-22.png" class="navbar-brand-img brand-sm" style="width:2.5rem" />
-                <span class="text-dark h4">باشگاه</span> <span class="text-green h4">هگزاگون@* قلب سبز *@</span>
+                <img src="/img/logo/logo.jpg" class="navbar-brand-img brand-sm" style="width:2.5rem" />
+                <span class="text-dark h4">باشگاه</span> <span class="text-green h4">قلب سبز</span>
             </a>
             <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="navbar-toggler-success">
                 <div class="flex-fill mx-xl-5 mb-2">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-xl-5 text-center text-dark">
                         <li class="nav-item">
                             <a class="nav-link btn-outline-primary rounded-pill px-3" href="/">خانه</a>
-                        </li>                        
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" asp-area="" asp-controller="Trainer" asp-action="List">مربی ها</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link btn-outline-primary rounded-pill px-3" asp-area="" asp-controller="SportClass" asp-action="List">کلاس های ورزشی</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="pricing.html">خدمات</a>
-                        </li>
+                        </li>                       
                         <li class="nav-item">
                             <a class="nav-link btn-outline-primary rounded-pill px-3" asp-area="" asp-controller="ContactUs" asp-action="ContactUs">ارتباط با ما</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="about.html">درباره ما</a>
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" asp-area="" asp-controller="AboutUs" asp-action="AboutUs">درباره ما</a>
                         </li>
                     </ul>
                 </div>

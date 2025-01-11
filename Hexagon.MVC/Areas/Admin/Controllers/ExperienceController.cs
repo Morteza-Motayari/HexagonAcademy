@@ -16,6 +16,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         ,IUserService userService) : AdminSideController
     {
         #region List
+        [AuthorizePermission("ManageExperiences")]
         public async Task<IActionResult> List(FilterExperienceViewModel filter)
         {
             var experiences=await experienceService.FilterExperienceesAsync(filter);
@@ -24,6 +25,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Create
+        [AuthorizePermission("AddExperience")]
         public async Task<IActionResult> Create(int staffId,int userId)
         {
             ViewData["Experiences"]=await experienceService.ListExperienceesAsync(staffId);
@@ -60,6 +62,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Edit
+        [AuthorizePermission("EditExperience")]
         public async Task<IActionResult> Edit(int id)
         {
             var experience=await experienceService.GetExperienceForEdit(id);
@@ -103,6 +106,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
+        [AuthorizePermission("DetailExperience")]
         public async Task<IActionResult> Detail(int id)
         {
             var experience = await experienceService.AdminSideDetailExperienceAsync(id);
@@ -113,7 +117,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
-        //[AuthorizePermission("DeleteExperience")]
+        [AuthorizePermission("DeleteExperience")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await experienceService.DeleteExperienceAsync(id);
@@ -134,7 +138,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete Forever
-        //[AuthorizePermission("DeleteExperienceForever")]
+        [AuthorizePermission("DeleteExperienceForever")]
         public async Task<IActionResult> DeleteForever(int id)
         {
             var result = await experienceService.DeleteExperienceForever(id);

@@ -5,6 +5,7 @@ using Hexagon.Application.Services.Interfaces.Tickets;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Tickets.TicketMessages;
 using Hexagon.Domain.ViewModels.Tickets.Tickets;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
@@ -15,6 +16,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         ,ITicketMessageService ticketMessageService) : AdminSideController
     {
         #region List
+        [AuthorizePermission("ManageTickets")]
         public async Task<IActionResult> List(FilterTicketViewModel filter)
         {
             var tickets = await ticketService.FilterTicketAsync(filter);
@@ -23,6 +25,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
+        [AuthorizePermission("DetailTicket")]
         public async Task<IActionResult> Detail(int id)
         {
             ViewData["TicketCreatorId"]=await ticketService.GetTicketCreatorIdAsync(id);
@@ -35,6 +38,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
+        [AuthorizePermission("DeleteTicket")]
         public async Task<IActionResult> DeleteTicket(int id)
         {
             var result = await ticketService.DeleteTicketAsync(id);
@@ -52,7 +56,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(List), "Ticket", new { area = "Admin" });
         }
-
+        [AuthorizePermission("DeleteTicketMessage")]
         public async Task<IActionResult> DeleteTicketMessage(int id)
         {
             var result=await ticketMessageService.AdminSideDeleteTicketMessageAsync(id);
@@ -73,6 +77,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete Forever
+        [AuthorizePermission("DeleteTicketForever")]
         public async Task<IActionResult> DeleteForeverTicket(int id)
         {
             var result = await ticketService.DeleteTicketForeverAsync(id);
@@ -94,6 +99,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(List), "Ticket", new { area = "Admin" });
         }
+        [AuthorizePermission("DeleteTicketMessageForever")]
         public async Task<IActionResult> DeleteForeverTicketMessage(int id)
         {
             var result = await ticketMessageService.DeleteTicketMessageForeverAsync(id);
@@ -119,6 +125,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
 
         #region Answer
         [HttpPost]
+        [AuthorizePermission("AnswerTicket")]
         public async Task<IActionResult> Answer(AdminSideAnswerTicketMessageViewModel model)
         {
             var result = await ticketMessageService.AdminSideAnswerTicketMessageAsync(model);
@@ -139,6 +146,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region ChangeStatus
+        [AuthorizePermission("ChangeTicketStatus")]
         public IActionResult ChangeStatus(int id) 
         {
             return PartialView("_ChangeStatus", new UpdateTicketStatusViewModel { TicketId=id});

@@ -15,8 +15,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
     public class ClassCommentController(IClassCommentService classCommentService) : AdminSideController
     {
         #region List
-        //TODO adding new permissions
-        //[AuthorizePermission("ManageClassComments")]
+        [AuthorizePermission("ManageClassComments")]
         public async Task<IActionResult> List(FilterCommentViewModel filter, int sportClassId)
         {
             ViewData["SportClassId"] = sportClassId;
@@ -26,6 +25,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Get Comment
+        [AuthorizePermission("GetComments")]
         public async Task<IActionResult> CommentView(int commentId)
         {
             var comment=await classCommentService.GetClassCommentForViewAdminAsync(commentId);
@@ -34,6 +34,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Change Status
+        [AuthorizePermission("ChangeCommentStatus")]
         public async Task<IActionResult> AcceptComment(int id)
         {
             var comment = await classCommentService.AcceptCommentAsync(id);
@@ -58,7 +59,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 message = ErrorMessages.ErrorOccured
             });
         }
-
+        [AuthorizePermission("ChangeCommentStatus")]
         public async Task<IActionResult> RejectComment(int id)
         {
             var comment = await classCommentService.RejectCommentAsync(id);
@@ -86,7 +87,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
-        //[AuthorizePermission("DetailSport")]
+        [AuthorizePermission("DetailComment")]
         public async Task<IActionResult> Detail(int id)
         {
             var commeny = await classCommentService.AdminSideDetailClassCommentAsync(id);
@@ -98,7 +99,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
-        //[AuthorizePermission("DeleteSport")]
+        [AuthorizePermission("DeleteComment")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await classCommentService.DeleteClassCommentAsync(id);
@@ -119,6 +120,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete Forever
+        [AuthorizePermission("DeleteCommentForever")]
         public async Task<IActionResult> DeleteForever(int id)
         {
             var result = await classCommentService.DeleteClassCommentForever(id);

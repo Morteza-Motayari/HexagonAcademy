@@ -1,9 +1,12 @@
 ﻿@using Hexagon.Application.Extensions
+@using Hexagon.Application.Services.Interfaces.Users
 @using Hexagon.Application.Statics
 @using Hexagon.Domain.ViewModels.Users.Users
+@inject IStaffService staffService
 @model UserClientSideView
 @{
     int budget = (int)ViewData["Budget"];
+    int userId = User.GetUserId();
 }
 <div class="user-options">
     <div class="user-option user-option--account">
@@ -37,31 +40,28 @@
                                     </a>
                                 </span>
                             </li>
-                            <li>
-                                <span class="label">باشگاه مشتریان</span>
-                                <span class="detail">
-                                    <span class="d-block">۰ <span class="score text-muted fs-7">امتیاز</span></span>
-                                </span>
-                            </li>
                         </ul>
                     </div>
                 </div>
                 <ul class="nav nav-items-with-icon flex-column">
+                    @if (await staffService.UserHasPermission(userId))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link nav-decor" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                <i class="nav-link-icon bx bx-laptop bxs"></i>
+                                مدیریت سایت
+                            </a>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a class="nav-link nav-decor" asp-area="UserManagement" asp-controller="SportClass" asp-action="List">
                             <i class="nav-link-icon bx bxs-category bxs"></i>
                             کلاس
                             های من
                         </a>
-                    </li>
+                    </li>                    
                     <li class="nav-item ">
-                        <a class="nav-link nav-decor" href="#">
-                            <i class="nav-link-icon bx bx-dumbbell bxs"></i>
-                            باشگاه ورزشی
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link nav-decor" asp-controller="Account" asp-action="LogOut">
+                        <a class="nav-link nav-decor" asp-area="" asp-controller="Account" asp-action="LogOut">
                             <i class="nav-link-icon bx bx-log-out bxs"></i>
                             خروج
                         </a>
@@ -69,11 +69,5 @@
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="user-option">
-        <a href="#" class="user-option-btn user-option-btn--account">
-            <i class="bx bxs-heart"></i>
-            <span class="counter">۲</span>
-        </a>
     </div>
 </div>

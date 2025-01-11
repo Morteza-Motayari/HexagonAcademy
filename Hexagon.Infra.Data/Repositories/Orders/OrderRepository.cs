@@ -45,7 +45,11 @@ namespace Hexagon.Infra.Data.Repositories.Orders
 
             if (filter.UserName != null)
             {
-                query = query.Where(r => r.User.FirstName.Contains(filter.UserName)|| r.User.LastName.Contains(filter.UserName)).Distinct();
+                string[] search = filter.UserName.Split(' ');
+                foreach (string name in search)
+                {
+                    query = query.Where(r => r.User.FirstName.Contains(name) || r.User.LastName.Contains(name)).Distinct();
+                }
             }
 
             #endregion

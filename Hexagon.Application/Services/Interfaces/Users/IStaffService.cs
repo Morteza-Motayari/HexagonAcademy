@@ -21,7 +21,9 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<TrainerViewModel> GetTrainerWithName(int trainerId);
         Task<DeleteForeverTrainerResult> DeleteTrainerForever(int TrainerId);
         Task<string> CantDeleteTrainerForeverNowMessage(int TrainerId);
-
+        Task<ClientSideFilterTrainerViewModel> ClientSideFilterTrainerAsync(ClientSideFilterTrainerViewModel filter);
+        Task<List<ClientSideTrainerViewModel>> GetTrainersForHomePageAsync();
+        Task<ClientSideTrainerDetailViewModel?> GetTrainerDetailAsync(string slug);
         #endregion
 
         #region Cader
@@ -34,6 +36,7 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<bool> UserHasPermission(int userId);
         Task<DeleteForeverCaderResult> DeleteCaderForever(int CaderId);
         Task<string> CantDeleteCaderForeverNowMessage(int CaderId);
+        Task<List<ClientSideCaderViewModel>?> GetCadersForAbouUsPageAsync();
         #endregion
     }
 }

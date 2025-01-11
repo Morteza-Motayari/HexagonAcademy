@@ -2,6 +2,8 @@
 using Hexagon.Domain.Models.Records;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.ViewModels.Users.Roles;
+using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
+using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
 using Hexagon.Domain.ViewModels.Users.Users;
 using System;
 using System.Collections.Generic;
@@ -32,5 +34,10 @@ namespace Hexagon.Domain.Interfaces
         Task<UserGender?> GetUserGenderAsync(int userId);
         Task<DateTime> GetLastModifiedDate(int id);
         Task<string?> GetUserAvatar(int userId);
+        Task<ClientSideFilterTrainerViewModel> ClientSideFilterTrainer(ClientSideFilterTrainerViewModel filter);
+        Task<List<ClientSideTrainerViewModel>?> GetTrainersForHomePage();
+        Task<User?> GetUserBySlug(string slug);
+        Task<List<ClientSideCaderViewModel>?> GetCadersForAbouUsPage();
+
     }
 }

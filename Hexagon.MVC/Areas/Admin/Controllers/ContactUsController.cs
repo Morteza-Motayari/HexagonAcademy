@@ -15,7 +15,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
     public class ContactUsController(IContactUsService contactUsService) : AdminSideController
     {
         #region List
-        //[AuthorizePermission("ManageSportClasses")]
+        [AuthorizePermission("ManageContactUses")]
         public async Task<IActionResult> List(FilterContactUsViewModel filter)
         {
             var list = await contactUsService.FilterContactUsAsync(filter);
@@ -25,6 +25,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
 
         #region Answer
         [HttpGet]
+        [AuthorizePermission("AnswerContactUs")]
         public async Task<IActionResult> Answer(int id)
         {
             var contact=await contactUsService.GetContactUsForAnswer(id);
@@ -86,7 +87,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
-        //[AuthorizePermission("DetailCertificate")]
+        [AuthorizePermission("DetailContactUs")]
         public async Task<IActionResult> Detail(int id)
         {
             var contact = await contactUsService.AdminSideDetailContactUsAsync(id);
@@ -98,7 +99,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
-        //[AuthorizePermission("DeleteCertificate")]
+        [AuthorizePermission("DeleteContactUs")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await contactUsService.DeleteContactUsAsync(id);
@@ -119,6 +120,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete Forever
+        [AuthorizePermission("DeleteContactUsForever")]
         public async Task<IActionResult> DeleteForever(int id)
         {
             var result = await contactUsService.DeleteContactUsForever(id);

@@ -3,6 +3,7 @@ using Hexagon.Application.Services.Interfaces.Banners;
 using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Banners;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -12,6 +13,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #region List
         [HttpGet]
         [Route("/Admin/Banner")]
+        [AuthorizePermission("ManageBanners")]
         public async Task<IActionResult> Banner()
         {
             ViewData["Banners"]=await bannerService.ListBannersAsync();
@@ -19,6 +21,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         }
         [HttpPost]
         [Route("/Admin/Banner")]
+        [AuthorizePermission("AddBanner")]
         public async Task<IActionResult> Banner(CreateBannerViewModel model)
         {
             #region Validations
@@ -45,7 +48,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             return View(model);
         }
         #endregion
-
+        [AuthorizePermission("DeleteBanner")]
         public async Task Delete(int id)
         {
             if (id == 0)

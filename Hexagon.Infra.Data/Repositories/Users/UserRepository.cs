@@ -12,6 +12,8 @@ using Hexagon.Infra.Data.DataExtensions;
 using Hexagon.Domain.Models.Records;
 using System.Collections.ObjectModel;
 using Hexagon.Domain.Interfaces.Links;
+using Hexagon.Domain.ViewModels.Users.Staffs.Trainers;
+using Hexagon.Domain.ViewModels.Users.Staffs.Caders;
 
 namespace Hexagon.Infra.Data.Repositories
 {
@@ -242,5 +244,59 @@ namespace Hexagon.Infra.Data.Repositories
 
         public async Task<string?> GetUserAvatar(int userId)
         => await _db.Users.Where(u=>u.Id==userId).Select(u=>u.Avatar).FirstAsync();
+
+        public async Task<ClientSideFilterTrainerViewModel> ClientSideFilterTrainer(ClientSideFilterTrainerViewModel filter)
+        {
+            var query = _db.Users.Include(t=>t.staffes).ThenInclude(t=>t.UserCertificates).Include(t=>t.UserCertificates)
+                .Where(u=>!u.IsDeleted&&u.staffes.Where(t=>!t.IsDeleted&&t.UserCertificates.Count()>0).Any()).AsQueryable();
+
+
+            query = query.OrderByDescending(u => u.CreatedDate);
+
+            await filter.Paging(query.Select(u => new ClientSideTrainerViewModel
+            {
+                Slug=u.Slug,
+                Avatar=u.Avatar,
+                email=u.email,
+                FullName=u.FirstName+" "+u.LastName,
+                Position=u.staffes.Select(t=>t.Position).First()
+            }));
+            return filter;
+        }
+
+        public async Task<List<ClientSideTrainerViewModel>?> GetTrainersForHomePage()
+        =>await _db.Users.Include(t => t.staffes).ThenInclude(t => t.UserCertificates).Include(t => t.UserCertificates)
+                .Where(u => !u.IsDeleted && u.staffes.Where(t => !t.IsDeleted && t.UserCertificates.Count() > 0).Any())
+                .OrderBy(r => Guid.NewGuid()).Take(6).Select(t => new ClientSideTrainerViewModel
+                {
+                    Avatar = t.Avatar,
+                    email = t.email,
+                    FullName = t.FirstName + " " + t.LastName,
+                    Slug = t.Slug,
+                    Position = t.staffes.Where(s => !s.IsDeleted && s.UserCertificates.Count() > 0).Select(t => t.Position).First()
+                }).ToListAsync();
+
+        public async Task<User?> GetUserBySlug(string slug)
+        =>await _db.Users.Where(s=>s.Slug==slug)
+            .Select(u=>new User
+            {
+                Id= u.Id,
+                Avatar=u.Avatar,
+                FirstName=u.FirstName,
+                LastName=u.LastName,
+                email=u.email,
+                Slug=u.Slug
+            }).FirstOrDefaultAsync();
+
+        public async Task<List<ClientSideCaderViewModel>?> GetCadersForAbouUsPage()
+        =>await _db.Users.Include(t => t.staffes).ThenInclude(t => t.userRoles).Include(t => t.userRoles)
+                .Where(u => !u.IsDeleted && u.staffes.Where(t => !t.IsDeleted && t.userRoles.Count() > 0).Any())
+                .OrderBy(r => Guid.NewGuid()).Take(3).Select(t => new ClientSideCaderViewModel
+                {
+                    Avatar = t.Avatar,
+                    email = t.email,
+                    FullName = t.FirstName + " " + t.LastName,
+                    Position = t.staffes.Where(s=>!s.IsDeleted&&s.userRoles.Count()>0).Select(t => t.Position).First()
+                }).ToListAsync();
     }
 }

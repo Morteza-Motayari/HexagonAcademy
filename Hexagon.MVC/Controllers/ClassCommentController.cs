@@ -44,6 +44,12 @@ namespace Hexagon.MVC.Controllers
                         status = 200,
                         message = SuccessMessages.CommentAddedSuccessfully
                     });
+                case ClientSideCreateCommentResult.DuplicatedComment:
+                    return Ok(new
+                    {
+                        status = 409,
+                        message = ErrorMessages.CommentAddedBefore
+                    });
             }
             return Ok(new
             {

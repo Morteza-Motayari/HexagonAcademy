@@ -232,5 +232,13 @@ namespace Hexagon.Infra.Data.Repositories
 
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.Staffs.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
+        public async Task<Staff?> GetStaffByUserSlug(string slug)
+        => await _db.Staffs.Include(u=>u.user).Include(u=>u.UserCertificates).Where(t=>!t.IsDeleted&&t.user.Slug== slug&&t.UserCertificates.Count()>0)
+            .Select(s=>new Staff
+            {
+                Id=s.Id,
+                Position=s.Position
+            }).FirstOrDefaultAsync();
     }
 }

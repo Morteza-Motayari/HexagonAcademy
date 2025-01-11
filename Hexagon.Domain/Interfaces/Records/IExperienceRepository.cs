@@ -16,5 +16,6 @@ namespace Hexagon.Domain.Interfaces
         Task<List<ExperienceViewModel>?> GetAllExperiencesAsync(int userId);
         Task<FilterExperienceViewModel> FilterExperienceAsync(FilterExperienceViewModel filter);
         Task<DateTime> GetLastModifiedDate(int id);
+        Task<List<ClientSideExperienceViewModel>> GetTrainerExperienceForClientSide(int staffId);
     }
 }

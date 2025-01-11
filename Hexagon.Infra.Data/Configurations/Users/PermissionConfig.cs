@@ -416,6 +416,238 @@ namespace Hexagon.Infra.Data.Configurations.Users
                 });
             #endregion
 
+            #region Class Comment
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 86,
+                    PermissionName = "ManageClassComments",
+                    PermissionTitle = "مدیریت نظرات کلاس ها"
+                },
+                new Permission
+                {
+                    PermissionId = 87,
+                    PermissionName = "GetComments",
+                    PermissionTitle = "مشاهده نظر",
+                    ParentId = 86
+                }, new Permission
+                {
+                    PermissionId = 88,
+                    PermissionName = "ChangeCommentStatus",
+                    PermissionTitle = "تغییر وضعیت نظر",
+                    ParentId = 86
+                }, new Permission
+                {
+                    PermissionId = 89,
+                    PermissionName = "DeleteComment",
+                    PermissionTitle = "حذف نظر",
+                    ParentId = 86
+                }, new Permission
+                {
+                    PermissionId = 90,
+                    PermissionName = "DetailComment",
+                    PermissionTitle = "جزئیات نظر",
+                    ParentId = 86
+                }, new Permission
+                {
+                    PermissionId = 91,
+                    PermissionName = "DeleteCommentForever",
+                    PermissionTitle = "حذف مطلق نظر",
+                    ParentId = 86
+                });
+            #endregion
+
+            #endregion
+
+            #region Banners
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 59,
+                    PermissionName = "ManageBanners",
+                    PermissionTitle = "مدیریت بنرها"
+                },
+                new Permission
+                {
+                    PermissionId = 60,
+                    PermissionName = "AddBanner",
+                    PermissionTitle = "افزودن بنر",
+                    ParentId = 59
+                }, new Permission
+                {
+                    PermissionId = 61,
+                    PermissionName = "DeleteBanner",
+                    PermissionTitle = "افزودن بنر",
+                    ParentId = 59
+                });
+            #endregion
+
+            #region Contact Us
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 62,
+                    PermissionName = "ManageContactUses",
+                    PermissionTitle = "مدیریت ارتباط با ما"
+                }, new Permission
+                {
+                    PermissionId = 63,
+                    PermissionName = "AnswerContactUs",
+                    PermissionTitle = "ویرایش ارتباط با ما",
+                    ParentId = 62
+                }, new Permission
+                {
+                    PermissionId = 64,
+                    PermissionName = "DeleteContactUs",
+                    PermissionTitle = "حذف ارتباط با ما",
+                    ParentId = 62
+                }, new Permission
+                {
+                    PermissionId = 65,
+                    PermissionName = "DetailContactUs",
+                    PermissionTitle = "جزئیات ارتباط با ما",
+                    ParentId = 62
+                }, new Permission
+                {
+                    PermissionId = 66,
+                    PermissionName = "DeleteContactUsForever",
+                    PermissionTitle = "حذف مطلق ارتباط با ما",
+                    ParentId = 62
+                });
+            #endregion
+
+            #region Key Words
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 67,
+                    PermissionName = "ManageKeyWords",
+                    PermissionTitle = "مدیریت کلمات کلیدی"
+                },
+                new Permission
+                {
+                    PermissionId = 68,
+                    PermissionName = "AddKeyWord",
+                    PermissionTitle = "افزودن کلمه کلیدی",
+                    ParentId = 67
+                }, new Permission
+                {
+                    PermissionId = 69,
+                    PermissionName = "EditKeyWord",
+                    PermissionTitle = "ویرایش کلمه کلیدی",
+                    ParentId = 67
+                }, new Permission
+                {
+                    PermissionId = 70,
+                    PermissionName = "DeleteKeyWord",
+                    PermissionTitle = "حذف کلمه کلیدی",
+                    ParentId = 67
+                }, new Permission
+                {
+                    PermissionId = 71,
+                    PermissionName = "DetailKeyWord",
+                    PermissionTitle = "جزئیات کلمه کلیدی",
+                    ParentId = 67
+                }, new Permission
+                {
+                    PermissionId = 72,
+                    PermissionName = "DeleteKeyWordForever",
+                    PermissionTitle = "حذف مطلق کلمه کلیدی",
+                    ParentId = 67
+                });
+            #endregion
+
+            #region Tickets
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 73,
+                    PermissionName = "ManageTickets",
+                    PermissionTitle = "مدیریت تیکت ها"
+                },
+                new Permission
+                {
+                    PermissionId = 74,
+                    PermissionName = "AnswerTicket",
+                    PermissionTitle = "پاسخ تیکت",
+                    ParentId = 73
+                },
+                new Permission
+                {
+                    PermissionId = 75,
+                    PermissionName = "ChangeTicketStatus",
+                    PermissionTitle = "تغییر وضعیت تیکت",
+                    ParentId = 73
+                }, new Permission
+                {
+                    PermissionId = 76,
+                    PermissionName = "DeleteTicket",
+                    PermissionTitle = "حذف تیکت",
+                    ParentId = 73
+                }, new Permission
+                {
+                    PermissionId = 77,
+                    PermissionName = "DetailTicket",
+                    PermissionTitle = "جزئیات تیکت",
+                    ParentId = 73
+                }, new Permission
+                {
+                    PermissionId = 78,
+                    PermissionName = "DeleteTicketForever",
+                    PermissionTitle = "حذف مطلق تیکت",
+                    ParentId = 73
+                }, new Permission
+                {
+                    PermissionId = 79,
+                    PermissionName = "DeleteTicketMessage",
+                    PermissionTitle = "حذف پیام تیکت",
+                    ParentId = 73
+                }, new Permission
+                {
+                    PermissionId = 80,
+                    PermissionName = "DeleteTicketMessageForever",
+                    PermissionTitle = "حذف مطلق پیام تیکت",
+                    ParentId = 73
+                });
+            #endregion
+
+            #region Wallets
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 81,
+                    PermissionName = "ManageWallets",
+                    PermissionTitle = "مدیریت کیف پول ها"
+                },
+                new Permission
+                {
+                    PermissionId = 82,
+                    PermissionName = "ChargeUserWallet",
+                    PermissionTitle = "شارژ کیف پول کاربر",
+                    ParentId = 81
+                }, new Permission
+                {
+                    PermissionId = 83,
+                    PermissionName = "DetailWallet",
+                    PermissionTitle = "جزئیات کیف پول",
+                    ParentId = 81
+                });
+            #endregion
+
+            #region Orders
+                        builder.HasData(
+                new Permission
+                {
+                    PermissionId = 84,
+                    PermissionName = "ManageOrders",
+                    PermissionTitle = "مدیریت فاکتور ها"
+                }, new Permission
+                {
+                    PermissionId = 85,
+                    PermissionName = "DetailOrder",
+                    PermissionTitle = "جزئیات فاکتور",
+                    ParentId = 84
+                });
             #endregion
         }
     }

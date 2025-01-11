@@ -190,7 +190,7 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         }).ToListAsync();
 
         public async Task<SportClass?> GetClassBySlugAsync(string slug)
-        =>await _db.SportClasses.Include(s=>s.sport).FirstAsync(u => u.Slug == slug);
+        =>await _db.SportClasses.Include(s=>s.sport).Where(s=>s.Slug==slug).FirstOrDefaultAsync();
 
         public async Task<int> GetMaxClassAthleteSpace(int sportClassId)
         => await _db.SportClasses.Where(c=>c.Id == sportClassId).Select(s=>s.MaxSubscription).FirstAsync();

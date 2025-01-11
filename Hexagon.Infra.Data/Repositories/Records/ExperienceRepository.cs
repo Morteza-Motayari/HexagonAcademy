@@ -105,5 +105,16 @@ namespace Hexagon.Infra.Data.Repositories
 
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.Experiences.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+
+        public async Task<List<ClientSideExperienceViewModel>> GetTrainerExperienceForClientSide(int staffId)
+        => await _db.Experiences.Where(e=>!e.IsDeleted&&e.StaffId== staffId)
+            .Select(t=>new ClientSideExperienceViewModel
+            {
+                Certificate= _db.Certificates.Where(c => c.Id == t.CertificateId).Select(c => c.Name).First(),
+                Company=t.Company,
+                Detail=t.Detail,
+                HowLong=t.HowLong,
+                Title=t.Title
+            }).ToListAsync();
     }
 }

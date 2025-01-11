@@ -25,6 +25,10 @@ namespace Hexagon.Infra.Data.Repositories.Gyms
         public async Task<int> CommentClassId(int commentId)
         => await _db.ClassComments.Where(c => c.Id == commentId).Select(u => u.SportClassId).FirstAsync();
 
+        public async Task<bool> ExistUserCommentForSportClass(int userId, int classId, string comment)
+        => await _db.ClassComments
+            .AnyAsync(c => !c.IsDeleted && c.CreatedBy == userId && c.SportClassId == classId && c.Comment == comment);
+
         public async Task<FilterCommentViewModel> FilterCommentAsync(FilterCommentViewModel filter)
         {
             var query = _db.ClassComments.Include(c=>c.User).Include(s=>s.sportClass).AsQueryable();

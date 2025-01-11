@@ -124,7 +124,7 @@ namespace Hexagon.MVC.Controllers
                 {
                     return View("ErrorPayment", new ErrorPaymentViewModel()
                     {
-                        Message = ErrorMessages.ErrorOccuredContactUs,
+                        Message = ErrorMessages.ErrorOccuredSendTicketToUs,
                         RefId = result.Data.RefId
                     });
                 }
@@ -170,12 +170,12 @@ namespace Hexagon.MVC.Controllers
             {
                 return View("ErrorPayment", new ErrorPaymentViewModel()
                 {
-                    Message = ErrorMessages.ErrorOccuredContactUs
+                    Message = ErrorMessages.ErrorOccuredSendTicketToUs
                 });
             }
             return View("ErrorPayment", new ErrorPaymentViewModel()
             {
-                Message = ErrorMessages.ErrorOccuredContactUs
+                Message = ErrorMessages.ErrorOccuredSendTicketToUs
             });
         }
     }

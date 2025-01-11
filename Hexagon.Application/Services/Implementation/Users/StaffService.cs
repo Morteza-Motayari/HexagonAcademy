@@ -27,7 +27,8 @@ namespace Hexagon.Application.Services.Implementation.Users
         ,ICertificateRepository certificateRepository,
         ISportRepository sportRepository,
         IRoleRepository roleRepository,
-        IUserRoleRepository userRoleRepository) : IStaffService
+        IUserRoleRepository userRoleRepository,
+        IExperienceRepository experienceRepository) : IStaffService
     {
         public async Task<AdminSideDetailCaderViewModel?> AdminSideDetailCaderAsync(int CaderId)
         {
@@ -105,6 +106,9 @@ namespace Hexagon.Application.Services.Implementation.Users
             int leftdays = lastEdit.HowManyDayLeftToDelete();
             return $"شما فعلا توانایی حذف مطلق این مربی تا {leftdays} روز آینده را ندارید.";
         }
+
+        public async Task<ClientSideFilterTrainerViewModel> ClientSideFilterTrainerAsync(ClientSideFilterTrainerViewModel filter)
+        => await userRepository.ClientSideFilterTrainer(filter);
 
         public async Task<CreateCaderResult> CreateCaderAsync(CreateCaderViewModel model)
         {
@@ -216,6 +220,7 @@ namespace Hexagon.Application.Services.Implementation.Users
             #region Changing User Situation
             user.Situation = UserSituation.Trainer;
             userRepository.Update(user);
+            await userRepository.SaveChangeAsync();
             #endregion
 
             await staffRepository.InserAsync(trainer);
@@ -333,6 +338,29 @@ namespace Hexagon.Application.Services.Implementation.Users
             };
         }
 
+        public async Task<List<ClientSideCaderViewModel>?> GetCadersForAbouUsPageAsync()
+        => await userRepository.GetCadersForAbouUsPage();
+
+        public async Task<ClientSideTrainerDetailViewModel?> GetTrainerDetailAsync(string slug)
+        {
+            var user= await userRepository.GetUserBySlug(slug);
+            if(user == null) 
+                return null;
+            var trainer=await staffRepository.GetStaffByUserSlug(slug);
+            if(trainer == null)
+                return null;
+
+            return new ClientSideTrainerDetailViewModel()
+            {
+                Avatar = user.Avatar,
+                FullName = user.GetUserName(),
+                email = user.email,
+                Slug = user.Slug,
+                Position = trainer.Position,
+                Experiences = await experienceRepository.GetTrainerExperienceForClientSide(trainer.Id)
+            };
+        }
+
         public async Task<UpdateTrainerViewModel?> GetTrainerForEdit(int TrainerId)
         {
             var trainer = await staffRepository.GetByIdAsync(TrainerId);
@@ -349,6 +377,9 @@ namespace Hexagon.Application.Services.Implementation.Users
                 TrainerName = await userRepository.GetJustUserName(trainer.UserId)
             };
         }
+
+        public Task<List<ClientSideTrainerViewModel>> GetTrainersForHomePageAsync()
+        => userRepository.GetTrainersForHomePage();
 
         public async Task<TrainerViewModel> GetTrainerWithName(int trainerId)
         {

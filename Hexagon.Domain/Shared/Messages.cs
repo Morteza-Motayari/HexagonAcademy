@@ -246,6 +246,7 @@ namespace Hexagon.Domain.Shared
 
         #region Comment
         public static string CommentNotFound = "نظر مدنظر پیدا نشده است.";
+        public static string CommentAddedBefore = "نظری مطابق با این قبلا از طرف شما ثبت شده است.";
         public static string CommentAlreadyDeleted = "نظر مدنظر قبلا حذف شده است.";
         public static string FirstSimpleDeleteComment = "ابتدا نظر مد نظر را به طور ساده حذف بکنید.";
         #endregion
@@ -263,7 +264,7 @@ namespace Hexagon.Domain.Shared
 
         #region Payment
         public static string ErrorOccuredWhileEnteringGateway = "عملیات پرداخت با شکست مواجه شد لطفا دقایقی دیگر تلاش بکنید.";
-        public static string ErrorOccuredContactUs = "خطایی رخ داده است لطفا مشکل را از طریق تماس با ما اطلاع رسانی بکنید.";
+        public static string ErrorOccuredSendTicketToUs = "خطایی رخ داده است لطفا مشکل را از طریق تیکت مشکل خود را مطرح بکنید.";
         #endregion
 
         #region Order

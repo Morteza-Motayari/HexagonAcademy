@@ -1279,6 +1279,230 @@ namespace Hexagon.Infra.Data.Migrations
                             ParentId = 51,
                             PermissionName = "DeleteSportClassForever",
                             PermissionTitle = "حذف مطلق کلاس ورزشی"
+                        },
+                        new
+                        {
+                            PermissionId = 86,
+                            PermissionName = "ManageClassComments",
+                            PermissionTitle = "مدیریت نظرات کلاس ها"
+                        },
+                        new
+                        {
+                            PermissionId = 87,
+                            ParentId = 86,
+                            PermissionName = "GetComments",
+                            PermissionTitle = "مشاهده نظر"
+                        },
+                        new
+                        {
+                            PermissionId = 88,
+                            ParentId = 86,
+                            PermissionName = "ChangeCommentStatus",
+                            PermissionTitle = "تغییر وضعیت نظر"
+                        },
+                        new
+                        {
+                            PermissionId = 89,
+                            ParentId = 86,
+                            PermissionName = "DeleteComment",
+                            PermissionTitle = "حذف نظر"
+                        },
+                        new
+                        {
+                            PermissionId = 90,
+                            ParentId = 86,
+                            PermissionName = "DetailComment",
+                            PermissionTitle = "جزئیات نظر"
+                        },
+                        new
+                        {
+                            PermissionId = 91,
+                            ParentId = 86,
+                            PermissionName = "DeleteCommentForever",
+                            PermissionTitle = "حذف مطلق نظر"
+                        },
+                        new
+                        {
+                            PermissionId = 59,
+                            PermissionName = "ManageBanners",
+                            PermissionTitle = "مدیریت بنرها"
+                        },
+                        new
+                        {
+                            PermissionId = 60,
+                            ParentId = 59,
+                            PermissionName = "AddBanner",
+                            PermissionTitle = "افزودن بنر"
+                        },
+                        new
+                        {
+                            PermissionId = 61,
+                            ParentId = 59,
+                            PermissionName = "DeleteBanner",
+                            PermissionTitle = "افزودن بنر"
+                        },
+                        new
+                        {
+                            PermissionId = 62,
+                            PermissionName = "ManageContactUses",
+                            PermissionTitle = "مدیریت ارتباط با ما"
+                        },
+                        new
+                        {
+                            PermissionId = 63,
+                            ParentId = 62,
+                            PermissionName = "AnswerContactUs",
+                            PermissionTitle = "ویرایش ارتباط با ما"
+                        },
+                        new
+                        {
+                            PermissionId = 64,
+                            ParentId = 62,
+                            PermissionName = "DeleteContactUs",
+                            PermissionTitle = "حذف ارتباط با ما"
+                        },
+                        new
+                        {
+                            PermissionId = 65,
+                            ParentId = 62,
+                            PermissionName = "DetailContactUs",
+                            PermissionTitle = "جزئیات ارتباط با ما"
+                        },
+                        new
+                        {
+                            PermissionId = 66,
+                            ParentId = 62,
+                            PermissionName = "DeleteContactUsForever",
+                            PermissionTitle = "حذف مطلق ارتباط با ما"
+                        },
+                        new
+                        {
+                            PermissionId = 67,
+                            PermissionName = "ManageKeyWords",
+                            PermissionTitle = "مدیریت کلمات کلیدی"
+                        },
+                        new
+                        {
+                            PermissionId = 68,
+                            ParentId = 67,
+                            PermissionName = "AddKeyWord",
+                            PermissionTitle = "افزودن کلمه کلیدی"
+                        },
+                        new
+                        {
+                            PermissionId = 69,
+                            ParentId = 67,
+                            PermissionName = "EditKeyWord",
+                            PermissionTitle = "ویرایش کلمه کلیدی"
+                        },
+                        new
+                        {
+                            PermissionId = 70,
+                            ParentId = 67,
+                            PermissionName = "DeleteKeyWord",
+                            PermissionTitle = "حذف کلمه کلیدی"
+                        },
+                        new
+                        {
+                            PermissionId = 71,
+                            ParentId = 67,
+                            PermissionName = "DetailKeyWord",
+                            PermissionTitle = "جزئیات کلمه کلیدی"
+                        },
+                        new
+                        {
+                            PermissionId = 72,
+                            ParentId = 67,
+                            PermissionName = "DeleteKeyWordForever",
+                            PermissionTitle = "حذف مطلق کلمه کلیدی"
+                        },
+                        new
+                        {
+                            PermissionId = 73,
+                            PermissionName = "ManageTickets",
+                            PermissionTitle = "مدیریت تیکت ها"
+                        },
+                        new
+                        {
+                            PermissionId = 74,
+                            ParentId = 73,
+                            PermissionName = "AnswerTicket",
+                            PermissionTitle = "پاسخ تیکت"
+                        },
+                        new
+                        {
+                            PermissionId = 75,
+                            ParentId = 73,
+                            PermissionName = "ChangeTicketStatus",
+                            PermissionTitle = "تغییر وضعیت تیکت"
+                        },
+                        new
+                        {
+                            PermissionId = 76,
+                            ParentId = 73,
+                            PermissionName = "DeleteTicket",
+                            PermissionTitle = "حذف تیکت"
+                        },
+                        new
+                        {
+                            PermissionId = 77,
+                            ParentId = 73,
+                            PermissionName = "DetailTicket",
+                            PermissionTitle = "جزئیات تیکت"
+                        },
+                        new
+                        {
+                            PermissionId = 78,
+                            ParentId = 73,
+                            PermissionName = "DeleteTicketForever",
+                            PermissionTitle = "حذف مطلق تیکت"
+                        },
+                        new
+                        {
+                            PermissionId = 79,
+                            ParentId = 73,
+                            PermissionName = "DeleteTicketMessage",
+                            PermissionTitle = "حذف پیام تیکت"
+                        },
+                        new
+                        {
+                            PermissionId = 80,
+                            ParentId = 73,
+                            PermissionName = "DeleteTicketMessageForever",
+                            PermissionTitle = "حذف مطلق پیام تیکت"
+                        },
+                        new
+                        {
+                            PermissionId = 81,
+                            PermissionName = "ManageWallets",
+                            PermissionTitle = "مدیریت کیف پول ها"
+                        },
+                        new
+                        {
+                            PermissionId = 82,
+                            ParentId = 81,
+                            PermissionName = "ChargeUserWallet",
+                            PermissionTitle = "شارژ کیف پول کاربر"
+                        },
+                        new
+                        {
+                            PermissionId = 83,
+                            ParentId = 81,
+                            PermissionName = "DetailWallet",
+                            PermissionTitle = "جزئیات کیف پول"
+                        },
+                        new
+                        {
+                            PermissionId = 84,
+                            PermissionName = "ManageOrders",
+                            PermissionTitle = "مدیریت فاکتور ها"
+                        },
+                        new
+                        {
+                            PermissionId = 85,
+                            ParentId = 84,
+                            PermissionName = "DetailOrder",
+                            PermissionTitle = "جزئیات فاکتور"
                         });
                 });
 

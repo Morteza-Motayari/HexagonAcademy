@@ -1,6 +1,7 @@
 ﻿using Hexagon.Application.Services.Interfaces.KeyWords;
 using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.KeyWords;
+using Hexagon.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Areas.Admin.Controllers
@@ -8,8 +9,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
     public class KeyWordController(IKeyWordService KeyWordService) : AdminSideController
     {
         #region List
-        //TODO adding new permissions
-        //[AuthorizePermission("ManageKeyWords")]
+        [AuthorizePermission("ManageKeyWords")]
         public async Task<IActionResult> List(FilterkeyWordViewModel filter,int sportClassId)
         {
             ViewData["SportClassId"] = sportClassId;
@@ -19,7 +19,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Create
-        //[AuthorizePermission("AddKeyWord")]
+        [AuthorizePermission("AddKeyWord")]
         public async Task<IActionResult> Create(int sportClassId)
         {
             ViewData["SportClassId"] = sportClassId;
@@ -63,7 +63,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Edit
-        //[AuthorizePermission("EditKeyWord")]
+        [AuthorizePermission("EditKeyWord")]
         public async Task<IActionResult> Edit(int id)
         {
             var KeyWord = await KeyWordService.GetKeyWordForEdit(id);
@@ -120,7 +120,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Detail
-        //[AuthorizePermission("DetailKeyWord")]
+        [AuthorizePermission("DetailKeyWord")]
         public async Task<IActionResult> Detail(int id)
         {
             var KeyWord = await KeyWordService.AdminSideDetailKeyWordAsync(id);
@@ -132,7 +132,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete
-        //[AuthorizePermission("DeleteKeyWord")]
+        [AuthorizePermission("DeleteKeyWord")]
         public async Task<IActionResult> Delete(int id,int ClassId)
         {
             var result = await KeyWordService.DeleteKeyWordAsync(id);
@@ -153,6 +153,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         #endregion
 
         #region Delete Forever
+        [AuthorizePermission("DeleteKeyWordForever")]
         public async Task<IActionResult> DeleteForever(int id)
         {
             var result = await KeyWordService.DeleteKeyWordForever(id);

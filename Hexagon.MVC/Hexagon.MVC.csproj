@@ -39,7 +39,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Images\Avatars\" />
     <Folder Include="wwwroot\Images\GymGalleries\" />
     <Folder Include="wwwroot\Images\Banners\" />
   </ItemGroup>

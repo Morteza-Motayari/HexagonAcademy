@@ -1,8 +1,11 @@
 ﻿@using Hexagon.Application.Extensions
+@using Hexagon.Application.Services.Interfaces.Users
 @using Hexagon.Application.Statics
 @using Hexagon.Domain.ViewModels.Users.Users
+@inject IStaffService staffService
 @model UserClientSideView
 @{
+    int userId = User.GetUserId();
     int budget = (int)ViewData["Budget"];
 }
 <div class="col-xl-3 col-lg-4 col-md-5 mb-md-0 mb-4 row-pannel-inner">
@@ -36,6 +39,15 @@
                 </div>
             </div>
             <ul class="nav nav-items-with-icon flex-column decor-ul">
+                @if (await staffService.UserHasPermission(userId))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link nav-decor" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                            <i class="nav-link-icon bx bx-laptop bxs"></i>
+                            مدیریت سایت
+                        </a>
+                    </li>
+                }
                 <li class="nav-item">
                     <a class="nav-link nav-decor" asp-area="UserManagement" asp-controller="SportClass" asp-action="List">
                         <i class="nav-link-icon bx bxs-category bxs"></i>

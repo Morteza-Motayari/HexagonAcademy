@@ -16,6 +16,7 @@ namespace Hexagon.Domain.Interfaces.Gyms
         Task<int> CommentClassId(int commentId);
         Task<DateTime> GetLastModifiedDate(int id);
         Task<ClientSideFilterCommentViewModel> GetUserComments(int userId, ClientSideFilterCommentViewModel filter);
+        Task<bool> ExistUserCommentForSportClass(int userId,int classId,string comment);
 
     }
 }

@@ -24,5 +24,6 @@ namespace Hexagon.Domain.Interfaces
         Task<bool> ExistActiveCaderForUser(int userId);
         Task<ClientSideTrainerForClass?> GetTrainerNameAndImageAsync(int staffId);
         Task<DateTime> GetLastModifiedDate(int id);
+        Task<Staff?> GetStaffByUserSlug(string slug);
     }
 }
