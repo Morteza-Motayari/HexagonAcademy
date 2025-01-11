@@ -20,6 +20,7 @@ namespace Hexagon.Infra.Data.Configurations.Gyms
                 .HasMaxLength(230);
             builder.Property(g => g.Detail).HasMaxLength(1000);
             builder.Property(g => g.Company).HasMaxLength(120);
+            builder.Property(g => g.HowLong).HasMaxLength(120);
         }
     }
 }

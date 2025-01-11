@@ -53,6 +53,13 @@ namespace Hexagon.Domain.Shared
         public static string CertificateDeletedForeverSuccessfully = "مدرک مدنظر به طور کامل پاک شده است.";
         #endregion
 
+        #region Experiences
+        public static string ExperienceAddedSuccessfully = "سابقه جدید برای همکار گرامی با موفقیت ثبت شده است.";
+        public static string ExperienceUpdatedSuccessfully = "سابقه مدنظر با موفقیت ویرایش شده است.";
+        public static string ExperienceDeletedSuccessfully = "سابقه مدنظر  با موفقیت حذف شده است.";
+        public static string ExperienceDeletedForeverSuccessfully = "سابقه مدنظر به طور کامل پاک شده است.";
+        #endregion
+
         #region Sport
         public static string SportAddedSuccessfully = "رشته ورزشی جدید با موفقیت اضافه شده است.";
         public static string SportUpdatedSuccessfully = "رشته ورزشی مدنظر  با موفقیت ویرایش شده است.";
@@ -186,6 +193,13 @@ namespace Hexagon.Domain.Shared
         public static string FirstSimpleDeleteCertificate = "ابتدا مدرک مد نظر را به طور ساده حذف بکنید.";
         #endregion
 
+        #region Experiences
+        public static string ExperienceNotFound = "سابقه مدنظر پیدا نشده است.";
+        public static string ExperienceDuplicated = "سابقه مدنظر قبلا ثبت شده است.";
+        public static string ExperienceAlreadyDeleted = "سابقه مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteExperience = "ابتدا سابقه مدنظر را به طور ساده حذف بکنید.";
+        #endregion
+
         #region Sport
         public static string SportNotFound = "رشته ورزشی مدنظر پیدا نشده است.";
         public static string SportDuplicated = "رشته ورزشی مدنظر قبلا ثبت شده است.";
@@ -297,6 +311,10 @@ namespace Hexagon.Domain.Shared
         public static string CertificateCantbeEdited = "این مدرک حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
 
+        #region Experiences
+        public static string ExperienceCantbeEdited = "این سابقه حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
         #region Sport
         public static string SportCantbeEdited = "این رشته ورزشی حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
@@ -321,7 +339,7 @@ namespace Hexagon.Domain.Shared
         public static string KeyWordCantbeEdited = "این کلمه کلیدی حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
 
-        #region Key Word
+        #region Contact Us
         public static string ContactUsCantbeAnsweredForDeletion = "این درخواست حذف شده است و امکان پاسخ به آن وجود ندارد.";
         public static string ContactUsAlreadyAnswered= "این درخواست قبلا به آن پاسخ داده شده است و امکان پاسخ مجدد به آن وجود ندارد.";
         #endregion

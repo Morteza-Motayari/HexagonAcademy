@@ -18,9 +18,9 @@ namespace Hexagon.Infra.Data.Repositories
         public async Task<bool> ExistSpecificSlug(string slug)
         => await _db.SportClasses.AnyAsync(u => u.Slug == slug);
 
-        public async Task<FilterExperienceViewModel> FilterExperienceAsync(FilterExperienceViewModel filter, int userId)
+        public async Task<FilterExperienceViewModel> FilterExperienceAsync(FilterExperienceViewModel filter)
         {
-            var query = _db.Experiences.Where(u=>u.UserId==userId).AsQueryable();
+            var query = _db.Experiences.Include(u=>u.user).AsQueryable();
 
             #region Filter Search
             switch (filter.Status)
@@ -40,6 +40,15 @@ namespace Hexagon.Infra.Data.Repositories
                 query = query.Where(r => r.Title.Contains(filter.Title));
             }
 
+            if (filter.UserName != null)
+            {
+                string[] search = filter.UserName.Split(' ');
+                foreach (string name in search)
+                {
+                    query = query.Where(r => r.user.FirstName.Contains(name) || r.user.LastName.Contains(name)).Distinct();
+                }
+            }
+
             #endregion
 
             query = query.OrderByDescending(u => u.CreatedDate);
@@ -54,13 +63,16 @@ namespace Hexagon.Infra.Data.Repositories
                 Company = u.Company,
                 Title = u.Title,
                 HowLong = u.HowLong,
-                UserId = userId
+                UserId = u.UserId,
+                StaffId = u.StaffId,
+                Certificate = _db.Certificates.Where(c => c.Id == u.CertificateId).Select(c => c.Name).First(),
+                UserName = _db.Users.Where(c => c.Id == u.UserId).Select(c => c.FirstName+" "+c.LastName).First()
             }));
             return filter;
         }
 
-        public async Task<List<ExperienceViewModel>?> GetAllExperiencesAsync(int userId)
-        => await _db.Experiences.Where(e=>e.UserId == userId).Include(u=>u.certificate).Select(u=>new ExperienceViewModel
+        public async Task<List<ExperienceViewModel>?> GetAllExperiencesAsync(int staffId)
+        => await _db.Experiences.Where(e=>e.StaffId == staffId).Include(u=>u.certificate).Select(u=>new ExperienceViewModel
         {
             Id = u.Id,
             IsDeleted = u.IsDeleted,
@@ -70,7 +82,8 @@ namespace Hexagon.Infra.Data.Repositories
             Company=u.Company,
             Title=u.Title,
             HowLong=u.HowLong,
-            UserId=userId
+            UserId=u.UserId,
+            StaffId=u.StaffId
         }).ToListAsync();
 
         //the below method will contoll of duplicating the slug and never gonna have similar slug

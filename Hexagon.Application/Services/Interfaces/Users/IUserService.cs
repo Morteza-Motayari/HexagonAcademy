@@ -26,5 +26,6 @@ namespace Hexagon.Application.Services.Interfaces.Users
         Task<string> CantDeleteUserForeverNowMessage(int UserId);
         Task<bool> IsUserInfoCompleted(int UserId);
         Task<string?>GetUserAvatarUrlAsync(int UserId);
+        Task<string?> GetUserNameAsync(int userId);
     }
 }

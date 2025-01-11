@@ -18,21 +18,21 @@ namespace Hexagon.Application.Services.Implementation.Gyms
     {
         public async Task<AdminSideDetailCertificateViewModel?> AdminSideDetailCertificateAsync(int CertificateId)
         {
-            var user = await CertificateRepository.GetByIdAsync(CertificateId);
-            if (user == null)
+            var certificate = await CertificateRepository.GetByIdAsync(CertificateId);
+            if (certificate == null)
                 return null;
             AdminSideDetailCertificateViewModel? Detail = new()
             {
                 Id = CertificateId,
-                Name = user.Name,
-                Details=user.Details,
-                CreatedDate = user.CreatedDate,
-                LastModifiedDate = user.LastModifiedDate,
-                CreatedBy = await userRepository.GetJustUserName(user.CreatedBy),
-                LastModifiedBy = await userRepository.GetJustUserName(user.LastModifiedBy),                
-                CreatedById = user.CreatedBy,
-                LastModifiedById = user.LastModifiedBy,
-                IsDeleted = user.IsDeleted
+                Name = certificate.Name,
+                Details= certificate.Details,
+                CreatedDate = certificate.CreatedDate,
+                LastModifiedDate = certificate.LastModifiedDate,
+                CreatedBy = await userRepository.GetJustUserName(certificate.CreatedBy),
+                LastModifiedBy = await userRepository.GetJustUserName(certificate.LastModifiedBy),                
+                CreatedById = certificate.CreatedBy,
+                LastModifiedById = certificate.LastModifiedBy,
+                IsDeleted = certificate.IsDeleted
             };
             return Detail;
         }
@@ -41,7 +41,7 @@ namespace Hexagon.Application.Services.Implementation.Gyms
         {
             DateTime lastEdit = await CertificateRepository.GetLastModifiedDate(CertificateId);
             int leftdays = lastEdit.HowManyDayLeftToDelete();
-            return $"شما فعلا توانایی حذف مطلق این کاربر تا {leftdays} روز آینده را ندارید.";
+            return $"شما فعلا توانایی حذف مطلق این مدرک تا {leftdays} روز آینده را ندارید.";
         }
 
         public async Task<CreateCertificateResult> CreateCertificateAsync(CreateCertificateViewModel model)

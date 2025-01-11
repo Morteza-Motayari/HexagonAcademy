@@ -4,6 +4,7 @@ using Hexagon.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hexagon.Infra.Data.Migrations
 {
     [DbContext(typeof(HexagonContext))]
-    partial class HexagonContextModelSnapshot : ModelSnapshot
+    [Migration("20250111054823_Changing_HowLong_In_Experience_Form_TimeSpan_To_String")]
+    partial class Changing_HowLong_In_Experience_Form_TimeSpan_To_String
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

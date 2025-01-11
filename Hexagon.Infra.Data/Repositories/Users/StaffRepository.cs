@@ -42,7 +42,11 @@ namespace Hexagon.Infra.Data.Repositories
 
             if (filter.Name != null)
             {
-                query = query.Where(r => r.user.FirstName.Contains(filter.Name) || r.user.LastName.Contains(filter.Name)).Distinct();
+                string[] search = filter.Name.Split(' ');
+                foreach (string name in search)
+                {
+                    query = query.Where(r => r.user.FirstName.Contains(name) || r.user.LastName.Contains(name)).Distinct();
+                }
             }
             if (filter.Position != null)
             {
@@ -110,7 +114,11 @@ namespace Hexagon.Infra.Data.Repositories
 
             if (filter.Name != null)
             {
-                query = query.Where(r => r.user.FirstName.Contains(filter.Name) || r.user.LastName.Contains(filter.Name)).Distinct();
+                string[] search = filter.Name.Split(' ');
+                foreach (string name in search)
+                {
+                    query = query.Where(r => r.user.FirstName.Contains(name) || r.user.LastName.Contains(name)).Distinct();
+                }
             }
             if (filter.Position != null)
             {

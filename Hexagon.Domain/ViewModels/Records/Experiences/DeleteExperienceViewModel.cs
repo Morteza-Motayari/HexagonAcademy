@@ -10,6 +10,7 @@ namespace Hexagon.Domain.ViewModels.Records.Experiences
     public enum DeleteExperienceResult
     {
         Success,
-        ExperienceNotFound
+        ExperienceNotFound,
+        ExperienceAlreadyDeleted
     }
 }

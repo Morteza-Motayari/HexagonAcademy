@@ -8,17 +8,20 @@ namespace Hexagon.Domain.Models.Records
     {
         #region Properties
         public int UserId { get; set; }
+        public int StaffId { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
         public string? Company { get; set; }
         public string? Detail { get; set; }
-        public TimeSpan HowLong { get; set; }
+        public string HowLong { get; set; }
         public int? CertificateId { get; set; }
         #endregion
 
         #region Relations
         [ForeignKey(nameof(UserId))]
         public User? user { get; set; }
+        [ForeignKey(nameof(StaffId))]
+        public Staff? staff { get; set; }
         [ForeignKey(nameof(CertificateId))]
         public Certificate? certificate { get; set; }
         #endregion

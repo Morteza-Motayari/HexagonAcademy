@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hexagon.Domain.ViewModels.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace Hexagon.Domain.ViewModels.Records.Experiences
 {
-    public class CreateExperienceViewModel
+    public class AdminSideDetailExperienceViewModel:BaseAdminDetail
     {
         public int UserId { get; set; }
+        [Display(Name = "نام همکار")]
+        public string UserName { get; set; }
         public int StaffId { get; set; }
         [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
@@ -25,10 +28,7 @@ namespace Hexagon.Domain.ViewModels.Records.Experiences
         [Display(Name = "مدت زمان سابقه")]
         public string HowLong { get; set; }
         [Display(Name = "مدرک")]
+        public string? Certificate { get; set; }
         public int? CertificateId { get; set; }
-    }
-    public enum CreateExperienceResult
-    {
-        Success
     }
 }

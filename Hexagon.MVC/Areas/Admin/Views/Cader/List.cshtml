@@ -169,6 +169,9 @@
                                                 <a asp-area="Admin" asp-controller="Cader" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
                                                     <i class="fe fe-24 fe-alert-circle text-warning"></i>
                                                 </a>
+                                                <a asp-area="Admin" asp-controller="Experience" asp-action="Create" asp-route-staffId="@item.Id" asp-route-userId="@item.UserId" class="text-primary">
+                                                    <i class="fe fe-24 fe-award text-warning"></i>
+                                                </a>
                                                 @if (item.IsDeleted == false)
                                                 {
                                                     <a asp-area="Admin" asp-controller="Cader" asp-action="Edit" asp-route-id="@item.Id" class="text-success">

@@ -14,7 +14,7 @@ namespace Hexagon.Domain.Interfaces
         Task<bool> ExistSpecificSlug(string slug); 
         Task<string> PutSpecificSlug(string slug);
         Task<List<ExperienceViewModel>?> GetAllExperiencesAsync(int userId);
-        Task<FilterExperienceViewModel> FilterExperienceAsync(FilterExperienceViewModel filter, int userId);
+        Task<FilterExperienceViewModel> FilterExperienceAsync(FilterExperienceViewModel filter);
         Task<DateTime> GetLastModifiedDate(int id);
     }
 }

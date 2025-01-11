@@ -67,6 +67,9 @@ namespace Hexagon.Infra.Data.Repositories
             Name = u.Name
         }).ToListAsync();
 
+        public async Task<string?> GetCertificateTitle(int id)
+        => await _db.Certificates.Where(s=>s.Id==id).Select(c=>c.Name).FirstAsync();
+
         public async Task<DateTime> GetLastModifiedDate(int id)
         => await _db.Certificates.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
 

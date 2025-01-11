@@ -1,4 +1,5 @@
-﻿using Hexagon.Domain.ViewModels.Records.Experiences;
+﻿using Hexagon.Domain.ViewModels.Records.Certificates;
+using Hexagon.Domain.ViewModels.Records.Experiences;
 
 namespace Hexagon.Application.Services.Interfaces.Records
 {
@@ -8,7 +9,11 @@ namespace Hexagon.Application.Services.Interfaces.Records
         Task<UpdateExperienceViewModel> GetExperienceForEdit(int experienceId);
         Task<UpdateExperienceResult> UpdateExperienceAsync(UpdateExperienceViewModel model);
         Task<DeleteExperienceResult> DeleteExperienceAsync(int experienceId);
-        Task<List<ExperienceViewModel>?> ListExperienceesAsync(int userId);
-        Task<FilterExperienceViewModel> FilterExperienceesAsync(FilterExperienceViewModel filter,int userId);
+        Task<List<ExperienceViewModel>?> ListExperienceesAsync(int staffId);
+        Task<FilterExperienceViewModel> FilterExperienceesAsync(FilterExperienceViewModel filter);
+        Task<AdminSideDetailExperienceViewModel?> AdminSideDetailExperienceAsync(int ExperienceId);
+        Task<DeleteForeverExperienceResult> DeleteExperienceForever(int ExperienceId);
+        Task<string> CantDeleteExperienceForeverNowMessage(int ExperienceId);
+
     }
 }

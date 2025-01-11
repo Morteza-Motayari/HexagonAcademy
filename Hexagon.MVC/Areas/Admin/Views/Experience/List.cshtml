@@ -1,0 +1,155 @@
+﻿@using Hexagon.Application.Convertors
+@using Hexagon.Application.Extensions
+@using Hexagon.Domain.Enums.Filter
+@using Hexagon.Domain.ViewModels.Records.Experiences
+@model FilterExperienceViewModel
+@{
+    ViewData["Title"] = "لیست سابقه ها";
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="List">سابقه ها</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2><i class="fe fe-24 fe-edit"></i> فیلترها</h2>
+                <div class="toolbar">
+                    <div class="col-12">
+                        <form class="form" method="post" id="filter-search" asp-area="Admin" asp-controller="Experience" asp-action="List">
+                            <input type="hidden" asp-for="Page" />
+                            <div class="form-row row pl-4">
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Title" class="control-label"></label>
+                                        <input asp-for="Title" class="form-control form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="UserName" class="control-label"></label>
+                                        <input asp-for="UserName" class="form-control form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Status" class="control-label"></label>
+                                        <select asp-for="Status" class="form-control">
+                                            @foreach (var item in Enum.GetValues(typeof(ExistingStatus)).Cast<ExistingStatus>().ToList())
+                                            {
+                                                @if (Model.Status == item)
+                                                {
+                                                    <option selected value="@item">@item.GetDisplayName()</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item">@item.GetDisplayName()</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 py-2">
+                                    <label class="control-label">
+                                        نمایش ورودی
+                                        <select asp-for="TakeEntity" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">
+                                            <option value="3">3</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">15</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-12 col-sm-12 ">
+                                    <input type="submit" value="جستجو" class="btn btn-outline-success" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="body">
+                <h2><i class="fe fe-award text-dark bxl"></i> @ViewData["Title"]</h2>
+                <div class="table-responsive">
+                    <div id="tableExport_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table class="table table-borderless dataTable table-responsive w-100 d-block d-table table-hover" role="grid">
+                            <thead class="thead-dark">
+                                <tr role="row">
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="نام: activate to sort column ascending">نام </th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="عنوان: activate to sort column ascending">عنوان</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="شرکت: activate to sort column ascending">شرکت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="مدت زمان سابقه: activate to sort column ascending">مدت زمان سابقه</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="مدرک: activate to sort column ascending">مدرک</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ ثبت: activate to sort column ascending">تاریخ ثبت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="وضعیت: activate to sort column ascending">وضعیت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending">اقدام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Entities.CheckNullability())
+                                {
+                                    @foreach (var item in Model.Entities)
+                                    {
+                                        <tr role="row" class="@((item.IsDeleted==true)?"bg-danger":"") text-dark">
+                                            <td class="center"><a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@item.UserId">@item.UserName</a></td>
+                                            <td class="center">@item.Title</td>
+                                            <td class="center">@item.Company</td>
+                                            <td class="center">@item.HowLong</td>
+                                            <td class="center"><a asp-area="Admin" asp-controller="Certificate" asp-action="Detail" asp-route-id="@item.CertificateId">@item.Certificate</a></td>
+                                            <td class="center">@item.CreatedDate.ToShamsi()</td>
+                                            <td class="center">
+                                                @if (item.IsDeleted == true)
+                                                {
+                                                    <span class="badge badge-warning text-white">حذف شده</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-success text-white">موجود می باشد</span>
+                                                }
+                                            </td>
+                                            <td class="center">
+                                                <a asp-area="Admin" asp-controller="Experience" asp-action="Detail" asp-route-id="@item.Id" class="text-secondary">
+                                                    <i class="fe fe-24 fe-alert-circle text-warning"></i>
+                                                </a>
+                                                @if (item.IsDeleted == false)
+                                                {
+                                                    <a asp-area="Admin" asp-controller="Experience" asp-action="Edit" asp-route-id="@item.Id" class="text-success">
+                                                        <i class="fe fe-24 fe-edit-3"></i>
+                                                    </a>
+                                                    <a onclick="confirmDelete('@Url.Action("Delete","Experience",new{id=item.Id})',event,'سابقه @item.Title')" class="text-danger">
+                                                        <i class="fe fe-24 fe-trash-2"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a onclick="confirmDeleteForever('@Url.Action("DeleteForever","Experience",new{id=item.Id})',event,'سابقه @item.Title')" class="text-warning">
+                                                        <i class="fe fe-24 fe-trash"></i>
+                                                    </a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="dataTables_info" id="tableExport_info" role="status" aria-live="polite">نمایش @Model.StartItemFromList تا @Model.EndItemFromList از @Model.AllEntitiesCount ورودی</div>
+                @if (Model.PageCount > 1)
+                {
+                    <partial name="_AdminPaging" model="Model.GetCurrentPaging()" />
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

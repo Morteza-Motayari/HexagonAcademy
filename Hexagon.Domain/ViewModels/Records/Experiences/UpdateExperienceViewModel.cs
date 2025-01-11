@@ -11,6 +11,7 @@ namespace Hexagon.Domain.ViewModels.Records.Experiences
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public int StaffId { get; set; }
         [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [Display(Name = "سابقه")]
@@ -23,9 +24,10 @@ namespace Hexagon.Domain.ViewModels.Records.Experiences
         public string? Detail { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [Display(Name = "مدت زمان سابقه")]
-        public TimeSpan HowLong { get; set; }
+        public string HowLong { get; set; }
         [Display(Name = "مدرک")]
         public int? CertificateId { get; set; }
+        public bool IsDeleted { get; set; }
     }
     public enum UpdateExperienceResult
     {
