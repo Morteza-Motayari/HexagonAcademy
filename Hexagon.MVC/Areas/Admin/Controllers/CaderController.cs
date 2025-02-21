@@ -22,6 +22,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [AuthorizePermission("ManageCaders")]
         public async Task<IActionResult> List(FilterCaderViewModel filter)
         {
+            ViewData["Title"] = Titles.AdminCaders;
             ViewData["roles"] = await roleService.ListRolesAsync();
             var list = await staffService.FilterCadersAsync(filter);
             return View(list);
@@ -32,6 +33,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [AuthorizePermission("AddCader")]
         public async Task<IActionResult> Create()
         {
+            ViewData["Title"] = Titles.AdminCreateCader;
             ViewData["roles"] = await roleService.ListRolesAsync();
             return View();
         }
@@ -41,6 +43,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminCreateCader;
                 ViewData["roles"] = await roleService.ListRolesAsync();
                 return View(model);
             }
@@ -64,6 +67,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.ExistRoleForUserCader;
                     break;
             }
+            ViewData["Title"] = Titles.AdminCreateCader;
             ViewData["roles"] = await roleService.ListRolesAsync();
             return View(model);
         }
@@ -81,6 +85,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 TempData[WarningMessage] = WarningMessages.CaderCantbeEdited;
                 return RedirectToAction("List", "Cader", new { area = "Admin" });
             }
+            ViewData["Title"] = Titles.AdminEditCader;
             ViewData["roles"] = await roleService.ListRolesAsync();
             return View(Cader);
         }
@@ -90,6 +95,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminEditCader;
                 ViewData["roles"] = await roleService.ListRolesAsync();
                 return View(model);
             }
@@ -99,7 +105,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 case UpdateCaderResult.Success:
                     TempData[SuccessMessage] = SuccessMessages.CaderUpdatedSuccessfully;
-                    return RedirectToAction(nameof(List), "Cader", "Admin");
+                    return RedirectToAction("List", "Cader", new { area = "Admin" });
                 case UpdateCaderResult.DuplicatedPosition:
                     TempData[ErrorMessage] = ErrorMessages.CaderPositionDuplicated;
                     break;
@@ -113,6 +119,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.ExistRoleForUserCader;
                     break;
             }
+            ViewData["Title"] = Titles.AdminEditCader;
             ViewData["roles"] = await roleService.ListRolesAsync();
             return View(model);
         }
@@ -125,7 +132,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var Cader = await staffService.AdminSideDetailCaderAsync(id);
             if (Cader == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailCader;
             return View(Cader);
         }
         #endregion
@@ -147,7 +154,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.CaderAlreadyDeleted;
                     break;
             }
-            return RedirectToAction(nameof(List));
+            return RedirectToAction(nameof(List), "Cader", new { area = "Admin" });
         }
         #endregion
 
@@ -172,7 +179,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.CaderNotFound;
                     break;
             }
-            return RedirectToAction(nameof(List));
+            return RedirectToAction(nameof(List), "Cader", new { area = "Admin" });
         }
         #endregion
 

@@ -13,6 +13,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
         {
             filter.TakeEntity = 6;
             var comments = await classCommentService.GetUserCommentsAsync(User.GetUserId(), filter);
+            ViewData["Title"] = Titles.UserComments;
             return View(comments);
         }
         #endregion

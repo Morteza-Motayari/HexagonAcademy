@@ -16,6 +16,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> List(FilterSportViewModel filter)
         {
             var list = await sportService.FilterSportsAsync(filter);
+            ViewData["Title"] = Titles.AdminSports;
             return View(list);
         }
         #endregion
@@ -129,7 +130,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var Sport = await sportService.AdminSideDetailSportAsync(id);
             if (Sport == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailSport;
             return View(Sport);
         }
         #endregion

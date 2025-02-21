@@ -20,6 +20,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         {
             ViewData["SportClassId"] = sportClassId;
             var list = await classCommentService.FilterClassCommentsAsync(filter);
+            ViewData["Title"] = Titles.AdminComments;
             return View(list);
         }
         #endregion
@@ -93,7 +94,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var commeny = await classCommentService.AdminSideDetailClassCommentAsync(id);
             if (commeny == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailComment;
             return View(commeny);
         }
         #endregion

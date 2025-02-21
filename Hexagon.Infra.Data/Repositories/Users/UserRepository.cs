@@ -140,7 +140,10 @@ namespace Hexagon.Infra.Data.Repositories
 
         public async Task<ReadOnlyCollection<UserViewModel>?> GetAllUsersForOptionsAsync(string term)
         {
-            var data = await _db.Users.Where(u => u.Status == UserStatus.Active && u.IsDeleted == false).Select(u => new UserViewModel
+            var data = _db.Users.Where(u => u.Status == UserStatus.Active && u.IsDeleted == false)
+                .Where(a => a.FirstName.Contains(term)
+            || a.LastName.Contains(term)
+            || a.PhoneNumber.Contains(term)).Select(u => new UserViewModel
             {
                 Id = u.Id,
                 FirstName = u.FirstName,
@@ -148,12 +151,9 @@ namespace Hexagon.Infra.Data.Repositories
                 PhoneNumber = u.PhoneNumber,
                 Gender = u.Gender,
                 Avatar = u.Avatar
-            }).ToListAsync();
+            }).ToList().AsReadOnly();
 
-            var search = data.Where(a => a.FirstName.Contains(term, StringComparison.OrdinalIgnoreCase)
-            || a.LastName.Contains(term, StringComparison.OrdinalIgnoreCase)
-            || a.PhoneNumber.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList().AsReadOnly();
-            return search;
+            return data;
         }
 
         public async Task<User?> GetbyMobileAndPassword(string mobile, string password)

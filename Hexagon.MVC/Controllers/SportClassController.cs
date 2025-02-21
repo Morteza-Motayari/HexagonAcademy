@@ -1,5 +1,6 @@
 ﻿using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.Shared;
 using Hexagon.Domain.ViewModels.Gyms.SportClasses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +12,12 @@ namespace Hexagon.MVC.Controllers
     {
         [Route("/Class")]
         public async Task<IActionResult> List(ClientSideFilterSportClassViewModel filter)
-        {
+        {           
             ViewData["Sports"] = await sportService.ListSportsForOptionsAsync();
             ViewData["Gyms"]=await gymService.ListGymsForOptionsAsync();
             filter.TakeEntity = 6;
             var list = await sportClassService.ClientSideFilterClasses(filter);
+            ViewData["Title"] = Titles.SportClasses;
             return View(list);
         }
 
@@ -26,6 +28,7 @@ namespace Hexagon.MVC.Controllers
             if(classDetail == null) 
                 return NotFound();
 
+            ViewData["Title"] = classDetail.Title;
             return View(classDetail);
         }        
     }

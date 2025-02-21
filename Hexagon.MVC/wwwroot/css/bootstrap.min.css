@@ -6578,7 +6578,7 @@ textarea.form-control-lg {
 .carousel-inner {
     position: relative;
     width: 100%;
-    overflow: hidden
+    overflow: hidden;
 }
 
     .carousel-inner::after {
@@ -8241,6 +8241,12 @@ textarea.form-control-lg {
 
 .bg-secondary {
     background-color: #6266ea !important
+}
+.bg-grenn {
+    background-color: #0b8018c9 !important
+}
+.bg-green-hot {
+    background-color: #025304 !important
 }
 
 .bg-success {
@@ -12343,6 +12349,11 @@ textarea.form-control-lg {
         padding-top: 15px
     }
 
+.blog_right_sidebar .post_category_widget .cat-list .active {
+    background-color: #18e143;
+    border-radius: 10px;
+}
+
 .blog_area a:hover, .blog_area a :hover {
     background: -webkit-linear-gradient(131deg, #8f1bdc 0%, #8f1bdc 99%);
     -webkit-background-clip: text;
@@ -13243,3 +13254,16 @@ blog_right_sidebar .widget_title {
         height:300px;
         width:300px;
     }
+
+
+
+
+
+
+.offcanvas-menu-wrapper {
+    display: none;
+}
+
+.canvas-open {
+    display: none;
+}

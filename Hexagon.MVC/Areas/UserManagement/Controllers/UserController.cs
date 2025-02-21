@@ -18,7 +18,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
             ClientSideUpdateUserViewModel? model=await accountService.GetUserForUpdateClientSide(User.GetUserId());
             if (model == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.UserInfo;
             return View(model);
         }
         [HttpPost]

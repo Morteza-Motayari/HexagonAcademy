@@ -11,6 +11,7 @@ namespace Hexagon.MVC.Controllers
         [HttpGet(template:"Contact-Us")]
         public IActionResult ContactUs()
         {
+            ViewData["Title"] = Titles.ContactUs;
             return View();
         }
         [HttpPost(template: "Contact-Us")]
@@ -19,6 +20,7 @@ namespace Hexagon.MVC.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.ContactUs;
                 return View(model);
             }
             #endregion
@@ -30,6 +32,7 @@ namespace Hexagon.MVC.Controllers
                     TempData[SuccessMessage] = SuccessMessages.ContactUsAddedSuccessfully;
                     return Redirect("/");
             }
+            ViewData["Title"] = Titles.ContactUs;
             return View(model);
         }
 

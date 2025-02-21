@@ -93,9 +93,8 @@ namespace Hexagon.Application.Services.Implementation.Wallets
             {
                 Price = model.Price,
                 IP = model.IP,
-                OS = model.IP,
+                OS = model.OS,
                 RefId = model.RefId,
-                Description = model.Description,
                 Case = TransactionCase.ChargeWallet,
                 Type = TransactionType.Deposit,
                 UserId = model.UserId,

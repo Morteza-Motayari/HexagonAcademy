@@ -55,7 +55,7 @@ namespace Hexagon.MVC.Controllers
             {
                 MerchantId = "test",
                 Amount = price,
-                CallbackUrl = $"https://localhost:7275/payment/NovinoCallback?walletId={wallet?.Id}&orderId={order?.Id}",
+                CallbackUrl = $"https://www.greenheartgym.com/payment/NovinoCallback?walletId={wallet?.Id}&orderId={order?.Id}",
                 Description = InfoMessages.ChargeWallet,
                 InvoiceId = invoiceId,
                 CallbackMethod = "POST",

@@ -17,6 +17,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
             var userId = User.GetUserId();
             var walets=await walletService.ClientSideFilterWalletAsync(filterWallet,userId);
             ViewData["Budget"] = await walletService.GetBudgetsAsync(userId);
+            ViewData["Title"] = Titles.UserWallets;
             return View(walets);
         }
         #endregion
@@ -31,7 +32,8 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
                 return RedirectToAction(nameof(List));
             }
             model.IP = HttpContext.GettingIP();
-            model.OS=Environment.OSVersion.GettingOStype();
+            model.OS = Request.Headers["User-Agent"].GettingClientOSType();
+            
             model.UserId= User.GetUserId();
             var walletId=await walletService.ClientSideChargingWalletAsync(model);
 

@@ -14,6 +14,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [AuthorizePermission("ManageCertificates")]
         public async Task<IActionResult> List(FilterCertificateViewModel filter)
         {
+            ViewData["Title"] = Titles.AdminCertificates;
             var list = await certificateService.FilterCertificateesAsync(filter);
             return View(list);
         }
@@ -23,6 +24,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [AuthorizePermission("AddCertificate")]
         public IActionResult Create()
         {
+            ViewData["Title"] = Titles.AdminCreateCertificate;
             return View();
         }
         [HttpPost]
@@ -31,6 +33,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminCreateCertificate;
                 return View(model);
             }
             #endregion
@@ -44,6 +47,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.CertificateDuplicated;
                     break;
             }
+            ViewData["Title"] = Titles.AdminCreateCertificate;
             return View(model);
         }
         #endregion
@@ -60,7 +64,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 TempData[WarningMessage] = WarningMessages.CertificateCantbeEdited;
                 return RedirectToAction("List", "Certificate", new { area = "Admin" });
             }
-
+            ViewData["Title"] = Titles.AdminEditCertificate;
             return View(certificate);
         }
         [HttpPost]
@@ -69,6 +73,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminEditCertificate;
                 return View(model);
             }
             #endregion
@@ -85,6 +90,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.CertificateNotFound;
                     break;
             }
+            ViewData["Title"] = Titles.AdminEditCertificate;
             return View(model);
         }
         #endregion
@@ -96,7 +102,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var certificate = await certificateService.AdminSideDetailCertificateAsync(id);
             if (certificate == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailCertificate;
             return View(certificate);
         }
         #endregion

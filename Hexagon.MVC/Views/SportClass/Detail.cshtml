@@ -74,8 +74,8 @@ IsRegisterted=Model.IsRegisterted
                 <div class="navigation-top">
                     <div class="d-sm-flex justify-content-between text-center">
                         <ul class="social-icons">
-                            <li><a href="#"><i class="bx bxl-instagram"></i></a></li>
-                            <li><a href="#"><i class="bx bxl-telegram"></i></a></li>
+                            <li><a href="https://www.instagram.com/green_heart_gym/profilecard/?igsh=NDk1ZTM1Yzk2eHd3"><i class="bx bxl-instagram"></i></a></li>
+                            <li><a href="https://t.me/greenheartgym"><i class="bx bxl-telegram"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -87,7 +87,7 @@ IsRegisterted=Model.IsRegisterted
             </div>
             <div class="col-lg-4">
                 <div class="blog_right_sidebar">
-                    @await Component.InvokeAsync("SportExisted")
+                    @await Component.InvokeAsync("SportExisted",Model.SportId)
                     @if (Model.KeyWords.CheckNullability())
                     {
                         <aside class="single_sidebar_widget tag_cloud_widget">

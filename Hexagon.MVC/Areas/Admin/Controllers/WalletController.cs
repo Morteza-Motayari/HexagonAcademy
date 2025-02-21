@@ -14,6 +14,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> List(FilterWalletViewModel filter)
         {
             var wallets=await walletService.FilterWalletAsync(filter);
+            ViewData["Title"] = Titles.AdminWallets;
             return View(wallets);
         }
         #endregion
@@ -31,7 +32,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> ChargeWallet(AdminChargeWalletViewModel model)
         {
             model.IP = HttpContext.GettingIP();
-            model.OS=Environment.OSVersion.GettingOStype();
+            model.OS= Request.Headers["User-Agent"].GettingClientOSType();
             var result=await walletService.ChargingWalletAsync(model);
             switch (result)
             {
@@ -58,6 +59,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if(wallet==null)
                 return NotFound();
 
+            ViewData["Title"] = Titles.AdminDetailWallet;
             return View(wallet);
         }
         #endregion

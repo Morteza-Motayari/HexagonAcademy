@@ -5,6 +5,8 @@
 @using Hexagon.Domain.ViewModels.Gyms.Gyms
 @using Hexagon.Domain.ViewModels.Gyms.SportClasses
 @using Hexagon.Domain.ViewModels.Gyms.Sports
+@using Hexagon.Application.Statics.WebSite_Texts;
+@inject SportsList sportList;
 @model ClientSideFilterSportClassViewModel
 @{
     List<GymViewModel> GymItems = ViewData["Gyms"] as List<GymViewModel> ?? new List<GymViewModel>();
@@ -18,7 +20,7 @@
             <h3 class="text-primary">کلاس های ورزشی ما</h3>
             <h5 class="display-7 mb-4">در  باشگاه  <span class="text-green h4">قلب سبز</span> تلاش بر این می شود که بهترین کلاس ها برگزار بشود</h5>
             <p class="mb-0">
-                کلاس های ما توسط مربی های با تجربه و حرفه ای به صورت هدفمند برای آمادگی برای شرکت در مسابقات برگزار می شود.
+                @sportList.SportGoal
             </p>
         </div>
         <div class="row border-service p-3 mb-5 bg-body rounded-service g-4">

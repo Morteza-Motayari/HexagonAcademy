@@ -1,6 +1,7 @@
 ﻿@using Hexagon.Application.Convertors
 @using Hexagon.Application.Extensions
 @using Hexagon.Application.Statics
+@using Hexagon.Domain.Enums.Tickets
 @using Hexagon.Domain.ViewModels.Tickets.TicketMessages
 @model List<ClientSideTicketMessageViewModel>
 @{
@@ -8,6 +9,7 @@
     int userId = User.GetUserId();
     string avatar = (string)ViewData["userAvatar"]??null;
     int ticketid = (int)ViewData["TicketId"];
+    TicketStatus status = (TicketStatus)ViewData["TicketStatus"];
 }
 <div class="card shadow mb-4 ui-box-profile">
     <div class="card-header">
@@ -31,7 +33,7 @@
                             <div class="row no-gutters">
                                 <div class="col-12">
                                     <div class="selected-user">
-                                        <span>موضوع: <span class="name">@ViewData["TicketTitke"]</span></span>
+                                        <span>موضوع: <span class="name">@ViewData["TicketTitle"]</span></span>
                                     </div>
                                     <div class="chat-container">
                                         <ul class="chat-box chatContainerScroll">
@@ -72,11 +74,23 @@
                                             }
                                         </ul>
                                         <div class="form-group mt-3 mb-0">
-                                            <form method="post" asp-area="UserManagement" asp-controller="Ticket" asp-action="Response">
-                                                <input type="hidden" name="TicketId" value="@ticketid" />
-                                                <textarea name="ResponseTicket" class="form-control" rows="4" placeholder="بازخورد خود را این جا بنویسید"></textarea>
-                                                <button type="submit" class="btn btn-block btn-success">ثبت</button>
-                                            </form>                                           
+                                            @if (status != TicketStatus.Close)
+                                            {
+                                                <form method="post" asp-area="UserManagement" asp-controller="Ticket" asp-action="Response">
+                                                    <input type="hidden" name="TicketId" value="@ticketid" />
+                                                    <textarea name="ResponseTicket" class="form-control" rows="4" placeholder="بازخورد خود را این جا بنویسید"></textarea>
+                                                    <button type="submit" class="btn btn-block btn-success">ثبت</button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <div class="alert alert-warning alert-dismissible fade show mb-5" role="alert">
+                                                    <div>
+                                                        این تیکت بسته شده است و امکان ارسال پیام دیگری در آن وجود دارد.
+                                                    </div>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            }                                       
                                         </div>
                                     </div>
                                 </div>

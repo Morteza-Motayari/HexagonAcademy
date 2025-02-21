@@ -2,6 +2,7 @@ using Hexagon.Application.Services.Implementation.Gyms;
 using Hexagon.Application.Services.Interfaces.Banners;
 using Hexagon.Application.Services.Interfaces.Gyms;
 using Hexagon.Domain.Enums.Filter;
+using Hexagon.Domain.Shared;
 using Hexagon.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -25,6 +26,7 @@ namespace Hexagon.MVC.Controllers
         {
             ViewData["banner"]=await _bannerService.ClientSideBannerViewModel();
             var sportClasses = await _sportClassService.GetClassesForIndexPage(FilterUserGender.All);
+            ViewData["Title"] = Titles.Home;
             return View(sportClasses);
         }
         [HttpGet]

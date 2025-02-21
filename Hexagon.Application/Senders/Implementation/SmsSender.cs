@@ -1,24 +1,43 @@
 ﻿using Hexagon.Application.Senders.Interfaces;
+using Hexagon.Application.Statics;
 using Kavenegar;
 using Kavenegar.Models;
+using Microsoft.Extensions.Configuration;
+using mpNuget;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Hexagon.Application.Senders.Implementation
 {
     public class SmsSender : ISmsSender
     {
-        private readonly KavenegarApi _KavenegarApi;
-        public SmsSender()
+        public bool SendMessage(string PhoneNumber, string message)
         {
-            _KavenegarApi = new KavenegarApi("");
-        }
-        public SendResult SendMessage(string PhoneNumber, string message)
-        {
-            return _KavenegarApi.Send("Sender",PhoneNumber,message);
+            const bool isFlash = false;
+            const string from = "50002710090964";
+            MelipayamakStatics melipayamakStatics = new MelipayamakStatics();            
+            
+            Uri apiBaseAddress = new Uri("https://console.melipayamak.com");
+            using (HttpClient client = new HttpClient() { BaseAddress = apiBaseAddress })
+            {
+                //You may need to Install - Package Microsoft.AspNet.WebApi.Client
+
+                //var result = client.PostAsJsonAsync("api/send/simple/5ba7de3f21f84a76be6376fa4b92914b",
+                //    new { from = "50002710090964", to = PhoneNumber, text = message }).Result;
+                // var response = result.Content.ReadAsStringAsync().Result;
+
+                var result = client.PostAsJsonAsync("api/send/otp/5ba7de3f21f84a76be6376fa4b92914b",
+        new { to = PhoneNumber }).Result;
+                var response = result.Content.ReadAsStringAsync().Result;
+
+                return true;
+            }
+            
         }
     }
 }

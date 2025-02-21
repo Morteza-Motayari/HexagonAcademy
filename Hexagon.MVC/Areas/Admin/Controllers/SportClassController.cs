@@ -19,6 +19,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
             ViewData["Sports"] = await sportService.ListSportsForOptionsAsync();
             var list = await SportClassService.FilterSportClassesAsync(filter);
+            ViewData["Title"] = Titles.AdminSportClasses;
             return View(list);
         }
         #endregion
@@ -29,6 +30,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         {
             ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
             ViewData["Sports"] = await sportService.ListSportsForOptionsAsync();
+            ViewData["Title"] = Titles.AdminCreateSportClass;
             return View();
         }
         [HttpPost]
@@ -39,6 +41,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
                 ViewData["Sports"] = await sportService.ListSportsForOptionsAsync();
+                ViewData["Title"] = Titles.AdminCreateSportClass;
                 return View(model);
             }
             #endregion
@@ -57,6 +60,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             }
             ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
             ViewData["Sports"] = await sportService.ListSportsForOptionsAsync();
+            ViewData["Title"] = Titles.AdminCreateSportClass;
             return View(model);
         }
         #endregion
@@ -76,6 +80,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
             ViewData["Sports"] = await sportService.ListSportsForOptionsAsync();
             ViewData["Trainers"] = await staffService.ListTrainerForEditItemsAsync(SportClass.Gender, SportClass.SportId);
+            ViewData["Title"] = Titles.AdminEditSportClass;
             return View(SportClass);
         }
         [HttpPost]
@@ -87,6 +92,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
                 ViewData["Sports"] = await sportService.ListSportsForOptionsAsync();
                 ViewData["Trainers"] = await staffService.ListTrainerForEditItemsAsync(model.Gender,model.SportId);
+                ViewData["Title"] = Titles.AdminEditSportClass;
                 return View(model);
             }
             #endregion
@@ -109,6 +115,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             ViewData["Gyms"] = await gymService.ListGymsForOptionsAsync();
             ViewData["Sports"] = await sportService.ListSportsForOptionsAsync();
             ViewData["Trainers"] = await staffService.ListTrainerForEditItemsAsync(model.Gender, model.SportId);
+            ViewData["Title"] = Titles.AdminEditSportClass;
             return View(model);
         }
         #endregion
@@ -121,6 +128,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (SportClass == null)
                 return NotFound();
 
+            ViewData["Title"] = Titles.AdminDetailSportClass;
             return View(SportClass);
         }
         #endregion

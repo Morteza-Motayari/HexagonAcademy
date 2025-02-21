@@ -24,7 +24,7 @@ namespace Hexagon.Infra.Data.Repositories.Tickets
         => await _db.TicketMessages.Where(tm => tm.TicketId == ticketId && !tm.IsDeleted).Select(t => new ClientSideTicketMessageViewModel
         {
             TicketMessageId = t.Id,
-            CreatedDate = DateTime.Now,
+            CreatedDate = t.CreatedDate,
             Message = t.Message,
             SenderId = (int)t.CreatedBy
         }).ToListAsync();
@@ -36,7 +36,7 @@ namespace Hexagon.Infra.Data.Repositories.Tickets
         => await _db.TicketMessages.Where(tm => tm.TicketId == ticketId).Select(t => new AdminSideTicketMessageViewModel
         {
             TicketMessageId = t.Id,
-            CreatedDate = DateTime.Now,
+            CreatedDate = t.CreatedDate,
             Message = t.Message,
             SenderId = (int)t.CreatedBy,
             SenderName=_db.Users.Where(u=>u.Id==t.CreatedBy).Select(u=>u.FirstName+" "+u.LastName).First(),

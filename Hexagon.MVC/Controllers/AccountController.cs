@@ -1,4 +1,5 @@
 ﻿using Hexagon.Application.Extensions;
+using Hexagon.Application.Senders.Interfaces;
 using Hexagon.Application.Services.Interfaces.Users;
 using Hexagon.Domain.Models.Users;
 using Hexagon.Domain.Shared;
@@ -6,20 +7,24 @@ using Hexagon.Domain.ViewModels.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using mpNuget;
 using System.Security.Claims;
 
 namespace Hexagon.MVC.Controllers
 {
-    public class AccountController(IAccountService accountService,IUserService userService) : BaseSiteController
+    public class AccountController(IAccountService accountService
+        ,IUserService userService
+        ,ISmsSender smsSender) : BaseSiteController
     {
         #region Actions
 
         #region Register
         [HttpGet(template: "/register")]
         public IActionResult Register()
-        {
+        {           
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home", "UserManagement");
+            ViewData["Title"] = Titles.Register;
             return View();
         }
         [HttpPost(template: "/register")]
@@ -28,6 +33,7 @@ namespace Hexagon.MVC.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.Register;
                 return View(model);
             }
             #endregion
@@ -42,6 +48,7 @@ namespace Hexagon.MVC.Controllers
                     TempData[ErrorMessage] = ErrorMessages.PhoneNumberExisted;
                     return View(model);
             }
+            ViewData["Title"] = Titles.Register;
             return View(model);
         }
         #endregion
@@ -49,9 +56,10 @@ namespace Hexagon.MVC.Controllers
         #region Log In
         [HttpGet(template: "/LogIn")]
         public IActionResult LogIn()
-        {
+        {            
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home", "UserManagement");
+            ViewData["Title"] = Titles.Login;
             return View();
         }
         [HttpPost(template: "/LogIn")]
@@ -60,6 +68,7 @@ namespace Hexagon.MVC.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.Login;
                 return View(model);
             }
             #endregion
@@ -112,6 +121,7 @@ namespace Hexagon.MVC.Controllers
                     TempData[ErrorMessage] = ErrorMessages.UserNotActive;
                     break;
             }
+            ViewData["Title"] = Titles.Login;
             return View(model);
         }
         #endregion
@@ -120,6 +130,7 @@ namespace Hexagon.MVC.Controllers
         [HttpGet(template: "/Forgot-Password")]
         public IActionResult ForgotPassword()
         {
+            ViewData["Title"] = Titles.ForgetPassword;
             return View();
         }
         [HttpPost(template: "/Forgot-Password")]
@@ -128,6 +139,7 @@ namespace Hexagon.MVC.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.ForgetPassword;
                 return View(model);
             }
             #endregion
@@ -145,6 +157,7 @@ namespace Hexagon.MVC.Controllers
                     TempData[ErrorMessage] = ErrorMessages.UserNotExisted;
                     break;
             }
+            ViewData["Title"] = Titles.ForgetPassword;
             return View(model);
         }
         #endregion
@@ -153,6 +166,7 @@ namespace Hexagon.MVC.Controllers
         [HttpGet(template:"/Reset-Password")]
         public IActionResult ResetPassword()
         {
+            ViewData["Title"] = Titles.ResetPassword;
             return View();
         }
         [HttpPost(template: "/Reset-Password")]
@@ -161,6 +175,7 @@ namespace Hexagon.MVC.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.ResetPassword;
                 return View(model);
             }
             #endregion
@@ -174,6 +189,7 @@ namespace Hexagon.MVC.Controllers
                     TempData[ErrorMessage]=ErrorMessages.WrongCodeEntered;
                     break;
             }
+            ViewData["Title"] = Titles.ResetPassword;
             return View(model);
         }
         #endregion
@@ -203,6 +219,23 @@ namespace Hexagon.MVC.Controllers
         }
         #endregion
 
+
+        [HttpGet(template: "/test")]
+        public IActionResult Test()
+        {
+            
+            ViewData["Title"] = Titles.Register;
+            return View();
+        }
+        [HttpPost(template: "/test")]
+        public IActionResult Test(string PhoneNumber)
+        {
+            string message = "پیامک آزمایشی";
+            smsSender.SendMessage(PhoneNumber, message);
+            TempData[SuccessMessage] = "عملیات انجام شد";
+            ViewData["Title"] = Titles.Register;
+            return View();
+        }
         #endregion
 
     }

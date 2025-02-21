@@ -18,6 +18,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
         public async Task<IActionResult> List()
         {
             var orders = await orderService.ClinetSideOrdersAsync(User.GetUserId());
+            ViewData["Title"] = Titles.UserOrders;
             return View(orders);
         }
         #endregion
@@ -52,6 +53,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
             if (order == null)
                 return NotFound();
 
+            ViewData["Title"] = Titles.UserOrderDetail;
             return View(order);
         }
         #endregion
@@ -92,7 +94,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
         public async Task<IActionResult> PayOrder(ClientSidePayOrderViewModel model)
         {          
             model.IP = HttpContext.GettingIP();
-            model.OS = Environment.OSVersion.GettingOStype();
+            model.OS = Request.Headers["User-Agent"].GettingClientOSType();
             model.UserId=User.GetUserId();
             model.ClassesOrder=await orderService.GetOrderClassesForOrderAsync(model.Id);
             var result = await orderService.ClientSidePayOrderAsync(model);

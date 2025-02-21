@@ -16,6 +16,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [AuthorizePermission("ManageBanners")]
         public async Task<IActionResult> Banner()
         {
+            ViewData["Title"]=Titles.AdminBanners;
             ViewData["Banners"]=await bannerService.ListBannersAsync();
             return View();
         }
@@ -27,6 +28,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminBanners;
                 ViewData["Banners"] = await bannerService.ListBannersAsync();
                 return View(model);
             }
@@ -44,6 +46,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.BannerReachedMaximumAmount;
                     break;
             }
+            ViewData["Title"] = Titles.AdminBanners;
             ViewData["Banners"] = await bannerService.ListBannersAsync();
             return View(model);
         }

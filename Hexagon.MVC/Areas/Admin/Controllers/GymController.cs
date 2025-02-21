@@ -18,6 +18,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> List(FilterGymViewModel filter)
         {
             var list=await gymService.FilterGymsAsync(filter);
+            ViewData["Title"] = Titles.AdminGyms;
             return View(list);
         }
         #endregion
@@ -26,6 +27,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [AuthorizePermission("AddGym")]
         public IActionResult Create()
         {
+            ViewData["Title"] = Titles.AdminCreateGym;
             return View();
         }
         [HttpPost]
@@ -34,6 +36,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminCreateGym;
                 return View(model);
             }
             #endregion
@@ -47,6 +50,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.GymConstatntPhoneNumberDuplicated;
                     break;
             }
+            ViewData["Title"] = Titles.AdminCreateGym;
             return View(model);
         }
         #endregion
@@ -63,7 +67,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 TempData[WarningMessage] = WarningMessages.GymCantbeEdited;
                 return RedirectToAction("List", "Gym", new { area = "Admin" });
             }
-
+            ViewData["Title"] = Titles.AdminEditGym;
             return View(gym);
         }
         [HttpPost]
@@ -72,6 +76,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminEditGym;
                 return View(model);
             }
             #endregion
@@ -88,6 +93,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.GymNotFound;
                     break;
             }
+            ViewData["Title"] = Titles.AdminEditGym;
             return View(model);
         }
         #endregion
@@ -99,7 +105,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var Gym = await gymService.AdminSideDetailGymAsync(id);
             if (Gym == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailGym;
             return View(Gym);
         }
         #endregion

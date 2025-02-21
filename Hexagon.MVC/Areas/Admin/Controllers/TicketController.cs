@@ -20,6 +20,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> List(FilterTicketViewModel filter)
         {
             var tickets = await ticketService.FilterTicketAsync(filter);
+            ViewData["Title"] = Titles.AdminTickets;
             return View(tickets);
         }
         #endregion
@@ -33,6 +34,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             ViewData["IsDeleted"]=await ticketService.GetTicketExistingAsync(id);
             ViewData["Status"]=await ticketService.GetTicketStatusAsync(id);
             var tickeMessages = await ticketMessageService.GetTicketMessagesAsync(id);
+            ViewData["Title"] = Titles.AdminDetailTicket;
             return View(tickeMessages);
         }
         #endregion

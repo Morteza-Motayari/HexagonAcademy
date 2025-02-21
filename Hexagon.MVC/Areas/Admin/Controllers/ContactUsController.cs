@@ -19,6 +19,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> List(FilterContactUsViewModel filter)
         {
             var list = await contactUsService.FilterContactUsAsync(filter);
+            ViewData["Title"] = Titles.AdminContactUs;
             return View(list);
         }
         #endregion
@@ -93,7 +94,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var contact = await contactUsService.AdminSideDetailContactUsAsync(id);
             if (contact == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailContactUs;
             return View(contact);
         }
         #endregion

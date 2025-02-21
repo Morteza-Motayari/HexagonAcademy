@@ -19,6 +19,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [AuthorizePermission("ManageExperiences")]
         public async Task<IActionResult> List(FilterExperienceViewModel filter)
         {
+            ViewData["Title"] = Titles.AdminExperiences;
             var experiences=await experienceService.FilterExperienceesAsync(filter);
             return View(experiences);
         }
@@ -31,6 +32,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             ViewData["Experiences"]=await experienceService.ListExperienceesAsync(staffId);
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
             ViewData["staffName"]=await userService.GetUserNameAsync(userId);
+            ViewData["Title"] = Titles.AdminCreateExperience;
             return View(new CreateExperienceViewModel
             {
                 UserId = userId,
@@ -46,6 +48,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 ViewData["Experiences"] = await experienceService.ListExperienceesAsync(model.StaffId);
                 ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
                 ViewData["staffName"] = await userService.GetUserNameAsync(model.UserId);
+                ViewData["Title"] = Titles.AdminCreateExperience;
                 return View(model);
             }
             #endregion
@@ -57,6 +60,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[SuccessMessage] = SuccessMessages.ExperienceAddedSuccessfully;
                     break;
             }
+            ViewData["Title"] = Titles.AdminCreateExperience;
             return RedirectToAction(nameof(Create), "Experience", new { staffId =model.StaffId, userId =model.UserId});
         }
         #endregion
@@ -75,6 +79,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             }
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
             ViewData["staffName"] = await userService.GetUserNameAsync(experience.UserId);
+            ViewData["Title"] = Titles.AdminEditExperience;
             return View(experience);
         }
         [HttpPost]
@@ -85,6 +90,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
                 ViewData["staffName"] = await userService.GetUserNameAsync(model.UserId);
+                ViewData["Title"] = Titles.AdminEditExperience;
                 return View(model);
             }
             #endregion
@@ -101,6 +107,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             }
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
             ViewData["staffName"] = await userService.GetUserNameAsync(model.UserId);
+            ViewData["Title"] = Titles.AdminEditExperience;
             return View(model);
         }
         #endregion
@@ -112,6 +119,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var experience = await experienceService.AdminSideDetailExperienceAsync(id);
             if (experience == null)
                 return NotFound();
+            ViewData["Title"] = Titles.AdminDetailExperience;
             return View(experience);
         }
         #endregion

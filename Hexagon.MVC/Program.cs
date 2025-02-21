@@ -1,8 +1,10 @@
 using Hexagon.Application.Statics;
+using Hexagon.Application.Statics.WebSite_Texts;
 using Hexagon.Infra.Data.Context;
 using Hexagon.Infra.IOC.Container;
 using Hexagon.MVC.Utilities.ActionFilters;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NLog.Web;
@@ -18,13 +20,6 @@ try
 
     // Add services to the container.
     builder.Services.AddControllersWithViews();
-
-    //#region Action Filter
-    //builder.Services.AddControllers(options =>
-    //{
-    //    options.Filters.Add<UserInfoFilter>();
-    //});
-    //#endregion
 
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(LogLevel.Trace);
@@ -44,10 +39,11 @@ UnicodeRanges.Arabic }));
     builder.Services.AddScoped<UserInfoFilter>();
     #endregion
 
-
+    #region Set Point Manager for Payment
     System.Net.ServicePointManager.SecurityProtocol =
     System.Net.SecurityProtocolType.Tls12 |
     System.Net.SecurityProtocolType.Tls13;
+    #endregion
 
     #region Configure Hexagon Context
     var connectionString = builder.Configuration.GetConnectionString("AcademyConnectionStrings");
@@ -69,6 +65,7 @@ UnicodeRanges.Arabic }));
 
     #region Config kaveNegar
     builder.Configuration.GetSection("KaveNegarInfo").Get<KaveNegarStatics>();
+    builder.Configuration.GetSection("MelipayamakInfo").Get<MelipayamakStatics>();
     #endregion
 
     #region HtppContextAccessor
@@ -82,6 +79,15 @@ UnicodeRanges.Arabic }));
     });
     #endregion
 
+    #region Configure Cookie
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        options.SlidingExpiration = true;
+    });
+    #endregion
+
     #region Adding Session Support
     builder.Services.AddSession(options =>
     {
@@ -89,6 +95,27 @@ UnicodeRanges.Arabic }));
         options.Cookie.HttpOnly = true;
     });
     #endregion
+
+    #region Configure Appsetting Texts
+    builder.Services.AddSingleton(builder.Configuration.GetSection("Footer").Get<Footer>());
+    builder.Services.AddSingleton(builder.Configuration.GetSection("HomeBoby").Get<HomeBoby>());
+    builder.Services.AddSingleton(builder.Configuration.GetSection("SportsList").Get<SportsList>());
+    #endregion
+
+    #region Configuring DataProtection for machine key
+
+    //Configure Data Protection
+
+    //var dirInfo = new DirectoryInfo(@"C:\Inetpub\vhosts\greenheartgym.com\keys");
+    //Console.WriteLine($"Can Read: {dirInfo.Exists}");
+
+    //var dataProtectionBuilder = builder.Services.AddDataProtection()
+    //    .PersistKeysToFileSystem(new DirectoryInfo(@"C:\Inetpub\vhosts\greenheartgym.com\keys"))
+    //    .SetApplicationName("greenheartgym");
+
+
+    #endregion
+
     var app = builder.Build();
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())

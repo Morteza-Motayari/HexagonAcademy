@@ -17,6 +17,7 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
         public async Task<IActionResult> List(FilterClientSideTicketViewModel filter)
         {
             var tickets=await ticketService.ClientSideFilterTicketViewModelAsync(filter,User.GetUserId());
+            ViewData["Title"] = Titles.UserTickets;
             return View(tickets);
         }
         #endregion
@@ -63,9 +64,11 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             ViewData["TicketId"] = id;
-            ViewData["TicketTitke"]=await ticketService.GetTicketTitleAsync(id);
+            ViewData["TicketTitle"]=await ticketService.GetTicketTitleAsync(id);
             ViewData["userAvatar"]=await userService.GetUserAvatarUrlAsync(User.GetUserId());
+            ViewData["TicketStatus"]= await ticketService.GetTicketStatusAsync(id);
             var tickeMessages=await ticketMessageService.ClientSideGetTicketMessagesAsync(id);
+            ViewData["Title"] = Titles.UserTicketDetail;
             return View(tickeMessages);
         }
         #endregion
@@ -94,6 +97,11 @@ namespace Hexagon.MVC.Areas.UserManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> Response(ClientSideResponseTicketMessageViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                TempData[ErrorMessage] = ErrorMessages.TicketMessageEmpty;
+                return RedirectToAction(nameof(Detail), "Ticket", new { area = "UserManagement", id = model.TicketId });
+            }
             var result = await ticketMessageService.ClientSideResponseTickeMessageAsync(model);
             switch(result)
             {

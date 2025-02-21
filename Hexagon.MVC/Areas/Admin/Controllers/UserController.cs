@@ -15,6 +15,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> List(FilterUserViewModel filter)
         {
             var list = await userService.FilterUsersAsync(filter);
+            ViewData["Title"] = Titles.AdminUsers;
             return View(list);
         }
         #endregion
@@ -23,6 +24,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         [AuthorizePermission("AddUser")]
         public async Task<IActionResult> Create()
         {
+            ViewData["Title"] = Titles.AdminCreateUser;
             return View();
         }
         [HttpPost]
@@ -31,6 +33,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminCreateUser;
                 return View(model);
             }
             #endregion
@@ -47,6 +50,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.InvalidDateTimeInput;
                     break;
             }
+            ViewData["Title"] = Titles.AdminCreateUser;
             return View(model);
         }
         #endregion
@@ -63,7 +67,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 TempData[WarningMessage] = WarningMessages.UserCantbeEdited;
                 return RedirectToAction("List", "User", new {area="Admin"});
             }
-
+            ViewData["Title"] = Titles.AdminEditUser;
             return View(user);
         }
         [HttpPost]
@@ -72,6 +76,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             #region Validations
             if (!ModelState.IsValid)
             {
+                ViewData["Title"] = Titles.AdminEditUser;
                 return View(model);
             }
             #endregion
@@ -91,6 +96,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.InvalidDateTimeInput;
                     break;
             }
+            ViewData["Title"] = Titles.AdminEditUser;
             return View(model);
         }
         #endregion
@@ -103,6 +109,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (user == null)
                 return NotFound();
 
+            ViewData["Title"] = Titles.AdminDetailUser;
             return View(user);
         }
         #endregion

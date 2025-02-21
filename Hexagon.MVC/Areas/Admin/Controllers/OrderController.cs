@@ -16,6 +16,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> List(FilterOrderViewModel filter)
         {
             var orders = await orderService.FilterOrderAsync(filter);
+            ViewData["Title"] = Titles.AdminOrders;
             return View(orders);
         }
         #endregion
@@ -27,7 +28,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var order = await orderService.AdminSideDetailOrderAsync(id);
             if (order == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailOrder;
             return View(order);
         }
         #endregion

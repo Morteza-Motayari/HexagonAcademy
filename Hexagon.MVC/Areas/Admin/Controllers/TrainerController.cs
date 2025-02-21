@@ -21,6 +21,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         {
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
             var list = await staffService.FilterTrainersAsync(filter);
+            ViewData["Title"] = Titles.AdminTrainers;
             return View(list);
         }
         #endregion
@@ -37,6 +38,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 return RedirectToAction("Create", "Certificate", new { area = "Admin" });
             }
             ViewData["Certificates"] = list;
+            ViewData["Title"] = Titles.AdminCreateTrainer;
             return View();
         }
         [HttpPost]
@@ -46,6 +48,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
+                ViewData["Title"] = Titles.AdminCreateTrainer;
                 return View(model);
             }
             #endregion
@@ -69,6 +72,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
             }
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
+            ViewData["Title"] = Titles.AdminCreateTrainer;
             return View(model);
         }
         #endregion
@@ -86,6 +90,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 return RedirectToAction("List", "Trainer", new { area = "Admin" });
             }
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
+            ViewData["Title"] = Titles.AdminEditTrainer;
             return View(Trainer);
         }
         [HttpPost]
@@ -95,6 +100,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
+                ViewData["Title"] = Titles.AdminEditTrainer;
                 return View(model);
             }
             #endregion
@@ -103,7 +109,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             {
                 case UpdateTrainerResult.Success:
                     TempData[SuccessMessage] = SuccessMessages.TrainerUpdatedSuccessfully;
-                    return RedirectToAction(nameof(List), "Trainer", "Admin");
+                    return RedirectToAction("List", "Trainer", new { area = "Admin" });
                 case UpdateTrainerResult.DuplicatedPosition:
                     TempData[ErrorMessage] = ErrorMessages.TrainerPositionDuplicated;
                     break;
@@ -118,6 +124,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
             }
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
+            ViewData["Title"] = Titles.AdminEditTrainer;
             return View(model);
         }
         #endregion
@@ -129,7 +136,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var Trainer = await staffService.AdminSideDetailTrainerAsync(id);
             if (Trainer == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailTrainer;
             return View(Trainer);
         }
         #endregion
@@ -151,7 +158,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.TrainerAlreadyDeleted;
                     break;
             }
-            return RedirectToAction(nameof(List));
+            return RedirectToAction("List", "Trainer", new { area = "Admin" });
         }
         #endregion
 
@@ -199,7 +206,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.TrainerNotFound;
                     break;
             }
-            return RedirectToAction(nameof(List));
+            return RedirectToAction("List", "Trainer", new { area = "Admin" });
         }
         #endregion
     }

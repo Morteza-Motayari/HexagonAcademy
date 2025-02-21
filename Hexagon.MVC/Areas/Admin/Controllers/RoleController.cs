@@ -16,6 +16,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> List(FilterRoleViewModel filter)
         {           
             var roles = await roleService.FilterRolesAsync(filter);
+            ViewData["Title"] = Titles.AdminRoles;
             return View(roles);
         }
         #endregion
@@ -26,6 +27,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Create()
         {
             ViewData["Permissions"] = await roleService.GetAllPermmisions();
+            ViewData["Title"] = Titles.AdminCreateRole;
             return View();
         }
         [HttpPost]
@@ -35,6 +37,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 ViewData["Permissions"] = await roleService.GetAllPermmisions();
+                ViewData["Title"] = Titles.AdminCreateRole;
                 return View(model);
             }
             #endregion
@@ -50,6 +53,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
             }
             ViewData["Permissions"] = await roleService.GetAllPermmisions();
+            ViewData["Title"] = Titles.AdminCreateRole;
             return View(model);
         }
         #endregion
@@ -68,6 +72,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 return RedirectToAction("List", "Role", new { area = "Admin" });
             }
             ViewData["Permissions"] = await roleService.GetAllPermmisions();
+            ViewData["Title"] = Titles.AdminEditRole;
             return View(role);
         }
         [HttpPost]
@@ -77,6 +82,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 ViewData["Permissions"] = await roleService.GetAllPermmisions();
+                ViewData["Title"] = Titles.AdminEditRole;
                 return View(model);
             }
             #endregion
@@ -95,6 +101,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
             }
             ViewData["Permissions"] = await roleService.GetAllPermmisions();
+            ViewData["Title"] = Titles.AdminEditRole;
             return View(model);
         }
         #endregion
@@ -108,6 +115,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if (Role == null)
                 return NotFound();
 
+            ViewData["Title"] = Titles.AdminDetailRole;
             return View(Role);
         }
         #endregion

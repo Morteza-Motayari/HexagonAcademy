@@ -21,9 +21,6 @@ namespace Hexagon.Domain.ViewModels.Wallets
         public string? OS { get; set; }
         [Display(Name = "کدپیگیری")]
         public string RefId { get; set; }
-
-        [Display(Name = "توضیحات")]
-        public string Description { get; set; }
     }
     public enum ClientSideChargingWalletResult
     {

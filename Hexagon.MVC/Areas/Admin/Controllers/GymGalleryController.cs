@@ -18,6 +18,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                 return RedirectToAction("List","Gym", new { area = "Admin" });
             }
             ViewData["GymGallery"]=await gymGalleryService.ListGymGallerysAsync(gymId);
+            ViewData["Title"] = Titles.AdminGymGallery;
             return View(new CreateGymGalleryViewModel
             {
                 GymId = gymId
@@ -31,6 +32,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             if(!ModelState.IsValid)
             {
                 ViewData["GymGallery"] = await gymGalleryService.ListGymGallerysAsync(model.GymId);
+                ViewData["Title"] = Titles.AdminGymGallery;
                 return View(model);
             }
                 
@@ -49,6 +51,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
                     break;
             }
             ViewData["GymGallery"] = await gymGalleryService.ListGymGallerysAsync(model.GymId);
+            ViewData["Title"] = Titles.AdminGymGallery;
             return View(model);
         }
         [AuthorizePermission("DeleteGalleryGym")]

@@ -287,6 +287,7 @@ namespace Hexagon.Domain.Shared
         public static string TicketMessageCantDletedForPassedTime = "پیام تیکت مدنظر شما ارسال شده و به دلیل گذر زمان امکان حذف آن نیست.";
         public static string FirstSimpleDeleteTicket = "ابتدا تیکت مد نظر را به طور ساده حذف بکنید.";
         public static string FirstSimpleDeleteTicketMessage = "ابتدا پیام تیکت مد نظر را به طور ساده حذف بکنید.";
+        public static string TicketMessageEmpty = "لطفا متن تیکت خود را وارد کنید.";
         #endregion
     }
 

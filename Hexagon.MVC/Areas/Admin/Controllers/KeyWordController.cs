@@ -14,6 +14,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
         {
             ViewData["SportClassId"] = sportClassId;
             var list = await KeyWordService.FilterKeyWordsAsync(filter, sportClassId);
+            ViewData["Title"] = Titles.AdminKeyWords;
             return View(list);
         }
         #endregion
@@ -126,7 +127,7 @@ namespace Hexagon.MVC.Areas.Admin.Controllers
             var KeyWord = await KeyWordService.AdminSideDetailKeyWordAsync(id);
             if (KeyWord == null)
                 return NotFound();
-
+            ViewData["Title"] = Titles.AdminDetailKeyWord;
             return View(KeyWord);
         }
         #endregion

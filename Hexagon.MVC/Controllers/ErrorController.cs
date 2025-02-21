@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hexagon.Domain.Shared;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hexagon.MVC.Controllers
 {
@@ -7,11 +8,13 @@ namespace Hexagon.MVC.Controllers
         [Route("Error/{statusCode}")]
         public IActionResult HandleError(int statusCode)
         {
+            
             if (statusCode == 404)
             {
+                ViewData["Title"] = Titles.ContentNotFound;
                 return View("404");
             }
-
+            ViewData["Title"] = Titles.ContentNotFound;
             return View("Error");
         }
     }

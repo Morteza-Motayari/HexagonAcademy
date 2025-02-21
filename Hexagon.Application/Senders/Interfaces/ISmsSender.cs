@@ -9,6 +9,6 @@ namespace Hexagon.Application.Senders.Interfaces
 {
     public interface ISmsSender
     {
-        SendResult SendMessage(string PhoneNumber,string message);
+        bool SendMessage(string PhoneNumber,string message);
     }
 }
