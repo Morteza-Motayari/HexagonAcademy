@@ -1,0 +1,148 @@
+﻿using GreenHeart.Application.Services.Implementation.Gyms;
+using GreenHeart.Application.Services.Implementation.KeyWords;
+using GreenHeart.Application.Services.Implementation.Users;
+using GreenHeart.Application.Services.Interfaces.Gyms;
+using GreenHeart.Domain.Shared;
+using GreenHeart.Domain.ViewModels.Gyms.ClassComments;
+using GreenHeart.Domain.ViewModels.Gyms.Sports;
+using GreenHeart.Domain.ViewModels.KeyWords;
+using GreenHeart.Domain.ViewModels.Users.Roles;
+using GreenHeart.MVC.Utilities;
+using Microsoft.AspNetCore.Mvc;
+
+namespace GreenHeart.MVC.Areas.Admin.Controllers
+{
+    public class ClassCommentController(IClassCommentService classCommentService) : AdminSideController
+    {
+        #region List
+        [AuthorizePermission("ManageClassComments")]
+        public async Task<IActionResult> List(FilterCommentViewModel filter, int sportClassId)
+        {
+            ViewData["SportClassId"] = sportClassId;
+            var list = await classCommentService.FilterClassCommentsAsync(filter);
+            ViewData["Title"] = Titles.AdminComments;
+            return View(list);
+        }
+        #endregion
+
+        #region Get Comment
+        [AuthorizePermission("GetComments")]
+        public async Task<IActionResult> CommentView(int commentId)
+        {
+            var comment=await classCommentService.GetClassCommentForViewAdminAsync(commentId);
+            return PartialView("_CommentView", comment);
+        }
+        #endregion
+
+        #region Change Status
+        [AuthorizePermission("ChangeCommentStatus")]
+        public async Task<IActionResult> AcceptComment(int id)
+        {
+            var comment = await classCommentService.AcceptCommentAsync(id);
+            switch(comment)
+            {
+                case UpdateCommentStatusResult.Success:
+                    return Ok(new
+                    {
+                        status = 200,
+                        message = SuccessMessages.CommentAcceptedSuccessfully
+                    });
+                case UpdateCommentStatusResult.ClassCommentNotFound:
+                    return Ok(new
+                    {
+                        status = 200,
+                        message = ErrorMessages.CommentNotFound
+                    });
+            }
+            return Ok(new
+            {
+                status = 204,
+                message = ErrorMessages.ErrorOccured
+            });
+        }
+        [AuthorizePermission("ChangeCommentStatus")]
+        public async Task<IActionResult> RejectComment(int id)
+        {
+            var comment = await classCommentService.RejectCommentAsync(id);
+            switch (comment)
+            {
+                case UpdateCommentStatusResult.Success:
+                    return Ok(new
+                    {
+                        status = 200,
+                        message = SuccessMessages.CommentRejectedSuccessfully
+                    });
+                case UpdateCommentStatusResult.ClassCommentNotFound:
+                    return Ok(new
+                    {
+                        status = 200,
+                        message = ErrorMessages.CommentNotFound
+                    });
+            }
+            return Ok(new
+            {
+                status = 204,
+                message = ErrorMessages.ErrorOccured
+            });
+        }
+        #endregion
+
+        #region Detail
+        [AuthorizePermission("DetailComment")]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var commeny = await classCommentService.AdminSideDetailClassCommentAsync(id);
+            if (commeny == null)
+                return NotFound();
+            ViewData["Title"] = Titles.AdminDetailComment;
+            return View(commeny);
+        }
+        #endregion
+
+        #region Delete
+        [AuthorizePermission("DeleteComment")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await classCommentService.DeleteClassCommentAsync(id);
+            switch (result)
+            {
+                case DeleteCommentStatusResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.SportClassDeletedSuccessfully;
+                    break;
+                case DeleteCommentStatusResult.ClassCommentNotFound:
+                    TempData[ErrorMessage] = ErrorMessages.CommentNotFound;
+                    break;
+                case DeleteCommentStatusResult.ClassCommentAlreadyDeleted:
+                    TempData[ErrorMessage] = ErrorMessages.CommentAlreadyDeleted;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
+
+        #region Delete Forever
+        [AuthorizePermission("DeleteCommentForever")]
+        public async Task<IActionResult> DeleteForever(int id)
+        {
+            var result = await classCommentService.DeleteClassCommentForever(id);
+            switch (result)
+            {
+                case DeleteForeverCommentResult.Success:
+                    TempData[SuccessMessage] = SuccessMessages.CommentDeletedForeverSuccessfully;
+                    break;
+                case DeleteForeverCommentResult.CantDeletedNow:
+                    string message = await classCommentService.CantDeleteClassCommentForeverNowMessage(id);
+                    TempData[ErrorMessage] = message;
+                    break;
+                case DeleteForeverCommentResult.FirstDeleteSimple:
+                    TempData[ErrorMessage] = ErrorMessages.FirstSimpleDeleteComment;
+                    break;
+                case DeleteForeverCommentResult.NotFound:
+                    TempData[ErrorMessage] = ErrorMessages.CommentNotFound;
+                    break;
+            }
+            return RedirectToAction(nameof(List));
+        }
+        #endregion
+    }
+}

@@ -1,0 +1,48 @@
+﻿@using GreenHeart.Application.Extensions
+@using GreenHeart.Application.Statics
+@using GreenHeart.Domain.ViewModels.Users.Staffs.Caders
+@model List<ClientSideCaderViewModel>
+<section class="bg-light w-100">
+    <div class="container">
+        <div class="row d-flex align-items-center py-5">
+            <div class="col-lg-6 text-start">
+                <h1 class="h2 py-5 text-primary typo-space-line">درباره ما</h1>
+                <p class="h-3">
+                    ما در باشگاه <span class="text-danger">قلب</span> <span class="text-success">سبز</span> تلاش بر این میکنیم که بهترین کلاس ورزشی برای امادگی جسمانی را برگزار میکنیم
+                    .
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <img src="/img/banner-img-02.svg">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="pt-5 pb-3 d-lg-flex align-items-center gx-5">
+
+        <div class="col-lg-3">
+            <h2 class="h2 py-5 typo-space-line">تیم همکاری ما</h2>
+            <p class="text-muted light-300">
+                ما در باشگاه قلب سبز با همکاران حرفه ای و با تجربه باشگاه را با پیش به سوی جلو میبریم
+            </p>
+        </div>
+
+        <div class="col-lg-9 row">
+            @if (Model.CheckNullability())
+            {
+                foreach(var cader in Model)
+                {
+                    <div class="team-member col-md-4">
+                        <img class="team-member-img img-fluid rounded-circle p-4 about-img" src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(cader.Avatar))?$"{cader.Avatar}":"cadre.png")" alt="@cader.FullName">
+                        <ul class="team-member-caption list-unstyled text-center pt-4 text-muted light-300">
+                            <li><strong>@cader.FullName</strong></li>
+                            <li><strong>موقعیت:@cader.Position</strong></li>
+                        </ul>
+                    </div>
+                }
+            }          
+        </div>
+    </div>
+</section>

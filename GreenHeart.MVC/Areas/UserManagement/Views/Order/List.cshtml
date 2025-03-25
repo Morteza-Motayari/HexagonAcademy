@@ -1,0 +1,80 @@
+﻿@using GreenHeart.Application.Convertors
+@using GreenHeart.Application.Extensions
+@using GreenHeart.Domain.ViewModels.Orders.Orders
+@model FilterClientSideOrdersViewModel
+<div class="card shadow mb-4 ui-box-profile">
+    <div class="card-header">
+        <strong class="card-title">
+            <i class='bx bxs-shopping-bags bxs'></i> فاکتورها
+        </strong>
+    </div>
+    <div class="card-body">
+        <form method="post" id="filter-search" asp-area="UserManagement" asp-controller="Order" asp-action="List">
+            <input type="hidden" asp-for="Page" />
+        </form>
+        <div class="ui-box-content">
+            <div class="table-responsive">
+                @if (Model.Entities.CheckNullability())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>زمان ایجاد</th>
+                                <th>هزینه کل</th>
+                                <th>وضعیت پرداخت</th>
+                                <th>آخرین بروزرسانی</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(int i=0;i<Model.Entities.Count();i++)
+                            {
+                                <tr>
+                                    <td class="fa-num">@(Model.StartItemFromList + i)</td>
+                                    <td class="fa-num">@Model.Entities[i].CreatedDate.ToShamsiWithPersianMonth()</td>
+                                    <td class="fa-num">@Model.Entities[i].TotalPrice.ToMoney()</td>
+                                    @if (@Model.Entities[i].IsFainally == false)
+                                    {
+                                        <td class="fa-num">
+                                            <span class="badge bg-warning rounded-pill">
+                                                پرداخت نشده
+                                            </span>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fa-num">
+                                            <span class="badge bg-success rounded-pill">
+                                                پرداخت شده
+                                            </span>
+                                        </td>
+                                    }
+                                    <td class="fa-num">@Model.Entities[i].LastModifiedDate.ToShamsiWithPersianMonth()</td>
+                                    <td>
+                                        <a asp-area="UserManagement" asp-controller="Order" asp-action="Detail" asp-route-orderId="@Model.Entities[i].Id" class="text-warning"><i class="bx bxs-low-vision"></i></a>
+                                        @if (@Model.Entities[i].IsFainally == false)
+                                        {
+                                            <a asp-area="UserManagement" asp-controller="Order" asp-action="PayOrder" asp-route-orderId="@Model.Entities[i].Id" class="text-success"><i class="bx bx-credit-card"></i></a>
+                                        }
+                                    </td>
+                                </tr>
+                            }                            
+                        </tbody>
+                    </table>
+                    @if (Model.PageCount > 1)
+                    {
+                        <div class="dataTables_info" role="status">نمایش @Model.StartItemFromList تا @Model.EndItemFromList از @Model.AllEntitiesCount فاکتور</div>
+                        <partial name="_ClientSidePaging" model="Model.GetCurrentPaging()" />
+                    }
+                }
+                else
+                {
+                    <div>
+                        <strong>شما هیچ فاکتوری ندارید</strong>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

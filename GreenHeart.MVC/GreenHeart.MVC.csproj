@@ -1,0 +1,474 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>96723f09-fdf9-42bc-aa0e-97b8679b9ffa</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+    <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
+	<PublishTrimmed>true</PublishTrimmed>
+	<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\AdminFiles\assets\Admin\Admin-comment.js" />
+    <Content Remove="wwwroot\css\_headerStyle.scss" />
+    <Content Remove="wwwroot\js\UserActions.js" />
+    <Content Remove="wwwroot\js\Utilities.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="settings.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\AdminFiles\assets\Admin\Admin-comment.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\_headerStyle.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\UserActions.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Utilities.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="NLog" Version="4.7.13" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.14.0" />
+    <PackageReference Include="UAParser" Version="3.1.47" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\GymGalleries\" />
+    <Folder Include="wwwroot\Images\Banners\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\AdminFiles\assets\Admin\Admin-comment.js" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\feather.svg" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\fontawesome\fa-brands-400.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\fontawesome\fa-regular-400.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\fontawesome\fa-solid-900.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\fontawesome\fontawesome-webfont.svg" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\fontawesome\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\iconfont\MaterialIcons-Regular.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\poppins\poppins-v5-latin-regular.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\simple-line-icons\fonts\Simple-Line-Icons4c824c82.svg" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\simple-line-icons\fonts\Simple-Line-Icons4c824c82.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\simple-line-icons\Simple-Line-Icons4c824c82.svg" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\simple-line-icons\Simple-Line-Icons4c824c82.woff2" />
+    <None Include="wwwroot\AdminFiles\assets\fonts\themify-icons\fonts\themify9f249f24.svg" />
+    <None Include="wwwroot\AdminFiles\assets\images\logo.svg" />
+    <None Include="wwwroot\AdminFiles\assets\images\qrcode.svg" />
+    <None Include="wwwroot\AdminFiles\assets\js\admin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\apexcharts.custom.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\apexcharts.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\app.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\apps.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bootstrap-datepicker.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bootstrap.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\amcharts4\animated.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\amcharts4\charts.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\amcharts4\core.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\amcharts4\maps.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\amcharts4\worldLow.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\apexcharts\apexcharts.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\bootstrap-colorpicker\dist\js\bootstrap-colorpicker.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\ckeditor.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\config.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\lang\en.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\az.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\de-ch.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\en-au.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\es-mx.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\eu.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\fo.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\oc.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\tt.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\about\dialogs\about.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\image\dialogs\image.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\link\dialogs\anchor.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\link\dialogs\link.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\pastefromgdocs\filter\default.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\pastefromword\filter\default.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\pastetools\filter\common.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\pastetools\filter\image.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\scayt\CHANGELOG.md" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\scayt\dialogs\options.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\scayt\LICENSE.md" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\scayt\README.md" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\af.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\az.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\da.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\de-ch.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\en-au.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\en-ca.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\en-gb.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\es-mx.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\eu.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\ko.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\lt.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\oc.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\ro.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\sr-latn.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\sr.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\tt.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\table\dialogs\table.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\wsc\LICENSE.md" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\plugins\wsc\README.md" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\skins\moono-lisa\en.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\skins\moono-lisa\readme.md" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\ckeditor\styles.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\datamaps\d3.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\datamaps\datamaps.world.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\datamaps\topojson.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\echart\echarts.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\editable-table\mindmup-editabletable.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\export-tables\buttons.flash.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\export-tables\buttons.html5.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\export-tables\buttons.print.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\export-tables\dataTables.buttons.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\export-tables\jszip.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\export-tables\pdfmake.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\export-tables\vfs_fonts.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\jquery-steps\jquery.steps.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\lightgallery\dist\js\lightgallery-all.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\multiselect\js\jquery.multi-select.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\rangeSlider\js\ion.rangeSlider.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\jquery.tinymce.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\langs\readme.md" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\advlist\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\advlist\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\anchor\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\anchor\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\autolink\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\autolink\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\autoresize\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\autoresize\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\autosave\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\autosave\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\bbcode\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\bbcode\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\charmap\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\charmap\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\codesample\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\codesample\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\code\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\code\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\colorpicker\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\colorpicker\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\compat3x\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\compat3x\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\compat3x\tiny_mce_popup.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\compat3x\utils\editable_selects.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\compat3x\utils\form_utils.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\compat3x\utils\mctabs.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\compat3x\utils\validate.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\contextmenu\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\contextmenu\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\directionality\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\directionality\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\emoticons\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\emoticons\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\fullpage\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\fullpage\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\fullscreen\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\fullscreen\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\help\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\help\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\hr\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\hr\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\imagetools\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\imagetools\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\image\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\image\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\importcss\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\importcss\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\insertdatetime\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\legacyoutput\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\link\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\link\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\lists\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\lists\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\media\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\media\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\nonbreaking\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\noneditable\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\noneditable\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\pagebreak\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\pagebreak\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\paste\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\paste\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\preview\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\preview\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\print\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\print\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\save\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\save\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\searchreplace\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\searchreplace\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\spellchecker\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\spellchecker\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\tabfocus\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\tabfocus\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\table\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\table\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\template\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\template\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\textcolor\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\textcolor\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\textpattern\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\textpattern\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\toc\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\toc\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\visualblocks\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\visualblocks\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\visualchars\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\visualchars\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\wordcount\plugin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\plugins\wordcount\plugin.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\skins\lightgray\skin.min.css.map" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\skins\lightgray\skin.mobile.min.css.map" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\themes\inlite\theme.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\themes\inlite\theme.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\themes\mobile\theme.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\themes\mobile\theme.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\themes\modern\theme.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\themes\modern\theme.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\tinymce.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\bundles\tinymce\tinymce.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\chart.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\config.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\Custom-admin.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\d3.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\datamaps-zoomto.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\datamaps.all.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\datamaps.custom.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\daterangepicker.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\dropzone.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\form.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\fullcalendar.custom.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\fullcalendar.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\gauge.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\jquery.mask.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\jquery.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\jquery.sparkline.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\jquery.steps.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\jquery.stickOnScroll.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\jquery.timepicker.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\jquery.validate.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\map.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\moment.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\apps\calendar.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\apps\chat.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\apps\dragdrop.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\apps\portfolio.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\apps\support.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\apps\task.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\cards\basic.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\charts\amchart.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\charts\apexcharts.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\charts\chartjs.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\charts\echarts.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\charts\jquery-knob.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\charts\morris.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\charts\sparkline.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\dashboard\dashboard2.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\dashboard\dashboard3.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\ecommerce\product-detail.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\examples\login-register.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\examples\pages.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\forms\advanced-form-elements.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\forms\basic-form-elements.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\forms\editors.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\forms\form-validation.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\forms\form-wizard.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\index.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\maps\datamap.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\maps\google.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\maps\jqvmap.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\medias\carousel.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\medias\image-gallery.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\tables\editable-table.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\tables\jquery-datatable.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\todo\todo.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\ui\animations.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\ui\collapse.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\ui\dialogs.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\ui\notifications.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\ui\range-sliders.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\ui\sortable-nestable.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\widgets\chart-widget.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\pages\widgets\data-widget.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\perfect-scrollbar.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\popper.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\quill.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\select2.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\simplebar.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\table.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\tinycolor-min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\topojson.min.js" />
+    <None Include="wwwroot\AdminFiles\assets\js\uppy.min.js" />
+    <None Include="wwwroot\scss\moduls\_headerStyle.scss" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\useractions.js" />
+    <None Include="wwwroot\js\Utilities.js" />
+    <None Include="wwwroot\lib\animate\counterup\counterup.min.js" />
+    <None Include="wwwroot\lib\animate\easing\easing.js" />
+    <None Include="wwwroot\lib\animate\easing\easing.min.js" />
+    <None Include="wwwroot\lib\animate\lightbox\js\lightbox.min.js" />
+    <None Include="wwwroot\lib\animate\owlcarousel\LICENSE" />
+    <None Include="wwwroot\lib\animate\owlcarousel\owl.carousel.js" />
+    <None Include="wwwroot\lib\animate\owlcarousel\owl.carousel.min.js" />
+    <None Include="wwwroot\lib\animate\waypoints\links.php" />
+    <None Include="wwwroot\lib\animate\waypoints\waypoints.min.js" />
+    <None Include="wwwroot\lib\animate\wow\wow.js" />
+    <None Include="wwwroot\lib\animate\wow\wow.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GreenHeart.Infra.IOC\GreenHeart.Infra.IOC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\Views\KeyWord\_EditKey.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\UserManagement\Views\ClassComment\_EditComment.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\UserManagement\Views\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContainerEnvironmentVariable Include="ASPNETCORE_HTTPS_PORTS">
+      <Value>8081</Value>
+    </ContainerEnvironmentVariable>
+  </ItemGroup>
+
+</Project>

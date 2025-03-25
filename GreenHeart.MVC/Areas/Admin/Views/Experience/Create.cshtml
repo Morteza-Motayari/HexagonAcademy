@@ -1,0 +1,132 @@
+﻿@using GreenHeart.Application.Convertors
+@using GreenHeart.Application.Extensions
+@using GreenHeart.Application.Statics
+@using GreenHeart.Domain.ViewModels.Records.Certificates
+@using GreenHeart.Domain.ViewModels.Records.Experiences
+@model CreateExperienceViewModel
+@{
+    ViewData["Title"] = "سابقه ها";
+    var experiences = ViewData["Experiences"] as List<ExperienceViewModel>;
+    List<CertificateViewModel> CertificateItems = ViewData["Certificates"] as List<CertificateViewModel> ?? new List<CertificateViewModel>();
+    var Options = new SelectList(CertificateItems, "Id", "Name");
+    string staffName = (string)ViewData["staffName"];
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="List">سابقه ها</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="Create" asp-route-staffId="@Model.StaffId" asp-route-userId="@Model.UserId">ایجاد سابقه برای @staffName</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2><i class="fe fe-24 fe-edit bxl"></i> افزودن سابقه برای @staffName</h2>
+                <div class="toolbar">
+                    <div class="col-12">
+                        <form class="form" enctype="multipart/form-data" method="post" asp-area="Admin" asp-controller="Experience" asp-action="Create">
+                            <input type="hidden" asp-for="StaffId" />
+                            <input type="hidden" asp-for="UserId" />
+                            <div class="form-row row pl-4">
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Title" class="control-label"></label>
+                                        <input asp-for="Title" class="form-control form-control">
+                                        <span asp-validation-for="Title" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Company" class="control-label"></label>
+                                        <input asp-for="Company" class="form-control form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="CertificateId" class="form-control-label"></label>
+                                    <select asp-for="CertificateId" class="form-control" asp-items="Options">
+                                        <option value="">مدرک مورد نظر را در صورت نیاز انتخاب کنید ...</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="HowLong" class="control-label"></label>
+                                        <input asp-for="HowLong" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="Detail" class="control-label"></label>
+                                        <textarea asp-for="Detail" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 ">
+                                    <input type="submit" value="افزودن" class="btn btn-outline-success" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="body">
+                <h2><i class="fe fe-award fe-24 bxl"></i> @ViewData["Title"]</h2>
+                <div class="table-responsive">
+                    <div id="tableExport_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table class="table table-borderless dataTable table-responsive w-100 d-block d-table table-hover" role="grid">
+                            <thead class="thead-dark">
+                                <tr role="row">
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="عنوان: activate to sort column ascending">عنوان</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="شرکت: activate to sort column ascending">شرکت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="مدت زمان: activate to sort column ascending">مدت زمان</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="تاریخ ثبت: activate to sort column ascending">تاریخ ثبت</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="اقدام: activate to sort column ascending">اقدام</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (experiences.CheckNullability())
+                                {
+                                    @foreach (var experience in experiences)
+                                    {
+                                        <tr role="row" class="@((experience.IsDeleted==true)?"bg-danger":"") text-dark" id="tr_@experience.Id">
+                                            <td class="center">@experience.Title</td>
+                                            <td class="center">
+                                                @experience.Company
+                                            </td>
+                                            <td class="center">
+                                                @experience.HowLong
+                                            </td>
+                                            <td class="center">@experience.CreatedDate.ToShamsiWithHour()</td>
+                                            <td class="center">
+                                                @if (experience.IsDeleted == false)
+                                                {
+                                                    <a onclick="confirmDelete('@Url.Action("Delete","Experience",new{id=experience.Id})',event,'سابقه @experience.Title')" class="text-danger">
+                                                        <i class="fe fe-24 fe-trash-2"></i>
+                                                    </a>
+                                                    <a asp-area="Admin" asp-controller="Experience" asp-action="Edit" asp-route-id="@experience.Id" class="text-success">
+                                                        <i class="fe fe-24 fe-edit-3"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a onclick="confirmDeleteForever('@Url.Action("DeleteForever","Experience",new{id=experience.Id})',event,'سابقه @experience.Title')" class="text-warning">
+                                                        <i class="fe fe-24 fe-trash"></i>
+                                                    </a>
+                                                }
+                                                <a asp-area="Admin" asp-controller="Experience" asp-action="Detail" asp-route-id="@experience.Id" class="text-secondary">
+                                                    <i class="fe fe-24 fe-alert-circle text-warning"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

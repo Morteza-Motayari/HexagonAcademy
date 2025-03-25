@@ -1,0 +1,27 @@
+﻿using GreenHeart.Domain.Models.Gyms;
+using GreenHeart.Domain.Models.Users;
+using GreenHeart.Domain.ViewModels.Gyms.SportClasses;
+using GreenHeart.Domain.ViewModels.Gyms.Sports;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GreenHeart.Domain.Interfaces.Gyms
+{
+    public interface ISportRepository : IGenericRepository<Sport>
+    {
+        Task<bool> ExistSportTitle(string title);
+        Task<bool> ExistSportTitle(string title,int id);
+        Task<FilterSportViewModel> FilterSportAsync(FilterSportViewModel filter);
+        Task<List<SportViewModel>?> GetAllSportsAsync();
+        Task<Sport?> GetSportWithCertificate(int id);
+        Task<List<SportViewModel>?> GetAllSportsItemsAsync();
+        string GetSportTitle(int sportId);
+        Task<int> GetSportCertifiacetId(int sportId);
+        Task<List<ClientSideSportExisted>> GetSportExistedWithRelationAsync();
+        Task<DateTime> GetLastModifiedDate(int id);
+        Task<List<ClientSideSportNameViewModel>?> GetActiveSportName();
+    }
+}

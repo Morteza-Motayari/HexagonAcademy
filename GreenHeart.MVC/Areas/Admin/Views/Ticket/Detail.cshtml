@@ -1,0 +1,130 @@
+﻿@using GreenHeart.Application.Convertors
+@using GreenHeart.Application.Extensions
+@using GreenHeart.Application.Statics
+@using GreenHeart.Domain.Enums.Tickets
+@using GreenHeart.Domain.ViewModels.Tickets.TicketMessages
+@using GreenHeart.Domain.ViewModels.Tickets.Tickets
+@model List<AdminSideTicketMessageViewModel>
+@{
+    ViewData["Title"] = "جزئیات تیکت";
+    int CreatorId = (int)ViewData["TicketCreatorId"];
+    int TicketId = (int)ViewData["TicketId"];
+    bool Existing = (bool)ViewData["IsDeleted"];
+    TicketStatus status = (TicketStatus)ViewData["Status"];
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Ticket" asp-action="List">تیکت ها</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Ticket" asp-action="Detail" asp-route-id="@TicketId">جزئیات تیکت</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2 class="mt-3">
+                    <i class="bx bx-conversation fe-24 "></i> @ViewData["Title"]
+                </h2>
+            </div>
+            <div class="body">
+                <div class="row col-md-12">
+                    <div class="container">
+                        <div class="panel messages-panel">
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+
+                                    <div class="message-chat">
+                                        <div class="chat-body">
+                                            @if (Model.CheckNullability())
+                                            {
+                                                @foreach(var message in Model)
+                                                {
+                                                    @if (message.SenderId ==CreatorId)
+                                                    {
+                                                        <div class="message info">
+                                                            <img alt="@message.SenderName" class="img-circle medium-image" src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(message.SenderAvatar))?$"{message.SenderAvatar}":"default.png")">
+
+                                                            <div class="message-body @((message.IsDeleted==true)?"deleted":"")">
+                                                                <div class="message-info">
+                                                                    <h4><a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@message.SenderId">@message.SenderName</a></h4>
+                                                                    <h5> <i class="fa fa-clock-o"></i>@message.CreatedDate.ToShamsiWithPersianMonth()</h5>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="message-text">
+                                                                    @message.Message
+                                                                </div>
+                                                                @if (message.IsDeleted == false)
+                                                                {
+                                                                    <a onclick="confirmDelete('@Url.Action("DeleteTicketMessage","Ticket",new{id=message.TicketMessageId})',event,'پیام تیکت')" class="text-danger">
+                                                                        <i class="fe fe-24 fe-x text-danger"></i>
+                                                                    </a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a onclick="confirmDeleteForever('@Url.Action("DeleteForeverTicketMessage","Ticket",new{id=message.TicketMessageId})',event,'پیام تیکت')" class="text-danger">
+                                                                        <i class="fe fe-24 fe-trash"></i>
+                                                                    </a>
+                                                                }
+
+                                                            </div>
+                                                            
+                                                            <br>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="message my-message">
+                                                            <img alt="@message.SenderName" class="img-circle medium-image" src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(message.SenderAvatar))?$"{message.SenderAvatar}":"default.png")">
+                                                            <div class="message-body @((message.IsDeleted==true)?"deleted":"")">
+                                                                <div class="message-body-inner">
+                                                                    <div class="message-info">
+                                                                        <h4><a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@message.SenderId">@message.SenderName</a></h4>
+                                                                        <h5> <i class="fa fa-clock-o"></i>@message.CreatedDate.ToShamsiWithPersianMonth()</h5>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <div class="message-text">
+                                                                        @message.Message
+                                                                    </div>
+                                                                    @if (message.IsDeleted == false)
+                                                                    {
+                                                                        <a onclick="confirmDelete('@Url.Action("DeleteTicketMessage","Ticket",new{id=message.TicketMessageId})',event,'پیام تیکت')" class="text-danger">
+                                                                            <i class="fe fe-24 fe-x text-danger"></i>
+                                                                        </a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a onclick="confirmDeleteForever('@Url.Action("DeleteForeverTicketMessage","Ticket",new{id=message.TicketMessageId})',event,'پیام تیکت')" class="text-danger">
+                                                                            <i class="fe fe-24 fe-trash"></i>
+                                                                        </a>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                        </div>
+                                                    }                                         
+                                                }                                               
+                                            }                                           
+                                        </div>
+                                        @if (Existing == false && status != TicketStatus.Close)
+                                        {
+                                            <div class="chat-footer">
+                                                <form method="post" asp-area="Admin" asp-controller="Ticket" asp-action="Answer">
+                                                    <input type="hidden" name="TicketId" value="@TicketId" />
+                                                    <textarea class="send-message-text" name="AnswerTicket" rows="5" placeholder="پاسخ خود را اینجا بنویسید"></textarea>
+                                                    <button type="submit" class="send-message-button btn-info"> <i class="fe fe-24 fe-send"></i> </button>
+                                                </form>
+                                            </div>
+                                        }                 
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

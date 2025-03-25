@@ -1,0 +1,119 @@
+﻿@using GreenHeart.Domain.ViewModels.Contact_Us;
+@model CreateContactUsViewModel
+@{
+
+}
+<section class="container py-5">
+    <h1 class="col-12 col-xl-8 h2 text-left text-primary pt-3">همکاری موفقیت آمیز با ما درست بکن</h1>
+    <h2 class="col-12 col-xl-8 h4 text-left regular-400">پیامت را به باشگاه <span class="text-danger">قلب</span> <span class="text-green">سبز</span> برسان</h2>
+    <p class="col-12 col-xl-8 text-left text-muted pb-5 light-300">
+        در باشگاه <span class="text-danger">قلب</span> <span class="text-green">سبز</span> تلاش برای برگزاری
+        بهترین کلاس های ورزشی و با بهترین کیفیت انجام می شود
+        تا ورزشکار گرامی نگران هیچ کم وکاستی از لجاظ آموزشی نباشد
+    </p>
+
+    <div class="row pb-4">
+        <div class="col-lg-4">
+
+            <div class="contact row mb-4">
+                <div class="contact-icon col-lg-3 col-3">
+                    <div class="py-3 mb-2 text-center border rounded text-secondary">
+                        <i class="display-6 bx bx-news"></i>
+                    </div>
+                </div>
+                <ul class="contact-info list-unstyled col-lg-9 col-9  light-300">
+                    <li class="h5 mb-0">ارتباط با بخش محتوی</li>
+                    <li class="text-muted">آقای مرتضی مطیری</li>
+                    <li class="text-muted">09101760581</li>
+                </ul>
+            </div>
+
+            <div class="contact row mb-4">
+                <div class="contact-icon col-lg-3 col-3">
+                    <div class="border py-3 mb-2 text-center border rounded text-secondary">
+                        <i class="bx bx-laptop display-6"></i>
+                    </div>
+                </div>
+                <ul class="contact-info list-unstyled col-lg-9 col-9 light-300">
+                    <li class="h5 mb-0">ارتباط با بخش کلاس ها</li>
+                    <li class="text-muted">آقای محمد سمیعی</li>
+                    <li class="text-muted">09136585964</li>
+                </ul>
+            </div>
+
+            <div class="contact row mb-4">
+                <div class="contact-icon col-lg-3 col-3">
+                    <div class="border py-3 mb-2 text-center border rounded text-secondary">
+                        <i class="bx bx-money display-6"></i>
+                    </div>
+                </div>
+                <ul class="contact-info list-unstyled col-lg-9 col-9 light-300">
+                    <li class="h5 mb-0">ارتباط با باشگاه</li>
+                    <li class="text-muted">آقای محمد حسن رجبی</li>
+                    <li class="text-muted">02151875856</li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        <!-- Start Contact Form -->
+        <div class="col-lg-8 ">
+            <form class="contact-form row" method="post" asp-controller="ContactUs" asp-action="ContactUs" role="form">
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input asp-for="FullName" class="form-control form-control-lg light-300"  placeholder="Name">
+                        <label asp-for="FullName" for="floatingname light-300"></label>
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                </div><!-- End Input Name -->
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input asp-for="Email" class="form-control form-control-lg light-300"  placeholder="Email">
+                        <label asp-for="Email" for="floatingemail light-300"></label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div><!-- End Input Email -->
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input asp-for="Phone" class="form-control form-control-lg light-300"  placeholder="Phone">
+                        <label asp-for="Phone" for="floatingphone light-300"></label>
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div><!-- End Input Phone -->
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input asp-for="Subject" class="form-control form-control-lg light-300"  placeholder="Company Name">
+                        <label asp-for="Subject" for="floatingcompany light-300"></label>
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Description" class="form-control light-300" rows="8" placeholder="Message" id="floatingtextarea"></textarea>
+                        <label asp-for="Description" for="floatingtextarea light-300"></label>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div><!-- End Textarea Message -->
+
+                <div class="col-md-12 col-12 m-auto text-end">
+                    <button type="submit" class="btn btn-secondary rounded-pill px-md-5 px-4 py-2 radius-0 text-light light-300">ارسال پیام</button>
+                </div>
+
+            </form>
+        </div>
+        <!-- End Contact Form -->
+
+
+    </div>
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}    

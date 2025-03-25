@@ -1,0 +1,61 @@
+﻿using GreenHeart.Domain.Enums.Users;
+using GreenHeart.Domain.Models.Users;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GreenHeart.Domain.ViewModels.Users.Users
+{
+    public class CreateUserViewModel
+    {
+        [Display(Name = "نام")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
+        [RegularExpression(@"\D+", ErrorMessage = "نام وارد شده نمی تواند شامل اعداد باشد .")]
+        public string FirstName { get; set; }
+        [Display(Name = "نام خانوادگی")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
+        [RegularExpression(@"\D+", ErrorMessage = "نام وارد شده نمی تواند شامل اعداد باشد .")]
+        public string LastName { get; set; }
+        [Display(Name = "شماره موبایل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        [MaxLength(13, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
+        [RegularExpression(@"^([0-9]{11})$", ErrorMessage = "موبایل وارد شده معتبر نمی باشد")]
+        public string PhoneNumber { get; set; }
+        [Display(Name = "کلمه عبور")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
+        public string Password { get; set; }
+        [Display(Name = "کد ملی")]
+        [MaxLength(10, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "کد ملی وارد شده معتبر نمی باشد")]
+        public string? NationalCode { get; set; }
+        [Display(Name = "شهر")]
+        public string? city { get; set; }
+        [Display(Name = "ایمیل")]
+        [MaxLength(150, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
+        [EmailAddress(ErrorMessage = "ایمیل وارد شده نادرست می باشد.")]
+        public string? email { get; set; }
+        [Display(Name = "تاریخ تولد")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
+        public string? BirthDay { get; set; }
+        [Display(Name = "عکس")]
+        public IFormFile? Image { get; set; }
+        [Display(Name = "جنسیت")]
+        [Required(ErrorMessage = "لطفا {0} را انتخاب کنید.")]
+        public UserGender Gender { get; set; }
+        [Display(Name = "وضعیت")]
+        public UserStatus Status { get; set; }
+    }
+    public enum CreateUserResult
+    {
+        Success,
+        MobileDuplicated,
+        InvalidDateTime
+    }
+}

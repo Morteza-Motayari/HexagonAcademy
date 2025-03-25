@@ -1,0 +1,92 @@
+﻿using GreenHeart.Domain.Enums.Filter;
+using GreenHeart.Domain.Interfaces.Users;
+using GreenHeart.Domain.Models.Users;
+using GreenHeart.Domain.ViewModels.Users.Roles;
+using GreenHeart.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GreenHeart.Infra.Data.Repositories.Users
+{
+    public class RoleRepository : GenericRepository<Role>, IRoleRepository
+    {
+        private readonly GreenHeartContext _db;
+        public RoleRepository(GreenHeartContext db) : base(db)
+        {
+            _db = db;
+        }
+        public async Task<bool> ExistRoleTitle(string roleTilte)
+        => await _db.Roles.AnyAsync(u => u.RoleTitle == roleTilte&&u.IsDeleted==false);
+
+        public async Task<bool> ExistRoleTitle(string roleTilte, int roleId)
+        => await _db.Roles.AnyAsync(u => u.RoleTitle == roleTilte && u.IsDeleted == false&&u.Id!=roleId);
+
+        public async Task<FilterRoleViewModel> FilteRolesAsync(FilterRoleViewModel filter)
+        {
+            var query = _db.Roles.AsQueryable();
+
+            #region Filter Search
+            switch (filter.Status)
+            {
+                case ExistingStatus.All:
+                    break;
+                case ExistingStatus.Deleted:
+                    query = query.Where(u => u.IsDeleted == true);
+                    break;
+                case ExistingStatus.NotDeleted:
+                    query = query.Where(u => !u.IsDeleted);
+                    break;
+            }
+
+            if (filter.Title != null)
+            {
+                query = query.Where(r => r.RoleTitle.Contains(filter.Title));
+            }
+            #endregion
+
+            query=query.OrderByDescending(u=>u.CreatedDate);
+
+            await filter.Paging(query.Select(r => new RoleViewModel
+            {
+                Id = r.Id,
+                RoleTitle = r.RoleTitle,
+                CreatedDate = r.CreatedDate,
+                IsDeleted = r.IsDeleted
+            }));
+            return filter;
+        }
+
+        public async Task<List<RoleViewModel>> GetAllRolesOptionAsync()
+        {
+            var roles = await _db.Roles.Where(r=>r.IsDeleted==false).Select(u => new RoleViewModel
+            {
+                Id = u.Id,
+                RoleTitle = u.RoleTitle,
+                CreatedDate = u.CreatedDate
+            }).ToListAsync();
+            return roles;
+        }
+
+        public async Task<List<Role>?> getCaderRoles(int userId, int caderId)
+        => await _db.Roles.Include(u=>u.userRoles).Where(r=>r.userRoles.Where(u=>u.UserId==userId&&u.CaderId==caderId).Any()).ToListAsync();
+
+        public async Task<List<Role>?> GetUserRoles(List<int>? ids)
+        {
+            if (ids == null || ids.Count == 0)
+                return null;
+            List<Role> roles = new();
+            foreach(var item in ids)
+            {
+                roles.Add(await GetByIdAsync(item));
+            }
+            return roles;
+        }
+
+        public async Task<DateTime> GetLastModifiedDate(int id)
+        => await _db.Roles.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
+    }
+}

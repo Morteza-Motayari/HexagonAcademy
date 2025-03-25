@@ -1,0 +1,25 @@
+﻿@using GreenHeart.Domain.ViewModels.KeyWords
+@model UpdatekeyWordViewModel
+
+<form asp-action="Edit" asp-controller="KeyWord" asp-area="Admin" method="post"
+      data-ajax="true"
+      data-ajax-method="post"
+      data-ajax-success="OnSuccessAddingItem">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="SportClassId" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="Key" class="form-control-label"></label>
+                <input asp-for="Key" class="form-control" />
+                <span asp-validation-for="Key" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="submit" value="ویرایش کلمه" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

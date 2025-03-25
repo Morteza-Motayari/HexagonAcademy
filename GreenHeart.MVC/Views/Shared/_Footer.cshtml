@@ -1,0 +1,101 @@
+﻿@using GreenHeart.Application.Statics.WebSite_Texts;
+@inject Footer footer;
+    <!-- Start Footer TODO fixthis to bottom --> 
+<footer class="bg-grenn pt-4">
+    <div class="container">
+        <div class="row py-4">
+
+            <div class="col-lg-3 col-12 align-left">
+                <a class="navbar-brand" href="/">
+                    <i class='bx bx-dumbbell bx-sm text-light bxs fe-24'></i>
+                    <span class="text-light h5">باشگاه ورزشی</span> <span class="text-light h5 semi-bold-600">قلب سبز</span>
+                </a>
+                <p class="text-light my-lg-4 my-2">@footer.Address
+                </p>
+                <div class="ratio ratio-16x9">
+                    <iframe src="@footer.Location"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 my-sm-0 mt-4">
+                <h3 class="h4 pb-lg-3 text-light">
+                    شرکت ما</h3>
+                    <ul class="list-unstyled text-light light-300">
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light" href="/">خانه</a>
+                        </li>
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="Trainer" asp-action="List">مربی ها</a>
+                        </li>
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="SportClass" asp-action="List">کلاس های ورزشی</a>
+                        </li>                        
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="ContactUs" asp-action="ContactUs">ارتباط با ما</a>
+                        </li>
+
+                        <li class="pb-2">
+                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="AboutUs" asp-action="AboutUs">درباره ما</a>
+                        </li>
+                    </ul>
+            </div>
+
+            @await Component.InvokeAsync("SportsName")
+
+            <div class="col-lg-3 col-md-4 my-sm-0 mt-4">
+                <h2 class="h4 pb-lg-3 text-light">برای ارتباط</h2>
+                <ul class="list-unstyled text-light text-start footer-icons light-300">
+                    <li class="pb-2">
+                        <a class="text-decoration-none text-light" target="_blank" href="tel:@footer.PhoneNumberCall">
+                            <i class='bx-fw bx bx-phone bx-md bxs'></i>@footer.PhoneNumberDisplay
+                        </a>
+                    </li>
+                    <li class="pb-2">
+                        <a class="text-decoration-none text-light" target="_blank" href="mailto:@footer.Email">
+                            <i class='bx-fw bx bx-mail-send bx-md bxs'></i>@footer.Email
+                        </a>
+                    </li>
+                    <li class="pb-2">
+                        <a class="text-decoration-none text-light bxs" target="_blank" href="@footer.InstaLink">
+                            <i class='bx-fw bx bxl-instagram bx-md bxs'></i>@footer.InstaName
+                        </a>
+                    </li>
+                    <li class="pb-2">
+                        <a class="text-decoration-none text-light bxs" target="_blank" href="https://t.me/@footer.TelegramLink">
+                            <i class='bx-fw bx bxl-telegram bx-md bxs'></i>@footer.TelegramName
+                        </a>
+                    </li>
+                    <li class="pb-2">
+                        <a class="text-decoration-none text-light bxs" target="_blank" href="https://wa.me/@footer.WhatsappLink">
+                            <i class='bx-fw bx bxl-whatsapp bx-md bxs'></i>@footer.WhatsappName
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="w-100 bg-green-hot py-3">
+        <div class="container">
+            <div class="row pt-2">
+                <div class="col-lg-6 col-sm-12">
+                    <p class="text-lg-start text-center text-light light-300">
+                        @footer.CopyRight
+                    </p>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <p class="text-lg-end text-center text-light light-300">
+                        طراحی و تدوین سایت توسط <a rel="sponsored" class="text-decoration-none text-light" href="mailto:@footer.CreatorEmail" target="_blank"><strong>مرتضی مطیری</strong></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+<!-- End Footer -->

@@ -1,0 +1,124 @@
+﻿@using GreenHeart.Application.Convertors
+@using GreenHeart.Application.Extensions
+@using GreenHeart.Domain.Enums.Wallets
+@using GreenHeart.Domain.ViewModels.Wallets
+@model ClientSideFilterWallet
+@{
+    ViewData["Tilte"] = "کیف پول";
+    int budget = (int)ViewData["Budget"];
+}
+<div class="card shadow mb-4 ui-box-profile">
+    <div class="card-header">
+        <strong class="card-title">
+            <i class='bx bx-wallet bxs'></i> تراکنش ها
+        </strong>
+    </div>
+    <div class="card-body">
+        <div class="ui-box-title align-items-center justify-content-between">
+            <div class="d-flex justify-content-between">
+                <div>
+                    @ViewData["Title"]
+                </div>
+                <div>
+                    <span>موجودی کیف پول شما:@budget.ToMoney() ریال</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <partial name="_ChargingWallet" />
+            </div>
+            <form method="post" id="filter-search" asp-area="UserManagement" asp-controller="Wallet" asp-action="List">
+                <input type="hidden" asp-for="Page" />
+            </form>
+            <div class="col-12">
+                <div class="ui-box-content">
+                    <div class="table-responsive">
+                        @if (Model.Entities.CheckNullability())
+                        {
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>مبلغ</th>
+                                        <th>نوع</th>
+                                        <th>علت</th>
+                                        <th>وضعیت پرداخت</th>
+                                        <th>تاریخ</th>
+                                        <th>توضیحات</th>
+                                        <th>کد پیگیری</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.Entities.Count(); i++)
+                                    {
+                                        <tr>
+                                            <td class="fa-num">@(Model.StartItemFromList + i)</td>
+                                            <td class="fa-num">@(Model.Entities[i].Price.ToMoney())</td>
+                                            <td class="fa-num">
+                                                @switch (Model.Entities[i].Type)
+                                                {
+                                                    case TransactionType.Deposit:
+                                                        <span class="badge bg-success rounded-pill">@Model.Entities[i].Type.GetDisplayName()</span>
+                                                        break;
+                                                    case TransactionType.Creditor:
+                                                        <span class="badge bg-danger rounded-pill">@Model.Entities[i].Type.GetDisplayName()</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td class="fa-num">
+                                                @switch (Model.Entities[i].Case)
+                                                {
+                                                    case TransactionCase.ChargeWallet:
+                                                        <span class="badge bg-primary rounded-pill">@Model.Entities[i].Case.GetDisplayName()</span>
+                                                        break;
+                                                    case TransactionCase.PayOrder:
+                                                        <span class="badge bg-warning rounded-pill">@Model.Entities[i].Case.GetDisplayName()</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            @if (@Model.Entities[i].IsPayed == false)
+                                            {
+                                                <td class="fa-num">
+                                                    <span class="badge bg-warning rounded-pill">
+                                                        پرداخت نشده
+                                                    </span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="fa-num">
+                                                    <span class="badge bg-success rounded-pill">
+                                                        پرداخت شده
+                                                    </span>
+                                                </td>
+                                            }
+                                            <td class="fa-num">@Model.Entities[i].CreatedDate.ToShamsiWithPersianMonth()</td>
+                                            <td class="fa-num">@Model.Entities[i].Description</td>
+                                            <td class="fa-num">@Model.Entities[i].RefId</td>
+                                        </tr>
+                                    }                                    
+                                </tbody>
+                            </table>
+                            @if (Model.PageCount > 1)
+                            {
+                                <div class="dataTables_info" role="status">نمایش @Model.StartItemFromList تا @Model.EndItemFromList از @Model.AllEntitiesCount تراکنش</div>
+                                <partial name="_ClientSidePaging" model="Model.GetCurrentPaging()" />
+                            }
+                        }
+                        else
+                        {
+                            <div>
+                                <strong>شما هیچ تراکنشی ندارید</strong>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+@section Scripts{
+    <script src="/js/client-custom.js"></script>
+}

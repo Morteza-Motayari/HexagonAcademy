@@ -1,0 +1,116 @@
+﻿@using GreenHeart.Application.Extensions
+@using GreenHeart.Application.Statics
+@using GreenHeart.Domain.Enums.Users
+@using GreenHeart.Domain.ViewModels.Users.Users
+@model ClientSideUpdateUserViewModel
+<div class="card shadow mb-4 ui-box-profile">
+    <div class="card-header">
+        <strong class="card-title">
+            <i class='bx bxs-user-detail bxs'></i> اطلاعات
+            حساب
+        </strong>
+    </div>
+    <div class="card-body">
+        <form enctype="multipart/form-data" method="post" asp-controller="User" asp-action="EditProfile">
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="Avatar" type="hidden" />
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NationalCode" class="control-label"></label>
+                    <input asp-for="NationalCode" class="form-control">
+                    <span asp-validation-for="NationalCode" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="city" class="control-label"></label>
+                    <input asp-for="city" class="form-control">
+                </div>
+                <div class="col-md-10 mb-3">
+                    <label asp-for="email" class="control-label"></label>
+                    <input asp-for="email" type="email" class="form-control">
+                    <span asp-validation-for="email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Gender" class="control-label"></label>
+                    <div class="custom-control custom-radio">
+                        <input asp-for="Gender" type="radio" value="@UserGender.Female" class="custom-control-input bxs"  >
+                        <label class="custom-control-label" for="customControlValidation2">
+                            @UserGender.Female.GetDisplayName()
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio mb-3">
+                        <input asp-for="Gender" type="radio" value="@UserGender.Male" class="custom-control-input bxs"  >
+                        <label class="custom-control-label" for="customControlValidation3">
+                            @UserGender.Male.GetDisplayName()
+                        </label>
+                    </div>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BirthDay" class="control-label"></label>
+                    <div class="input-group">
+                        <input asp-for="BirthDay" data-jdp type="text" autocomplete="off" class="form-control" id="birthDay">
+                        <div class="input-group-append">
+                            <div data-jdp class="input-group-text" ><span class="bx bx-calendar"></span></div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center mb-5">
+                        <div class="avatar avatar-xl contact-photo">
+                            <img id="avatar" src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(Model.Avatar))?$"{Model.Avatar}":"default.png")" alt="..." class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="custom-file mb-3">
+                            <label asp-for="NewImage" class="control-label"></label>
+                            <input asp-for="NewImage" id="avaterFile" type="file"  >
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit">ویرایش اطلاعات</button>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/jalalidatepicker.min.js"></script>
+    <script>
+        jalaliDatepicker.startWatch();
+    </script>
+    <script>
+        avaterFile.onchange = evt => {
+            const [file] = avaterFile.files
+            if (file) {
+                avatar.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+    <script>
+        // Function to prevent typing and pasting in the input field
+        function disableInput(event) {
+            event.preventDefault();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputField = document.getElementById("birthDay");
+
+            // Disable typing
+            inputField.addEventListener("keydown", disableInput);
+
+            // Disable pasting
+            inputField.addEventListener("paste", disableInput);
+        });
+    </script>
+}
