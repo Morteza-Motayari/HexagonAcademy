@@ -1,8 +1,11 @@
 ﻿using GreenHeart.Application.Extensions;
+using GreenHeart.Application.Services.Interfaces.Caching;
 using GreenHeart.Application.Services.Interfaces.KeyWords;
+using GreenHeart.Application.Statics.Caches_Constatnt;
 using GreenHeart.Domain.Interfaces;
 using GreenHeart.Domain.Interfaces.Gyms;
 using GreenHeart.Domain.Interfaces.KeyWords;
+using GreenHeart.Domain.Models.Gyms;
 using GreenHeart.Domain.Models.KeyWords;
 using GreenHeart.Domain.Models.Users;
 using GreenHeart.Domain.ViewModels.KeyWords;
@@ -13,7 +16,9 @@ using GreenHeart.Infra.Data.Repositories.Users;
 namespace GreenHeart.Application.Services.Implementation.KeyWords
 {
     public class KeyWordService(IKeyWordRepository keyWordRepository
-        ,IUserRepository userRepository):IKeyWordService
+        ,IUserRepository userRepository
+        ,ICacheService cacheService
+        ,ISportClassRepository sportClassRepository):IKeyWordService
     {
         public async Task<AdminSideDetailKeyWordViewModel?> AdminSideDetailKeyWordAsync(int KeyWordId)
         {
@@ -57,6 +62,10 @@ namespace GreenHeart.Application.Services.Implementation.KeyWords
 
             await keyWordRepository.InserAsync(keyword);
             await keyWordRepository.SaveChangeAsync();
+            #region Deleting Cached Class
+            var sportClassSlug=await sportClassRepository.GetClassSlugByIdAsync(model.SportClassId);
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.SportClass + sportClassSlug);
+            #endregion
             return CreatekeyWordResult.Success;
         }
 
@@ -71,6 +80,10 @@ namespace GreenHeart.Application.Services.Implementation.KeyWords
             KeyWord.IsDeleted = true;
             keyWordRepository.Update(KeyWord);
             await keyWordRepository.SaveChangeAsync();
+            #region Deleting Cached Class
+            var sportClassSlug = await sportClassRepository.GetClassSlugByIdAsync((int)KeyWord.ClassId);
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.SportClass + sportClassSlug);
+            #endregion
             return DeletekeyWordResult.Success;
         }
 
@@ -127,7 +140,10 @@ namespace GreenHeart.Application.Services.Implementation.KeyWords
             keyWordRepository.Update(KeyWord);
             await keyWordRepository.SaveChangeAsync();
             #endregion
-
+            #region Deleting Cached Class
+            var sportClassSlug = await sportClassRepository.GetClassSlugByIdAsync((int)model.SportClassId);
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.SportClass + sportClassSlug);
+            #endregion
             return UpdatekeyWordResult.Success;
         }
     }

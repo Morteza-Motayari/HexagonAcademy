@@ -2,6 +2,7 @@
 using GreenHeart.Application.Services.Interfaces.Banners;
 using GreenHeart.Application.Services.Interfaces.Caching;
 using GreenHeart.Application.Statics;
+using GreenHeart.Application.Statics.Caches_Constatnt;
 using GreenHeart.Domain.Interfaces.Banners;
 using GreenHeart.Domain.Models.Banners;
 using GreenHeart.Domain.ViewModels.Banners;
@@ -12,17 +13,21 @@ namespace GreenHeart.Application.Services.Implementation.Banners
     {
         public async Task<List<ClientSideBannerViewModel>> ClientSideBannerViewModel()
         {
-            //string cacheKey = "all_banners";
-            //var cachedBanners = await cacheService.GetListAsync<ClientSideBannerViewModel>(cacheKey);
-            //if (cachedBanners.CheckNullability())
-            //{
-            //    return cachedBanners;
-            //}
-            var banners=await bannerRepository.GetBannerForClient();
-            //if (banners.CheckNullability())
-            //{
-            //    await cacheService.SetListAsync(cacheKey, banners,TimeSpan.FromMinutes(10));
-            //}
+            string cacheKey = CacheKeys.AllBanners;
+            if(await cacheService.ExistsAsync(cacheKey))
+            {
+                var cachedBanners = await cacheService.GetListAsync<ClientSideBannerViewModel>(cacheKey);
+                if (cachedBanners.CheckNullability())
+                {
+                    return cachedBanners;
+                }
+            }            
+
+            var banners = await bannerRepository.GetBannerForClient();
+            if (banners.CheckNullability())
+            {
+                await cacheService.SetListAsync(cacheKey, banners, CacheDuration.NormalCahingTime);
+            }
 
             return banners;
         }
@@ -47,6 +52,12 @@ namespace GreenHeart.Application.Services.Implementation.Banners
             banner.BannerUrl = bannerUrl;
             await bannerRepository.InserAsync(banner);
             await bannerRepository.SaveChangeAsync();
+
+            #region Deleting Cached Banners
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.AllBanners);
+            #endregion
+
+
             return CreateBannerResult.Success;
         }
 
@@ -61,6 +72,11 @@ namespace GreenHeart.Application.Services.Implementation.Banners
             #endregion
             bannerRepository.Delete(banner);
             await bannerRepository.SaveChangeAsync();
+
+            #region Deleting Cached Banners
+            await CacheExtensions.InvalidateCacheKey(cacheService,CacheKeys.AllBanners);
+            #endregion
+
             return DeleteBannerResult.Success;
         }
 

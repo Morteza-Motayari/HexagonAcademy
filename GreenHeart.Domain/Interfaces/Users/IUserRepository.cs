@@ -38,6 +38,6 @@ namespace GreenHeart.Domain.Interfaces
         Task<List<ClientSideTrainerViewModel>?> GetTrainersForHomePage();
         Task<User?> GetUserBySlug(string slug);
         Task<List<ClientSideCaderViewModel>?> GetCadersForAbouUsPage();
-
+        Task<string?> GetStaffSlugByIdAsync(int userId);
     }
 }

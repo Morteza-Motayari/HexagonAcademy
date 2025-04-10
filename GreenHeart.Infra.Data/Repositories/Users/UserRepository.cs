@@ -298,5 +298,9 @@ namespace GreenHeart.Infra.Data.Repositories
                     FullName = t.FirstName + " " + t.LastName,
                     Position = t.staffes.Where(s=>!s.IsDeleted&&s.userRoles.Count()>0).Select(t => t.Position).First()
                 }).ToListAsync();
+
+        public async Task<string?> GetStaffSlugByIdAsync(int userId)
+        => await _db.Users.Where(u => u.Id == userId)
+            .Select(s => s.Slug).FirstOrDefaultAsync();
     }
 }

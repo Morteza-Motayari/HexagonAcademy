@@ -4,12 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>96723f09-fdf9-42bc-aa0e-97b8679b9ffa</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
-    <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
-	<PublishTrimmed>true</PublishTrimmed>
-	<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>

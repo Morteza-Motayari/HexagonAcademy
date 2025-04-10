@@ -1,5 +1,7 @@
 ﻿using EasyCaching.Core;
+using GreenHeart.Application.Extensions;
 using GreenHeart.Application.Services.Interfaces.Caching;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace GreenHeart.Application.Services.Implementation.Caching
 {
-    public class RedisCacheService: ICacheService
+    public class RedisCacheService : ICacheService
     {
         private readonly IEasyCachingProvider _provider;
+        private readonly IEasyCachingProviderFactory _cachingProviderFactory;
 
-        public RedisCacheService(IEasyCachingProvider provider)
+        public RedisCacheService(IEasyCachingProviderFactory cachingProviderFactory)
         {
-            _provider = provider;
+            _cachingProviderFactory = cachingProviderFactory;
+            _provider = cachingProviderFactory.GetCachingProvider("redis1");
         }
 
         public async Task<T> GetAsync<T>(string key)
@@ -47,5 +51,9 @@ namespace GreenHeart.Application.Services.Implementation.Caching
         {
             await _provider.SetAsync(key, value, expiration);
         }
+
+        public async Task RemovePatternAsync(string patternKey)
+        => await _provider.RemoveByPrefixAsync(patternKey);
+
     }
 }

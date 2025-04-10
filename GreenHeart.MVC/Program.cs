@@ -1,4 +1,5 @@
 using EasyCaching.Core.Configurations;
+using EasyCaching.Serialization.Json;
 using GreenHeart.Application.Statics;
 using GreenHeart.Application.Statics.WebSite_Texts;
 using GreenHeart.Infra.Data.Context;
@@ -7,18 +8,21 @@ using GreenHeart.MVC.Utilities.ActionFilters;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NLog.Web;
+using NuGet.Protocol;
+using StackExchange.Redis;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-
 
 var logger=NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-
     // Add services to the container.
     builder.Services.AddControllersWithViews();
 
@@ -37,15 +41,38 @@ UnicodeRanges.Arabic }));
     //use redis cache that named redis1
     builder.Services.AddEasyCaching(options =>
     {
-        // Use JSON serializer
+        #region Configuration For json if Self referencing loop detected
+        //var jsonOptions = new Action<EasyCaching.Serialization.Json.EasyCachingJsonSerializerOptions>(x =>
+        //{
+        //    x.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        //    x.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+        //});
+        //options.WithJson(jsonOptions, "json");
+        #endregion
+
         options.WithJson("json");
 
         options.UseRedis(config =>
         {
             config.DBConfig.Endpoints.Add(new ServerEndPoint("localhost", 6379));
-            config.DBConfig.ConnectionTimeout = 10000; // Increase timeout to 10 seconds
             config.SerializerName = "json"; // Match the serializer name
+           
+            // Timeout Settings
+            config.DBConfig.ConnectionTimeout = 30000; // 30 seconds for initial connection
+            config.DBConfig.SyncTimeout = 10000;      // 10 seconds for sync operations
+            config.DBConfig.AsyncTimeout = 10000;     // 10 seconds for async operations
+
+            // Connection and Pooling Settings
+            //config.DBConfig.PoolSize = 50;            // Increase connection pool size
+            //config.DBConfig.ConnectRetry = 3;        // Retry connection attempts
+            //config.DBConfig.KeepAlive = 180;          // Keep connections alive (seconds)
+
+            // Database and Serializer
+            config.DBConfig.Database = 0;             // Explicitly set DB index
+            config.SerializerName = "json";
+            config.DBConfig.AllowAdmin=true;
         }, "redis1");
+       
     });
 
     #endregion

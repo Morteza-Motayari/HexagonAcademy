@@ -11,10 +11,14 @@ using GreenHeart.Infra.Data.Repositories.Users;
 using GreenHeart.Infra.Data.Repositories;
 using GreenHeart.Domain.Interfaces.Users;
 using GreenHeart.Domain.ViewModels.Users.Roles;
+using GreenHeart.Application.Services.Interfaces.Caching;
+using GreenHeart.Application.Statics.Caches_Constatnt;
 
 namespace GreenHeart.Application.Services.Implementation.Gyms
 {
-    public class CertificateService(ICertificateRepository CertificateRepository,IUserRepository userRepository) : ICertificateService
+    public class CertificateService(ICertificateRepository CertificateRepository
+        ,IUserRepository userRepository
+        ,ICacheService cacheService) : ICertificateService
     {
         public async Task<AdminSideDetailCertificateViewModel?> AdminSideDetailCertificateAsync(int CertificateId)
         {
@@ -129,7 +133,9 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             CertificateRepository.Update(certificate);
             await CertificateRepository.SaveChangeAsync();
             #endregion
-
+            #region Deleting Cached trainer
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.Trainers);
+            #endregion
             return UpdateCertificateResult.Success;
         }
 

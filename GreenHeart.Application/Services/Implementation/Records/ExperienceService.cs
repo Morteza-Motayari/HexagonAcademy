@@ -1,7 +1,9 @@
 ﻿using GreenHeart.Application.Extensions;
 using GreenHeart.Application.Generators;
+using GreenHeart.Application.Services.Interfaces.Caching;
 using GreenHeart.Application.Services.Interfaces.Records;
 using GreenHeart.Application.Statics;
+using GreenHeart.Application.Statics.Caches_Constatnt;
 using GreenHeart.Domain.Interfaces;
 using GreenHeart.Domain.Interfaces.Gyms;
 using GreenHeart.Domain.Models.Gyms;
@@ -15,7 +17,8 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 {
     public class ExperienceService(IExperienceRepository experienceRepository
         ,IUserRepository userRepository
-        ,ICertificateRepository certificateRepository) : IExperienceService
+        ,ICertificateRepository certificateRepository
+        ,ICacheService cacheService) : IExperienceService
     {
         public async Task<AdminSideDetailExperienceViewModel?> AdminSideDetailExperienceAsync(int ExperienceId)
         {
@@ -74,6 +77,10 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             experience.Slug = slug;
             await experienceRepository.InserAsync(experience);
             await experienceRepository.SaveChangeAsync();
+            #region Deleting Cached Trainer
+            string trainerSlug=await userRepository.GetStaffSlugByIdAsync(model.UserId);
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.Trainer+trainerSlug);
+            #endregion
             return CreateExperienceResult.Success;
         }
 
@@ -88,6 +95,10 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             experience.IsDeleted = true;
             experienceRepository.Update(experience);
             await experienceRepository.SaveChangeAsync();
+            #region Deleting Cached Trainer
+            string trainerSlug = await userRepository.GetStaffSlugByIdAsync(experience.UserId);
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.Trainer + trainerSlug);
+            #endregion
             return DeleteExperienceResult.Success;
         }
 
@@ -162,6 +173,11 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             }
             experienceRepository.Update(experience);
             await experienceRepository.SaveChangeAsync();
+            #endregion
+
+            #region Deleting Cached Trainer
+            string trainerSlug = await userRepository.GetStaffSlugByIdAsync(experience.UserId);
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.Trainer + trainerSlug);
             #endregion
 
             return UpdateExperienceResult.Success;

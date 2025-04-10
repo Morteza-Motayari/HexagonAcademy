@@ -14,5 +14,7 @@ namespace GreenHeart.Application.Services.Interfaces.Caching
         Task<bool> ExistsAsync(string key);
         Task<List<T>> GetListAsync<T>(string key);
         Task SetListAsync<T>(string key, List<T> value, TimeSpan expiration);
+        Task RemovePatternAsync(string patternKey);
+
     }
 }

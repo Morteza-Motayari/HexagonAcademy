@@ -19,6 +19,8 @@ using GreenHeart.Domain.Models.Users;
 using GreenHeart.Infra.Data.Repositories.Users;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using GreenHeart.Application.Services.Interfaces.Caching;
+using GreenHeart.Application.Statics.Caches_Constatnt;
 
 namespace GreenHeart.Application.Services.Implementation.Gyms
 {
@@ -26,7 +28,8 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
         ,IUserRepository userRepository
         ,ISportClassRepository sportClassRepository
         ,IClassCommentReactionRepository classCommentReactionRepository
-        ,IHttpContextAccessor httpContextAccessor) : IClassCommentService
+        ,IHttpContextAccessor httpContextAccessor
+        ,ICacheService cacheService) : IClassCommentService
     {
         public async Task<AdminSideDetailClassCommentViewModel?> AdminSideDetailClassCommentAsync(int ClassCommentId)
         {
@@ -80,6 +83,9 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             ClassComment.IsDeleted = true;
             classCommentRepository.Update(ClassComment);
             await classCommentRepository.SaveChangeAsync();
+            #region Deleting Cached ClassComments
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.ClassComment + ClassComment.SportClassId.ToString());
+            #endregion
             return DeleteCommentStatusResult.Success;
         }
 
@@ -88,6 +94,15 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<List<ClientSideCommentViewModel>?> GetClientClassActiveCommentAsync(int classId)
         {
+            string cachekey=CacheKeys.ClassComment+classId.ToString();
+            if(await cacheService.ExistsAsync(cachekey))
+            {
+                var cachedClassComments=await cacheService.GetListAsync<ClientSideCommentViewModel>(cachekey);
+                if (cachedClassComments.CheckNullability())
+                {
+                    return cachedClassComments;
+                }
+            }
             var commentIds=await classCommentRepository.GetClassActiveCommentsIds(classId);
             if(commentIds == null)
                 return null;
@@ -107,6 +122,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                     DisLike = await classCommentReactionRepository.GetCommentDisLikesAsync(commentid)
                 });
             }
+            await cacheService.SetListAsync(cachekey, comments,CacheDuration.SportClassCahingTime);
             return comments;
         }
 
@@ -152,6 +168,10 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             await classCommentRepository.SaveChangeAsync();
             #endregion
 
+            #region Deleting Cached ClassComments
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.ClassComment + ClassComment.SportClassId.ToString());
+            #endregion
+
             return ClientSideUpdateCommentResult.Success;
         }
 
@@ -180,6 +200,9 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             comment.CommentStatus = ClassCommentPending.Accepted;
             classCommentRepository.Update(comment);
             await classCommentRepository.SaveChangeAsync();
+            #region Deleting Cached ClassComments
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.ClassComment + comment.SportClassId.ToString());
+            #endregion
             return UpdateCommentStatusResult.Success;
         }
 
@@ -191,6 +214,9 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             comment.CommentStatus = ClassCommentPending.Rejected;
             classCommentRepository.Update(comment);
             await classCommentRepository.SaveChangeAsync();
+            #region Deleting Cached ClassComments
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.ClassComment + comment.SportClassId.ToString());
+            #endregion
             return UpdateCommentStatusResult.Success;
         }
 
@@ -236,6 +262,10 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             await classCommentReactionRepository.DeleteCommentReactions(commentId);
             classCommentRepository.Delete(comment);
             await classCommentRepository.SaveChangeAsync();
+
+            #region Deleting Cached ClassComments
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.ClassComment + comment.SportClassId.ToString());
+            #endregion
             return ClientSideDeleteForeverCommentResult.Success;
         }
     }

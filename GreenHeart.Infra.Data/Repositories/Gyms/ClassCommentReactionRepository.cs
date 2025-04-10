@@ -42,11 +42,23 @@ namespace GreenHeart.Infra.Data.Repositories.Gyms
 
         public async Task<List<ClassCommentReaction>?> GetCommentDisLikesAsync(int commentId)
         =>await _db.ClassCommentReactions
-            .Where(c=>c.CommentId == commentId&&c.ReactionType==ClassCommentReactionType.DisLike).ToListAsync();
+            .Where(c=>c.CommentId == commentId&&c.ReactionType==ClassCommentReactionType.DisLike)
+            .Select(l => new ClassCommentReaction
+            {
+                CommentId = l.CommentId,
+                ReactionType = l.ReactionType,
+                CreatedBy = l.CreatedBy
+            }).ToListAsync();
 
         public async Task<List<ClassCommentReaction>?> GetCommentLikesAsync(int commentId)
         => await _db.ClassCommentReactions
-            .Where(c => c.CommentId == commentId && c.ReactionType == ClassCommentReactionType.Like).ToListAsync();
+            .Where(c => c.CommentId == commentId && c.ReactionType == ClassCommentReactionType.Like)
+            .Select(l=>new ClassCommentReaction
+            {
+                CommentId = l.CommentId,
+                ReactionType = l.ReactionType,
+                CreatedBy=l.CreatedBy
+            }).ToListAsync();
 
         public async Task<ClassCommentReaction> GetCommentReaction(int coomentId, int userId)
         =>await _db.ClassCommentReactions.Where(r=>r.CreatedBy==userId&&r.CommentId==coomentId).FirstAsync();

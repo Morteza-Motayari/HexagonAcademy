@@ -291,6 +291,10 @@ namespace GreenHeart.Infra.Data.Repositories.Gyms
             }).ToList();
         }
 
+        public async Task<string?> GetClassSlugByIdAsync(int sportClassId)
+        => await _db.SportClasses.Where(s => s.Id == sportClassId)
+            .Select(sc => sc.Slug).FirstOrDefaultAsync();
+
         //public async Task<FilterSportClassAthleteViewModel> FilterSportClassAthlete(FilterSportClassAthleteViewModel filter)
         //{
 

@@ -1,4 +1,7 @@
-﻿using GreenHeart.Application.Services.Interfaces.Gyms;
+﻿using GreenHeart.Application.Extensions;
+using GreenHeart.Application.Services.Interfaces.Caching;
+using GreenHeart.Application.Services.Interfaces.Gyms;
+using GreenHeart.Application.Statics.Caches_Constatnt;
 using GreenHeart.Domain.Interfaces.Gyms;
 using GreenHeart.Domain.Models.Gyms;
 using GreenHeart.Domain.ViewModels.Gyms.ClassCommentReactions;
@@ -6,11 +9,15 @@ using GreenHeart.Domain.ViewModels.Gyms.ClassCommentReactions;
 namespace GreenHeart.Application.Services.Implementation.Gyms
 {
     public class ClassCommentReactionService(IClassCommentReactionRepository classCommentReactionRepository
-        ,IClassCommentRepository classCommentRepository) : IClassCommentReactionService
+        ,IClassCommentRepository classCommentRepository
+        ,ICacheService cacheService) : IClassCommentReactionService
     {
         public async Task<int> AddCommentVoteForUserAsync(ClientSideInsertCommentReactionViewModel model)
         {
             var voteExist = await classCommentReactionRepository.ExistCommentVoteForUser(model.commentId, model.userId);
+            #region Deleting Cached ClassComments
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.ClassComment + model.ClassId.ToString());
+            #endregion
             if (voteExist == false)
             {
                 int classId=await classCommentRepository.CommentClassId(model.commentId);

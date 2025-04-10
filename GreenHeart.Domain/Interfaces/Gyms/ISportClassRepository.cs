@@ -25,7 +25,7 @@ namespace GreenHeart.Domain.Interfaces.Gyms
         Task<DateTime> GetLastModifiedDate(int id);
         Task<UserSideFilterSportClassViewModel> GetUserClassesAsync(int userId, UserSideFilterSportClassViewModel filter);
         Task<List<ClientSideSportClassViewModel>?> GetClassesForIndexPage(FilterUserGender filter);
-       // Task<FilterSportClassAthleteViewModel> FilterSportClassAthlete(FilterSportClassAthleteViewModel filter)
-
+        // Task<FilterSportClassAthleteViewModel> FilterSportClassAthlete(FilterSportClassAthleteViewModel filter)
+        Task<string?> GetClassSlugByIdAsync(int sportClassId);
     }
 }

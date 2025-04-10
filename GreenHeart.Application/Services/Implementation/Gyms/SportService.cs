@@ -1,6 +1,9 @@
 ﻿using GreenHeart.Application.Extensions;
 using GreenHeart.Application.Generators;
+using GreenHeart.Application.Services.Interfaces.Caching;
 using GreenHeart.Application.Services.Interfaces.Gyms;
+using GreenHeart.Application.Statics;
+using GreenHeart.Application.Statics.Caches_Constatnt;
 using GreenHeart.Domain.Interfaces;
 using GreenHeart.Domain.Interfaces.Gyms;
 using GreenHeart.Domain.Models.Gyms;
@@ -15,7 +18,7 @@ using GreenHeart.Infra.Data.Repositories.Users;
 
 namespace GreenHeart.Application.Services.Implementation.Gyms
 {
-    public class SportService(ISportRepository sportRepository,IUserRepository userRepository) : ISportService
+    public class SportService(ISportRepository sportRepository,IUserRepository userRepository, ICacheService cacheService) : ISportService
     {
         public async Task<AdminSideDetailSportViewModel?> AdminSideDetailSportAsync(int SportId)
         {
@@ -61,6 +64,11 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
             await sportRepository.InserAsync(sport);
             await sportRepository.SaveChangeAsync();
+
+            #region Deleting Sports Cached
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.SportRelatedKeys);
+            #endregion
+
             return CreateSportResult.Success;
         }
 
@@ -75,6 +83,11 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             Sport.IsDeleted = true;
             sportRepository.Update(Sport);
             await sportRepository.SaveChangeAsync();
+
+            #region Deleting Sports Cached
+            await CacheExtensions.InvalidateCacheKey(cacheService,CacheKeys.SportRelatedKeys);
+            #endregion
+
             return DeleteSportResult.Success;
         }
 
@@ -105,10 +118,44 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
         => await sportRepository.FilterSportAsync(filter);
 
         public async Task<List<ClientSideSportNameViewModel>?> GetActiveSportNameAsync()
-        => await sportRepository.GetActiveSportName();
+        {
+            string cachekey = CacheKeys.ActiveSports;
+            if(await cacheService.ExistsAsync(cachekey))
+            {
+                var cachedSports = await cacheService.GetListAsync<ClientSideSportNameViewModel>(cachekey);
+                if (cachedSports.CheckNullability())
+                {
+                    return cachedSports;
+                }
+            }
+            var sports = await sportRepository.GetActiveSportName();
+            if(sports.CheckNullability())
+            {
+                await cacheService.SetListAsync(cachekey, sports, CacheDuration.NormalCahingTime);
+            }
+            return sports;
+        }
+        
 
         public async Task<List<ClientSideSportExisted>?> GetSportExistedAsync()
-        => await sportRepository.GetSportExistedWithRelationAsync();
+        {
+            string cachekey = CacheKeys.SportsExisted;
+            if( await cacheService.ExistsAsync(cachekey))
+            {
+                var cachedSportsExisted = await cacheService.GetListAsync<ClientSideSportExisted>(cachekey);
+                if (cachedSportsExisted.CheckNullability())
+                {
+                    return cachedSportsExisted;
+                }
+            }
+            var sportsExisted = await sportRepository.GetSportExistedWithRelationAsync();
+            if (sportsExisted.CheckNullability())
+            {
+                await cacheService.SetListAsync(cachekey,sportsExisted,CacheDuration.NormalCahingTime);
+            }
+            return sportsExisted;
+        }
+        
 
         public async Task<UpdateSportViewModel> GetSportForEdit(int SportId)
         {
@@ -145,6 +192,10 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             }
             sportRepository.Update(Sport);
             await sportRepository.SaveChangeAsync();
+            #endregion
+
+            #region Deleting Sports Cached
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.SportRelatedKeys);
             #endregion
 
             return UpdateSportResult.Success;
