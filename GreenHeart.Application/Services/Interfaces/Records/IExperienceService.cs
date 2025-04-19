@@ -9,7 +9,7 @@ namespace GreenHeart.Application.Services.Interfaces.Records
         Task<UpdateExperienceViewModel> GetExperienceForEdit(int experienceId);
         Task<UpdateExperienceResult> UpdateExperienceAsync(UpdateExperienceViewModel model);
         Task<DeleteExperienceResult> DeleteExperienceAsync(int experienceId);
-        Task<List<ExperienceViewModel>?> ListExperienceesAsync(int staffId);
+        Task<List<ExperienceViewModel>?> ListExperiencesForStaffCategoryAsync(int staffId, int categoryId);
         Task<FilterExperienceViewModel> FilterExperienceesAsync(FilterExperienceViewModel filter);
         Task<AdminSideDetailExperienceViewModel?> AdminSideDetailExperienceAsync(int ExperienceId);
         Task<DeleteForeverExperienceResult> DeleteExperienceForever(int ExperienceId);

@@ -1,0 +1,27 @@
+﻿@using GreenHeart.Domain.ViewModels.Records.RecordCategories
+@model CreateRecordCategoryViewModel
+@{
+
+}
+<form asp-action="Create" method="post"
+      data-ajax="true"
+      data-ajax-method="post"
+      data-ajax-success="OnSuccessAddingItem">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="StaffId" value="@ViewData["staffId"]" />
+    <div class="col-md-12">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="Title" class="form-control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="submit" value="ایجاد مجموعه سوابق" class="btn btn-success" />
+            <a asp-area="Admin" asp-controller="RecordCategory" asp-action="List" asp-route-staffId="@Model.StaffId" class="btn btn-secondary">برگشت به لیست</a>
+        </div>
+    </div>
+</form>

@@ -81,7 +81,8 @@
                         <table class="table table-borderless dataTable table-responsive w-100 d-block d-table table-hover" role="grid">
                             <thead class="thead-dark">
                                 <tr role="row">
-                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="نام: activate to sort column ascending">نام </th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="نام: activate to sort column ascending">نام</th>
+                                    <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="مجموعه سوابق: activate to sort column ascending">مجموعه سوابق</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="عنوان: activate to sort column ascending">عنوان</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="شرکت: activate to sort column ascending">شرکت</th>
                                     <th class="center sorting" tabindex="0" aria-controls="tableExport" rowspan="1" colspan="1" aria-label="مدت زمان سابقه: activate to sort column ascending">مدت زمان سابقه</th>
@@ -98,6 +99,7 @@
                                     {
                                         <tr role="row" class="@((item.IsDeleted==true)?"bg-danger":"") text-dark">
                                             <td class="center"><a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@item.UserId">@item.UserName</a></td>
+                                            <td class="center"><a asp-area="Admin" asp-controller="RecordCategory" asp-action="Detail" asp-route-id="@item.RecordCategoryId">@item.RecordCategory</a></td>
                                             <td class="center">@item.Title</td>
                                             <td class="center">@item.Company</td>
                                             <td class="center">@item.HowLong</td>
@@ -119,7 +121,7 @@
                                                 </a>
                                                 @if (item.IsDeleted == false)
                                                 {
-                                                    <a asp-area="Admin" asp-controller="Experience" asp-action="Edit" asp-route-id="@item.Id" class="text-success">
+                                                    <a asp-area="Admin" asp-controller="Experience" asp-action="Edit" asp-route-id="@item.Id" asp-route-categoryName="@item.RecordCategory" class="text-success">
                                                         <i class="fe fe-24 fe-edit-3"></i>
                                                     </a>
                                                     <a onclick="confirmDelete('@Url.Action("Delete","Experience",new{id=item.Id})',event,'سابقه @item.Title')" class="text-danger">

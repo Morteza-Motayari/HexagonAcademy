@@ -7,6 +7,7 @@ using GreenHeart.Application.Services.Implementation.Gyms;
 using GreenHeart.Application.Services.Implementation.KeyWords;
 using GreenHeart.Application.Services.Implementation.Orders;
 using GreenHeart.Application.Services.Implementation.Payment;
+using GreenHeart.Application.Services.Implementation.Records;
 using GreenHeart.Application.Services.Implementation.Tickets;
 using GreenHeart.Application.Services.Implementation.Users;
 using GreenHeart.Application.Services.Implementation.Wallets;
@@ -28,6 +29,7 @@ using GreenHeart.Domain.Interfaces.Gyms;
 using GreenHeart.Domain.Interfaces.KeyWords;
 using GreenHeart.Domain.Interfaces.Links;
 using GreenHeart.Domain.Interfaces.Orders;
+using GreenHeart.Domain.Interfaces.Records;
 using GreenHeart.Domain.Interfaces.Tickets;
 using GreenHeart.Domain.Interfaces.Users;
 using GreenHeart.Domain.Interfaces.Wallets;
@@ -38,6 +40,7 @@ using GreenHeart.Infra.Data.Repositories.Gyms;
 using GreenHeart.Infra.Data.Repositories.KeyWords;
 using GreenHeart.Infra.Data.Repositories.Links;
 using GreenHeart.Infra.Data.Repositories.Orders;
+using GreenHeart.Infra.Data.Repositories.Records;
 using GreenHeart.Infra.Data.Repositories.Tickets;
 using GreenHeart.Infra.Data.Repositories.Users;
 using GreenHeart.Infra.Data.Repositories.Wallets;
@@ -96,6 +99,7 @@ namespace GreenHeart.Infra.IOC.Container
             #region Records
             services.AddScoped<ICertificateService, CertificateService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<IRecordCategoryService, RecordCategoryService>();
             #endregion
 
             #region Tickets
@@ -148,6 +152,7 @@ namespace GreenHeart.Infra.IOC.Container
             #region Records
             services.AddScoped<ICertificateRepository, CertificateRepository>();
             services.AddScoped<IExperienceRepository, ExperienceRepository>();
+            services.AddScoped<IRecordCategoryRepository, RecordCategoryRepository>();
             #endregion
 
             #region Tickets

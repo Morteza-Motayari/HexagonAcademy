@@ -57,6 +57,7 @@ namespace GreenHeart.Infra.Data.Context
         #region Records
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<Experience> Experiences { get; set; }
+        public DbSet<RecordCategory> RecordCategories { get; set; }
         #endregion
 
         #region Tickets

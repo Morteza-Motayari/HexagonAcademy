@@ -240,5 +240,8 @@ namespace GreenHeart.Infra.Data.Repositories
                 Id=s.Id,
                 Position=s.Position
             }).FirstOrDefaultAsync();
+
+        public async Task<int> GetUserIdByStaffId(int staffId)
+        => await _db.Staffs.Where(s=>s.Id==staffId).Select(s=>s.UserId).FirstOrDefaultAsync();
     }
 }

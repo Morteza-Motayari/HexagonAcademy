@@ -13,5 +13,6 @@ namespace GreenHeart.Application.Statics
         public static string GymGalleryPath = "/Images/GymGalleries/";
         public static string SportClassPath = "/Images/SportClasses/";
         public static string BannerPath = "/Images/Banners/";
+        public static string ExperiencePath = "/Images/Experiences/";
     }
 }

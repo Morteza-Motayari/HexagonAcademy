@@ -1,6 +1,7 @@
 ﻿@using GreenHeart.Application.Convertors
 @using GreenHeart.Application.Extensions
 @using GreenHeart.Application.Statics
+@using GreenHeart.Domain.Enums.Users
 @using GreenHeart.Domain.ViewModels.Gyms.SportClasses
 @using GreenHeart.Domain.ViewModels.Orders.ClassesOrder
 @model ClientSideSportClassDeatilViewModel
@@ -24,7 +25,7 @@
             <div class="col-lg-8 posts-list">
                 <div class="single-post">
                     <div class="feature-img">
-                        <img class="img-fluid" src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(Model.ImageUrl))?$"{Model.ImageUrl}":"defaultClass.jpg")" alt="">
+                        <img class="img-fluid clickable-image" src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(Model.ImageUrl))?$"{Model.ImageUrl}":"defaultClass.jpg")" alt="">
                     </div>
                     <div class="blog_details">
                         <h2>
@@ -39,8 +40,8 @@
                                 <p class="excert">
                                     مربی:<a asp-area="" asp-controller="Trainer" asp-action="Detail" asp-route-Slug="@Model.TrainerSlug">@Model.Trainer</a>
                                     <br />
-                                    مخاطب:@Model.Gender.GetDisplayName()
-                                    <br />
+                                    مخاطب:@((Model.Gender==UserGender.Male)?"آقایان":"بانوان")
+                                        <br />
                                     تاریخ ایجاد کلاس:@Model.StartDate.ToShamsi()
                                     <br />
                                     ساعت برگزاری کلاس:@Model.StartTime.ToHoure() تا @Model.EndTime.ToHoure()

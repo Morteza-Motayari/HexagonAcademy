@@ -20,9 +20,9 @@ namespace GreenHeart.Domain.Enums.Filter
     {
         [Display(Name = "همه")]
         All,
-        [Display(Name = "مذکر")]
+        [Display(Name = "آقایان")]
         Male,
-        [Display(Name = "مونث")]
+        [Display(Name = "بانوان")]
         Female
     }
     public enum FilterUserStatus

@@ -30,5 +30,10 @@ namespace GreenHeart.Domain.ViewModels.Records.Experiences
         [Display(Name = "مدرک")]
         public string? Certificate { get; set; }
         public int? CertificateId { get; set; }
+        public int RecordCategoryId { get; set; }
+        [Display(Name = "مجموعه سوابق")]
+        public string RecordCategory { get; set; }
+        [Display(Name = "تصویر مدرک")]
+        public string ExImage { get; set; }
     }
 }

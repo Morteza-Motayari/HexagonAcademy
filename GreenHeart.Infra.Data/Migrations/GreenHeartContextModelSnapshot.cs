@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenHeart.Infra.Data.Migrations
 {
     [DbContext(typeof(GreenHeartContext))]
-    partial class HexagonContextModelSnapshot : ModelSnapshot
+    partial class GreenHeartContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -732,6 +732,10 @@ namespace GreenHeart.Infra.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<string>("ExImage")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
                     b.Property<string>("HowLong")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -745,6 +749,9 @@ namespace GreenHeart.Infra.Data.Migrations
 
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("RecordCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -766,11 +773,51 @@ namespace GreenHeart.Infra.Data.Migrations
 
                     b.HasIndex("CertificateId");
 
+                    b.HasIndex("RecordCategoryId");
+
                     b.HasIndex("StaffId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Experiences");
+                });
+
+            modelBuilder.Entity("GreenHeart.Domain.Models.Records.RecordCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StaffId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("RecordCategories");
                 });
 
             modelBuilder.Entity("GreenHeart.Domain.Models.Tickets.Ticket", b =>
@@ -1135,6 +1182,47 @@ namespace GreenHeart.Infra.Data.Migrations
                             ParentId = 31,
                             PermissionName = "DeleteExperienceForever",
                             PermissionTitle = "حذف مطلق سابقه"
+                        },
+                        new
+                        {
+                            PermissionId = 92,
+                            PermissionName = "ManageRecordCategories",
+                            PermissionTitle = "مدیریت مجموعه های سوابق"
+                        },
+                        new
+                        {
+                            PermissionId = 93,
+                            ParentId = 92,
+                            PermissionName = "AddRecordCategory",
+                            PermissionTitle = "افزودن مجموعه سوابق"
+                        },
+                        new
+                        {
+                            PermissionId = 94,
+                            ParentId = 92,
+                            PermissionName = "EditRecordCategory",
+                            PermissionTitle = "ویرایش مجموعه سوابق"
+                        },
+                        new
+                        {
+                            PermissionId = 95,
+                            ParentId = 92,
+                            PermissionName = "DeleteRecordCategory",
+                            PermissionTitle = "حذف مجموعه سوابق"
+                        },
+                        new
+                        {
+                            PermissionId = 96,
+                            ParentId = 92,
+                            PermissionName = "DetailRecordCategory",
+                            PermissionTitle = "جزئیات مجموعه سوابق"
+                        },
+                        new
+                        {
+                            PermissionId = 97,
+                            ParentId = 92,
+                            PermissionName = "DeleteRecordCategoryForever",
+                            PermissionTitle = "حذف مطلق مجموعه سوابق"
                         },
                         new
                         {
@@ -2007,6 +2095,12 @@ namespace GreenHeart.Infra.Data.Migrations
                         .WithMany()
                         .HasForeignKey("CertificateId");
 
+                    b.HasOne("GreenHeart.Domain.Models.Records.RecordCategory", "recordCategory")
+                        .WithMany("Experiences")
+                        .HasForeignKey("RecordCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GreenHeart.Domain.Models.Users.Staff", "staff")
                         .WithMany()
                         .HasForeignKey("StaffId")
@@ -2021,9 +2115,22 @@ namespace GreenHeart.Infra.Data.Migrations
 
                     b.Navigation("certificate");
 
+                    b.Navigation("recordCategory");
+
                     b.Navigation("staff");
 
                     b.Navigation("user");
+                });
+
+            modelBuilder.Entity("GreenHeart.Domain.Models.Records.RecordCategory", b =>
+                {
+                    b.HasOne("GreenHeart.Domain.Models.Users.Staff", "Trainer")
+                        .WithMany("RecordCategories")
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Trainer");
                 });
 
             modelBuilder.Entity("GreenHeart.Domain.Models.Tickets.Ticket", b =>
@@ -2154,6 +2261,11 @@ namespace GreenHeart.Infra.Data.Migrations
                     b.Navigation("UserCertificates");
                 });
 
+            modelBuilder.Entity("GreenHeart.Domain.Models.Records.RecordCategory", b =>
+                {
+                    b.Navigation("Experiences");
+                });
+
             modelBuilder.Entity("GreenHeart.Domain.Models.Tickets.Ticket", b =>
                 {
                     b.Navigation("TicketMessages");
@@ -2173,6 +2285,8 @@ namespace GreenHeart.Infra.Data.Migrations
 
             modelBuilder.Entity("GreenHeart.Domain.Models.Users.Staff", b =>
                 {
+                    b.Navigation("RecordCategories");
+
                     b.Navigation("SportClasses");
 
                     b.Navigation("StaffGyms");

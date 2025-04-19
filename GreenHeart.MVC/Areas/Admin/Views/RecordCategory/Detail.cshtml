@@ -1,0 +1,97 @@
+﻿@using GreenHeart.Application.Convertors
+@using GreenHeart.Application.Extensions
+@using GreenHeart.Domain.ViewModels.Records.RecordCategories
+@model AdminSideDetailRecordCategoryViewModel
+@{
+
+}
+<div class="row">
+    <div class="pl-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Trainer" asp-action="List">لیست مربیان</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="RecordCategory" asp-action="List" asp-route-staffId="@Model.StaffId">مجموعه های سوابق @Model.StaffName</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="RecordCategory" asp-action="Detail" asp-route-id="@Model.Id">جزئیات مجموعه سوابق @Model.Title</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="header">
+                <h2 class="mt-3">
+                    <i class="fe fe-24 fe-layers bxl"></i> @ViewData["Title"]
+                </h2>
+            </div>
+            <div class="body">
+                <div class="row col-md-12">
+                    <div class="col-md-12">
+                        <div class="row">
+                            @if (Model.IsDeleted == true)
+                            {
+                                <div class="form-group col-md-12 ">
+                                    <p class="h2 mb-3 text-danger">این مجموعه سوابق حذف شده است</p>
+                                </div>
+                            }
+                            <div class="form-group col-md-6">
+                                <label asp-for="Title" class="form-control-label"></label>
+                                <input asp-for="Title" class="form-control" disabled="" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="StaffName" class="form-control-label"></label>
+                                <a class="form-control color-disabled" asp-area="Admin" asp-controller="Trainer" asp-action="Detail" asp-route-id="@Model.StaffId">@Model.StaffName</a>
+                            </div>
+
+                            <div class="form-group col-md-12 col-xl-12">
+                                @if (Model.Experiences.CheckNullability())
+                                {
+                                    <h2>سابقه ها</h2>
+                                    <hr />
+                                    <div class="custom-checkbox">
+                                        @foreach (var item in Model.Experiences)
+                                        {
+                                            <a asp-area="Admin" asp-controller="Experience" asp-action="Detail" class="btn mb-2 @((item.IsDeleted==true)?"btn-outline-danger":"btn-outline-primary")" asp-route-id="@item.Id">
+                                                @item.Title
+                                                <span class="fe fe-arrow-left fe-16 bxs"></span>
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="h2 mb-4">این مجموعه هیچ سابقه ثبت شده‌ای ندارد</p>
+                                }
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label asp-for="CreatedDate" class="control-label"></label>
+                                <input value="@Model.CreatedDate.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="LastModifiedDate" class="control-label"></label>
+                                <input value="@Model.LastModifiedDate?.ToShamsiWithHour()" type="text" class="form-control" id="birthDay" disabled="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="CreatedBy" class="form-control-label"></label>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.CreatedById">@Model.CreatedBy</a>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="LastModifiedBy" class="form-control-label"></label>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.LastModifiedById">@Model.LastModifiedBy</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @if (Model.IsDeleted == false)
+                            {
+                                <a onclick="ShowAddingItemForm('@Url.Action("Edit","RecordCategory",new{id=Model.Id})','ویرایش مجموعه سوابق')" class="btn btn-primary">ویرایش مجموعه سوابق</a>
+                            }
+                            <a asp-area="Admin" asp-controller="RecordCategory" asp-action="List" asp-route-staffId="@Model.StaffId" class="btn btn-secondary">برگشت به لیست</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

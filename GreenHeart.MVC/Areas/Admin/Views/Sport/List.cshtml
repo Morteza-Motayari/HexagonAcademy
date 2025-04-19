@@ -6,8 +6,8 @@
 @model FilterSportViewModel
 @{
     ViewData["Title"] = "لیست رشته های ورزشی";
-    List<CertificateViewModel> CertificateItems = ViewData["Certificates"] as List<CertificateViewModel> ?? new List<CertificateViewModel>();
-    var Options = new SelectList(CertificateItems, "Id", "Name");
+    // List<CertificateViewModel> CertificateItems = ViewData["Certificates"] as List<CertificateViewModel> ?? new List<CertificateViewModel>();
+    // var Options = new SelectList(CertificateItems, "Id", "Name");
 }
 <div class="row">
     <div class="pl-3">

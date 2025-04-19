@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,5 +33,10 @@ namespace GreenHeart.Domain.ViewModels.Records.Experiences
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreatedDate { get; set; }
         public bool IsDeleted { get; set; }
+        public int RecordCategoryId { get; set; }
+        [Display(Name = "مجموعه سوابق")]
+        public string RecordCategory { get; set; }
+        [Display(Name = "تصویر مدرک")]
+        public string ExImage { get; set; }
     }
 }

@@ -152,15 +152,15 @@ UnicodeRanges.Arabic }));
     #region Configuring DataProtection for machine key
 
     //Configure Data Protection
+    if (builder.Environment.IsProduction())
+    {
+        var dirInfo = new DirectoryInfo(@"C:\Inetpub\vhosts\greenheartgym.com\keys");
+        //Console.WriteLine($"Can Read: {dirInfo.Exists}");
 
-    //var dirInfo = new DirectoryInfo(@"C:\Inetpub\vhosts\greenheartgym.com\keys");
-    //Console.WriteLine($"Can Read: {dirInfo.Exists}");
-
-    //var dataProtectionBuilder = builder.Services.AddDataProtection()
-    //    .PersistKeysToFileSystem(new DirectoryInfo(@"C:\Inetpub\vhosts\greenheartgym.com\keys"))
-    //    .SetApplicationName("greenheartgym");
-
-
+        var dataProtectionBuilder = builder.Services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo(@"C:\Inetpub\vhosts\greenheartgym.com\keys"))
+            .SetApplicationName("greenheartgym");
+    }    
     #endregion
 
     var app = builder.Build();

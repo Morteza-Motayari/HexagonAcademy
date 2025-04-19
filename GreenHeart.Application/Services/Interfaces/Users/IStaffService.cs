@@ -38,5 +38,10 @@ namespace GreenHeart.Application.Services.Interfaces.Users
         Task<string> CantDeleteCaderForeverNowMessage(int CaderId);
         Task<List<ClientSideCaderViewModel>?> GetCadersForAbouUsPageAsync();
         #endregion
+
+        #region Shared
+        Task<string> GetStaffNameAsync(int staffId);
+        Task<int> GetUserIdByStaffIdAsync(int staffId);
+        #endregion
     }
 }

@@ -15,6 +15,8 @@ namespace GreenHeart.Domain.Models.Records
         public string? Detail { get; set; }
         public string HowLong { get; set; }
         public int? CertificateId { get; set; }
+        public int RecordCategoryId { get; set; }
+        public string? ExImage { get; set; }
         #endregion
 
         #region Relations
@@ -24,6 +26,8 @@ namespace GreenHeart.Domain.Models.Records
         public Staff? staff { get; set; }
         [ForeignKey(nameof(CertificateId))]
         public Certificate? certificate { get; set; }
+        [ForeignKey(nameof(RecordCategoryId))]
+        public RecordCategory? recordCategory { get; set; }
         #endregion
     }
 }

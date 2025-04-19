@@ -20,7 +20,7 @@ namespace GreenHeart.Infra.Data.Repositories
 
         public async Task<FilterExperienceViewModel> FilterExperienceAsync(FilterExperienceViewModel filter)
         {
-            var query = _db.Experiences.Include(u=>u.user).AsQueryable();
+            var query = _db.Experiences.Include(u=>u.user).Include(s=>s.recordCategory).AsQueryable();
 
             #region Filter Search
             switch (filter.Status)
@@ -66,13 +66,15 @@ namespace GreenHeart.Infra.Data.Repositories
                 UserId = u.UserId,
                 StaffId = u.StaffId,
                 Certificate = _db.Certificates.Where(c => c.Id == u.CertificateId).Select(c => c.Name).First(),
-                UserName = _db.Users.Where(c => c.Id == u.UserId).Select(c => c.FirstName+" "+c.LastName).First()
+                UserName = _db.Users.Where(c => c.Id == u.UserId).Select(c => c.FirstName+" "+c.LastName).First(),
+                RecordCategoryId = u.RecordCategoryId,
+                RecordCategory=u.recordCategory.Title
             }));
             return filter;
         }
 
-        public async Task<List<ExperienceViewModel>?> GetAllExperiencesAsync(int staffId)
-        => await _db.Experiences.Where(e=>e.StaffId == staffId).Include(u=>u.certificate).Select(u=>new ExperienceViewModel
+        public async Task<List<ExperienceViewModel>?> GetAllExperiencesForStaffCategoryAsync(int staffId, int categoryId)
+        => await _db.Experiences.Where(e=>e.StaffId == staffId&&e.RecordCategoryId==categoryId).Include(u=>u.certificate).Select(u=>new ExperienceViewModel
         {
             Id = u.Id,
             IsDeleted = u.IsDeleted,
@@ -83,7 +85,8 @@ namespace GreenHeart.Infra.Data.Repositories
             Title=u.Title,
             HowLong=u.HowLong,
             UserId=u.UserId,
-            StaffId=u.StaffId
+            StaffId=u.StaffId,
+            ExImage=u.ExImage
         }).ToListAsync();
 
         //the below method will contoll of duplicating the slug and never gonna have similar slug
@@ -107,14 +110,27 @@ namespace GreenHeart.Infra.Data.Repositories
         => await _db.Experiences.Where(d => d.Id == id).Select(s => (DateTime)s.LastModifiedDate).FirstAsync();
 
         public async Task<List<ClientSideExperienceViewModel>> GetTrainerExperienceForClientSide(int staffId)
-        => await _db.Experiences.Where(e=>!e.IsDeleted&&e.StaffId== staffId)
+        => await _db.Experiences.Include(e=>e.recordCategory).Where(e=>!e.IsDeleted&&e.StaffId== staffId&&!e.recordCategory.IsDeleted)
             .Select(t=>new ClientSideExperienceViewModel
             {
                 Certificate= _db.Certificates.Where(c => c.Id == t.CertificateId).Select(c => c.Name).First(),
                 Company=t.Company,
                 Detail=t.Detail,
                 HowLong=t.HowLong,
-                Title=t.Title
+                Title=t.Title,
+                RecordCategory=t.recordCategory.Title,
+                RecordCategoryId=t.recordCategory.Id,
+                ExImage=t.ExImage
+            }).ToListAsync();
+
+        public async Task<List<ExperienceViewModel>> GetExperincesForRecordCategory(int CategoryID)
+        => await _db.Experiences.Where(e => e.RecordCategoryId == CategoryID)
+            .Select(e => new ExperienceViewModel
+            {
+                Id = e.Id,
+                Title = e.Title,
+                CreatedDate = e.CreatedDate,
+                IsDeleted=e.IsDeleted
             }).ToListAsync();
     }
 }

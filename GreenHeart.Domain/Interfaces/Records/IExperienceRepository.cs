@@ -13,9 +13,10 @@ namespace GreenHeart.Domain.Interfaces
     {
         Task<bool> ExistSpecificSlug(string slug); 
         Task<string> PutSpecificSlug(string slug);
-        Task<List<ExperienceViewModel>?> GetAllExperiencesAsync(int userId);
+        Task<List<ExperienceViewModel>?> GetAllExperiencesForStaffCategoryAsync(int staffId, int categoryId);
         Task<FilterExperienceViewModel> FilterExperienceAsync(FilterExperienceViewModel filter);
         Task<DateTime> GetLastModifiedDate(int id);
         Task<List<ClientSideExperienceViewModel>> GetTrainerExperienceForClientSide(int staffId);
+        Task<List<ExperienceViewModel>> GetExperincesForRecordCategory(int CategoryID);
     }
 }

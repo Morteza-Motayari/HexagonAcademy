@@ -62,7 +62,6 @@
     <None Include="wwwroot\AdminFiles\assets\images\qrcode.svg" />
     <None Include="wwwroot\AdminFiles\assets\js\admin.js" />
     <None Include="wwwroot\AdminFiles\assets\js\apexcharts.custom.js" />
-    <None Include="wwwroot\AdminFiles\assets\js\apexcharts.min.js" />
     <None Include="wwwroot\AdminFiles\assets\js\app.min.js" />
     <None Include="wwwroot\AdminFiles\assets\js\apps.js" />
     <None Include="wwwroot\AdminFiles\assets\js\bootstrap-datepicker.min.js" />
@@ -424,7 +423,7 @@
     <None Include="wwwroot\AdminFiles\assets\js\topojson.min.js" />
     <None Include="wwwroot\AdminFiles\assets\js\uppy.min.js" />
     <None Include="wwwroot\scss\moduls\_headerStyle.scss" />
-    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\img-expand.js" />
     <None Include="wwwroot\js\useractions.js" />
     <None Include="wwwroot\js\Utilities.js" />
     <None Include="wwwroot\lib\animate\counterup\counterup.min.js" />

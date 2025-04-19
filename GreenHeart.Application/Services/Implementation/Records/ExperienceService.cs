@@ -6,6 +6,7 @@ using GreenHeart.Application.Statics;
 using GreenHeart.Application.Statics.Caches_Constatnt;
 using GreenHeart.Domain.Interfaces;
 using GreenHeart.Domain.Interfaces.Gyms;
+using GreenHeart.Domain.Interfaces.Records;
 using GreenHeart.Domain.Models.Gyms;
 using GreenHeart.Domain.Models.Records;
 using GreenHeart.Domain.ViewModels.Records.Certificates;
@@ -18,7 +19,8 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
     public class ExperienceService(IExperienceRepository experienceRepository
         ,IUserRepository userRepository
         ,ICertificateRepository certificateRepository
-        ,ICacheService cacheService) : IExperienceService
+        ,ICacheService cacheService,
+        IRecordCategoryRepository recordCategoryRepository) : IExperienceService
     {
         public async Task<AdminSideDetailExperienceViewModel?> AdminSideDetailExperienceAsync(int ExperienceId)
         {
@@ -35,8 +37,11 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 Company=experience.Company,
                 StaffId=experience.StaffId,
                 Title=experience.Title,
+                ExImage=experience.ExImage,
                 UserId=experience.UserId,
-                UserName= await userRepository.GetJustUserName(experience.UserId),
+                RecordCategoryId = experience.RecordCategoryId,
+                RecordCategory = await recordCategoryRepository.GetCategoryNameAsync(experience.RecordCategoryId),
+                UserName = await userRepository.GetJustUserName(experience.UserId),
                 CreatedDate = experience.CreatedDate,
                 LastModifiedDate = experience.LastModifiedDate,
                 CreatedBy = await userRepository.GetJustUserName(experience.CreatedBy),
@@ -67,7 +72,8 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 Title=model.Title,
                 HowLong=model.HowLong,
                 UserId=model.UserId,
-                StaffId=model.StaffId
+                StaffId=model.StaffId,
+                RecordCategoryId=model.RecordCategoryId
             };
             string slug = model.Title.GenerateSlug();
             if (await experienceRepository.ExistSpecificSlug(slug))
@@ -75,6 +81,15 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 slug = await experienceRepository.PutSpecificSlug(slug);
             }
             experience.Slug = slug;
+            #region Image
+            if (model.Image != null)
+            {
+                string imageName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
+                model.Image.AddImageToServer(imageName, SavingPath.ExperiencePath);
+                experience.ExImage = imageName;
+            }
+            #endregion
+
             await experienceRepository.InserAsync(experience);
             await experienceRepository.SaveChangeAsync();
             #region Deleting Cached Trainer
@@ -91,7 +106,13 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 return DeleteExperienceResult.ExperienceNotFound;
             if(experience.IsDeleted==true)
                 return DeleteExperienceResult.ExperienceAlreadyDeleted;
-
+            #region Deleting Image
+            if (experience.ExImage != null)
+            {
+                experience.ExImage.DeleteImage(SavingPath.ExperiencePath);
+                experience.ExImage = null;
+            }
+            #endregion
             experience.IsDeleted = true;
             experienceRepository.Update(experience);
             await experienceRepository.SaveChangeAsync();
@@ -143,12 +164,14 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 HowLong=experience.HowLong,
                 UserId=experience.UserId,
                 StaffId=experience.StaffId,
-                IsDeleted=experience.IsDeleted
+                IsDeleted=experience.IsDeleted,
+                ExImage=experience.ExImage,
+                RecordCategoryId=experience.RecordCategoryId
             };
         }
 
-        public async Task<List<ExperienceViewModel>?> ListExperienceesAsync(int staffId)
-        => await experienceRepository.GetAllExperiencesAsync(staffId);
+        public async Task<List<ExperienceViewModel>?> ListExperiencesForStaffCategoryAsync(int staffId,int categoryId)
+        => await experienceRepository.GetAllExperiencesForStaffCategoryAsync(staffId,categoryId);
 
         public async Task<UpdateExperienceResult> UpdateExperienceAsync(UpdateExperienceViewModel model)
         {
@@ -171,6 +194,18 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 }
                 experience.Slug = slug;
             }
+            #region Update Image
+            if (model.NewImage != null)
+            {
+                if (experience.ExImage != null)
+                {
+                    experience.ExImage.DeleteImage(SavingPath.ExperiencePath);
+                }
+                string imageName = Guid.NewGuid().ToString() + Path.GetExtension(model.NewImage.FileName);
+                model.NewImage.AddImageToServer(imageName, SavingPath.ExperiencePath);
+                experience.ExImage = imageName;
+            }
+            #endregion
             experienceRepository.Update(experience);
             await experienceRepository.SaveChangeAsync();
             #endregion

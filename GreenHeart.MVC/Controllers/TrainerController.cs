@@ -16,15 +16,20 @@ namespace GreenHeart.MVC.Controllers
             ViewData["Title"] = Titles.Triners; 
             return View(trainers);
         }
+        #endregion
+
+        #region Detail
         [HttpGet("/Trainers/{Slug}")]
         public async Task<IActionResult> Detail(string Slug)
         {
             var trainer = await staffService.GetTrainerDetailAsync(Slug);
             if (trainer == null)
                 return NotFound();
-            ViewData["Title"] = Titles.TrinerDetail+trainer.FullName;
+            ViewData["Title"] = Titles.TrinerDetail + trainer.FullName;
             return View(trainer);
         }
         #endregion
+
+
     }
 }

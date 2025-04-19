@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace GreenHeart.Domain.ViewModels.Records.Experiences
         public int Id { get; set; }
         public int UserId { get; set; }
         public int StaffId { get; set; }
+        public int RecordCategoryId { get; set; }
         [MaxLength(200, ErrorMessage = "تعداد کارکتر وارد شده بیش از حد مجاز است.")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید.")]
         [Display(Name = "سابقه")]
@@ -28,6 +30,9 @@ namespace GreenHeart.Domain.ViewModels.Records.Experiences
         [Display(Name = "مدرک")]
         public int? CertificateId { get; set; }
         public bool IsDeleted { get; set; }
+        [Display(Name = "تصویر مدرک")]
+        public string ExImage { get; set; }
+        public IFormFile? NewImage { get; set; }
     }
     public enum UpdateExperienceResult
     {

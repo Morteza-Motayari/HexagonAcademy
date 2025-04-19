@@ -21,6 +21,7 @@ namespace GreenHeart.Infra.Data.Configurations.Gyms
             builder.Property(g => g.Detail).HasMaxLength(1000);
             builder.Property(g => g.Company).HasMaxLength(120);
             builder.Property(g => g.HowLong).HasMaxLength(120);
+            builder.Property(g => g.ExImage).HasMaxLength(300);
         }
     }
 }

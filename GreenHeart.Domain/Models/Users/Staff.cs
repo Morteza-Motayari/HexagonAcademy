@@ -1,6 +1,7 @@
 ﻿using GreenHeart.Domain.Models.Common;
 using GreenHeart.Domain.Models.Gyms;
 using GreenHeart.Domain.Models.Links;
+using GreenHeart.Domain.Models.Records;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GreenHeart.Domain.Models.Users
@@ -20,6 +21,7 @@ namespace GreenHeart.Domain.Models.Users
         public ICollection<SportClass>? SportClasses { get; set; }
         public ICollection<UserCertificates>? UserCertificates { get; set; }
         public List<UserRole>? userRoles { get; set; }
+        public ICollection<RecordCategory> RecordCategories { get; set; }
 
         #endregion
     }

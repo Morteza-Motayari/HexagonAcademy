@@ -10,5 +10,10 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
             ViewData["Title"] = Titles.Home;
             return View();
         }
+        public IActionResult Main()
+        {
+            ViewData["Title"] = Titles.Home;
+            return View();
+        }
     }
 }

@@ -140,6 +140,13 @@ namespace GreenHeart.Domain.Shared
         public static string TicketDeletedForeverSuccessFullyDone = "تیکت مدنظر  با موفقیت به طور مطلق حذف شد.";
         public static string TicketStatusChangedSuccessFullyDone = "وضعیت تیکت مدنظر  با موفقیت تغییر یافت.";
         #endregion
+
+        #region Record Category
+        public static string RecordCategoryAddedSuccessfully = "مجموعه سوابق جدید برای همکار گرامی با موفقیت ثبت شده است.";
+        public static string RecordCategoryUpdatedSuccessfully = "مجموعه سوابق مدنظر با موفقیت ویرایش شده است.";
+        public static string RecordCategoryDeletedSuccessfully = "مجموعه سوابق مدنظر  با موفقیت حذف شده است.";
+        public static string RecordCategoryDeletedForeverSuccessfully = "مجموعه سوابق مدنظر به طور کامل پاک شده است.";
+        #endregion
     }
     public class ErrorMessages
     {
@@ -289,6 +296,14 @@ namespace GreenHeart.Domain.Shared
         public static string FirstSimpleDeleteTicketMessage = "ابتدا پیام تیکت مد نظر را به طور ساده حذف بکنید.";
         public static string TicketMessageEmpty = "لطفا متن تیکت خود را وارد کنید.";
         #endregion
+
+        #region Record Category
+        public static string RecordCategoryNotFound = "مجموعه سوابق مدنظر پیدا نشده است.";
+        public static string RecordCategoryExisted = "مجموعه سوابق مدنظر برای همکار گرامی موجود می باشد.";
+        public static string RecordCategoryDuplicated = "مجموعه سوابق مدنظر قبلا ثبت شده است.";
+        public static string RecordCategoryAlreadyDeleted = "مجموعه سوابق مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteRecordCategory = "ابتدا مجموعه سوابق مدنظر را به طور ساده حذف بکنید.";
+        #endregion
     }
 
     public class WarningMessages
@@ -354,6 +369,10 @@ namespace GreenHeart.Domain.Shared
         #region Tickets
         public static string TicketClosedCantResponded = "تیکت مدنظر بسته شده است و امکان بازخورد به آن نیست.";
         public static string TicketClosedCantAnswered = "تیکت مدنظر بسته شده است و امکان پاسخ به آن نیست.";
+        #endregion
+
+        #region Record Category
+        public static string RecordCategoryCantbeEdited = "این مجموعه سوابق حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
     }
 

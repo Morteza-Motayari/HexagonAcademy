@@ -1,4 +1,5 @@
-﻿@using GreenHeart.Domain.ViewModels.Records.Certificates
+﻿@using GreenHeart.Application.Statics
+@using GreenHeart.Domain.ViewModels.Records.Certificates
 @using GreenHeart.Domain.ViewModels.Records.Experiences
 @model UpdateExperienceViewModel
 @{
@@ -6,14 +7,16 @@
     List<CertificateViewModel> CertificateItems = ViewData["Certificates"] as List<CertificateViewModel> ?? new List<CertificateViewModel>();
     var Options = new SelectList(CertificateItems, "Id", "Name");
     string staffName = (string)ViewData["staffName"];
+    string category = (string)ViewData["categoryName"];
 }
 <div class="row">
     <div class="pl-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="List">سابقه ها</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="Edit" asp-route-id="@Model.Id">ویرایش سابقه</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Trainer" asp-action="List">لیست مربیان</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="RecordCategory" asp-action="List" asp-route-staffId="@Model.StaffId">مجموعه های سوابق @staffName</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="Edit" asp-route-id="@Model.Id" asp-route-categoryName="@category">ویرایش سابقه @category</a></li>
             </ol>
         </nav>
     </div>
@@ -25,10 +28,14 @@
                 </h2>
             </div>
             <div class="body">
-                <form method="post" asp-area="Admin" class="row col-md-12" asp-controller="Experience" asp-action="Edit">
+                <form method="post" enctype="multipart/form-data" asp-area="Admin" class="row col-md-12" asp-controller="Experience" asp-action="Edit">
                     <input asp-for="Id" type="hidden" />
                     <input asp-for="UserId" type="hidden" />
                     <input asp-for="StaffId" type="hidden" />
+                    <input asp-for="ExImage" type="hidden" />
+                    <input asp-for="RecordCategoryId" type="hidden" />
+                    <input asp-for="CertificateId" type="hidden" />
+                    <input type="hidden" name="categoryName" value="@category" />
                     <div class="col-md-12">
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -46,6 +53,21 @@
                                 <select asp-for="CertificateId" class="form-control" asp-items="Options">
                                     <option value="">مدرک مورد نظر را در صورت نیاز انتخاب کنید ...</option>
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row ">
+                                    <div class="col-md-3 text-center">
+                                        <label asp-for="NewImage" class="control-label"></label>
+                                        <div class="avatar avatar-xl contact-photo">
+                                            <img id="avatar" src="@SavingPath.ExperiencePath@((!string.IsNullOrEmpty(Model.ExImage))?$"{Model.ExImage}":"defaultexperience.jpg")" alt="..." class="img-responsive">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="custom-file mb-3">
+                                            <input asp-for="NewImage" id="avaterFile" type="file">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4">
                                 <div class="form-group">
@@ -72,3 +94,16 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        avaterFile.onchange = evt => {
+            const [file] = avaterFile.files
+            if (file) {
+                avatar.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+}

@@ -271,6 +271,47 @@ namespace GreenHeart.Infra.Data.Configurations.Users
                 });
             #endregion
 
+            #region Record Category
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 92,
+                    PermissionName = "ManageRecordCategories",
+                    PermissionTitle = "مدیریت مجموعه های سوابق"
+                },
+                new Permission
+                {
+                    PermissionId = 93,
+                    PermissionName = "AddRecordCategory",
+                    PermissionTitle = "افزودن مجموعه سوابق",
+                    ParentId = 92
+                }, new Permission
+                {
+                    PermissionId = 94,
+                    PermissionName = "EditRecordCategory",
+                    PermissionTitle = "ویرایش مجموعه سوابق",
+                    ParentId = 92
+                }, new Permission
+                {
+                    PermissionId = 95,
+                    PermissionName = "DeleteRecordCategory",
+                    PermissionTitle = "حذف مجموعه سوابق",
+                    ParentId = 92
+                }, new Permission
+                {
+                    PermissionId = 96,
+                    PermissionName = "DetailRecordCategory",
+                    PermissionTitle = "جزئیات مجموعه سوابق",
+                    ParentId = 92
+                }, new Permission
+                {
+                    PermissionId = 97,
+                    PermissionName = "DeleteRecordCategoryForever",
+                    PermissionTitle = "حذف مطلق مجموعه سوابق",
+                    ParentId = 92
+                });
+            #endregion
+
             #endregion
 
             #region Gyms

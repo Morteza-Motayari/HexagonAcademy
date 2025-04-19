@@ -377,6 +377,9 @@ namespace GreenHeart.Application.Services.Implementation.Users
             return caders;
         }
 
+        public async Task<string> GetStaffNameAsync(int staffId)
+        => await staffRepository.GetStaffNameAsync(staffId);
+
         public async Task<ClientSideTrainerDetailViewModel?> GetTrainerDetailAsync(string slug)
         {
             string cachekey = CacheKeys.Trainer + slug;
@@ -448,6 +451,9 @@ namespace GreenHeart.Application.Services.Implementation.Users
                 FullName = await userRepository.GetJustUserName(trainer.UserId)
             };
         }
+
+        public async Task<int> GetUserIdByStaffIdAsync(int staffId)
+        => await staffRepository.GetUserIdByStaffId(staffId);
 
         public async Task<List<TrainerViewModel>?> ListTrainerForEditItemsAsync(UserGender gender, int sportId)
         {
@@ -615,5 +621,6 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<bool> UserHasPermission(int userId)
         => await staffRepository.ExistActiveCaderForUser(userId);
+        
     }
 }

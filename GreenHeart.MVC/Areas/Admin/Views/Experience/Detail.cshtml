@@ -1,4 +1,5 @@
 ﻿@using GreenHeart.Application.Convertors
+@using GreenHeart.Application.Statics
 @using GreenHeart.Domain.ViewModels.Records.Experiences
 @model AdminSideDetailExperienceViewModel
 @{
@@ -9,7 +10,9 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">خانه</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="List">سابقه ها</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Trainer" asp-action="List">لیست مربیان</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="RecordCategory" asp-action="List" asp-route-staffId="@Model.StaffId">مجموعه های سوابق @Model.UserName</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="Create" asp-route-staffId="@Model.StaffId" asp-route-userId="@Model.UserId" asp-route-categoryId="@Model.RecordCategoryId" asp-route-categoryName="@Model.RecordCategory">مجموعه سوابق @Model.RecordCategory</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a asp-area="Admin" asp-controller="Experience" asp-action="Detail" asp-route-id="@Model.Id">جزئیات سابقه</a></li>
             </ol>
         </nav>
@@ -25,15 +28,27 @@
                 <div class="row col-md-12">
                     <div class="col-md-12">
                         <div class="row">
-                            @if (Model.IsDeleted == true)
-                            {
-                                <div class="form-group col-md-12 ">
-                                    <p class="h2 mb-3 text-danger">این سابقه حذف شده است</p>
+                            <div class="col-12">
+                                <div class="col-md-9 col-lg-6  text-center">
+                                    <label asp-for="ExImage" class="control-label"></label>
+                                    <div class="avatar avatar-xl contact-photo">
+                                        <img id="avatar" src="@SavingPath.ExperiencePath@((!string.IsNullOrEmpty(Model.ExImage))?$"{Model.ExImage}":"defaultexperience")" alt="..." class="img-responsive">
+                                    </div>
                                 </div>
-                            }
+                                @if (Model.IsDeleted == true)
+                                {
+                                    <div class="form-group col-md-3 col-lg-6 ">
+                                        <p class="h2 mb-3 text-danger">این سابقه حذف شده است</p>
+                                    </div>
+                                }
+                            </div>
                             <div class="form-group col-md-6">
                                 <label asp-for="Title" class="form-control-label"></label>
                                 <input asp-for="Title" class="form-control" disabled="" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="RecordCategory" class="form-control-label"></label>
+                                <input asp-for="RecordCategory" class="form-control" disabled="" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label asp-for="Company" class="form-control-label"></label>
@@ -50,7 +65,7 @@
                             <div class="form-group col-md-6">
                                 <label asp-for="UserName" class="form-control-label"></label>
                                 <a class="form-control color-disabled" asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-id="@Model.UserId">@Model.UserName</a>
-                            </div> 
+                            </div>
                             <div class="form-group col-md-12">
                                 <label asp-for="Detail" class="form-control-label"></label>
                                 <textarea asp-for="Detail" class="form-control" disabled=""></textarea>

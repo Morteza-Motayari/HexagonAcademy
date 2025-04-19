@@ -13,7 +13,8 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
 {
     public class ExperienceController(IExperienceService experienceService
         ,ICertificateService certificateService
-        ,IUserService userService) : AdminSideController
+        ,IUserService userService
+        ,IRecordCategoryService recordCategoryService) : AdminSideController
     {
         #region List
         [AuthorizePermission("ManageExperiences")]
@@ -27,28 +28,32 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
 
         #region Create
         [AuthorizePermission("AddExperience")]
-        public async Task<IActionResult> Create(int staffId,int userId)
+        public async Task<IActionResult> Create(int staffId,int userId,int categoryId,string categoryName)
         {
-            ViewData["Experiences"]=await experienceService.ListExperienceesAsync(staffId);
+            ViewData["Experiences"]=await experienceService.ListExperiencesForStaffCategoryAsync(staffId, categoryId);
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
             ViewData["staffName"]=await userService.GetUserNameAsync(userId);
             ViewData["Title"] = Titles.AdminCreateExperience;
+            ViewData["IsCategoryDeleted"]=await recordCategoryService.IsRecordCategoryDeletedAsync(categoryId);
+            ViewData["categoryName"] = categoryName;
             return View(new CreateExperienceViewModel
             {
                 UserId = userId,
-                StaffId = staffId
+                StaffId = staffId,
+                RecordCategoryId = categoryId
             });
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateExperienceViewModel model)
+        public async Task<IActionResult> Create(CreateExperienceViewModel model,string categoryName)
         {
             #region Validations
             if (!ModelState.IsValid)
             {
-                ViewData["Experiences"] = await experienceService.ListExperienceesAsync(model.StaffId);
+                ViewData["Experiences"] = await experienceService.ListExperiencesForStaffCategoryAsync(model.StaffId,model.RecordCategoryId);
                 ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
                 ViewData["staffName"] = await userService.GetUserNameAsync(model.UserId);
                 ViewData["Title"] = Titles.AdminCreateExperience;
+                ViewData["categoryName"] = categoryName;
                 return View(model);
             }
             #endregion
@@ -61,13 +66,13 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
                     break;
             }
             ViewData["Title"] = Titles.AdminCreateExperience;
-            return RedirectToAction(nameof(Create), "Experience", new { staffId =model.StaffId, userId =model.UserId});
+            return RedirectToAction(nameof(Create), "Experience", new { staffId =model.StaffId, userId =model.UserId, categoryId =model.RecordCategoryId, categoryName =categoryName});
         }
         #endregion
 
         #region Edit
         [AuthorizePermission("EditExperience")]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id,string categoryName)
         {
             var experience=await experienceService.GetExperienceForEdit(id);
             if (experience == null)
@@ -80,10 +85,11 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
             ViewData["staffName"] = await userService.GetUserNameAsync(experience.UserId);
             ViewData["Title"] = Titles.AdminEditExperience;
+            ViewData["categoryName"] = categoryName;
             return View(experience);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(UpdateExperienceViewModel model)
+        public async Task<IActionResult> Edit(UpdateExperienceViewModel model,string categoryName)
         {
             #region Validations
             if (!ModelState.IsValid)
@@ -91,6 +97,7 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
                 ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
                 ViewData["staffName"] = await userService.GetUserNameAsync(model.UserId);
                 ViewData["Title"] = Titles.AdminEditExperience;
+                ViewData["categoryName"] = categoryName;
                 return View(model);
             }
             #endregion
@@ -100,7 +107,7 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
             {
                 case UpdateExperienceResult.Success:
                     TempData[SuccessMessage]=SuccessMessages.ExperienceUpdatedSuccessfully;
-                    return RedirectToAction(nameof(Create), "Experience", new { staffId = model.StaffId, userId = model.UserId });
+                    return RedirectToAction(nameof(Create), "Experience", new { staffId = model.StaffId, userId = model.UserId ,categoryId = model.RecordCategoryId, categoryName = categoryName });
                     case UpdateExperienceResult.ExperienceNotFound:
                     TempData[ErrorMessage] = ErrorMessages.ExperienceNotFound;
                     return RedirectToAction(nameof(List), "Experience");
@@ -108,6 +115,7 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
             ViewData["Certificates"] = await certificateService.ListCertificatesForOptionsAsync();
             ViewData["staffName"] = await userService.GetUserNameAsync(model.UserId);
             ViewData["Title"] = Titles.AdminEditExperience;
+            ViewData["categoryName"] = categoryName;
             return View(model);
         }
         #endregion

@@ -112,6 +112,13 @@ namespace GreenHeart.Domain.Shared
         public static string AdminChangeUserPassword = "تغییر رمز کاربر";
         #endregion
 
+        #region Record Category
+        public static string AdminRecordCategories = "مجموعه های سوابق";
+        public static string AdminCreateRecordCategory = "ایجاد مجموعه سوابق";
+        public static string AdminEditRecordCategory = "ویرایش مجموعه سوابق";
+        public static string AdminDetailRecordCategory = "جزئیات مجموعه سوابق";
+        #endregion
+
         #endregion
 
         #region UserManagement Side

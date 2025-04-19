@@ -25,5 +25,6 @@ namespace GreenHeart.Domain.Interfaces
         Task<ClientSideTrainerForClass?> GetTrainerNameAndImageAsync(int staffId);
         Task<DateTime> GetLastModifiedDate(int id);
         Task<Staff?> GetStaffByUserSlug(string slug);
+        Task<int> GetUserIdByStaffId(int staffId);
     }
 }
