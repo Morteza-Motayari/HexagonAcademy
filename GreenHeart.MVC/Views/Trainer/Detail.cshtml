@@ -29,7 +29,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 order-lg-2 order-md-2 order-sm-1">
                         <div class="single-post">
                             <div class="feature-img">
-                                <img class="img-fluid img-trainer-detail clickable-image"
+                                <img asp-append-version="true" class="img-fluid img-trainer-detail clickable-image"
                                      src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(Model.Avatar))?$"{Model.Avatar}":"trainer.png")"
                                      alt="@Model.Slug"
                                      data-bs-toggle="modal"
@@ -91,7 +91,7 @@
                                                                 @if (experince.ExImage != null && experince.ExImage != "")
                                                                 {
                                                                     <div class="d-flex justify-content-center">
-                                                                        <img src="@SavingPath.ExperiencePath@experince.ExImage" alt="@experince.Title" class="img-fluid w-75 clickable-image">
+                                                                        <img asp-append-version="true" src="@SavingPath.ExperiencePath@experince.ExImage" alt="@experince.Title" class="img-fluid w-75 clickable-image">
                                                                     </div>
                                                                 }
                                                                 @if (experince.Certificate != null)

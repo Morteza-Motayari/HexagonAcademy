@@ -14,7 +14,7 @@
         {
             <div class="col-xl-3 col-md-4 col-sm-6 project All @((item.Gender==UserGender.Male)?"Male":"Female")">
                 <a asp-area="" asp-controller="SportClass" asp-action="Detail" asp-route-slug="@item.slug" class="service-work card border-0 text-white shadow-sm overflow-hidden mx-5 m-sm-0">
-                    <img class="service card-img img-height-index" src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(item.ImageUrl))?$"{item.ImageUrl}":"defaultClass.jpg")" alt="@item.Title">
+                    <img asp-append-version="true" class="service card-img img-height-index" src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(item.ImageUrl))?$"{item.ImageUrl}":"defaultClass.jpg")" alt="@item.Title">
                     <div class="service-work-vertical card-img-overlay d-flex align-items-end">
                         <div class="service-work-content text-left text-light">
                             <span class="btn btn-outline-light rounded-pill mb-lg-3 px-lg-4 light-300">@item.StartTime.ToHoure() تا @item.EndTime.ToHoure()</span>

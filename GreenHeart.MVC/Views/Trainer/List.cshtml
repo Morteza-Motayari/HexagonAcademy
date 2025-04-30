@@ -29,7 +29,7 @@
                                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
                                     <div class="service-item">
                                         <div class="service-trainer-img">
-                                            <img src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(trainer.Avatar))?$"{trainer.Avatar}":"trainer.png")" class="img-fluid rounded-top mx-auto d-block " alt="@trainer.FullName">
+                                            <img asp-append-version="true" src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(trainer.Avatar))?$"{trainer.Avatar}":"trainer.png")" class="img-fluid rounded-top mx-auto d-block " alt="@trainer.FullName">
                                         </div>
                                         <div class="rounded-bottom-service p-4 d-flex flex-column">
                                             <a asp-area="" asp-controller="Trainer" asp-action="Detail" asp-route-slug="@trainer.Slug" class="h5 d-inline-block mb-4 service-a-tag">@trainer.FullName</a>

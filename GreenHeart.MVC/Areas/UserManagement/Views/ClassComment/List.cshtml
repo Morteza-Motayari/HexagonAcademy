@@ -23,7 +23,7 @@
             {
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="card">
-                        <img class="img-fluid rounded-top mx-auto d-block img-panel-comment" src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(item.ClassImg))?$"{item.ClassImg}":"defaultClass.jpg")" alt="@item.ClassName">
+                        <img asp-append-version="true" class="img-fluid rounded-top mx-auto d-block img-panel-comment" src="@SavingPath.SportClassPath@((!string.IsNullOrEmpty(item.ClassImg))?$"{item.ClassImg}":"defaultClass.jpg")" alt="@item.ClassName">
                         <div class="card-body">
                             <h5 class="card-title"><a asp-area="" asp-controller="SportClass" asp-action="Detail" asp-route-slug="@item.ClassSlug">@item.ClassName</a></h5>
                             <ul class="list-group">

@@ -1,4 +1,5 @@
 ﻿using GreenHeart.Domain.Interfaces;
+using GreenHeart.Domain.Models.Common;
 using GreenHeart.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 

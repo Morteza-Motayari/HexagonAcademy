@@ -13,7 +13,7 @@
                 </p>
             </div>
             <div class="col-lg-6">
-                <img src="/img/banner-img-02.svg">
+                <img asp-append-version="true" src="/img/banner-img-02.svg">
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
                 foreach(var cader in Model)
                 {
                     <div class="team-member col-md-4">
-                        <img class="team-member-img img-fluid rounded-circle p-4 about-img" src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(cader.Avatar))?$"{cader.Avatar}":"cadre.png")" alt="@cader.FullName">
+                        <img asp-append-version="true" class="team-member-img img-fluid rounded-circle p-4 about-img" src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(cader.Avatar))?$"{cader.Avatar}":"cadre.png")" alt="@cader.FullName">
                         <ul class="team-member-caption list-unstyled text-center pt-4 text-muted light-300">
                             <li><strong>@cader.FullName</strong></li>
                             <li><strong>موقعیت:@cader.Position</strong></li>

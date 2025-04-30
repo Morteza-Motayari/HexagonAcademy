@@ -44,8 +44,8 @@
                                                     @if (message.SenderId == userId)
                                                     {
                                                         <li class="chat-left">
-                                                            <div class="chat-avatar">                                                         
-                                                                    <img src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(avatar))?$"{avatar}":"default.png")" alt="Retail Admin">
+                                                            <div class="chat-avatar">
+                                                                <img asp-append-version="true" src="@SavingPath.AvatarPath@((!string.IsNullOrEmpty(avatar))?$"{avatar}":"default.png")" alt="Retail Admin">
                                                                 <div class="chat-name">خودم</div>
                                                             </div>
                                                             <div class="chat-text">
@@ -65,7 +65,7 @@
                                                                 <br> 
                                                             </div>
                                                             <div class="chat-avatar">
-                                                                <img src="~/Images/Avatars/default.png" alt="admin">
+                                                                <img asp-append-version="true" src="~/Images/Avatars/default.png" alt="admin">
                                                                 <div class="chat-name">کادر باشگاه</div>
                                                             </div>
                                                         </li>
