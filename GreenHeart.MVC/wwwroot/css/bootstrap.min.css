@@ -623,6 +623,16 @@ progress {
     margin-left: calc(var(--bs-gutter-x) / -2);
     margin-right: calc(var(--bs-gutter-x) / -2)
 }
+.row-banner {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+    margin-left: calc(var(--bs-gutter-x) / -2);
+    margin-right: calc(var(--bs-gutter-x) / -2)
+}
 
     .row > * {
         -ms-flex-negative: 0;

@@ -8,7 +8,7 @@
     List<ClientSideBannerViewModel> banners = ViewData["banner"] as List<ClientSideBannerViewModel> ?? new List<ClientSideBannerViewModel>();
 }
 <div class="d-flex justify-content-center">
-    <div class="row col-lg-10 col-md-10 col-sm-12">
+    <div class="row-banner col-lg-10 col-md-10 col-sm-12">
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
             <ol class="carousel-indicators">
                 @for (int i = 0; i < banners.Count(); i++)

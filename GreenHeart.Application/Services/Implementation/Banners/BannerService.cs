@@ -6,29 +6,36 @@ using GreenHeart.Application.Statics.Caches_Constatnt;
 using GreenHeart.Domain.Interfaces.Banners;
 using GreenHeart.Domain.Models.Banners;
 using GreenHeart.Domain.ViewModels.Banners;
+using Microsoft.Extensions.Configuration;
 
 namespace GreenHeart.Application.Services.Implementation.Banners
 {
-    public class BannerService(IBannerRepository bannerRepository,ICacheService cacheService) : IBannerService
+    public class BannerService(IBannerRepository bannerRepository,ICacheService cacheService, IConfiguration configuration) : IBannerService
     {
+        private readonly bool UsingCache = configuration.GetValue<bool>("Statics:UseCaching");
         public async Task<List<ClientSideBannerViewModel>> ClientSideBannerViewModel()
         {
-            string cacheKey = CacheKeys.AllBanners;
-            if(await cacheService.ExistsAsync(cacheKey))
+            string cacheKey = default;
+            if (UsingCache)
             {
-                var cachedBanners = await cacheService.GetListAsync<ClientSideBannerViewModel>(cacheKey);
-                if (cachedBanners.CheckNullability())
+               cacheKey = CacheKeys.AllBanners;
+                if (await cacheService.ExistsAsync(cacheKey))
                 {
-                    return cachedBanners;
+                    var cachedBanners = await cacheService.GetListAsync<ClientSideBannerViewModel>(cacheKey);
+                    if (cachedBanners.CheckNullability())
+                    {
+                        return cachedBanners;
+                    }
                 }
-            }            
-
+            }                      
             var banners = await bannerRepository.GetBannerForClient();
-            if (banners.CheckNullability())
+            if (UsingCache)
             {
-                await cacheService.SetListAsync(cacheKey, banners, CacheDuration.NormalCahingTime);
-            }
-
+                if (banners.CheckNullability())
+                {
+                    await cacheService.SetListAsync(cacheKey, banners, CacheDuration.NormalCahingTime);
+                }
+            }           
             return banners;
         }
 

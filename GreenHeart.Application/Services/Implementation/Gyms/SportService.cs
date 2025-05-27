@@ -15,11 +15,16 @@ using GreenHeart.Domain.ViewModels.Users.Roles;
 using GreenHeart.Infra.Data.Repositories;
 using GreenHeart.Infra.Data.Repositories.Gyms;
 using GreenHeart.Infra.Data.Repositories.Users;
+using Microsoft.Extensions.Configuration;
 
 namespace GreenHeart.Application.Services.Implementation.Gyms
 {
-    public class SportService(ISportRepository sportRepository,IUserRepository userRepository, ICacheService cacheService) : ISportService
+    public class SportService(ISportRepository sportRepository,
+        IUserRepository userRepository,
+        ICacheService cacheService,
+        IConfiguration configuration) : ISportService
     {
+        private readonly bool UsingCache = configuration.GetValue<bool>("Statics:UseCaching");
         public async Task<AdminSideDetailSportViewModel?> AdminSideDetailSportAsync(int SportId)
         {
             var sport = await sportRepository.GetSportWithCertificate(SportId);
@@ -29,7 +34,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             {
                 Id = SportId,
                 CertificateId = sport.CertificateId,
-                Certificate=sport.Certificate?.Name,
+                Certificate = sport.Certificate?.Name,
                 Title = sport.Title,
                 CreatedDate = sport.CreatedDate,
                 LastModifiedDate = sport.LastModifiedDate,
@@ -77,7 +82,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             var Sport = await sportRepository.GetByIdAsync(SportId);
             if (Sport == null)
                 return DeleteSportResult.SportNotFound;
-            if(Sport.IsDeleted==true)
+            if (Sport.IsDeleted == true)
                 return DeleteSportResult.SportAlreadyDeleted;
 
             Sport.IsDeleted = true;
@@ -85,7 +90,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             await sportRepository.SaveChangeAsync();
 
             #region Deleting Sports Cached
-            await CacheExtensions.InvalidateCacheKey(cacheService,CacheKeys.SportRelatedKeys);
+            await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.SportRelatedKeys);
             #endregion
 
             return DeleteSportResult.Success;
@@ -119,43 +124,48 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<List<ClientSideSportNameViewModel>?> GetActiveSportNameAsync()
         {
-            string cachekey = CacheKeys.ActiveSports;
-            if(await cacheService.ExistsAsync(cachekey))
+            string cachekey = default;
+            if (UsingCache)
             {
-                var cachedSports = await cacheService.GetListAsync<ClientSideSportNameViewModel>(cachekey);
-                if (cachedSports.CheckNullability())
+                cachekey = CacheKeys.ActiveSports;
+                if (await cacheService.ExistsAsync(cachekey))
                 {
-                    return cachedSports;
+                    var cachedSports = await cacheService.GetListAsync<ClientSideSportNameViewModel>(cachekey);
+                    if (cachedSports.CheckNullability())
+                    {
+                        return cachedSports;
+                    }
                 }
             }
             var sports = await sportRepository.GetActiveSportName();
-            if(sports.CheckNullability())
-            {
+            if (UsingCache && sports.CheckNullability())
                 await cacheService.SetListAsync(cachekey, sports, CacheDuration.NormalCahingTime);
-            }
+
             return sports;
         }
-        
 
         public async Task<List<ClientSideSportExisted>?> GetSportExistedAsync()
         {
-            string cachekey = CacheKeys.SportsExisted;
-            if( await cacheService.ExistsAsync(cachekey))
+            string cachekey = default;
+            if (!UsingCache)
             {
-                var cachedSportsExisted = await cacheService.GetListAsync<ClientSideSportExisted>(cachekey);
-                if (cachedSportsExisted.CheckNullability())
+                cachekey = CacheKeys.SportsExisted;
+                if (await cacheService.ExistsAsync(cachekey))
                 {
-                    return cachedSportsExisted;
+                    var cachedSportsExisted = await cacheService.GetListAsync<ClientSideSportExisted>(cachekey);
+                    if (cachedSportsExisted.CheckNullability())
+                    {
+                        return cachedSportsExisted;
+                    }
                 }
             }
             var sportsExisted = await sportRepository.GetSportExistedWithRelationAsync();
-            if (sportsExisted.CheckNullability())
-            {
-                await cacheService.SetListAsync(cachekey,sportsExisted,CacheDuration.NormalCahingTime);
-            }
+            if (UsingCache && sportsExisted.CheckNullability())
+                await cacheService.SetListAsync(cachekey, sportsExisted, CacheDuration.NormalCahingTime);
+
             return sportsExisted;
         }
-        
+
 
         public async Task<UpdateSportViewModel> GetSportForEdit(int SportId)
         {
@@ -165,7 +175,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             return new UpdateSportViewModel()
             {
                 Id = Sport.Id,
-                Title= Sport.Title,
+                Title = Sport.Title,
                 CertificateId = Sport.CertificateId,
                 IsDeleted = Sport.IsDeleted
             };
@@ -179,7 +189,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             var Sport = await sportRepository.GetByIdAsync(model.Id);
             if (Sport == null)
                 return UpdateSportResult.SportNotFound;
-            if (await sportRepository.ExistSportTitle(model.Title,model.Id))
+            if (await sportRepository.ExistSportTitle(model.Title, model.Id))
                 return UpdateSportResult.DuplicatedTitle;
 
             #region Update Sport

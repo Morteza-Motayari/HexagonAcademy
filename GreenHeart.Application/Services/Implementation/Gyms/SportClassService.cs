@@ -14,11 +14,12 @@ using GreenHeart.Domain.Interfaces.Links;
 using GreenHeart.Domain.Models.Gyms;
 using GreenHeart.Domain.ViewModels.Gyms.SportClasses;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace GreenHeart.Application.Services.Implementation.Gyms
 {
     public class SportClassService(ISportClassRepository SportClassRepository
-        ,IUserRepository userRepository,
+        , IUserRepository userRepository,
         IGymRepository gymRepository,
         ISportRepository sportRepository,
         IStaffRepository staffRepository,
@@ -26,8 +27,10 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
         IClassCommentRepository classCommentRepository,
         IHttpContextAccessor httpContextAccessor,
         IClassUserRepository classUserRepository,
-        ICacheService cacheService) : ISportClassService
+        ICacheService cacheService,
+        IConfiguration configuration) : ISportClassService
     {
+        private readonly bool UsingCache = configuration.GetValue<bool>("Statics:UseCaching");
         public async Task<AdminSideDetailSportClassViewModel?> AdminSideDetailSportClassAsync(int SportClassId)
         {
             var sportClass = await SportClassRepository.GetSportClassWithDetails(SportClassId);
@@ -38,17 +41,17 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 Id = SportClassId,
                 Title = sportClass.Title,
                 GymId = sportClass.GymId,
-                gym=sportClass.gym?.Name,
+                gym = sportClass.gym?.Name,
                 TrainerId = sportClass.TrainerId,
-                trainer=await staffRepository.GetStaffNameAsync(sportClass.TrainerId),
+                trainer = await staffRepository.GetStaffNameAsync(sportClass.TrainerId),
                 SportId = sportClass.SportId,
-                sport=sportClass.sport?.Title,
+                sport = sportClass.sport?.Title,
                 StartDate = sportClass.StartDate,
-                RegisteredAthletes=sportClass.ClassUsers.Count(),
-                StartTime= sportClass.StartTime,
+                RegisteredAthletes = sportClass.ClassUsers.Count(),
+                StartTime = sportClass.StartTime,
                 EndTime = sportClass.EndTime,
                 SubscriptionFee = sportClass.SubscriptionFee,
-                MaxSubscription= sportClass.MaxSubscription,
+                MaxSubscription = sportClass.MaxSubscription,
                 ImageUrl = sportClass.ImageUrl,
                 Gender = sportClass.Gender,
                 ClassStatus = sportClass.ClassStatus,
@@ -73,37 +76,47 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
         public async Task<ClientSideFilterSportClassViewModel> ClientSideFilterClasses(ClientSideFilterSportClassViewModel filter)
         {
             string cacheKey = default;
-            if (filter.Title == null && filter.Gender == null && filter.GymId == null && filter.KeyWord == null && filter.SportId == null && filter.SportSlug == null)
+            if (UsingCache)
             {
-                cacheKey= CacheKeys.SportClassPage + filter.Page.ToString();
-                if (await cacheService.ExistsAsync(cacheKey))
+                if (filter.Title == null && filter.Gender == null && filter.GymId == null && filter.KeyWord == null && filter.SportId == null && filter.SportSlug == null)
                 {
-                    var cachedClasses=await cacheService.GetAsync<ClientSideFilterSportClassViewModel>(cacheKey);
-                    if (cachedClasses.Entities.CheckNullability())
+                    cacheKey = CacheKeys.SportClassPage + filter.Page.ToString();
+                    if (await cacheService.ExistsAsync(cacheKey))
                     {
-                        return cachedClasses;
+                        var cachedClasses = await cacheService.GetAsync<ClientSideFilterSportClassViewModel>(cacheKey);
+                        if (cachedClasses.Entities.CheckNullability())
+                        {
+                            return cachedClasses;
+                        }
                     }
                 }
             }
             var sportClasses = await SportClassRepository.ClientSideFilterClasses(filter);
-            if(cacheKey!=default)
-            await cacheService.SetAsync(cacheKey,sportClasses,CacheDuration.NormalCahingTime);
-
+            if (UsingCache)
+            {
+                if (cacheKey != default)
+                    await cacheService.SetAsync(cacheKey, sportClasses, CacheDuration.NormalCahingTime);
+            }
             return sportClasses;
         }
-         
+
         public async Task<ClientSideSportClassDeatilViewModel> ClientSideSportClassViewModel(string slug)
         {
-            var cacheKey = CacheKeys.SportClass + slug;
-            if(await cacheService.ExistsAsync(cacheKey))
+            string cacheKey = default;
+            if (UsingCache)
             {
-                var cachedClass = await cacheService.GetAsync<ClientSideSportClassDeatilViewModel>(cacheKey);
-                if (cachedClass != null)
+                cacheKey = CacheKeys.SportClass + slug;
+                if (await cacheService.ExistsAsync(cacheKey))
                 {
-                    return cachedClass;
+                    var cachedClass = await cacheService.GetAsync<ClientSideSportClassDeatilViewModel>(cacheKey);
+                    if (cachedClass != null)
+                    {
+                        return cachedClass;
+                    }
                 }
             }
-            var sportClass=await SportClassRepository.GetClassBySlugAsync(slug);
+
+            var sportClass = await SportClassRepository.GetClassBySlugAsync(slug);
             if (sportClass == null)
                 return null;
             if (sportClass.IsDeleted == true || sportClass.ClassStatus == SportClassStatus.NotActive)
@@ -128,9 +141,9 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 ImageUrl = sportClass.ImageUrl,
                 Title = sportClass.Title,
                 TrainerSlug = trainer.TrainerSlug,
-                KeyWords=await keyWordRepository.GetClassKeyWordsAsync(sportClass.Id),
-                CommentsAmount=await classCommentRepository.ClassCommentAmountAsync(sportClass.Id),
-                SportSlug =sportClass.sport.Slug
+                KeyWords = await keyWordRepository.GetClassKeyWordsAsync(sportClass.Id),
+                CommentsAmount = await classCommentRepository.ClassCommentAmountAsync(sportClass.Id),
+                SportSlug = sportClass.sport.Slug
             };
             if (httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
             {
@@ -140,27 +153,29 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                     detail.RegistraionDate = await classUserRepository.LastUserRegistrationDateInClass(httpContextAccessor.HttpContext.User.GetUserId(), sportClass.Id);
                 }
             }
-            await cacheService.SetAsync(cacheKey, detail, CacheDuration.NormalCahingTime);
+            if (UsingCache)
+                await cacheService.SetAsync(cacheKey, detail, CacheDuration.NormalCahingTime);
+
             return detail;
         }
 
         public async Task<CreateSportClassResult> CreateSportClassAsync(CreateSportClassViewModel model)
         {
-            if(model.StartTime>=model.EndTime) 
+            if (model.StartTime >= model.EndTime)
                 return CreateSportClassResult.InvalidEndTime;
 
             SportClass sportClass = new()
             {
-                Title=model.Title,
-                EndTime=model.EndTime,
-                StartTime=model.StartTime,
-                GymId=model.GymId,
-                TrainerId=model.TrainerId,
-                SportId=model.SportId,
-                MaxSubscription=model.MaxSubscription,
-                Gender=model.Gender,
-                ClassStatus=model.ClassStatus,
-                SubscriptionFee=model.SubscriptionFee
+                Title = model.Title,
+                EndTime = model.EndTime,
+                StartTime = model.StartTime,
+                GymId = model.GymId,
+                TrainerId = model.TrainerId,
+                SportId = model.SportId,
+                MaxSubscription = model.MaxSubscription,
+                Gender = model.Gender,
+                ClassStatus = model.ClassStatus,
+                SubscriptionFee = model.SubscriptionFee
             };
             if (model.StartDate != null)
             {
@@ -198,16 +213,16 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             var SportClass = await SportClassRepository.GetByIdAsync(SportClassId);
             if (SportClass == null)
                 return DeleteSportClassResult.SportClassNotFound;
-            if(SportClass.IsDeleted==true)
+            if (SportClass.IsDeleted == true)
                 return DeleteSportClassResult.SportClassAlreadyDeleted;
 
             #region Deleting Avatar
             if (SportClass.ImageUrl != null)
             {
                 SportClass.ImageUrl.DeleteImage(SavingPath.SportClassPath);
-                SportClass.ImageUrl=null;
+                SportClass.ImageUrl = null;
             }
-                
+
             #endregion
 
             SportClass.IsDeleted = true;
@@ -253,18 +268,24 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<List<ClientSideSportClassViewModel>?> GetClassesForIndexPage(FilterUserGender gender)
         {
-            string cachekey = CacheKeys.SportClassesHomePage;
-            if(await cacheService.ExistsAsync(cachekey))
+            string cachekey = default;
+            if (UsingCache)
             {
-                var cachedClass = await cacheService.GetListAsync<ClientSideSportClassViewModel>(cachekey);
-                if (cachedClass != null)
-                    return cachedClass;
-            }
+                cachekey = CacheKeys.SportClassesHomePage;
+                if (await cacheService.ExistsAsync(cachekey))
+                {
+                    var cachedClass = await cacheService.GetListAsync<ClientSideSportClassViewModel>(cachekey);
+                    if (cachedClass != null)
+                        return cachedClass;
+                }
+            }            
             var sportClasses = await SportClassRepository.GetClassesForIndexPage(gender);
-            await cacheService.SetListAsync(cachekey, sportClasses,CacheDuration.ClassHomeCahingTime);
+            if (UsingCache)
+                await cacheService.SetListAsync(cachekey, sportClasses, CacheDuration.ClassHomeCahingTime);
+
             return sportClasses;
         }
-            
+
 
         public async Task<UpdateSportClassViewModel> GetSportClassForEdit(int SportClassId)
         {
@@ -274,9 +295,9 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             return new UpdateSportClassViewModel()
             {
                 Id = SportClass.Id,
-                StartDate= SportClass.StartDate.ToShamsi(),
-                StartTime= SportClass.StartTime,
-                EndTime= SportClass.EndTime,
+                StartDate = SportClass.StartDate.ToShamsi(),
+                StartTime = SportClass.StartTime,
+                EndTime = SportClass.EndTime,
                 Title = SportClass.Title,
                 GymId = SportClass.GymId,
                 TrainerId = SportClass.TrainerId,
@@ -284,8 +305,8 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 SubscriptionFee = SportClass.SubscriptionFee,
                 ImageUrl = SportClass.ImageUrl,
                 IsDeleted = SportClass.IsDeleted,
-                MaxSubscription= SportClass.MaxSubscription,
-                Gender= SportClass.Gender,
+                MaxSubscription = SportClass.MaxSubscription,
+                Gender = SportClass.Gender,
                 ClassStatus = SportClass.ClassStatus
             };
         }
@@ -319,7 +340,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             SportClass.GymId = model.GymId;
             SportClass.TrainerId = model.TrainerId;
             SportClass.SportId = model.SportId;
-            SportClass.ClassStatus= model.ClassStatus;
+            SportClass.ClassStatus = model.ClassStatus;
             SportClass.SubscriptionFee = model.SubscriptionFee;
             if (SportClass.Title != model.Title)
             {
@@ -330,7 +351,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                     slug = await SportClassRepository.PutSpecificSlug(slug);
                 }
                 SportClass.Slug = slug;
-            }            
+            }
             #region Update Image
             if (model.NewImage != null)
             {

@@ -21,16 +21,18 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using GreenHeart.Application.Services.Interfaces.Caching;
 using GreenHeart.Application.Statics.Caches_Constatnt;
+using Microsoft.Extensions.Configuration;
 
 namespace GreenHeart.Application.Services.Implementation.Gyms
 {
     public class ClassCommentService(IClassCommentRepository classCommentRepository
-        ,IUserRepository userRepository
-        ,ISportClassRepository sportClassRepository
-        ,IClassCommentReactionRepository classCommentReactionRepository
-        ,IHttpContextAccessor httpContextAccessor
-        ,ICacheService cacheService) : IClassCommentService
+        , IUserRepository userRepository
+        , ISportClassRepository sportClassRepository
+        , IClassCommentReactionRepository classCommentReactionRepository
+        , IHttpContextAccessor httpContextAccessor
+        , ICacheService cacheService, IConfiguration configuration) : IClassCommentService
     {
+        private readonly bool UsingCache = configuration.GetValue<bool>("Statics:UseCaching");
         public async Task<AdminSideDetailClassCommentViewModel?> AdminSideDetailClassCommentAsync(int ClassCommentId)
         {
             var comment = await classCommentRepository.GetByIdAsync(ClassCommentId);
@@ -39,9 +41,9 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             AdminSideDetailClassCommentViewModel? Detail = new()
             {
                 Id = ClassCommentId,
-                Comment= comment.Comment,
-                ClassId=comment.SportClassId,
-                SportClass=await sportClassRepository.getSportClassName(comment.SportClassId),                
+                Comment = comment.Comment,
+                ClassId = comment.SportClassId,
+                SportClass = await sportClassRepository.getSportClassName(comment.SportClassId),
                 CreatedDate = comment.CreatedDate,
                 LastModifiedDate = comment.LastModifiedDate,
                 CreatedBy = await userRepository.GetJustUserName(comment.CreatedBy),
@@ -57,7 +59,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
         public async Task<ClientSideCreateCommentResult> CreateClassCommentAsync(ClientSideCreateCommentViewModel model)
         {
             int userId = int.Parse(httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value);
-            if(await classCommentRepository.ExistUserCommentForSportClass(userId,model.ClassId,model.Comment))
+            if (await classCommentRepository.ExistUserCommentForSportClass(userId, model.ClassId, model.Comment))
             {
                 return ClientSideCreateCommentResult.DuplicatedComment;
             }
@@ -94,22 +96,26 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<List<ClientSideCommentViewModel>?> GetClientClassActiveCommentAsync(int classId)
         {
-            string cachekey=CacheKeys.ClassComment+classId.ToString();
-            if(await cacheService.ExistsAsync(cachekey))
+            string cachekey = default;
+            if (UsingCache)
             {
-                var cachedClassComments=await cacheService.GetListAsync<ClientSideCommentViewModel>(cachekey);
-                if (cachedClassComments.CheckNullability())
+                cachekey = CacheKeys.ClassComment + classId.ToString();
+                if (await cacheService.ExistsAsync(cachekey))
                 {
-                    return cachedClassComments;
+                    var cachedClassComments = await cacheService.GetListAsync<ClientSideCommentViewModel>(cachekey);
+                    if (cachedClassComments.CheckNullability())
+                    {
+                        return cachedClassComments;
+                    }
                 }
             }
-            var commentIds=await classCommentRepository.GetClassActiveCommentsIds(classId);
-            if(commentIds == null)
+            var commentIds = await classCommentRepository.GetClassActiveCommentsIds(classId);
+            if (commentIds == null)
                 return null;
             List<ClientSideCommentViewModel> comments = new();
-            foreach(var commentid in commentIds)
+            foreach (var commentid in commentIds)
             {
-                var item=await classCommentRepository.GetByIdAsync(commentid);
+                var item = await classCommentRepository.GetByIdAsync(commentid);
                 comments.Add(new ClientSideCommentViewModel
                 {
                     Id = commentid,
@@ -117,18 +123,20 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                     Comment = item.Comment,
                     CreatedDate = item.CreatedDate,
                     UserName = await userRepository.GetJustUserName(item.CreatedBy),
-                    Avatar=await userRepository.GetJustAvatarAsync(item.CreatedBy),
+                    Avatar = await userRepository.GetJustAvatarAsync(item.CreatedBy),
                     Like = await classCommentReactionRepository.GetCommentLikesAsync(commentid),
                     DisLike = await classCommentReactionRepository.GetCommentDisLikesAsync(commentid)
                 });
             }
-            await cacheService.SetListAsync(cachekey, comments,CacheDuration.SportClassCahingTime);
+            if (UsingCache)
+                await cacheService.SetListAsync(cachekey, comments, CacheDuration.SportClassCahingTime);
+
             return comments;
         }
 
         public async Task<CommentViewModel> GetClassCommentAsync(int ClassCommentId)
         {
-            var comment=await classCommentRepository.GetByIdAsync(ClassCommentId);
+            var comment = await classCommentRepository.GetByIdAsync(ClassCommentId);
             if (comment == null)
                 return null;
             return new CommentViewModel
@@ -163,7 +171,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
             #region Update ClassComment
             ClassComment.Comment = model.Comment;
-            ClassComment.CommentStatus=ClassCommentPending.CommentSent;
+            ClassComment.CommentStatus = ClassCommentPending.CommentSent;
             classCommentRepository.Update(ClassComment);
             await classCommentRepository.SaveChangeAsync();
             #endregion
@@ -185,16 +193,16 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
                 Id = comment.Id,
                 IsDeleted = comment.IsDeleted,
                 UserName = await userRepository.GetJustUserName(comment.CreatedBy),
-                Comment=comment.Comment,
-                CreatedDate=comment.CreatedDate,
-                SportClass=await sportClassRepository.getSportClassName(comment.SportClassId),
-                CommentStatus=comment.CommentStatus
+                Comment = comment.Comment,
+                CreatedDate = comment.CreatedDate,
+                SportClass = await sportClassRepository.getSportClassName(comment.SportClassId),
+                CommentStatus = comment.CommentStatus
             };
         }
 
         public async Task<UpdateCommentStatusResult> AcceptCommentAsync(int commentId)
         {
-            var comment=await classCommentRepository.GetByIdAsync(commentId);
+            var comment = await classCommentRepository.GetByIdAsync(commentId);
             if (comment == null)
                 return UpdateCommentStatusResult.ClassCommentNotFound;
             comment.CommentStatus = ClassCommentPending.Accepted;
@@ -251,12 +259,12 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
         }
 
         public async Task<ClientSideFilterCommentViewModel> GetUserCommentsAsync(int UserId, ClientSideFilterCommentViewModel filter)
-        => await classCommentRepository.GetUserComments(UserId,filter);
+        => await classCommentRepository.GetUserComments(UserId, filter);
 
         public async Task<ClientSideDeleteForeverCommentResult> ClientSideDeleteCommentAsync(int commentId)
         {
-            var comment=await classCommentRepository.GetByIdAsync(commentId);
-            if (comment == null||comment.IsDeleted==true)
+            var comment = await classCommentRepository.GetByIdAsync(commentId);
+            if (comment == null || comment.IsDeleted == true)
                 return ClientSideDeleteForeverCommentResult.NotFound;
 
             await classCommentReactionRepository.DeleteCommentReactions(commentId);
