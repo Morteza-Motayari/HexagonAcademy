@@ -5202,3 +5202,17 @@
 2025-05-03 05:42:09.9027 Info Adding target FileTarget(Name=SqlQueryLog)
 2025-05-03 05:42:09.9027 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
 2025-05-03 05:42:09.9310 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\GreenHeartGym\GreenHeart.MVC\bin\Debug\net8.0\nlog.config
+2025-05-27 08:57:18.3631 Info Message Template Auto Format enabled
+2025-05-27 08:57:18.3727 Info Loading assembly: NLog.Web.AspNetCore
+2025-05-27 08:57:18.4189 Info Adding target FileTarget(Name=f)
+2025-05-27 08:57:18.4189 Info Adding target FileTarget(Name=All)
+2025-05-27 08:57:18.4189 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-05-27 08:57:18.4350 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-05-27 08:57:18.4524 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\GreenHeartGym\GreenHeart.MVC\bin\Debug\net8.0\nlog.config
+2025-05-27 08:57:37.2972 Info Message Template Auto Format enabled
+2025-05-27 08:57:37.2972 Info Loading assembly: NLog.Web.AspNetCore
+2025-05-27 08:57:37.3399 Info Adding target FileTarget(Name=f)
+2025-05-27 08:57:37.3399 Info Adding target FileTarget(Name=All)
+2025-05-27 08:57:37.3399 Info Adding target FileTarget(Name=SqlQueryLog)
+2025-05-27 08:57:37.3399 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'RequestTimingLog' not found for logging rule: *Toplearn.Web.Middleware.RequestTimingMiddleware*.
+2025-05-27 08:57:37.3675 Info Validating config: TargetNames=f, All, SqlQueryLog, ConfigItems=87, FilePath=C:\Users\Acer\source\repos\GreenHeartGym\GreenHeart.MVC\bin\Debug\net8.0\nlog.config

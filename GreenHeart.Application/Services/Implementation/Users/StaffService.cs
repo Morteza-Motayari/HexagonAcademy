@@ -13,20 +13,23 @@ using GreenHeart.Domain.Models.Links;
 using GreenHeart.Domain.Models.Users;
 using GreenHeart.Domain.ViewModels.Users.Staffs.Caders;
 using GreenHeart.Domain.ViewModels.Users.Staffs.Trainers;
+using Microsoft.Extensions.Configuration;
 using System.Collections.ObjectModel;
 
 namespace GreenHeart.Application.Services.Implementation.Users
 {
     public class StaffService(IStaffRepository staffRepository
         , IUserCertificatesRepository userCertificatesRepository
-        ,IUserRepository userRepository
-        ,ICertificateRepository certificateRepository,
+        , IUserRepository userRepository
+        , ICertificateRepository certificateRepository,
         ISportRepository sportRepository,
         IRoleRepository roleRepository,
         IUserRoleRepository userRoleRepository,
         IExperienceRepository experienceRepository,
-        ICacheService cacheService) : IStaffService
+        ICacheService cacheService,
+        IConfiguration configuration) : IStaffService
     {
+        private readonly bool UsingCache = configuration.GetValue<bool>("Statics:UseCaching");
         public async Task<AdminSideDetailCaderViewModel?> AdminSideDetailCaderAsync(int CaderId)
         {
             var cader = await staffRepository.GetStaffWithUser(CaderId);
@@ -106,8 +109,8 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<ClientSideFilterTrainerViewModel> ClientSideFilterTrainerAsync(ClientSideFilterTrainerViewModel filter)
         {
-            string cachekey = CacheKeys.TrainerPage+filter.Page.ToString();
-            if(await cacheService.ExistsAsync(cachekey))
+            string cachekey = CacheKeys.TrainerPage + filter.Page.ToString();
+            if (await cacheService.ExistsAsync(cachekey))
             {
                 var cachedTrainer = await cacheService.GetAsync<ClientSideFilterTrainerViewModel>(cachekey);
                 if (cachedTrainer.Entities.CheckNullability())
@@ -116,10 +119,10 @@ namespace GreenHeart.Application.Services.Implementation.Users
                 }
             }
             var trainers = await userRepository.ClientSideFilterTrainer(filter);
-            await cacheService.SetAsync(cachekey, trainers,CacheDuration.SportClassCahingTime);
+            await cacheService.SetAsync(cachekey, trainers, CacheDuration.SportClassCahingTime);
             return trainers;
         }
-         
+
 
         public async Task<CreateCaderResult> CreateCaderAsync(CreateCaderViewModel model)
         {
@@ -145,11 +148,11 @@ namespace GreenHeart.Application.Services.Implementation.Users
             }
 
             #region Changing User Situation
-            if(user.Situation != UserSituation.Trainer)
+            if (user.Situation != UserSituation.Trainer)
             {
                 user.Situation = UserSituation.Cader;
                 userRepository.Update(user);
-            }            
+            }
             #endregion
             Staff cader = new()
             {
@@ -364,16 +367,21 @@ namespace GreenHeart.Application.Services.Implementation.Users
         }
 
         public async Task<List<ClientSideCaderViewModel>?> GetCadersForAbouUsPageAsync()
-        { 
-            string cachekey=CacheKeys.CaderAboutUsPage;
-            if(await cacheService.ExistsAsync(cachekey))
+        {
+            string cachekey = default;
+            if (UsingCache)
             {
-                var cachedCader=await cacheService.GetListAsync<ClientSideCaderViewModel>(cachekey);
-                if(cachedCader.CheckNullability())
-                    return cachedCader;
+                cachekey = CacheKeys.CaderAboutUsPage;
+                if (await cacheService.ExistsAsync(cachekey))
+                {
+                    var cachedCader = await cacheService.GetListAsync<ClientSideCaderViewModel>(cachekey);
+                    if (cachedCader.CheckNullability())
+                        return cachedCader;
+                }
             }
-            var caders= await userRepository.GetCadersForAbouUsPage();
-            await cacheService.SetListAsync(cachekey, caders, CacheDuration.ClassHomeCahingTime);
+            var caders = await userRepository.GetCadersForAbouUsPage();
+            if (UsingCache)
+                await cacheService.SetListAsync(cachekey, caders, CacheDuration.ClassHomeCahingTime);
             return caders;
         }
 
@@ -382,18 +390,22 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<ClientSideTrainerDetailViewModel?> GetTrainerDetailAsync(string slug)
         {
-            string cachekey = CacheKeys.Trainer + slug;
-            if(await cacheService.ExistsAsync(cachekey))
+            string cachekey = default;
+            if (UsingCache)
             {
-                var cachedTrainer = await cacheService.GetAsync<ClientSideTrainerDetailViewModel>(cachekey);
-                if(cachedTrainer != null)
-                    return cachedTrainer;
+                cachekey = CacheKeys.Trainer + slug;
+                if (await cacheService.ExistsAsync(cachekey))
+                {
+                    var cachedTrainer = await cacheService.GetAsync<ClientSideTrainerDetailViewModel>(cachekey);
+                    if (cachedTrainer != null)
+                        return cachedTrainer;
+                }
             }
-            var user= await userRepository.GetUserBySlug(slug);
-            if(user == null) 
+            var user = await userRepository.GetUserBySlug(slug);
+            if (user == null)
                 return null;
-            var trainer=await staffRepository.GetStaffByUserSlug(slug);
-            if(trainer == null)
+            var trainer = await staffRepository.GetStaffByUserSlug(slug);
+            if (trainer == null)
                 return null;
             var trainerDetail = new ClientSideTrainerDetailViewModel()
             {
@@ -404,7 +416,9 @@ namespace GreenHeart.Application.Services.Implementation.Users
                 Position = trainer.Position,
                 Experiences = await experienceRepository.GetTrainerExperienceForClientSide(trainer.Id)
             };
-            await cacheService.SetAsync(cachekey, trainerDetail,CacheDuration.SportClassCahingTime);
+            if (UsingCache)
+                await cacheService.SetAsync(cachekey, trainerDetail, CacheDuration.SportClassCahingTime);
+
             return trainerDetail;
         }
 
@@ -427,15 +441,21 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<List<ClientSideTrainerViewModel>> GetTrainersForHomePageAsync()
         {
-            string cachekey = CacheKeys.TrainerHomePage;
-            if(await cacheService.ExistsAsync(cachekey))
+            string cachekey = default;
+            if (UsingCache)
             {
-                var cachedTrainer=await cacheService.GetListAsync<ClientSideTrainerViewModel>(cachekey);
-                if (cachedTrainer.CheckNullability())
-                return cachedTrainer;
+                cachekey = CacheKeys.TrainerHomePage;
+                if (await cacheService.ExistsAsync(cachekey))
+                {
+                    var cachedTrainer = await cacheService.GetListAsync<ClientSideTrainerViewModel>(cachekey);
+                    if (cachedTrainer.CheckNullability())
+                        return cachedTrainer;
+                }
             }
-            var trainers=await userRepository.GetTrainersForHomePage();
-            await cacheService.SetListAsync(cachekey, trainers,CacheDuration.ClassHomeCahingTime);
+            var trainers = await userRepository.GetTrainersForHomePage();
+            if (UsingCache)
+                await cacheService.SetListAsync(cachekey, trainers, CacheDuration.ClassHomeCahingTime);
+
             return trainers;
         }
 
@@ -611,7 +631,7 @@ namespace GreenHeart.Application.Services.Implementation.Users
             #endregion
 
             #region Deleteing Cached trainer
-            string trainerSlug=await userRepository.GetStaffSlugByIdAsync(trainer.UserId);
+            string trainerSlug = await userRepository.GetStaffSlugByIdAsync(trainer.UserId);
             await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.Trainer + trainerSlug);
             await CacheExtensions.InvalidateCacheKey(cacheService, CacheKeys.TrainerRelatedKeys);
             #endregion
@@ -621,6 +641,6 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<bool> UserHasPermission(int userId)
         => await staffRepository.ExistActiveCaderForUser(userId);
-        
+
     }
 }
