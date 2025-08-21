@@ -1,0 +1,23 @@
+﻿@using GreenHeart.Domain.ViewModels.Essays.EssayCategories
+@model UpdateEssayCategoryViewModel
+<form asp-action="Edit" asp-controller="EssayCategory" asp-area="Admin" method="post"
+      data-ajax="true"
+      data-ajax-method="post"
+      data-ajax-success="OnSuccessAddingItem">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="Title" class="form-control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="submit" value="ویرایش گروه مقاله" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

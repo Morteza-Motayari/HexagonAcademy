@@ -1,6 +1,6 @@
 ﻿@using GreenHeart.Application.Statics.WebSite_Texts;
 @inject Footer footer;
-    <!-- Start Footer TODO fixthis to bottom --> 
+<!-- Start Footer TODO fixthis to bottom -->
 <footer class="bg-grenn pt-4">
     <div class="container">
         <div class="row py-4">
@@ -10,7 +10,8 @@
                     <i class='bx bx-dumbbell bx-sm text-light bxs fe-24'></i>
                     <span class="text-light h5">باشگاه ورزشی</span> <span class="text-light h5 semi-bold-600">قلب سبز</span>
                 </a>
-                <p class="text-light my-lg-4 my-2">@footer.Address
+                <p class="text-light my-lg-4 my-2">
+                    @footer.Address
                 </p>
                 <div class="ratio ratio-16x9">
                     <iframe src="@footer.Location"
@@ -23,25 +24,29 @@
 
             <div class="col-lg-3 col-md-4 my-sm-0 mt-4">
                 <h3 class="h4 pb-lg-3 text-light">
-                    شرکت ما</h3>
-                    <ul class="list-unstyled text-light light-300">
-                        <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light" href="/">خانه</a>
-                        </li>
-                        <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="Trainer" asp-action="List">مربی ها</a>
-                        </li>
-                        <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="SportClass" asp-action="List">کلاس های ورزشی</a>
-                        </li>                        
-                        <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="ContactUs" asp-action="ContactUs">ارتباط با ما</a>
-                        </li>
+                    شرکت ما
+                </h3>
+                <ul class="list-unstyled text-light light-300">
+                    <li class="pb-2">
+                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light" href="/">خانه</a>
+                    </li>
+                    <li class="pb-2">
+                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="Trainer" asp-action="List">مربی ها</a>
+                    </li>
+                    <li class="pb-2">
+                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="SportClass" asp-action="List">کلاس های ورزشی</a>
+                    </li>
+                    <li class="pb-2">
+                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="Essay" asp-action="List">مقالات</a>
+                    </li>
+                    <li class="pb-2">
+                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="ContactUs" asp-action="ContactUs">ارتباط با ما</a>
+                    </li>
 
-                        <li class="pb-2">
-                            <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="AboutUs" asp-action="AboutUs">درباره ما</a>
-                        </li>
-                    </ul>
+                    <li class="pb-2">
+                        <i class='bx-fw bx bxs-chevron-left bx-xs'></i><a class="text-decoration-none text-light py-1" asp-area="" asp-controller="AboutUs" asp-action="AboutUs">درباره ما</a>
+                    </li>
+                </ul>
             </div>
 
             @await Component.InvokeAsync("SportsName")

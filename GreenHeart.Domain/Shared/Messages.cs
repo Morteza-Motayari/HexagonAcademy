@@ -147,6 +147,20 @@ namespace GreenHeart.Domain.Shared
         public static string RecordCategoryDeletedSuccessfully = "مجموعه سوابق مدنظر  با موفقیت حذف شده است.";
         public static string RecordCategoryDeletedForeverSuccessfully = "مجموعه سوابق مدنظر به طور کامل پاک شده است.";
         #endregion
+
+        #region Essay
+        public static string EssayAddedSuccessfully = "مقاله جدید با موفقیت اضافه شده است.";
+        public static string EssayUpdatedSuccessfully = "مقاله مدنظر  با موفقیت ویرایش شده است.";
+        public static string EssayDeletedSuccessfully = "مقاله مدنظر  با موفقیت حذف شده است.";
+        public static string EssayDeletedForeverSuccessfully = "مقاله مدنظر به طور کامل پاک شده است.";
+        #endregion
+
+        #region Essay Category
+        public static string EssayCategoryAddedSuccessfully = "گروه مقاله جدید با موفقیت اضافه شده است.";
+        public static string EssayCategoryUpdatedSuccessfully = "گروه مقاله مدنظر  با موفقیت ویرایش شده است.";
+        public static string EssayCategoryDeletedSuccessfully = "گروه مقاله مدنظر  با موفقیت حذف شده است.";
+        public static string EssayCategoryDeletedForeverSuccessfully = "گروه مقاله مدنظر به طور کامل پاک شده است.";
+        #endregion
     }
     public class ErrorMessages
     {
@@ -304,6 +318,23 @@ namespace GreenHeart.Domain.Shared
         public static string RecordCategoryAlreadyDeleted = "مجموعه سوابق مدنظر قبلا حذف شده است.";
         public static string FirstSimpleDeleteRecordCategory = "ابتدا مجموعه سوابق مدنظر را به طور ساده حذف بکنید.";
         #endregion
+
+        #region Essay
+        public static string EssayNotFound = "مقاله مدنظر پیدا نشده است.";
+        public static string EssayAlreadyDeleted = "مقاله مدنظر قبلا حذف شده است.";
+        public static string FirstSimpleDeleteEssay = "ابتدا مقاله مد نظر را به طور ساده حذف بکنید.";
+        public static string EssayTitleDuplicated = "عنوان مقاله مدنظر قبلا اضافه شده است.";
+        public static string CantSelectParentCategory = "این گروه مقاله دارای فرزاندان میباشد و توانایی انتخاب آن برای گروه مقاله وجود ندارد.";
+        #endregion
+
+        #region Essay Category
+        public static string EssayCategoryNotFound = "گروه مقاله مدنظر پیدا نشده است.";
+        public static string EssayCategoryAlreadyDeleted = "گروه مقاله مدنظر قبلا حذف شده است."; 
+        public static string FirstSimpleDeleteEssayCategory = "ابتدا گروه مقاله مد نظر را به طور ساده حذف بکنید.";
+        public static string EssayCategoryTitleDuplicated = "عنوان گروه مقاله مدنظر قبلا اضافه شده است.";
+        public static string EssayCategoryHasEssaysAndCantHaveChildCategory = "این گروه مقاله دارای چندین مقاله می‌باشد و توانایی ثبت گروه مقاله فرزند برای آن نمی‌باشد.";
+
+        #endregion
     }
 
     public class WarningMessages
@@ -373,6 +404,14 @@ namespace GreenHeart.Domain.Shared
 
         #region Record Category
         public static string RecordCategoryCantbeEdited = "این مجموعه سوابق حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
+        #region Essay
+        public static string EssayCantbeEdited = "این مقاله حذف شده است و امکان ویرایش آن وجود ندارد.";
+        #endregion
+
+        #region Essay Category
+        public static string EssayCategoryCantbeEdited = "این گروه مقاله حذف شده است و امکان ویرایش آن وجود ندارد.";
         #endregion
     }
 

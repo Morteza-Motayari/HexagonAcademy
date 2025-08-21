@@ -40,6 +40,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\Images\GymGalleries\" />
     <Folder Include="wwwroot\Images\Banners\" />
+    <Folder Include="wwwroot\Images\CkEditor\" />
   </ItemGroup>
 
   <ItemGroup>

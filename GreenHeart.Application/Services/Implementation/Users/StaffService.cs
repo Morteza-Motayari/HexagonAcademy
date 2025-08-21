@@ -109,17 +109,24 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<ClientSideFilterTrainerViewModel> ClientSideFilterTrainerAsync(ClientSideFilterTrainerViewModel filter)
         {
-            string cachekey = CacheKeys.TrainerPage + filter.Page.ToString();
-            if (await cacheService.ExistsAsync(cachekey))
+            string cacheKey = default;
+            if (UsingCache)
             {
-                var cachedTrainer = await cacheService.GetAsync<ClientSideFilterTrainerViewModel>(cachekey);
-                if (cachedTrainer.Entities.CheckNullability())
+                string cachekey = CacheKeys.TrainerPage + filter.Page.ToString();
+                if (await cacheService.ExistsAsync(cachekey))
                 {
-                    return cachedTrainer;
+                    var cachedTrainer = await cacheService.GetAsync<ClientSideFilterTrainerViewModel>(cachekey);
+                    if (cachedTrainer.Entities.CheckNullability())
+                    {
+                        return cachedTrainer;
+                    }
                 }
             }
             var trainers = await userRepository.ClientSideFilterTrainer(filter);
-            await cacheService.SetAsync(cachekey, trainers, CacheDuration.SportClassCahingTime);
+            if (UsingCache)
+            {
+                await cacheService.SetAsync(cacheKey, trainers, CacheDuration.SportClassCahingTime);
+            }
             return trainers;
         }
 
@@ -280,17 +287,16 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<DeleteForeverCaderResult> DeleteCaderForever(int CaderId)
         {
+            var cader = await staffRepository.GetByIdAsync(CaderId);
+
+            if (cader == null)
+                return DeleteForeverCaderResult.NotFound;
+
+            if (cader.IsDeleted == false)
+                return DeleteForeverCaderResult.FirstDeleteSimple;
             DateTime lastDate = await staffRepository.GetLastModifiedDate(CaderId);
             if (lastDate.SixMonthPassed())
             {
-                var cader = await staffRepository.GetByIdAsync(CaderId);
-
-                if (cader == null)
-                    return DeleteForeverCaderResult.NotFound;
-
-                if (cader.IsDeleted == false)
-                    return DeleteForeverCaderResult.FirstDeleteSimple;
-
                 staffRepository.Delete(cader);
                 await staffRepository.SaveChangeAsync();
                 return DeleteForeverCaderResult.Success;
@@ -322,17 +328,16 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<DeleteForeverTrainerResult> DeleteTrainerForever(int TrainerId)
         {
+            var trainer = await staffRepository.GetByIdAsync(TrainerId);
+
+            if (trainer == null)
+                return DeleteForeverTrainerResult.NotFound;
+
+            if (trainer.IsDeleted == false)
+                return DeleteForeverTrainerResult.FirstDeleteSimple;
             DateTime lastDate = await staffRepository.GetLastModifiedDate(TrainerId);
             if (lastDate.SixMonthPassed())
             {
-                var trainer = await staffRepository.GetByIdAsync(TrainerId);
-
-                if (trainer == null)
-                    return DeleteForeverTrainerResult.NotFound;
-
-                if (trainer.IsDeleted == false)
-                    return DeleteForeverTrainerResult.FirstDeleteSimple;
-
                 staffRepository.Delete(trainer);
                 await staffRepository.SaveChangeAsync();
                 return DeleteForeverTrainerResult.Success;

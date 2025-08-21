@@ -93,7 +93,7 @@ namespace GreenHeart.Infra.Data.Repositories.Gyms
         => await _db.Sports.Include(s=>s.Certificate).FirstOrDefaultAsync(s => s.Id == id);
 
         public async Task<List<ClientSideSportExisted>> GetSportExistedWithRelationAsync()
-        => await _db.Sports.Include(s => s.Classes).Where(s=>!s.IsDeleted).Select(s => new ClientSideSportExisted
+        => await _db.Sports.Include(s => s.Classes).Where(s=>!s.IsDeleted && s.Classes.Count()>0).Select(s => new ClientSideSportExisted
         {
             Id = s.Id,
             Title = s.Title,

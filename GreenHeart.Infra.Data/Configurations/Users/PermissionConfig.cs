@@ -690,6 +690,92 @@ namespace GreenHeart.Infra.Data.Configurations.Users
                     ParentId = 84
                 });
             #endregion
+
+            #region Essays
+
+            #region Essay Categories
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 98,
+                    PermissionName = "ManageEssayCategories",
+                    PermissionTitle = "مدیریت گروه های مقالات"
+                },
+                new Permission
+                {
+                    PermissionId = 99,
+                    PermissionName = "AddEssayCategory",
+                    PermissionTitle = "افزودن گروه مقاله",
+                    ParentId = 98
+                }, new Permission
+                {
+                    PermissionId = 100,
+                    PermissionName = "EditEssayCategory",
+                    PermissionTitle = "ویرایش گروه مقاله",
+                    ParentId = 98
+                }, new Permission
+                {
+                    PermissionId = 101,
+                    PermissionName = "DeleteEssayCategory",
+                    PermissionTitle = "حذف گروه مقاله",
+                    ParentId = 98
+                }, new Permission
+                {
+                    PermissionId = 102,
+                    PermissionName = "DetailEssayCategory",
+                    PermissionTitle = "جزئیات گروه مقاله",
+                    ParentId = 98
+                }, new Permission
+                {
+                    PermissionId = 103,
+                    PermissionName = "DeleteEssayCategoryForever",
+                    PermissionTitle = "حذف مطلق گروه مقاله",
+                    ParentId = 98
+                });
+            #endregion
+
+            #region Essays
+            builder.HasData(
+                new Permission
+                {
+                    PermissionId = 104,
+                    PermissionName = "ManageEssays",
+                    PermissionTitle = "مدیریت مقالات"
+                },
+                new Permission
+                {
+                    PermissionId = 105,
+                    PermissionName = "AddEssay",
+                    PermissionTitle = "افزودن مقاله",
+                    ParentId = 104
+                }, new Permission
+                {
+                    PermissionId = 106,
+                    PermissionName = "EditEssay",
+                    PermissionTitle = "ویرایش مقاله",
+                    ParentId = 104
+                }, new Permission
+                {
+                    PermissionId = 107,
+                    PermissionName = "DeleteEssay",
+                    PermissionTitle = "حذف مقاله",
+                    ParentId = 104
+                }, new Permission
+                {
+                    PermissionId = 108,
+                    PermissionName = "DetailEssay",
+                    PermissionTitle = "جزئیات مقاله",
+                    ParentId = 104
+                }, new Permission
+                {
+                    PermissionId = 109,
+                    PermissionName = "DeleteEssayForever",
+                    PermissionTitle = "حذف مطلق مقاله",
+                    ParentId = 104
+                });
+            #endregion
+
+            #endregion
         }
     }
 }

@@ -125,17 +125,16 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<DeleteForeverExperienceResult> DeleteExperienceForever(int ExperienceId)
         {
+            var experience = await experienceRepository.GetByIdAsync(ExperienceId);
+
+            if (experience == null)
+                return DeleteForeverExperienceResult.NotFound;
+
+            if (experience.IsDeleted == false)
+                return DeleteForeverExperienceResult.FirstDeleteSimple;
             DateTime lastDate = await experienceRepository.GetLastModifiedDate(ExperienceId);
             if (lastDate.SixMonthPassed())
             {
-                var experience = await experienceRepository.GetByIdAsync(ExperienceId);
-
-                if (experience == null)
-                    return DeleteForeverExperienceResult.NotFound;
-
-                if (experience.IsDeleted == false)
-                    return DeleteForeverExperienceResult.FirstDeleteSimple;
-
                 experienceRepository.Delete(experience);
                 await experienceRepository.SaveChangeAsync();
                 return DeleteForeverExperienceResult.Success;

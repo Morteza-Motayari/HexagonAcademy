@@ -89,17 +89,16 @@ namespace GreenHeart.Application.Services.Implementation.KeyWords
 
         public async Task<DeleteForeverkeyWordResult> DeleteKeyWordForever(int KeyWordId)
         {
+            var keyword = await keyWordRepository.GetByIdAsync(KeyWordId);
+
+            if (keyword == null)
+                return DeleteForeverkeyWordResult.NotFound;
+
+            if (keyword.IsDeleted == false)
+                return DeleteForeverkeyWordResult.FirstDeleteSimple;
             DateTime lastDate = await keyWordRepository.GetLastModifiedDate(KeyWordId);
             if (lastDate.SixMonthPassed())
             {
-                var keyword = await keyWordRepository.GetByIdAsync(KeyWordId);
-
-                if (keyword == null)
-                    return DeleteForeverkeyWordResult.NotFound;
-
-                if (keyword.IsDeleted == false)
-                    return DeleteForeverkeyWordResult.FirstDeleteSimple;
-
                 keyWordRepository.Delete(keyword);
                 await keyWordRepository.SaveChangeAsync();
                 return DeleteForeverkeyWordResult.Success;

@@ -119,6 +119,20 @@ namespace GreenHeart.Domain.Shared
         public static string AdminDetailRecordCategory = "جزئیات مجموعه سوابق";
         #endregion
 
+        #region Essay Category
+        public static string AdminEssayCategorys = "گروه‌های مقالات";
+        public static string AdminCreateEssayCategory = "افزودن گروه مقاله";
+        public static string AdminEditEssayCategory = "ویرایش گروه مقاله";
+        public static string AdminDetailEssayCategory = "جزئیات گروه مقاله";
+        #endregion
+
+        #region Essay
+        public static string AdminEssays = "مقالات";
+        public static string AdminCreateEssay = "افزودن مقاله";
+        public static string AdminEditEssay = "ویرایش مقاله";
+        public static string AdminDetailEssay = "جزئیات مقاله";
+        #endregion
+
         #endregion
 
         #region UserManagement Side

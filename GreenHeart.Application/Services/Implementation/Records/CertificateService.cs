@@ -79,17 +79,16 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<DeleteForeverCertificateResult> DeleteCertificateForever(int CertificateId)
         {
+            var certificate = await CertificateRepository.GetByIdAsync(CertificateId);
+
+            if (certificate == null)
+                return DeleteForeverCertificateResult.NotFound;
+
+            if (certificate.IsDeleted == false)
+                return DeleteForeverCertificateResult.FirstDeleteSimple;
             DateTime lastDate = await CertificateRepository.GetLastModifiedDate(CertificateId);
             if (lastDate.SixMonthPassed())
             {
-                var certificate = await CertificateRepository.GetByIdAsync(CertificateId);
-
-                if (certificate == null)
-                    return DeleteForeverCertificateResult.NotFound;
-
-                if (certificate.IsDeleted == false)
-                    return DeleteForeverCertificateResult.FirstDeleteSimple;
-
                 CertificateRepository.Delete(certificate);
                 await CertificateRepository.SaveChangeAsync();
                 return DeleteForeverCertificateResult.Success;

@@ -16,7 +16,7 @@ namespace GreenHeart.Infra.Data.Repositories
             _db = db;
         }
         public async Task<bool> ExistSpecificSlug(string slug)
-        => await _db.SportClasses.AnyAsync(u => u.Slug == slug);
+        => await _db.SportClasses.AnyAsync(u => u.Slug == slug && u.IsDeleted == false);
 
         public async Task<FilterExperienceViewModel> FilterExperienceAsync(FilterExperienceViewModel filter)
         {

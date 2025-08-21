@@ -1,7 +1,9 @@
 ﻿using EasyCaching.Core;
 using GreenHeart.Application.Extensions;
 using GreenHeart.Application.Services.Interfaces.Caching;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +16,18 @@ namespace GreenHeart.Application.Services.Implementation.Caching
     {
         private readonly IEasyCachingProvider _provider;
         private readonly IEasyCachingProviderFactory _cachingProviderFactory;
+        public  IConfiguration _configuration;
+        private readonly bool UsingCache;
 
-        public RedisCacheService(IEasyCachingProviderFactory cachingProviderFactory)
+        public RedisCacheService(IEasyCachingProviderFactory cachingProviderFactory,IConfiguration configuration)
         {
             _cachingProviderFactory = cachingProviderFactory;
-            _provider = cachingProviderFactory.GetCachingProvider("redis1");
+            _configuration = configuration;
+            UsingCache = _configuration.GetValue<bool>("Statics:UseCaching");
+            if (UsingCache) 
+               _provider = cachingProviderFactory.GetCachingProvider("redis1");
         }
+       
 
         public async Task<T> GetAsync<T>(string key)
         {

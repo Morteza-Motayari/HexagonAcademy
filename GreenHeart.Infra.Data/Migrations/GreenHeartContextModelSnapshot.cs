@@ -126,6 +126,103 @@ namespace GreenHeart.Infra.Data.Migrations
                     b.ToTable("ContactUs");
                 });
 
+            modelBuilder.Entity("GreenHeart.Domain.Models.Essays.Essay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EssayCagtegoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Excerpt")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EssayCagtegoryId");
+
+                    b.ToTable("Essays");
+                });
+
+            modelBuilder.Entity("GreenHeart.Domain.Models.Essays.EssayCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EssayCategoryParentId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EssayCategoryParentId");
+
+                    b.ToTable("EssayCategories");
+                });
+
             modelBuilder.Entity("GreenHeart.Domain.Models.Gyms.ClassComment", b =>
                 {
                     b.Property<int>("Id")
@@ -435,6 +532,9 @@ namespace GreenHeart.Infra.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("EssayId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -452,6 +552,8 @@ namespace GreenHeart.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
+
+                    b.HasIndex("EssayId");
 
                     b.ToTable("KeyWords");
                 });
@@ -1591,6 +1693,88 @@ namespace GreenHeart.Infra.Data.Migrations
                             ParentId = 84,
                             PermissionName = "DetailOrder",
                             PermissionTitle = "جزئیات فاکتور"
+                        },
+                        new
+                        {
+                            PermissionId = 98,
+                            PermissionName = "ManageEssayCategories",
+                            PermissionTitle = "مدیریت گروه های مقالات"
+                        },
+                        new
+                        {
+                            PermissionId = 99,
+                            ParentId = 98,
+                            PermissionName = "AddEssayCategory",
+                            PermissionTitle = "افزودن گروه مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 100,
+                            ParentId = 98,
+                            PermissionName = "EditEssayCategory",
+                            PermissionTitle = "ویرایش گروه مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 101,
+                            ParentId = 98,
+                            PermissionName = "DeleteEssayCategory",
+                            PermissionTitle = "حذف گروه مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 102,
+                            ParentId = 98,
+                            PermissionName = "DetailEssayCategory",
+                            PermissionTitle = "جزئیات گروه مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 103,
+                            ParentId = 98,
+                            PermissionName = "DeleteEssayCategoryForever",
+                            PermissionTitle = "حذف مطلق گروه مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 104,
+                            PermissionName = "ManageEssays",
+                            PermissionTitle = "مدیریت مقالات"
+                        },
+                        new
+                        {
+                            PermissionId = 105,
+                            ParentId = 104,
+                            PermissionName = "AddEssay",
+                            PermissionTitle = "افزودن مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 106,
+                            ParentId = 104,
+                            PermissionName = "EditEssay",
+                            PermissionTitle = "ویرایش مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 107,
+                            ParentId = 104,
+                            PermissionName = "DeleteEssay",
+                            PermissionTitle = "حذف مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 108,
+                            ParentId = 104,
+                            PermissionName = "DetailEssay",
+                            PermissionTitle = "جزئیات مقاله"
+                        },
+                        new
+                        {
+                            PermissionId = 109,
+                            ParentId = 104,
+                            PermissionName = "DeleteEssayForever",
+                            PermissionTitle = "حذف مطلق مقاله"
                         });
                 });
 
@@ -1854,6 +2038,26 @@ namespace GreenHeart.Infra.Data.Migrations
                     b.Navigation("AnsweredUser");
                 });
 
+            modelBuilder.Entity("GreenHeart.Domain.Models.Essays.Essay", b =>
+                {
+                    b.HasOne("GreenHeart.Domain.Models.Essays.EssayCategory", "essayCategory")
+                        .WithMany("Essays")
+                        .HasForeignKey("EssayCagtegoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("essayCategory");
+                });
+
+            modelBuilder.Entity("GreenHeart.Domain.Models.Essays.EssayCategory", b =>
+                {
+                    b.HasOne("GreenHeart.Domain.Models.Essays.EssayCategory", "CategoryParent")
+                        .WithMany("CategoryChilds")
+                        .HasForeignKey("EssayCategoryParentId");
+
+                    b.Navigation("CategoryParent");
+                });
+
             modelBuilder.Entity("GreenHeart.Domain.Models.Gyms.ClassComment", b =>
                 {
                     b.HasOne("GreenHeart.Domain.Models.Users.User", "User")
@@ -1950,6 +2154,12 @@ namespace GreenHeart.Infra.Data.Migrations
                     b.HasOne("GreenHeart.Domain.Models.Gyms.SportClass", "sportClass")
                         .WithMany("KeyWords")
                         .HasForeignKey("ClassId");
+
+                    b.HasOne("GreenHeart.Domain.Models.Essays.Essay", "Essay")
+                        .WithMany("keyWords")
+                        .HasForeignKey("EssayId");
+
+                    b.Navigation("Essay");
 
                     b.Navigation("sportClass");
                 });
@@ -2213,6 +2423,18 @@ namespace GreenHeart.Infra.Data.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GreenHeart.Domain.Models.Essays.Essay", b =>
+                {
+                    b.Navigation("keyWords");
+                });
+
+            modelBuilder.Entity("GreenHeart.Domain.Models.Essays.EssayCategory", b =>
+                {
+                    b.Navigation("CategoryChilds");
+
+                    b.Navigation("Essays");
                 });
 
             modelBuilder.Entity("GreenHeart.Domain.Models.Gyms.ClassComment", b =>

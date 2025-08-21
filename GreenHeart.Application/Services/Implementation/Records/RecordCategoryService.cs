@@ -73,17 +73,16 @@ namespace GreenHeart.Application.Services.Implementation.Records
 
         public async Task<DeleteForeverRecordCategoryResult> DeleteRecordCategoryForever(int recordCategoryId)
         {
+            var category = await recordCategoryRepository.GetByIdAsync(recordCategoryId);
+
+            if (category == null)
+                return DeleteForeverRecordCategoryResult.RecordCategoryNotFound;
+
+            if (category.IsDeleted == false)
+                return DeleteForeverRecordCategoryResult.FirstDeleteSimple;
             DateTime lastDate = await recordCategoryRepository.GetLastModifiedDate(recordCategoryId);
             if (lastDate.SixMonthPassed())
             {
-                var category = await recordCategoryRepository.GetByIdAsync(recordCategoryId);
-
-                if (category == null)
-                    return DeleteForeverRecordCategoryResult.RecordCategoryNotFound;
-
-                if (category.IsDeleted == false)
-                    return DeleteForeverRecordCategoryResult.FirstDeleteSimple;
-
                 recordCategoryRepository.Delete(category);
                 await recordCategoryRepository.SaveChangeAsync();
                 return DeleteForeverRecordCategoryResult.Success;

@@ -98,17 +98,16 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<DeleteForeverSportResult> DeleteSportForever(int SportId)
         {
+            var sport = await sportRepository.GetByIdAsync(SportId);
+
+            if (sport == null)
+                return DeleteForeverSportResult.NotFound;
+
+            if (sport.IsDeleted == false)
+                return DeleteForeverSportResult.FirstDeleteSimple;
             DateTime lastDate = await sportRepository.GetLastModifiedDate(SportId);
             if (lastDate.SixMonthPassed())
             {
-                var sport = await sportRepository.GetByIdAsync(SportId);
-
-                if (sport == null)
-                    return DeleteForeverSportResult.NotFound;
-
-                if (sport.IsDeleted == false)
-                    return DeleteForeverSportResult.FirstDeleteSimple;
-
                 sportRepository.Delete(sport);
                 await sportRepository.SaveChangeAsync();
                 return DeleteForeverSportResult.Success;
@@ -147,7 +146,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
         public async Task<List<ClientSideSportExisted>?> GetSportExistedAsync()
         {
             string cachekey = default;
-            if (!UsingCache)
+            if (UsingCache)
             {
                 cachekey = CacheKeys.SportsExisted;
                 if (await cacheService.ExistsAsync(cachekey))

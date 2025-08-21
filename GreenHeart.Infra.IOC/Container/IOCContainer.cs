@@ -3,6 +3,7 @@ using GreenHeart.Application.Senders.Interfaces;
 using GreenHeart.Application.Services.Implementation.Banners;
 using GreenHeart.Application.Services.Implementation.Caching;
 using GreenHeart.Application.Services.Implementation.Contact_Us;
+using GreenHeart.Application.Services.Implementation.Essays;
 using GreenHeart.Application.Services.Implementation.Gyms;
 using GreenHeart.Application.Services.Implementation.KeyWords;
 using GreenHeart.Application.Services.Implementation.Orders;
@@ -14,6 +15,8 @@ using GreenHeart.Application.Services.Implementation.Wallets;
 using GreenHeart.Application.Services.Interfaces.Banners;
 using GreenHeart.Application.Services.Interfaces.Caching;
 using GreenHeart.Application.Services.Interfaces.Contact_Us;
+using GreenHeart.Application.Services.Interfaces.EssayCategorys;
+using GreenHeart.Application.Services.Interfaces.Essays;
 using GreenHeart.Application.Services.Interfaces.Gyms;
 using GreenHeart.Application.Services.Interfaces.KeyWords;
 using GreenHeart.Application.Services.Interfaces.Orders;
@@ -25,6 +28,7 @@ using GreenHeart.Application.Services.Interfaces.Wallets;
 using GreenHeart.Domain.Interfaces;
 using GreenHeart.Domain.Interfaces.Banners;
 using GreenHeart.Domain.Interfaces.Contact_Us;
+using GreenHeart.Domain.Interfaces.Essays;
 using GreenHeart.Domain.Interfaces.Gyms;
 using GreenHeart.Domain.Interfaces.KeyWords;
 using GreenHeart.Domain.Interfaces.Links;
@@ -36,6 +40,7 @@ using GreenHeart.Domain.Interfaces.Wallets;
 using GreenHeart.Infra.Data.Repositories;
 using GreenHeart.Infra.Data.Repositories.Banners;
 using GreenHeart.Infra.Data.Repositories.Contact_Us;
+using GreenHeart.Infra.Data.Repositories.Essays;
 using GreenHeart.Infra.Data.Repositories.Gyms;
 using GreenHeart.Infra.Data.Repositories.KeyWords;
 using GreenHeart.Infra.Data.Repositories.Links;
@@ -44,13 +49,14 @@ using GreenHeart.Infra.Data.Repositories.Records;
 using GreenHeart.Infra.Data.Repositories.Tickets;
 using GreenHeart.Infra.Data.Repositories.Users;
 using GreenHeart.Infra.Data.Repositories.Wallets;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GreenHeart.Infra.IOC.Container
 {
     public static class IOCContainer
     {
-        public static void RegisterServices (this IServiceCollection services)
+        public static void RegisterServices (this IServiceCollection services,IConfiguration configuration)
         {
             #region Services
 
@@ -72,7 +78,24 @@ namespace GreenHeart.Infra.IOC.Container
             #endregion
 
             #region Caching
-            services.AddScoped<ICacheService, RedisCacheService>();
+            bool useCaching = configuration.GetValue<bool>("Statics:UseCaching");
+            if (useCaching)
+            {
+                //services.AddEasyCaching(options =>
+                //{
+                //    options.UseRedis(/* Redis config */);
+                //});
+                services.AddScoped<ICacheService, RedisCacheService>();
+            }
+            else
+            {
+                services.AddScoped<ICacheService, NullCacheService>();
+            }
+            #endregion
+
+            #region Essays
+            services.AddScoped<IEssayService, EssayService>();
+            services.AddScoped<IEssayCategoryService, EssayCategoryService>();
             #endregion
 
             #region Gyms
@@ -122,6 +145,11 @@ namespace GreenHeart.Infra.IOC.Container
 
             #region Contact Us
             services.AddScoped<IContactUsRepository, ContactUsRepository>();
+            #endregion
+
+            #region Essays
+            services.AddScoped<IEssayRepository, EssayRepository>();
+            services.AddScoped<IEssayCategoryRepository, EssayCategoryRepository>();
             #endregion
 
             #region Gyms

@@ -89,17 +89,16 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<DeleteForeverRoleResult> DeleteRoleForever(int RoleId)
         {
+            var role = await roleRepository.GetByIdAsync(RoleId);
+
+            if (role == null)
+                return DeleteForeverRoleResult.NotFound;
+
+            if (role.IsDeleted == false)
+                return DeleteForeverRoleResult.FirstDeleteSimple;
             DateTime lastDate = await roleRepository.GetLastModifiedDate(RoleId);
             if (lastDate.SixMonthPassed())
             {
-                var role = await roleRepository.GetByIdAsync(RoleId);
-                               
-                if (role == null)
-                    return DeleteForeverRoleResult.NotFound;
-
-                if (role.IsDeleted == false)
-                    return DeleteForeverRoleResult.FirstDeleteSimple;
-
                 roleRepository.Delete(role);
                 await roleRepository.SaveChangeAsync();
                 return DeleteForeverRoleResult.Success;

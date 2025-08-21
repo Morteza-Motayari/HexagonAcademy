@@ -27,7 +27,7 @@ namespace GreenHeart.Infra.Data.Repositories.Gyms
         => await _db.Gyms.AnyAsync(g=>g.Id==gymId&&g.IsDeleted==false);
 
         public async Task<bool> ExistSpecificSlug(string slug)
-        =>await _db.Gyms.AnyAsync(u => u.Slug == slug);
+        =>await _db.Gyms.AnyAsync(u => u.Slug == slug && u.IsDeleted == false);
 
         public async Task<FilterGymViewModel> FilterGymAsync(FilterGymViewModel filter)
         {

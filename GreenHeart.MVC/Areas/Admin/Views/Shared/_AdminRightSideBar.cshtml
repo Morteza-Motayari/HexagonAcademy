@@ -261,6 +261,37 @@
         </ul>
 
         <p class="text-muted nav-heading mb-1">
+            <span>مدیریت مقالات و گروه‌ها</span>
+        </p>
+        <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+                <a href="#ui-essays" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-clipboard fe-20 text-dark bxs"></i>
+                    <span class="ml-3 item-text">مقالات</span>
+                </a>
+                <ul class="collapse list-unstyled pl-4 w-100" id="ui-essays">
+                    @if (await userService.CaderHasPermissionAsync(userId, "ManageEssayCategories"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" asp-area="Admin" asp-controller="EssayCategory" asp-action="List">
+                                <span class="ml-1 item-text">گروه‌ها</span>
+                            </a>
+                        </li>
+                    }
+                    @if (await userService.CaderHasPermissionAsync(userId, "ManageEssays"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" asp-area="Admin" asp-controller="Essay" asp-action="List">
+                                <span class="ml-1 item-text">مقالات</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </li>            
+        </ul>
+
+        <p class="text-muted nav-heading mb-1">
             <span>مدیریت فاکتورها ها و تراکنش ها</span>
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-2">

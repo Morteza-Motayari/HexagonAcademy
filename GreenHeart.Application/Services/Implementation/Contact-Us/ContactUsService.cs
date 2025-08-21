@@ -5,10 +5,12 @@ using GreenHeart.Domain.Interfaces;
 using GreenHeart.Domain.Interfaces.Contact_Us;
 using GreenHeart.Domain.Interfaces.Users;
 using GreenHeart.Domain.Models.Contact_Us;
+using GreenHeart.Domain.Models.Essays;
 using GreenHeart.Domain.Models.Gyms;
 using GreenHeart.Domain.Models.Users;
 using GreenHeart.Domain.ViewModels.Contact_Us;
 using GreenHeart.Domain.ViewModels.Users.Roles;
+using GreenHeart.Infra.Data.Repositories.Essays;
 using GreenHeart.Infra.Data.Repositories.Users;
 using System;
 using System.Collections.Generic;
@@ -71,9 +73,11 @@ namespace GreenHeart.Application.Services.Implementation.Contact_Us
             return AnswerContactUsResult.Success;
         }
 
-        public Task<string> CantDeleteContactUsForeverNowMessage(int ContactUsId)
+        public async Task<string> CantDeleteContactUsForeverNowMessage(int ContactUsId)
         {
-            throw new NotImplementedException();
+            DateTime lastEdit = await contactUsRepository.GetLastModifiedDate(ContactUsId);
+            int leftdays = lastEdit.HowManyDayLeftToDelete();
+            return $"شما فعلا توانایی حذف مطلق این درخواست ارتباط تا {leftdays} روز آینده را ندارید.";
         }
 
         public async Task<CreateContactUsResult> CreateContactUsAsync(CreateContactUsViewModel model)
@@ -107,17 +111,17 @@ namespace GreenHeart.Application.Services.Implementation.Contact_Us
 
         public async Task<DeleteForeverContactUsResult> DeleteContactUsForever(int ContactUsId)
         {
+            var contactus = await contactUsRepository.GetByIdAsync(ContactUsId);
+
+            if (contactus == null)
+                return DeleteForeverContactUsResult.NotFound;
+
+            if (contactus.IsDeleted == false)
+                return DeleteForeverContactUsResult.FirstDeleteSimple;
+
             DateTime lastDate = await contactUsRepository.GetLastModifiedDate(ContactUsId);
             if (lastDate.SixMonthPassed())
             {
-                var contactus = await contactUsRepository.GetByIdAsync(ContactUsId);
-
-                if (contactus == null)
-                    return DeleteForeverContactUsResult.NotFound;
-
-                if (contactus.IsDeleted == false)
-                    return DeleteForeverContactUsResult.FirstDeleteSimple;
-
                 contactUsRepository.Delete(contactus);
                 await contactUsRepository.SaveChangeAsync();
                 return DeleteForeverContactUsResult.Success;

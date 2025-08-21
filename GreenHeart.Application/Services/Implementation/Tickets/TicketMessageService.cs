@@ -121,15 +121,15 @@ namespace GreenHeart.Application.Services.Implementation.Tickets
 
         public async Task<DeleteTicketMessageForeverResult> DeleteTicketMessageForeverAsync(int ticketMessageId)
         {
+            var ticketMessage = await ticketMessageRepository.GetByIdAsync(ticketMessageId);
+            if (ticketMessage == null)
+                return DeleteTicketMessageForeverResult.TicketMessageNotFound;
+
+            if (ticketMessage.IsDeleted == false)
+                return DeleteTicketMessageForeverResult.FirstDeleteSimple;
             DateTime LastDate=await ticketMessageRepository.GetLastModifiedDate(ticketMessageId);
             if (LastDate.SixMonthPassed())
             {
-                var ticketMessage = await ticketMessageRepository.GetByIdAsync(ticketMessageId);
-                if (ticketMessage == null)
-                    return DeleteTicketMessageForeverResult.TicketMessageNotFound;
-
-                if (ticketMessage.IsDeleted == false)
-                    return DeleteTicketMessageForeverResult.FirstDeleteSimple;
                 ticketMessageRepository.Delete(ticketMessage);
                 await ticketMessageRepository.SaveChangeAsync();
 

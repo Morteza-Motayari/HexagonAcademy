@@ -107,17 +107,16 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<DeleteForeverGymResult> DeleteGymForever(int GymId)
         {
+            var gym = await gymRepository.GetByIdAsync(GymId);
+
+            if (gym == null)
+                return DeleteForeverGymResult.NotFound;
+
+            if (gym.IsDeleted == false)
+                return DeleteForeverGymResult.FirstDeleteSimple;
             DateTime lastDate = await gymRepository.GetLastModifiedDate(GymId);
             if (lastDate.SixMonthPassed())
             {
-                var gym = await gymRepository.GetByIdAsync(GymId);
-
-                if (gym == null)
-                    return DeleteForeverGymResult.NotFound;
-
-                if (gym.IsDeleted == false)
-                    return DeleteForeverGymResult.FirstDeleteSimple;
-
                 gymRepository.Delete(gym);
                 await gymRepository.SaveChangeAsync();
                 return DeleteForeverGymResult.Success;

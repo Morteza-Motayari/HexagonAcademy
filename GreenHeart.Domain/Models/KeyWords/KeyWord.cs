@@ -1,4 +1,5 @@
 ﻿using GreenHeart.Domain.Models.Common;
+using GreenHeart.Domain.Models.Essays;
 using GreenHeart.Domain.Models.Gyms;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,14 @@ namespace GreenHeart.Domain.Models.KeyWords
         #region Properties
         public string Key { get; set; }
         public int? ClassId { get; set; }
+        public int? EssayId { get; set; }
         #endregion
 
         #region Relations
         [ForeignKey(nameof(ClassId))]
         public SportClass? sportClass { get; set; }
+        [ForeignKey(nameof(EssayId))]
+        public Essay? Essay { get; set; }
         #endregion
     }
 }

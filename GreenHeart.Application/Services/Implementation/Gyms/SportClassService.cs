@@ -216,13 +216,12 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             if (SportClass.IsDeleted == true)
                 return DeleteSportClassResult.SportClassAlreadyDeleted;
 
-            #region Deleting Avatar
+            #region Deleting SportClass Image
             if (SportClass.ImageUrl != null)
             {
                 SportClass.ImageUrl.DeleteImage(SavingPath.SportClassPath);
                 SportClass.ImageUrl = null;
             }
-
             #endregion
 
             SportClass.IsDeleted = true;
@@ -239,17 +238,16 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<DeleteForeverSportClassResult> DeleteSportClassForever(int SportClassId)
         {
+            var sportclass = await SportClassRepository.GetByIdAsync(SportClassId);
+
+            if (sportclass == null)
+                return DeleteForeverSportClassResult.NotFound;
+
+            if (sportclass.IsDeleted == false)
+                return DeleteForeverSportClassResult.FirstDeleteSimple;
             DateTime lastDate = await SportClassRepository.GetLastModifiedDate(SportClassId);
             if (lastDate.SixMonthPassed())
             {
-                var sportclass = await SportClassRepository.GetByIdAsync(SportClassId);
-
-                if (sportclass == null)
-                    return DeleteForeverSportClassResult.NotFound;
-
-                if (sportclass.IsDeleted == false)
-                    return DeleteForeverSportClassResult.FirstDeleteSimple;
-
                 SportClassRepository.Delete(sportclass);
                 await SportClassRepository.SaveChangeAsync();
                 return DeleteForeverSportClassResult.Success;
@@ -357,7 +355,7 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
             {
                 if (SportClass.ImageUrl != null)
                 {
-                    SportClass.ImageUrl.DeleteImage(SavingPath.AvatarPath);
+                    SportClass.ImageUrl.DeleteImage(SavingPath.SportClassPath);
                     SportClass.ImageUrl = null;
                 }
                 string imageName = Guid.NewGuid().ToString() + Path.GetExtension(model.NewImage.FileName);

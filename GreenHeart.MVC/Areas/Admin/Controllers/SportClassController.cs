@@ -150,7 +150,7 @@ namespace GreenHeart.MVC.Areas.Admin.Controllers
                     TempData[ErrorMessage] = ErrorMessages.SportClassAlreadyDeleted;
                     break;
             }
-            return RedirectToAction(nameof(List));
+            return RedirectToAction(nameof(List), "SportClass", new { area = "Admin" });
         }
         #endregion
 

@@ -73,6 +73,14 @@ namespace GreenHeart.Infra.Data.Repositories.KeyWords
             ClassId = classId
         }).ToListAsync();
 
+        public async Task<List<KeyWord>> GetEssayKeyWordsAsync(int essayId)
+        => await _db.KeyWords.Where(c => c.EssayId == essayId && !c.IsDeleted).Select(k => new KeyWord
+        {
+            Id = k.Id,
+            Key = k.Key,
+            EssayId = essayId
+        }).ToListAsync();
+
         public async Task<KeyWord?> GetKeyWordWithDetail(int keyId)
         => await _db.KeyWords.Include(a => a.sportClass).FirstOrDefaultAsync(u => u.Id == keyId);
 

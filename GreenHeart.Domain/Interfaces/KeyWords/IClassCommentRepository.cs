@@ -10,6 +10,7 @@ namespace GreenHeart.Domain.Interfaces.KeyWords
         Task<FilterkeyWordViewModel> FilterKeyWordAsync(FilterkeyWordViewModel filter, int sportClassId);
         Task<KeyWord?> GetKeyWordWithDetail(int keyId);
         Task<List<KeyWord>> GetClassKeyWordsAsync(int classId);
+        Task<List<KeyWord>> GetEssayKeyWordsAsync(int essayId);
         Task<DateTime> GetLastModifiedDate(int id);
     }
 }

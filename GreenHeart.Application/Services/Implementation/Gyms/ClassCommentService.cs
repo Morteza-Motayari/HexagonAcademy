@@ -230,17 +230,16 @@ namespace GreenHeart.Application.Services.Implementation.Gyms
 
         public async Task<DeleteForeverCommentResult> DeleteClassCommentForever(int ClassCommentId)
         {
+            var classcomment = await classCommentRepository.GetByIdAsync(ClassCommentId);
+
+            if (classcomment == null)
+                return DeleteForeverCommentResult.NotFound;
+
+            if (classcomment.IsDeleted == false)
+                return DeleteForeverCommentResult.FirstDeleteSimple;
             DateTime lastDate = await classCommentRepository.GetLastModifiedDate(ClassCommentId);
             if (lastDate.SixMonthPassed())
             {
-                var classcomment = await classCommentRepository.GetByIdAsync(ClassCommentId);
-
-                if (classcomment == null)
-                    return DeleteForeverCommentResult.NotFound;
-
-                if (classcomment.IsDeleted == false)
-                    return DeleteForeverCommentResult.FirstDeleteSimple;
-
                 classCommentRepository.Delete(classcomment);
                 await classCommentRepository.SaveChangeAsync();
                 return DeleteForeverCommentResult.Success;

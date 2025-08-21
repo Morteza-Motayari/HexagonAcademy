@@ -1,6 +1,7 @@
 ﻿using GreenHeart.Domain.Models.Banners;
 using GreenHeart.Domain.Models.Common;
 using GreenHeart.Domain.Models.Contact_Us;
+using GreenHeart.Domain.Models.Essays;
 using GreenHeart.Domain.Models.Gyms;
 using GreenHeart.Domain.Models.KeyWords;
 using GreenHeart.Domain.Models.Links;
@@ -31,6 +32,11 @@ namespace GreenHeart.Infra.Data.Context
 
         #region Contact Us
         public DbSet<ContactUs> ContactUs { get; set; }
+        #endregion
+
+        #region Essays
+        public DbSet<Essay> Essays { get; set; }
+        public DbSet<EssayCategory> EssayCategories { get; set; }
         #endregion
 
         #region Gym

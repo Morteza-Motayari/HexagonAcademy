@@ -15,6 +15,7 @@ using Newtonsoft.Json.Serialization;
 using NLog.Web;
 using NuGet.Protocol;
 using StackExchange.Redis;
+using System;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -22,10 +23,11 @@ using System.Text.Unicode;
 var logger=NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 try
 {
+    
     var builder = WebApplication.CreateBuilder(args);
     // Add services to the container.
     builder.Services.AddControllersWithViews();
-
+    logger.Warn("the app started");
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(LogLevel.Trace);
     builder.Host.UseNLog();
@@ -38,47 +40,52 @@ UnicodeRanges.Arabic }));
     #endregion
 
     #region Redis Caching
+    
+    bool UsingCache = builder.Configuration.GetValue<bool>("Statics:UseCaching");
     //use redis cache that named redis1
-    builder.Services.AddEasyCaching(options =>
+    if (UsingCache)
     {
-        #region Configuration For json if Self referencing loop detected
-        //var jsonOptions = new Action<EasyCaching.Serialization.Json.EasyCachingJsonSerializerOptions>(x =>
-        //{
-        //    x.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-        //    x.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-        //});
-        //options.WithJson(jsonOptions, "json");
-        #endregion
-
-        options.WithJson("json");
-
-        options.UseRedis(config =>
+        builder.Services.AddEasyCaching(options =>
         {
-            config.DBConfig.Endpoints.Add(new ServerEndPoint("localhost", 6379));
-            config.SerializerName = "json"; // Match the serializer name
-           
-            // Timeout Settings
-            config.DBConfig.ConnectionTimeout = 30000; // 30 seconds for initial connection
-            config.DBConfig.SyncTimeout = 10000;      // 10 seconds for sync operations
-            config.DBConfig.AsyncTimeout = 10000;     // 10 seconds for async operations
+            #region Configuration For json if Self referencing loop detected
+            //var jsonOptions = new Action<EasyCaching.Serialization.Json.EasyCachingJsonSerializerOptions>(x =>
+            //{
+            //    x.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //    x.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            //});
+            //options.WithJson(jsonOptions, "json");
+            #endregion
 
-            // Connection and Pooling Settings
-            //config.DBConfig.PoolSize = 50;            // Increase connection pool size
-            //config.DBConfig.ConnectRetry = 3;        // Retry connection attempts
-            //config.DBConfig.KeepAlive = 180;          // Keep connections alive (seconds)
 
-            // Database and Serializer
-            config.DBConfig.Database = 0;             // Explicitly set DB index
-            config.SerializerName = "json";
-            config.DBConfig.AllowAdmin=true;
-        }, "redis1");
-       
-    });
+            options.WithJson("json");
 
+            options.UseRedis(config =>
+            {
+                config.DBConfig.Endpoints.Add(new ServerEndPoint("localhost", 6379));
+                config.SerializerName = "json"; // Match the serializer name
+
+                // Timeout Settings
+                config.DBConfig.ConnectionTimeout = 30000; // 30 seconds for initial connection
+                config.DBConfig.SyncTimeout = 10000;      // 10 seconds for sync operations
+                config.DBConfig.AsyncTimeout = 10000;     // 10 seconds for async operations
+
+                // Connection and Pooling Settings
+                //config.DBConfig.PoolSize = 50;            // Increase connection pool size
+                //config.DBConfig.ConnectRetry = 3;        // Retry connection attempts
+                //config.DBConfig.KeepAlive = 180;          // Keep connections alive (seconds)
+
+                // Database and Serializer
+                config.DBConfig.Database = 0;             // Explicitly set DB index
+                config.SerializerName = "json";
+                config.DBConfig.AllowAdmin = true;
+            }, "redis1");
+
+        });
+    }
     #endregion
 
     #region register Sevices
-    builder.Services.RegisterServices();
+    builder.Services.RegisterServices(builder.Configuration);
 
     builder.Services.AddHttpClient();
     builder.Services.AddScoped<UserInfoFilter>();

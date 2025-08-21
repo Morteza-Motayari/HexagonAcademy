@@ -37,7 +37,7 @@ namespace GreenHeart.Infra.Data.Repositories
         => await _db.Users.AnyAsync(u => u.PhoneNumber == mobile && u.Id != id && u.IsDeleted == false);
 
         public async Task<bool> ExistSpecificSlug(string slug)
-        => await _db.SportClasses.AnyAsync(u => u.Slug == slug);
+        => await _db.SportClasses.AnyAsync(u => u.Slug == slug && u.IsDeleted == false);
 
         public async Task<FilterUserViewModel> FilteUsersAsync(FilterUserViewModel filter)
         {
@@ -277,7 +277,7 @@ namespace GreenHeart.Infra.Data.Repositories
                 }).ToListAsync();
 
         public async Task<User?> GetUserBySlug(string slug)
-        =>await _db.Users.Where(s=>s.Slug==slug)
+        =>await _db.Users.Where(s=>s.Slug==slug&&s.IsDeleted==false)
             .Select(u=>new User
             {
                 Id= u.Id,

@@ -273,17 +273,16 @@ namespace GreenHeart.Application.Services.Implementation.Users
 
         public async Task<DeleteForeverUserResult> DeleteUserForever(int UserId)
         {
+            var user = await UserRepository.GetByIdAsync(UserId);
+
+            if (user == null)
+                return DeleteForeverUserResult.NotFound;
+
+            if (user.IsDeleted == false)
+                return DeleteForeverUserResult.FirstDeleteSimple;
             DateTime lastDate = await UserRepository.GetLastModifiedDate(UserId);
             if (lastDate.SixMonthPassed())
             {
-                var user = await UserRepository.GetByIdAsync(UserId);
-
-                if (user == null)
-                    return DeleteForeverUserResult.NotFound;
-
-                if (user.IsDeleted == false)
-                    return DeleteForeverUserResult.FirstDeleteSimple;
-
                 UserRepository.Delete(user);
                 await UserRepository.SaveChangeAsync();
                 return DeleteForeverUserResult.Success;
